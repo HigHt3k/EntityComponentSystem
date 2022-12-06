@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<map height="5" id="100" name="test" width="5">
+  <tileset source="base_tiles.xml"/>
+  <description/>
+  <layer id="0">
+    <entity id="202" interactable="false" x="3" y="3"/>
+  </layer>
+</map>

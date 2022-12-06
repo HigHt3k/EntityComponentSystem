@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="-1" name ="Debugging Level" version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="5" height="5" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+ <tileset firstgid="1" source="base_tiles.xml"/>
+ <layer id="0" name="Tile Layer 1" width="50" height="40" interactable="false">
+  <data encoding="csv">
+1,1,1,1,1,1,
+   1,1,1,1,1,1,
+   1,1,1,1,1,1,
+   1,1,1,1,1,1,
+   1,1,1,1,1,1,
+   1,1,1,1,1,1
+</data>
+ </layer>
+ <layer id="1" name="Tile Layer 2" width="50" height="40" interactable="true">
+  <data encoding="csv">
+  1000,1000,1000,1000,204,205,
+   200,1000,202,203,1000,205,
+   200,201,202,203,1000,205,
+   200,1000,1000,203,1000,205,
+   200,201,202,1000,1000,205,
+   200,201,202,203,204,205
+  </data>
+ </layer>
+</map>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="-1" name ="Building a Map" width="5" height="5">
+    <description>Building a new map is easy!</description>
+ <tileset source="base_tiles.xml"/>
+ <layer id="0" name="Tile Layer 1">
+ </layer>
+</map>

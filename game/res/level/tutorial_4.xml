@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="4" name ="Tutorial 4 : Com-Mon" width="5" height="3">
+    <description>As already mentioned earlier, some components need to be supervised by other components. This can be done by adding a Com-Mon unit to an existing system. We take the finished system from Tutorial 3 and modify it. As we can see, an even higher safety value is achievable this way without further adding redundancy.
+    </description>
+ <tileset source="base_tiles.xml"/>
+ <layer id="0" name="Tile Layer 1">
+     <entity x="0" y="1" id="201" interactable="false"/>
+     <entity x="2" y="0" id="203" interactable="false"/>
+     <entity x="2" y="2" id="203" interactable="false"/>
+     <entity x="4" y="1" id="205" interactable="false"/>
+ </layer>
+</map>

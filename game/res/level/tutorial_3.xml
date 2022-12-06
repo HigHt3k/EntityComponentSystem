@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="3" name ="Tutorial 3 : Redundancy" width="5" height="3">
+    <description>In aircraft system design, safety requirements need to be fulfilled in order to successfully certify an aircraft. Each component has a safety constant that is determined by different factors such as production quality. Often, a single components' safety value is not enough to reach the requirements. Therefore, multiple components need to be connected with each other and even need to monitor each other's behaviour. In the top corner, you can see the current safety value of your system and the required safety value of the system. Try to reach the requirement by adding another computer for redundancy and connect it with the sensor and actuator.
+    </description>
+ <tileset source="base_tiles.xml"/>
+ <layer id="0" name="Tile Layer 1">
+     <entity x="0" y="1" id="201" interactable="false"/>
+     <entity x="2" y="0" id="203" interactable="false"/>
+     <entity x="2" y="2" id="203" interactable="false"/>
+     <entity x="4" y="1" id="205" interactable="false"/>
+ </layer>
+</map>

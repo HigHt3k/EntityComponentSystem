@@ -1,14 +1,13 @@
-package ecs.entity;
-
-import ecs.component.Component;
+package com.ecs;
 
 import java.util.ArrayList;
+
 
 public class Entity {
 
     private ArrayList<Component> components;
 
-    public Entity() {
+    public Entity(String name, int id) {
         components = new ArrayList<>();
     }
 
@@ -44,6 +43,12 @@ public class Entity {
     public void update(float dTime) {
         for(int i = 0; i < components.size(); i++) {
             components.get(i).update(dTime);
+        }
+    }
+
+    public void start() {
+        for(int i = 0; i < components.size(); i++) {
+            components.get(i).start();
         }
     }
 }

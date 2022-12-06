@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset name="tiles" tilewidth="16" tileheight="16" tilecount="3" columns="0">
+ <grid width="1" height="1"/>
+ <tile id="0" type="CABLE">
+  <image width="16" height="16" source="test/res/tiles/cable.png"/>
+ </tile>
+ <tile id="1" type="BACKGROUND">
+  <image width="16" height="16" source="test/res/tiles/concrete.png"/>
+ </tile>
+ <tile id="2" type="BACKGROUND">
+  <image width="16" height="16" source="test/res/tiles/wall.png"/>
+ </tile>
+ <tile id="200" type="COMPUTER">
+  <image width="32" height="32" source="test/res/avionics/default.png"/>
+ </tile>
+ <tile id="201" type="SENSOR">
+  <image width="32" height="32" source="test/res/avionics/cpiom.png"/>
+ </tile>
+ <tile id="202" type="ACTUATOR">
+  <image width="32" height="32" source="test/res/avionics/cpiom_blade.png"/>
+ </tile>
+ <tile id="203" type="COMPUTER">
+  <image width="32" height="32" source="test/res/avionics/crdc.png"/>
+ </tile>
+ <tile id="204" type="COMPUTER">
+  <image width="32" height="32" source="test/res/avionics/rce.png"/>
+ </tile>
+ <tile id="205" type="ACTUATOR">
+  <image width="32" height="32" source="test/res/avionics/rpc.png"/>
+ </tile>
+ <tile id="501" type="CABLE">
+   <image width="32" height="32" source="test/res/cable-left-right.png"/>
+ </tile>
+ <tile id="1000" type="BACKGROUND">
+  <image width="32" height="32" source="test/res/tiles/air.png"/>
+ </tile>
+</tileset>

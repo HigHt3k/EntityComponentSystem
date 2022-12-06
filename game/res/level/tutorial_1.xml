@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="1" name ="Tutorial 1 : Connecting Cables" width="5" height="1">
+    <description>Welcome to the game. In this level you are going to learn how to connect components between each other by using cables.</description>
+ <tileset source="base_tiles.xml"/>
+ <layer id="0" name="Tile Layer 1">
+     <entity x="0" y="0" id="201" interactable="false" safety="10e-4"/>
+     <entity x="2" y="0" id="203" interactable="false" safety="10e-4"/>
+     <entity x="4" y="0" id="205" interactable="false" safety="10e-4"/>
+ </layer>
+</map>

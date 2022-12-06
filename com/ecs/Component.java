@@ -1,6 +1,4 @@
-package ecs.component;
-
-import ecs.entity.Entity;
+package com.ecs;
 
 public abstract class Component {
     private Entity entity;
@@ -10,5 +8,9 @@ public abstract class Component {
     }
 
     public abstract void update(float dTime);
+
+    public void start() {
+
+    }
 
 }

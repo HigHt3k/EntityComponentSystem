@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="2" name ="Tutorial 2 : Connecting Cables" width="5" height="3">
+    <description>Next, you will learn how components with multiple in and outputs are connected via cables.</description>
+ <tileset source="base_tiles.xml"/>
+ <layer id="0" name="Tile Layer 1">
+     <entity x="0" y="1" id="201" interactable="false"/>
+     <entity x="2" y="0" id="203" interactable="false"/>
+     <entity x="2" y="2" id="203" interactable="false"/>
+     <entity x="4" y="1" id="205" interactable="false"/>
+ </layer>
+</map>
