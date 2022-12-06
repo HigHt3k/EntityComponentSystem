@@ -29,7 +29,7 @@
   <image width="32" height="32" source="test/res/avionics/rpc.png"/>
  </tile>
  <tile id="501" type="CABLE">
-   <image width="32" height="32" source="test/res/cable-left-right.png"/>
+   <image width="32" height="32" source="test/res/tiles/cable-left-right.png"/>
  </tile>
  <tile id="1000" type="BACKGROUND">
   <image width="32" height="32" source="test/res/tiles/air.png"/>
