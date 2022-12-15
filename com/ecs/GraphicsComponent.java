@@ -3,7 +3,6 @@ package com.ecs;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 public class GraphicsComponent extends Component {
     Rectangle bounds;
@@ -22,13 +21,6 @@ public class GraphicsComponent extends Component {
 
     public Rectangle getBounds() {
         return bounds;
-    }
-
-    public boolean contains(Point2D p) {
-        if (bounds.contains(p)) {
-            return true;
-        }
-        return false;
     }
 
     public void setBounds(Rectangle bounds) {
