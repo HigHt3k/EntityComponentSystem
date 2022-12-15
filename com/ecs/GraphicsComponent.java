@@ -1,5 +1,7 @@
 package com.ecs;
 
+import com.graphics.render.ScalingEngine;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -26,7 +28,7 @@ public class GraphicsComponent extends Component {
     }
 
     public void setBounds(Rectangle bounds) {
-        this.bounds = bounds;
+        this.bounds = ScalingEngine.scaleRect(bounds);
     }
 
     public void setImage(BufferedImage image) {
@@ -58,7 +60,7 @@ public class GraphicsComponent extends Component {
     }
 
     public void setShape(Shape shape) {
-        this.shape = shape;
+        this.shape = ScalingEngine.scaleShape(shape);
     }
 
     public void setText(String text) {
@@ -78,7 +80,7 @@ public class GraphicsComponent extends Component {
     }
 
     public void setFont(Font font) {
-        this.font = font;
+        this.font = ScalingEngine.scaleFont(font);
     }
 
     public Font getFont() {

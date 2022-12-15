@@ -72,15 +72,14 @@ public class MenuScene extends Scene {
                 Entity menuItem = new Entity(s.getName() + "_button", _id);
 
                 GraphicsComponent menuItemGraphicsComponent = new GraphicsComponent();
-                menuItemGraphicsComponent.setBounds(
-                        new Rectangle(
-                                700,
-                                300 + (ITEM_HEIGHT+ITEM_MARGIN) * item,
-                                ITEM_WIDTH,
-                                ITEM_HEIGHT
-                        )
+                Rectangle rectangle = new Rectangle(
+                        700,
+                        300 + (ITEM_HEIGHT+ITEM_MARGIN) * item,
+                        ITEM_WIDTH,
+                        ITEM_HEIGHT
                 );
-                menuItemGraphicsComponent.setShape(menuItemGraphicsComponent.getBounds());
+                menuItemGraphicsComponent.setBounds(rectangle);
+                menuItemGraphicsComponent.setShape(rectangle);
                 menuItemGraphicsComponent.setText(s.getName());
                 menuItemGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 24f));
                 menuItemGraphicsComponent.setTextColor(TEXT_COLOR);

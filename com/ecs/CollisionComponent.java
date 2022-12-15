@@ -1,5 +1,7 @@
 package com.ecs;
 
+import com.graphics.render.ScalingEngine;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -24,6 +26,6 @@ public class CollisionComponent extends Component {
     }
 
     public void setCollisionBox(Rectangle collisionBox) {
-        this.collisionBox = collisionBox;
+        this.collisionBox = ScalingEngine.scaleRect(collisionBox);
     }
 }

@@ -40,10 +40,6 @@ public class RenderingEngine {
     public static void renderText(Graphics2D g, String text, Color color, int x, int y, int width, int height) {
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 Game.config().renderConfiguration().getAliasingText());
-        width = Math.round(scaleW * width);
-        height = Math.round(scaleH * height);
-        x = Math.round(scaleW * x);
-        y = Math.round(scaleH * y);
 
         int textWidth = g.getFontMetrics().stringWidth(text);
         int widthCharacter = g.getFontMetrics().stringWidth("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") / 36;
@@ -63,10 +59,6 @@ public class RenderingEngine {
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 Game.config().renderConfiguration().getAliasingText());
-        width = Math.round(scaleW * width);
-        height = Math.round(scaleH * height);
-        x = Math.round(scaleW * x);
-        y = Math.round(scaleH * y);
 
         int textWidth = g.getFontMetrics().stringWidth(text);
         int widthCharacter = g.getFontMetrics().stringWidth("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") / 36;
@@ -94,9 +86,7 @@ public class RenderingEngine {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
 
-        AffineTransform af = new AffineTransform();
-        af.scale(scaleW, scaleH);
-        ShapeRenderer.render(g, af.createTransformedShape(shape), borderColor, fillColor);
+        ShapeRenderer.render(g, shape, borderColor, fillColor);
     }
 
     /**
@@ -112,10 +102,6 @@ public class RenderingEngine {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
 
-        x = Math.round(scaleW * x);
-        y = Math.round(scaleH * y);
-        width = Math.round(scaleW * width);
-        height = Math.round(scaleH * height);
         ImageRenderer.render(g, img, x, y, width, height);
     }
 
