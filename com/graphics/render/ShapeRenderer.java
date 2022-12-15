@@ -4,11 +4,12 @@ import java.awt.*;
 
 public class ShapeRenderer {
 
-    public static void render(Graphics2D g, Shape shape, Color color, boolean fill) {
-        g.setColor(color);
-        if(fill)
+    public static void render(Graphics2D g, Shape shape, Color borderColor, Color fillColor) {
+        if(fillColor != null) {
+            g.setColor(fillColor);
             g.fill(shape);
-        else
-            g.draw(shape);
+        }
+        g.setColor(borderColor);
+        g.draw(shape);
     }
 }

@@ -1,10 +1,13 @@
 package com.graphics.render;
 
 import com.Game;
+import com.ecs.Entity;
+import com.ecs.GraphicsComponent;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
@@ -20,6 +23,8 @@ public class RenderingEngine {
     private static final float scaleW = Game.config().renderConfiguration().getScaleWidth();
     private static final float scaleH = Game.config().renderConfiguration().getScaleHeight();
     public static final int MARGIN = (int) (75 * scaleW); //px
+
+    private Graphics2D g;
 
     //TODO: handle alignment of texts, handle vertical size (height), auto scale if text doesn't fit box, handle
     // character amount per line in a smarter way -> this works, but not optimally
@@ -81,16 +86,16 @@ public class RenderingEngine {
      * Render a shape (e.g. Rectangle, Ellipse2D, ...) to the graphics context. Can also be filled.
      * @param g: graphics context
      * @param shape Shape to render, e.g. Rectangle or Ellipse2D
-     * @param color: Color to draw and fill
-     * @param fill: fill or draw the shape
+     * @param borderColor: Color to draw border
+     * @param fillColor: fill color, if null then not filled
      */
-    public static void renderShape(Graphics2D g, Shape shape, Color color, boolean fill) {
+    public static void renderShape(Graphics2D g, Shape shape, Color borderColor, Color fillColor) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
 
         AffineTransform af = new AffineTransform();
         af.scale(scaleW, scaleH);
-        ShapeRenderer.render(g, af.createTransformedShape(shape), color, fill);
+        ShapeRenderer.render(g, af.createTransformedShape(shape), borderColor, fillColor);
     }
 
     /**
@@ -114,6 +119,43 @@ public class RenderingEngine {
     }
 
     public void collectAndRenderEntities() {
+        ArrayList<Entity> entities = Game.scene().current().getEntities();
+        for(Entity e : entities) {
+            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+            // render based on the given content of the component
+            if(gc.getShape() != null) {
+                renderShape(
+                        g,
+                        gc.getShape(),
+                        gc.getBorderColor(),
+                        gc.getFillColor()
+                );
+            }
+            if(gc.getImage() != null) {
+                renderImage(
+                        g,
+                        gc.getImage(),
+                        gc.getBounds().x,
+                        gc.getBounds().y,
+                        gc.getBounds().width,
+                        gc.getBounds().height
+                );
+            }
+            if(gc.getText() != null) {
+                renderText(
+                        g,
+                        gc.getText(),
+                        gc.getTextColor(),
+                        gc.getBounds().x,
+                        gc.getBounds().y,
+                        gc.getBounds().width,
+                        gc.getBounds().height
+                );
+            }
+        }
+    }
 
+    public void setGraphics(Graphics2D g) {
+        this.g = g;
     }
 }

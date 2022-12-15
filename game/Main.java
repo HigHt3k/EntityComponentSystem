@@ -11,14 +11,14 @@ import java.util.logging.Level;
 public class Main {
 
     public static void main(String[] args) {
-        Game.info().setTitle("ENGINEer-Test");
+        Game.info().setTitle("Entity Component System Test");
         Game.init();
 
         Game.logger().setLevel(Level.ALL);
-        Game.frame().setIcon("test/res/avionics/crdc.png");
-        Game.res().loadTileSet("test/res/base_tiles.xml");
+        Game.frame().setIcon("game/res/avionics/crdc.png");
+        Game.res().loadTileSet("game/res/base_tiles.xml");
 
-        File folder = new File("test/res/level");
+        File folder = new File("game/res/level");
         File[] listOfFiles = folder.listFiles();
 
         try {

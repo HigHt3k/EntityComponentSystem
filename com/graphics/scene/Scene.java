@@ -13,6 +13,8 @@ public abstract class Scene {
     public Scene(String name, int id) {
         this.name = name;
         this.id = id;
+
+        entities = new ArrayList<>();
     }
 
     public void start() {
@@ -32,7 +34,7 @@ public abstract class Scene {
         return entities;
     }
 
-    public abstract void update(float dt);
+    public abstract void update();
 
     public String getName() {
         return name;

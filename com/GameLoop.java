@@ -6,6 +6,7 @@ package com;
 public class GameLoop extends Thread {
     private static final int DEFAULT_TICK_RATE = (int) (1000.0/144.0);
     private boolean paused = true;
+    private boolean started = false;
 
     /**
      * runs the standard game thread at a set tick rate / update rate
@@ -26,11 +27,14 @@ public class GameLoop extends Thread {
      * processes all the updates that need to be done at each tick
      */
     protected void process() {
-        if(!paused) {
-            Game.logic().update();
+        if(started) {
+            if (!paused) {
+                Game.logic().update();
+            }
+            Game.input().handle();
+            Game.scene().current().update();
+            Game.frame().getRenderPanel().repaint();
         }
-        Game.input().handle();
-        Game.frame().getRenderPanel().repaint();
     }
 
     protected void pause() {
@@ -40,5 +44,7 @@ public class GameLoop extends Thread {
     protected void unpause() {
         paused = false;
     }
+
+    public void setStarted() {started = true; }
 
 }

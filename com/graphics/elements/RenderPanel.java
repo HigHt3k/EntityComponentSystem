@@ -24,6 +24,7 @@ public class RenderPanel extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
+        Game.graphics().setGraphics((Graphics2D) g);
         super.paintComponent(g);
         Game.graphics().collectAndRenderEntities();
     }

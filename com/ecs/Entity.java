@@ -40,9 +40,9 @@ public class Entity {
         c.setEntity(this);
     }
 
-    public void update(float dTime) {
+    public void update() {
         for(int i = 0; i < components.size(); i++) {
-            components.get(i).update(dTime);
+            components.get(i).update();
         }
     }
 

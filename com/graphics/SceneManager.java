@@ -3,6 +3,7 @@ package com.graphics;
 import com.Game;
 import com.graphics.scene.Scene;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,10 @@ public class SceneManager {
     private List<Scene> scenes;
 
     private Scene currentScene;
+
+    public SceneManager() {
+        scenes = new ArrayList<>();
+    }
 
     /**
      * Gives the currently active scene.
@@ -62,6 +67,6 @@ public class SceneManager {
      * @param currentScene: scene to be active
      */
     public void setCurrentScene(Scene currentScene) {
-        Game.frame().getRenderPanel().setCurrentScene(currentScene);
+        this.currentScene = currentScene;
     }
 }

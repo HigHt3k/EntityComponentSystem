@@ -98,6 +98,7 @@ public class Game {
      */
     public static synchronized void start() {
         logger.info("Game started");
+        gameLoop.setStarted();
         gameLoop.start();
     }
 

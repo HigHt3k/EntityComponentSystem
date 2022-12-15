@@ -7,7 +7,7 @@ public abstract class Component {
         this.entity = entity;
     }
 
-    public abstract void update(float dTime);
+    public abstract void update();
 
     public void start() {
 
