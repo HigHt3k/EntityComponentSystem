@@ -2,6 +2,7 @@ package game.scenes;
 
 import com.Game;
 import com.ecs.*;
+import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
 import com.ecs.intent.HoverIntent;
 
@@ -33,7 +34,7 @@ public class MenuScene extends Scene {
         );
 
         try {
-            backgroundGraphicsComponent.setImage(ImageIO.read(new File("game/res/system.jpg")));
+            backgroundGraphicsComponent.setImage(ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")));
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
@@ -58,7 +59,7 @@ public class MenuScene extends Scene {
                 menuItemGraphicsComponent.setBounds(rectangle);
                 menuItemGraphicsComponent.setShape(rectangle);
                 menuItemGraphicsComponent.setText(s.getName());
-                menuItemGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 24f));
+                menuItemGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 14f));
                 menuItemGraphicsComponent.setTextColor(TEXT_COLOR);
                 menuItemGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
                 menuItemGraphicsComponent.setFillColor(BOX_COLOR);
@@ -93,7 +94,7 @@ public class MenuScene extends Scene {
         exitButtonGraphicsComponent.setBounds(exitButtonBounds);
         exitButtonGraphicsComponent.setShape(exitButtonBounds);
         exitButtonGraphicsComponent.setText("EXIT");
-        exitButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 34f));
+        exitButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
         exitButtonGraphicsComponent.setTextColor(TEXT_COLOR);
         exitButtonGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
         exitButtonGraphicsComponent.setFillColor(BOX_COLOR);
@@ -107,6 +108,18 @@ public class MenuScene extends Scene {
 
         exitButton.addComponent(exitButtonCollisionComponent);
         exitButtonCollisionComponent.setEntity(exitButton);
+
+        IntentComponent exitButtonIntentComponent = new IntentComponent();
+        HoverIntent hi = new HoverIntent();
+        hi.setIntentComponent(exitButtonIntentComponent);
+        exitButtonIntentComponent.addIntent(hi);
+        ExitIntent ei = new ExitIntent();
+        ei.setIntentComponent(exitButtonIntentComponent);
+        exitButtonIntentComponent.addIntent(ei);
+
+        exitButtonIntentComponent.setEntity(exitButton);
+        exitButton.addComponent(exitButtonIntentComponent);
+
 
         addEntityToScene(exitButton);
     }
