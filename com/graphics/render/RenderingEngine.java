@@ -134,6 +134,7 @@ public class RenderingEngine {
                             g,
                             gc.getText(),
                             gc.getTextColor(),
+                            gc.getFont(),
                             gc.getBounds().x,
                             gc.getBounds().y,
                             gc.getBounds().width,
