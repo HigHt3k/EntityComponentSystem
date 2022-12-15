@@ -3,10 +3,8 @@ package com;
 import com.config.GameConfiguration;
 import com.graphics.SceneManager;
 import com.graphics.elements.GameFrame;
-import com.graphics.elements.RenderPanel;
 import com.graphics.render.RenderingEngine;
-import com.graphics.scene.Scene;
-import com.input.InputManager;
+import com.ecs.input.InputManager;
 import com.logic.GameLogic;
 import com.resource.ResourceManager;
 
@@ -79,12 +77,7 @@ public class Game {
      * initialized in a certain in order due to class interconnection
      */
     public static synchronized void init() {
-        inputManager = new InputManager() {
-            @Override
-            public void handle() {
-
-            }
-        };
+        inputManager = new InputManager();
         gameFrame = new GameFrame();
         sceneManager = new SceneManager();
         gameLogic = new GameLogic();
@@ -100,10 +93,6 @@ public class Game {
         logger.info("Game started");
         gameLoop.setStarted();
         gameLoop.start();
-    }
-
-    public static void setInputManager(InputManager i) {
-        inputManager = i;
     }
 
     public static void unpause() {

@@ -1,16 +1,12 @@
 package game.scenes;
 
 import com.Game;
-import com.ecs.CollisionComponent;
-import com.ecs.Entity;
-import com.ecs.GraphicsComponent;
+import com.ecs.*;
 import com.graphics.scene.Scene;
-import com.input.InputManager;
+import com.ecs.intent.HoverIntent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -25,26 +21,7 @@ public class MenuScene extends Scene {
 
     public MenuScene(String name, int id) {
         super(name, id);
-        Game.setInputManager(new InputManager() {
-            @Override
-            public void handle() {
-                while(!getMouseEvents().isEmpty()) {
-                    MouseEvent e = getMouseEvents().get(0);
-                    for(Entity entity : Game.scene().current().getEntities()) {
-                        GraphicsComponent gc = entity.getComponent(GraphicsComponent.class);
-                        if(gc != null) {
-                            if(gc.contains(e.getPoint())) {
-                                gc.hovered();
-                            } else {
-                                gc.unhovered();
-                            }
-                        }
-                    }
 
-                    getMouseEvents().remove(e);
-                }
-            }
-        });
         // Create the Menu GUI
         Entity background = new Entity("Background", 0);
         GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
@@ -96,11 +73,42 @@ public class MenuScene extends Scene {
                 menuItemCollisionComponent.setEntity(menuItem);
                 menuItem.addComponent(menuItemCollisionComponent);
 
+                IntentComponent menuItemIntentComponent = new IntentComponent();
+                HoverIntent hi = new HoverIntent();
+                hi.setIntentComponent(menuItemIntentComponent);
+                menuItemIntentComponent.addIntent(hi);
+
+                menuItemIntentComponent.setEntity(menuItem);
+                menuItem.addComponent(menuItemIntentComponent);
+
                 addEntityToScene(menuItem);
                 _id += 1;
                 item += 1;
             }
         }
+
+        Entity exitButton = new Entity("Exit", 4999);
+        GraphicsComponent exitButtonGraphicsComponent = new GraphicsComponent();
+        Rectangle exitButtonBounds = new Rectangle(1400, 900, ITEM_WIDTH, ITEM_HEIGHT);
+        exitButtonGraphicsComponent.setBounds(exitButtonBounds);
+        exitButtonGraphicsComponent.setShape(exitButtonBounds);
+        exitButtonGraphicsComponent.setText("EXIT");
+        exitButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 34f));
+        exitButtonGraphicsComponent.setTextColor(TEXT_COLOR);
+        exitButtonGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
+        exitButtonGraphicsComponent.setFillColor(BOX_COLOR);
+        exitButtonGraphicsComponent.setHoverColor(HOVER_COLOR);
+
+        exitButton.addComponent(exitButtonGraphicsComponent);
+        exitButtonGraphicsComponent.setEntity(exitButton);
+
+        CollisionComponent exitButtonCollisionComponent = new CollisionComponent();
+        exitButtonCollisionComponent.setCollisionBox(exitButtonBounds);
+
+        exitButton.addComponent(exitButtonCollisionComponent);
+        exitButtonCollisionComponent.setEntity(exitButton);
+
+        addEntityToScene(exitButton);
     }
 
     @Override

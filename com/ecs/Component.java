@@ -13,4 +13,6 @@ public abstract class Component {
 
     }
 
+    public Entity getEntity() {return entity;}
+
 }
