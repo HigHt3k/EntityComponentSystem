@@ -13,6 +13,8 @@ public class GraphicsComponent extends Component {
     Color fillColor;
     Color textColor;
     Color borderColor;
+    boolean hovered = false;
+    Color hoverColor;
 
     @Override
     public void update() {
@@ -81,5 +83,25 @@ public class GraphicsComponent extends Component {
 
     public Font getFont() {
         return font;
+    }
+
+    public void setHoverColor(Color hoverColor) {
+        this.hoverColor = hoverColor;
+    }
+
+    public Color getHoverColor() {
+        return hoverColor;
+    }
+
+    public void hovered() {
+        hovered = true;
+    }
+
+    public void unhovered() {
+        hovered = false;
+    }
+
+    public boolean isHovered() {
+        return hovered;
     }
 }
