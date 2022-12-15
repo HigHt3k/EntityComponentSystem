@@ -29,8 +29,8 @@ public class Main {
             Game.logger().severe("No levels found, please add levels to the res/level folder \n" + ex);
         }
 
-        Game.scene().addScene(new MenuScene("Menu", 0));
-        Game.scene().setCurrentScene(0);
+        Game.scene().addScene(new MenuScene("Menu", -255));
+        Game.scene().setCurrentScene(-255);
 
         Game.start();
     }

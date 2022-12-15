@@ -2,6 +2,7 @@ package com.resource;
 
 import com.Game;
 import com.ecs.Entity;
+import game.scenes.GameScene;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -177,12 +178,14 @@ public class ResourceManager {
                     }
                 }
                 // Game.world().addMap(new GameMap(mapId, levelName, entities, background, width, height, description));
+                Game.scene().addScene(new GameScene(levelName, mapId));
             }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
             e.printStackTrace();
         }
+        Game.logger().info("Loaded level, now available levels: " + Game.scene().getSceneAmount());
     }
 
     public BufferedImage loadTile(int id) {

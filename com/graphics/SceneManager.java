@@ -69,4 +69,12 @@ public class SceneManager {
     public void setCurrentScene(Scene currentScene) {
         this.currentScene = currentScene;
     }
+
+    public int getSceneAmount() {
+        return scenes.size();
+    }
+
+    public List<Scene> getScenes() {
+        return scenes;
+    }
 }
