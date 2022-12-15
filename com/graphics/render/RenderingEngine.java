@@ -1,6 +1,7 @@
 package com.graphics.render;
 
 import com.Game;
+import com.ecs.CollisionComponent;
 import com.ecs.Entity;
 import com.ecs.GraphicsComponent;
 
@@ -122,35 +123,48 @@ public class RenderingEngine {
         ArrayList<Entity> entities = Game.scene().current().getEntities();
         for(Entity e : entities) {
             GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            // render based on the given content of the component
-            if(gc.getShape() != null) {
-                renderShape(
-                        g,
-                        gc.getShape(),
-                        gc.getBorderColor(),
-                        gc.getFillColor()
-                );
-            }
-            if(gc.getImage() != null) {
-                renderImage(
-                        g,
-                        gc.getImage(),
-                        gc.getBounds().x,
-                        gc.getBounds().y,
-                        gc.getBounds().width,
-                        gc.getBounds().height
-                );
-            }
-            if(gc.getText() != null) {
-                renderText(
-                        g,
-                        gc.getText(),
-                        gc.getTextColor(),
-                        gc.getBounds().x,
-                        gc.getBounds().y,
-                        gc.getBounds().width,
-                        gc.getBounds().height
-                );
+            if(gc != null) {
+                // render based on the given content of the component
+                if (gc.getShape() != null) {
+                    renderShape(
+                            g,
+                            gc.getShape(),
+                            gc.getBorderColor(),
+                            gc.getFillColor()
+                    );
+                }
+                if (gc.getImage() != null) {
+                    renderImage(
+                            g,
+                            gc.getImage(),
+                            gc.getBounds().x,
+                            gc.getBounds().y,
+                            gc.getBounds().width,
+                            gc.getBounds().height
+                    );
+                }
+                if (gc.getText() != null) {
+                    renderText(
+                            g,
+                            gc.getText(),
+                            gc.getTextColor(),
+                            gc.getBounds().x,
+                            gc.getBounds().y,
+                            gc.getBounds().width,
+                            gc.getBounds().height
+                    );
+                }
+
+                if(gc.isHovered() ) {
+                    if (gc.getHoverColor() != null) {
+                        renderShape(
+                                g,
+                                gc.getShape(),
+                                gc.getHoverColor(),
+                                gc.getHoverColor()
+                        );
+                    }
+                }
             }
         }
     }
