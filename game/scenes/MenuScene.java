@@ -5,9 +5,12 @@ import com.ecs.CollisionComponent;
 import com.ecs.Entity;
 import com.ecs.GraphicsComponent;
 import com.graphics.scene.Scene;
+import com.input.InputManager;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,9 +21,30 @@ public class MenuScene extends Scene {
     private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
     private final Color BOX_COLOR = new Color(200, 90, 0, 240);
     private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
+    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
 
     public MenuScene(String name, int id) {
         super(name, id);
+        Game.setInputManager(new InputManager() {
+            @Override
+            public void handle() {
+                while(!getMouseEvents().isEmpty()) {
+                    MouseEvent e = getMouseEvents().get(0);
+                    for(Entity entity : Game.scene().current().getEntities()) {
+                        GraphicsComponent gc = entity.getComponent(GraphicsComponent.class);
+                        if(gc != null) {
+                            if(gc.contains(e.getPoint())) {
+                                gc.hovered();
+                            } else {
+                                gc.unhovered();
+                            }
+                        }
+                    }
+
+                    getMouseEvents().remove(e);
+                }
+            }
+        });
         // Create the Menu GUI
         Entity background = new Entity("Background", 0);
         GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
@@ -62,6 +86,7 @@ public class MenuScene extends Scene {
                 menuItemGraphicsComponent.setTextColor(TEXT_COLOR);
                 menuItemGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
                 menuItemGraphicsComponent.setFillColor(BOX_COLOR);
+                menuItemGraphicsComponent.setHoverColor(HOVER_COLOR);
 
                 menuItem.addComponent(menuItemGraphicsComponent);
                 menuItemGraphicsComponent.setEntity(menuItem);

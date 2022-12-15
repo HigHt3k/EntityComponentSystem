@@ -104,4 +104,11 @@ public class GraphicsComponent extends Component {
     public boolean isHovered() {
         return hovered;
     }
+
+    public boolean contains(Point2D p) {
+        if(bounds.contains(p)) {
+            return true;
+        }
+        return false;
+    }
 }
