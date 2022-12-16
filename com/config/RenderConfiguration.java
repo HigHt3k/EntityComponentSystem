@@ -36,6 +36,7 @@ public class RenderConfiguration {
                 .getLocalGraphicsEnvironment()
                 .getMaximumWindowBounds().height;
         this.resolution = new Dimension(width, height);
+
         this.screenRatio = (float) resolution.width / (float) resolution.height;
         if(screenRatio > DEFAULT_SCREEN_RATIO) {
             this.resolution.width = (int) (this.resolution.height * DEFAULT_SCREEN_RATIO);

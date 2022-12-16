@@ -27,6 +27,7 @@ public class Main {
             }
         } catch(NullPointerException ex) {
             Game.logger().severe("No levels found, please add levels to the res/level folder \n" + ex);
+            // Exit game with a warning on screen
         }
 
         Game.scene().addScene(new MenuScene("Menu", -255));

@@ -5,6 +5,7 @@ import com.ecs.*;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
 import com.ecs.intent.HoverIntent;
+import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,13 +13,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class MenuScene extends Scene {
-    private final int ITEM_MARGIN = 20;
-    private final int ITEM_WIDTH = 300;
-    private final int ITEM_HEIGHT = 60;
-    private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
-    private final Color BOX_COLOR = new Color(200, 90, 0, 240);
-    private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
-    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private static final int ITEM_MARGIN = 20;
+    private static final int ITEM_WIDTH = 300;
+    private static final int ITEM_HEIGHT = 60;
+    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
+    private static final Color BOX_COLOR = new Color(200, 90, 0, 240);
+    private static final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
+    private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
 
     public MenuScene(String name, int id) {
         super(name, id);
@@ -26,6 +27,7 @@ public class MenuScene extends Scene {
         // Create the Menu GUI
         Entity background = new Entity("Background", 0);
         GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
+        System.out.println(Game.config().renderConfiguration().getResolution());
         backgroundGraphicsComponent.setBounds(new Rectangle(
                 0,
                 0,
@@ -69,7 +71,7 @@ public class MenuScene extends Scene {
                 menuItemGraphicsComponent.setEntity(menuItem);
 
                 CollisionComponent menuItemCollisionComponent = new CollisionComponent();
-                menuItemCollisionComponent.setCollisionBox(menuItemGraphicsComponent.getBounds());
+                menuItemCollisionComponent.setCollisionBox(rectangle);
 
                 menuItemCollisionComponent.setEntity(menuItem);
                 menuItem.addComponent(menuItemCollisionComponent);
@@ -78,6 +80,9 @@ public class MenuScene extends Scene {
                 HoverIntent hi = new HoverIntent();
                 hi.setIntentComponent(menuItemIntentComponent);
                 menuItemIntentComponent.addIntent(hi);
+                StartIntent si = new StartIntent();
+                si.setIntentComponent(menuItemIntentComponent);
+                menuItemIntentComponent.addIntent(si);
 
                 menuItemIntentComponent.setEntity(menuItem);
                 menuItem.addComponent(menuItemIntentComponent);
@@ -90,7 +95,7 @@ public class MenuScene extends Scene {
 
         Entity exitButton = new Entity("Exit", 4999);
         GraphicsComponent exitButtonGraphicsComponent = new GraphicsComponent();
-        Rectangle exitButtonBounds = new Rectangle(1400, 900, ITEM_WIDTH, ITEM_HEIGHT);
+        Rectangle exitButtonBounds = new Rectangle(1600, 900, ITEM_WIDTH, ITEM_HEIGHT);
         exitButtonGraphicsComponent.setBounds(exitButtonBounds);
         exitButtonGraphicsComponent.setShape(exitButtonBounds);
         exitButtonGraphicsComponent.setText("EXIT");
@@ -119,7 +124,6 @@ public class MenuScene extends Scene {
 
         exitButtonIntentComponent.setEntity(exitButton);
         exitButton.addComponent(exitButtonIntentComponent);
-
 
         addEntityToScene(exitButton);
     }

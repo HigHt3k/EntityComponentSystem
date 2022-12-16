@@ -1,5 +1,6 @@
 package com.ecs;
 
+import com.Game;
 import com.graphics.render.ScalingEngine;
 
 import java.awt.*;
@@ -26,6 +27,6 @@ public class CollisionComponent extends Component {
     }
 
     public void setCollisionBox(Rectangle collisionBox) {
-        this.collisionBox = ScalingEngine.scaleRect(collisionBox);
+        this.collisionBox = Game.scale().scaleRect(collisionBox);
     }
 }

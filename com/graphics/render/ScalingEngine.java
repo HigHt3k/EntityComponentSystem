@@ -8,30 +8,33 @@ import java.awt.geom.AffineTransform;
 public class ScalingEngine {
     private static float scaleW = Game.config().renderConfiguration().getScaleWidth();
     private static float scaleH = Game.config().renderConfiguration().getScaleHeight();
+    AffineTransform af = new AffineTransform();
 
-    public static Point scalePoint(Point p) {
+    public ScalingEngine() {
+        af.scale(scaleW, scaleH);
+    }
+
+    public Point scalePoint(Point p) {
         return new Point(scaleX(p.getX()), scaleY(p.getY()));
     }
 
-    public static int scaleX(double x) {
+    public int scaleX(double x) {
         return (int) (x * scaleW);
     }
 
-    public static int scaleY(double y) {
+    public int scaleY(double y) {
         return (int) (y * scaleH);
     }
 
-    public static Rectangle scaleRect(Rectangle r) {
+    public Rectangle scaleRect(Rectangle r) {
         return new Rectangle(scaleX(r.getX()), scaleY(r.getY()), scaleX(r.getWidth()), scaleY(r.getHeight()));
     }
 
-    public static Shape scaleShape(Shape s) {
-        AffineTransform af = new AffineTransform();
-        af.scale(scaleW, scaleH);
+    public Shape scaleShape(Shape s) {
         return af.createTransformedShape(s);
     }
 
-    public static Font scaleFont(Font f) {
+    public Font scaleFont(Font f) {
         return f.deriveFont(scaleW * f.getSize());
     }
 }

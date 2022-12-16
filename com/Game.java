@@ -5,6 +5,7 @@ import com.graphics.SceneManager;
 import com.graphics.elements.GameFrame;
 import com.graphics.render.RenderingEngine;
 import com.ecs.input.InputManager;
+import com.graphics.render.ScalingEngine;
 import com.logic.GameLogic;
 import com.resource.ResourceManager;
 
@@ -21,6 +22,7 @@ public class Game {
 
     // Managers
     private static final RenderingEngine graphics = new RenderingEngine();
+    private static final ScalingEngine scale = new ScalingEngine();
     private static final ResourceManager res = new ResourceManager();
     private static SceneManager sceneManager;
     private static InputManager inputManager;
@@ -71,6 +73,8 @@ public class Game {
     }
 
     public static RenderingEngine graphics() {return graphics;}
+
+    public static ScalingEngine scale() {return scale;}
 
     /**
      * initialize all instances needed for the game that need to be

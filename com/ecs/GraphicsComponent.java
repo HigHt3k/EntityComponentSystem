@@ -1,5 +1,6 @@
 package com.ecs;
 
+import com.Game;
 import com.graphics.render.ScalingEngine;
 
 import java.awt.*;
@@ -28,7 +29,7 @@ public class GraphicsComponent extends Component {
     }
 
     public void setBounds(Rectangle bounds) {
-        this.bounds = ScalingEngine.scaleRect(bounds);
+        this.bounds = Game.scale().scaleRect(bounds);
     }
 
     public void setImage(BufferedImage image) {
@@ -60,7 +61,7 @@ public class GraphicsComponent extends Component {
     }
 
     public void setShape(Shape shape) {
-        this.shape = ScalingEngine.scaleShape(shape);
+        this.shape = Game.scale().scaleShape(shape);
     }
 
     public void setText(String text) {
@@ -80,7 +81,7 @@ public class GraphicsComponent extends Component {
     }
 
     public void setFont(Font font) {
-        this.font = ScalingEngine.scaleFont(font);
+        this.font = Game.scale().scaleFont(font);
     }
 
     public Font getFont() {

@@ -6,8 +6,12 @@ import java.util.ArrayList;
 public class Entity {
 
     private ArrayList<Component> components;
+    private String name;
+    private int id;
 
     public Entity(String name, int id) {
+        this.name = name;
+        this.id = id;
         components = new ArrayList<>();
     }
 
@@ -50,5 +54,13 @@ public class Entity {
         for(int i = 0; i < components.size(); i++) {
             components.get(i).start();
         }
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getId() {
+        return id;
     }
 }
