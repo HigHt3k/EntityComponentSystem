@@ -90,9 +90,6 @@ public class ResourceManager {
         //TODO: change xml files so that each component contains its attributes
         String levelName = "Default";
 
-        ArrayList<Entity> entities = new ArrayList<>();
-        ArrayList<Entity> background = new ArrayList<>();
-
         try {
             Document doc = db.parse(new File(levelPath));
             doc.getDocumentElement().normalize();
@@ -106,18 +103,17 @@ public class ResourceManager {
                 int mapId = Integer.parseInt(level.getAttribute("id"));
                 int width = Integer.parseInt(level.getAttribute("width"));
                 int height = Integer.parseInt(level.getAttribute("height"));
-                //TODO: Add background entities
-//                for(int w = 0; w < width; w++) {
-//                    for(int h = 0; h < height; h++) {
-//                        background.add(new Entity(1,
-//                                w * Game.config().renderConfiguration().getGridPx(),
-//                                h * Game.config().renderConfiguration().getGridPx(),
-//                                -1,
-//                                true));
-//                    }
-//                }
-
                 String description = level.getElementsByTagName("description").item(0).getTextContent();
+
+                GameScene scene = new GameScene(levelName, mapId);
+                scene.setDescription(description);
+
+                // Add background to scene
+                for(int i = 0; i < width; i++) {
+                    for (int j = 0; j < height; j++) {
+                        scene.addGridElement(i, j);
+                    }
+                }
 
                 NodeList layerNodes = level.getElementsByTagName("layer");
 
@@ -125,7 +121,7 @@ public class ResourceManager {
                     if(layerNodes.item(temp).getNodeType() == Node.ELEMENT_NODE) {
                         Element layer = (Element) layerNodes.item(temp);
 
-                        String id = layer.getAttribute("id");
+                        int id = Integer.parseInt(layer.getAttribute("id"));
                         NodeList entityNodes = layer.getElementsByTagName("entity");
                         for (int e = 0; e < entityNodes.getLength(); e++) {
                             Element entity = (Element) entityNodes.item(e);
@@ -136,49 +132,15 @@ public class ResourceManager {
                             boolean interactable = false;
                             if (!entity.getAttribute("interactable").equals(""))
                                 interactable = Boolean.parseBoolean(entity.getAttribute("interactable"));
-                            String safety = entity.getAttribute("safety");
+                            float safety = 0f;
+                            if(!entity.getAttribute("safety").equals(""))
+                                safety = Float.parseFloat(entity.getAttribute("safety"));
 
-                            // TODO: Implement loading of data
-//                            if(safety.equals("")) {
-//                                entities.add(new Entity(entityId,
-//                                        x * Game.config().renderConfiguration().getGridPx(),
-//                                        y * Game.config().renderConfiguration().getGridPx(),
-//                                        Integer.parseInt(id),
-//                                        interactable));
-//                            } else {
-//                                SimulationEntityType set = tileSet.getTypes().get(entityId);
-//
-//                                if(set == SimulationEntityType.ACTUATOR) {
-//                                    entities.add(new Actuator(entityId,
-//                                            x * Game.config().renderConfiguration().getGridPx(),
-//                                            y * Game.config().renderConfiguration().getGridPx(),
-//                                            Integer.parseInt(id),
-//                                            interactable, Double.parseDouble(safety)));
-//                                } else if(set == SimulationEntityType.SENSOR) {
-//                                    entities.add(new Sensor(entityId,
-//                                            x * Game.config().renderConfiguration().getGridPx(),
-//                                            y * Game.config().renderConfiguration().getGridPx(),
-//                                            Integer.parseInt(id),
-//                                            interactable, Double.parseDouble(safety)));
-//                                } else if(set == SimulationEntityType.COMPUTER) {
-//                                    entities.add(new CPU(entityId,
-//                                            x * Game.config().renderConfiguration().getGridPx(),
-//                                            y * Game.config().renderConfiguration().getGridPx(),
-//                                            Integer.parseInt(id),
-//                                            interactable, Double.parseDouble(safety)));
-//                                } else {
-//                                    entities.add(new SimulationEntity(entityId,
-//                                            x * Game.config().renderConfiguration().getGridPx(),
-//                                            y * Game.config().renderConfiguration().getGridPx(),
-//                                            Integer.parseInt(id),
-//                                            interactable, Double.parseDouble(safety)));
-//                                }
-//                            }
+                            scene.addSimulationElement(x, y, entityId, safety, interactable);
                         }
                     }
                 }
-                // Game.world().addMap(new GameMap(mapId, levelName, entities, background, width, height, description));
-                Game.scene().addScene(new GameScene(levelName, mapId));
+                Game.scene().addScene(scene);
             }
         } catch (IOException e) {
             e.printStackTrace();

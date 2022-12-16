@@ -1,6 +1,7 @@
 package game.scenes;
 
 import com.Game;
+import com.IdGenerator;
 import com.ecs.*;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
@@ -25,7 +26,7 @@ public class MenuScene extends Scene {
         super(name, id);
 
         // Create the Menu GUI
-        Entity background = new Entity("Background", 0);
+        Entity background = new Entity("Background", IdGenerator.generateId());
         GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
         System.out.println(Game.config().renderConfiguration().getResolution());
         backgroundGraphicsComponent.setBounds(new Rectangle(
@@ -45,11 +46,10 @@ public class MenuScene extends Scene {
         backgroundGraphicsComponent.setEntity(background);
         addEntityToScene(background);
 
-        int _id = 5000;
         int item = 0;
         for(Scene s : Game.scene().getScenes()) {
             if(s instanceof GameScene) {
-                Entity menuItem = new Entity(s.getName() + "_button", _id);
+                Entity menuItem = new Entity(s.getName() + "_button", IdGenerator.generateId());
 
                 GraphicsComponent menuItemGraphicsComponent = new GraphicsComponent();
                 Rectangle rectangle = new Rectangle(
@@ -88,12 +88,11 @@ public class MenuScene extends Scene {
                 menuItem.addComponent(menuItemIntentComponent);
 
                 addEntityToScene(menuItem);
-                _id += 1;
                 item += 1;
             }
         }
 
-        Entity exitButton = new Entity("Exit", 4999);
+        Entity exitButton = new Entity("Exit", IdGenerator.generateId());
         GraphicsComponent exitButtonGraphicsComponent = new GraphicsComponent();
         Rectangle exitButtonBounds = new Rectangle(1600, 900, ITEM_WIDTH, ITEM_HEIGHT);
         exitButtonGraphicsComponent.setBounds(exitButtonBounds);

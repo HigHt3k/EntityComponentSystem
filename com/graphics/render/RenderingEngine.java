@@ -146,7 +146,7 @@ public class RenderingEngine {
                     if (gc.getHoverColor() != null) {
                         renderShape(
                                 g,
-                                gc.getShape(),
+                                gc.getBounds(),
                                 gc.getHoverColor(),
                                 gc.getHoverColor()
                         );

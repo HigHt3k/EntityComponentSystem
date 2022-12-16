@@ -19,11 +19,11 @@ public class ScalingEngine {
     }
 
     public int scaleX(double x) {
-        return (int) (x * scaleW);
+        return (int) Math.round(x * scaleW);
     }
 
     public int scaleY(double y) {
-        return (int) (y * scaleH);
+        return (int) Math.round(y * scaleH);
     }
 
     public Rectangle scaleRect(Rectangle r) {
