@@ -4,7 +4,7 @@ import com.config.GameConfiguration;
 import com.graphics.SceneManager;
 import com.graphics.elements.GameFrame;
 import com.graphics.render.RenderingEngine;
-import com.ecs.input.InputManager;
+import com.input.InputManager;
 import com.graphics.render.ScalingEngine;
 import com.logic.GameLogic;
 import com.resource.ResourceManager;

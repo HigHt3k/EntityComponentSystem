@@ -1,5 +1,7 @@
 package com.ecs;
 
+import com.ecs.component.Component;
+
 import java.util.ArrayList;
 
 

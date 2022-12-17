@@ -1,8 +1,8 @@
 package game.intent;
 
 import com.Game;
-import com.ecs.CollisionComponent;
-import com.ecs.IntentComponent;
+import com.ecs.component.CollisionComponent;
+import com.ecs.component.IntentComponent;
 import com.ecs.intent.Intent;
 
 import java.awt.event.KeyEvent;

@@ -1,12 +1,10 @@
 package com.graphics.render;
 
 import com.Game;
-import com.ecs.CollisionComponent;
 import com.ecs.Entity;
-import com.ecs.GraphicsComponent;
+import com.ecs.component.GraphicsComponent;
 
 import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;

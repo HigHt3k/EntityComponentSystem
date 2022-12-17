@@ -1,4 +1,4 @@
-package com.ecs;
+package com.ecs.component;
 
 public class SoundComponent {
 }

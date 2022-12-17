@@ -1,8 +1,8 @@
-package com.ecs.input;
+package com.input;
 
 import com.Game;
 import com.ecs.Entity;
-import com.ecs.IntentComponent;
+import com.ecs.component.IntentComponent;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

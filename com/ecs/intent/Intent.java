@@ -1,6 +1,6 @@
 package com.ecs.intent;
 
-import com.ecs.IntentComponent;
+import com.ecs.component.IntentComponent;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

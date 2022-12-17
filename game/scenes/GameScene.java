@@ -2,10 +2,10 @@ package game.scenes;
 
 import com.Game;
 import com.IdGenerator;
-import com.ecs.CollisionComponent;
+import com.ecs.component.CollisionComponent;
 import com.ecs.Entity;
-import com.ecs.GraphicsComponent;
-import com.ecs.IntentComponent;
+import com.ecs.component.GraphicsComponent;
+import com.ecs.component.IntentComponent;
 import com.ecs.intent.ExitIntent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.scene.Scene;

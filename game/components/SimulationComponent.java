@@ -1,6 +1,6 @@
 package game.components;
 
-import com.ecs.Component;
+import com.ecs.component.Component;
 
 public class SimulationComponent extends Component {
     private float failureRatio;
