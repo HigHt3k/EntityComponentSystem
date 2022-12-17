@@ -24,6 +24,10 @@ public class InputManager {
 
         while(!keyEvents.isEmpty()) {
             KeyEvent e = keyEvents.get(0);
+            if(e == null) {
+                keyEvents.remove(e);
+                continue;
+            }
 
             // send key event to all components with intents and check wether the intent is applicable
             for(Entity entity : entities) {
@@ -38,7 +42,10 @@ public class InputManager {
 
         while(!mouseEvents.isEmpty()) {
             MouseEvent e = mouseEvents.get(0);
-
+            if(e == null) {
+                mouseEvents.remove(e);
+                continue;
+            }
             // send mouse event to all components with intents and check wether the intent is applicable
             for(Entity entity : entities) {
                 IntentComponent ic = entity.getComponent(IntentComponent.class);
