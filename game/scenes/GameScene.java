@@ -9,11 +9,19 @@ import com.ecs.IntentComponent;
 import com.ecs.intent.ExitIntent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.scene.Scene;
+import com.resource.ResourceManager;
+import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.SimulationComponent;
+import game.components.TooltipComponent;
+import game.intent.BuildIntent;
+import game.intent.SimulationIntent;
 import game.intent.StartIntent;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class GameScene extends Scene {
     private static final int ITEM_MARGIN = 20;
@@ -25,12 +33,15 @@ public class GameScene extends Scene {
     private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
     private static final int CELL_SIZE = 128;
     private String description;
+    private int numberOfBuildPanelElements = 0;
 
     public GameScene(String name, int id) {
         super(name, id);
 
         // Create the GUI including buttons going back to menu, exit etc.
         setupButtons();
+        setupBuildPanel();
+        setupDescriptionPanel();
     }
 
     public void setDescription(String description) {
@@ -83,6 +94,7 @@ public class GameScene extends Scene {
         Rectangle simElementBounds = new Rectangle(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
         simElementGraphicsComponent.setBounds(simElementBounds);
         simElementGraphicsComponent.setImage(Game.res().loadTile(imgId));
+        simElementGraphicsComponent.setHoverColor(HOVER_COLOR);
         simElement.addComponent(simElementGraphicsComponent);
         simElementGraphicsComponent.setEntity(simElement);
 
@@ -102,13 +114,67 @@ public class GameScene extends Scene {
         simElementCollisionComponent.setEntity(simElement);
 
         IntentComponent simElementIntentComponent = new IntentComponent();
-        HoverIntent simElementIntentComponentHoverIntent = new HoverIntent();
-        simElementIntentComponentHoverIntent.setIntentComponent(simElementIntentComponent);
-        simElementIntentComponent.addIntent(simElementIntentComponentHoverIntent);
         simElement.addComponent(simElementIntentComponent);
         simElementIntentComponent.setEntity(simElement);
 
+        HoverIntent simElementIntentComponentHoverIntent = new HoverIntent();
+        simElementIntentComponentHoverIntent.setIntentComponent(simElementIntentComponent);
+        simElementIntentComponent.addIntent(simElementIntentComponentHoverIntent);
+
+        SimulationIntent simElementIntentComponentSimulationIntent = new SimulationIntent();
+        simElementIntentComponentSimulationIntent.setIntentComponent(simElementIntentComponent);
+        simElementIntentComponent.addIntent(simElementIntentComponentSimulationIntent);
+
+        TooltipComponent simElementTooltipComponent = new TooltipComponent();
+        simElementTooltipComponent.setTooltipText(Game.res().loadDescription(imgId));
+        simElementTooltipComponent.setFailureRatio(String.valueOf(failureRatio));
+        simElementTooltipComponent.setEntity(simElement);
+        simElement.addComponent(simElementTooltipComponent);
+
         addEntityToScene(simElement);
+    }
+
+    public void addToBuildPanel(int imgId, int amount, float failureRatio) {
+        Entity buildElement = new Entity("build_element_" + imgId, IdGenerator.generateId());
+
+        GraphicsComponent buildElementGC = new GraphicsComponent();
+        Rectangle buildElementBounds = new Rectangle((int) (150 +
+                numberOfBuildPanelElements * (CELL_SIZE * 0.7 + ITEM_MARGIN)),
+                900,
+                (int) (CELL_SIZE*0.7),
+                (int) (CELL_SIZE*0.7)
+                );
+        buildElementGC.setBounds(buildElementBounds);
+        buildElementGC.setImage(Game.res().loadTile(imgId));
+        buildElementGC.setHoverColor(HOVER_COLOR);
+        buildElementGC.setEntity(buildElement);
+        buildElement.addComponent(buildElementGC);
+        numberOfBuildPanelElements++;
+
+        BuildComponent buildElementBC = new BuildComponent();
+        buildElementBC.setAmount(amount);
+        buildElementBC.setFailureRatio(failureRatio);
+        buildElementBC.setEntity(buildElement);
+        buildElement.addComponent(buildElementBC);
+
+        CollisionComponent buildElementCC = new CollisionComponent();
+        buildElementCC.setCollisionBox(buildElementBounds);
+        buildElementCC.setEntity(buildElement);
+        buildElement.addComponent(buildElementCC);
+
+        IntentComponent buildElementIC = new IntentComponent();
+        buildElementIC.setEntity(buildElement);
+        buildElement.addComponent(buildElementIC);
+
+        HoverIntent buildElementICHI = new HoverIntent();
+        buildElementICHI.setIntentComponent(buildElementIC);
+        buildElementIC.addIntent(buildElementICHI);
+
+        BuildIntent buildElementICBI = new BuildIntent();
+        buildElementICBI.setIntentComponent(buildElementIC);
+        buildElementIC.addIntent(buildElementICBI);
+
+        addEntityToScene(buildElement);
     }
 
     private void setupButtons() {
@@ -181,5 +247,39 @@ public class GameScene extends Scene {
         mainMenuButton.addComponent(mainMenuButtonIntentComponent);
 
         addEntityToScene(mainMenuButton);
+    }
+
+    private void setupBuildPanel() {
+        Entity buildPanel = new Entity("Build Panel", IdGenerator.generateId());
+
+        GraphicsComponent buildPanelGC = new GraphicsComponent();
+        Rectangle buildPanelBounds = new Rectangle(0, 850, 1500, (1080-850));
+        buildPanelGC.setBounds(buildPanelBounds);
+        try {
+            buildPanelGC.setImage(ImageIO.read(new File("game/res/menus/blueprint_scaled.png")));
+        } catch (IOException e) {
+            Game.logger().severe("Could not load image from file\n" + e.getMessage());
+        }
+        buildPanel.addComponent(buildPanelGC);
+        buildPanelGC.setEntity(buildPanel);
+
+        addEntityToScene(buildPanel);
+    }
+
+    private void setupDescriptionPanel() {
+        Entity descriptionPanel = new Entity("Description Panel", IdGenerator.generateId());
+
+        GraphicsComponent descriptionPanelGC = new GraphicsComponent();
+        Rectangle descriptionPanelBounds = new Rectangle(1500, 0, 420, 1080);
+        descriptionPanelGC.setBounds(descriptionPanelBounds);
+        try {
+            descriptionPanelGC.setImage(ImageIO.read(new File("game/res/menus/box1.png")));
+        } catch (IOException e) {
+            Game.logger().severe("Could not load image from file\n" + e.getMessage());
+        }
+        descriptionPanel.addComponent(descriptionPanelGC);
+        descriptionPanelGC.setEntity(descriptionPanel);
+
+        addEntityToScene(descriptionPanel);
     }
 }
