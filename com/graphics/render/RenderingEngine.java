@@ -105,6 +105,9 @@ public class RenderingEngine {
         ImageRenderer.render(g, img, x, y, width, height);
     }
 
+    /**
+     * Collects all entities and detects if they have a @{@link GraphicsComponent} which should be rendered
+     */
     public void collectAndRenderEntities() {
         ArrayList<Entity> entities = Game.scene().current().getEntities();
         for(Entity e : entities) {
@@ -156,6 +159,10 @@ public class RenderingEngine {
         }
     }
 
+    /**
+     * set the graphics context to render to
+     * @param g: the graphics context
+     */
     public void setGraphics(Graphics2D g) {
         this.g = g;
     }
