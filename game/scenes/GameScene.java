@@ -9,7 +9,6 @@ import com.ecs.IntentComponent;
 import com.ecs.intent.ExitIntent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.scene.Scene;
-import com.resource.ResourceManager;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.SimulationComponent;
