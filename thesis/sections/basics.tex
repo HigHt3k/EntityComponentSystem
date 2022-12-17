@@ -1,0 +1,74 @@
+\section{Basics}\label{sec:basics}
+In this chapter, some basic knowledge in order to understand the context and classify this work as a whole will be provided.
+The definitions of the most common terms used for aircraft system architecture and the formulas for calculating the relevant
+parameters are shown.~\ref{subsec:definitions-system-architecture}
+Since this work aims to implement a game, some basic understanding of games and the game development process is described in
+section~\ref{subsec:game-design}.
+\subsection{Definitions System Architecture}\label{subsec:definitions-system-architecture}
+\subsubsection{Failure Probability}
+The probability of a failure of a system during a specified point in time is defined as~\cite{lfs2}:
+\begin{equation}
+    \label{eq:failure-probability}
+    P_f(t) \in [0,1]
+\end{equation}
+\subsubsection{Reliability}
+Reliability defines the probability of a working system at a specified point in time,
+therefore it is the inverse of the failure probability~\cite{lfs2}:
+\begin{equation}
+    \label{eq:reliability}
+    P_k(t) = 1 - P_f(t) \in [0,1]
+\end{equation}
+\subsubsection{Integrity}
+The detection probability of an error in a system is defined as integrity~\cite{lfs2}:
+\begin{equation}
+    \label{eq:integrity}
+    C \in [0,1]
+\end{equation}
+\subsubsection{Safety Effect}
+There exist different categories of safety effects in the CS-25 for aircraft certification that define the requirements to different systems.
+A mapping of safety effect to minimum failure probability has to be achieved in order to successfully certify aircraft systems.
+The below table~\ref{tab:safety-effect} displays the different categories.
+\begin{table}[!htb]
+    \centering
+    \begin{tabular}{l|l|l}
+        Safety Effect    & Safety Effect short & Accepted Failure Probability \\ \hline
+        Catastrophic     & CAT                 & $P_f(1h) <= 10e-9$           \\
+        Hazardous        & HAZ                 & $P_f(1h) <= 10e-7$           \\
+        Major            & MAJ                 & $P_f(1h) <= 10e-5$           \\
+        Minor            & MIN                 & $P_f(1h) <= 10e-3$           \\
+        No Safety Effect & NSE                 & $P_f(1h) < 1$
+    \end{tabular}
+    \caption{Definition of safety effect categories}
+    \label{tab:safety-effect}
+\end{table}
+
+\subsection{Redundancy Concepts}\label{subsec:redundancy-concepts}
+By default, the failure probability of integrated components is defined as $10e-4$, which means, that with only a single component
+safety effect requirements of categories higher than \textit{Major} are out of scope.
+Therefore, different redundancy concepts have been developed and are being used in system architectures.
+These include duplex, triplex and quadruplex systems - meaning, a component is replicated multiple times to run the same program.
+One needs to divide between replicated computers, also called \textbf{channels}, and replicated components (e.g.\ CPU) within a computer,
+namely \textbf{lanes}.
+It is important to note, that each lane or channel is merged right before an actuator.
+The decision on how the actuator needs to move is done by a \textbf{voting} component, which can have different methods of voting
+for the correct output: mean value, median value, democratic decision.
+The voting component generally is the bottleneck of aircraft systems and needs to guarantee a low probability of failure
+due to being the most critical component in the chain, since all further movement is based on its decision.
+Actuators can also have a monitoring component, which ensures the correct movement of itself.
+This is called a \textbf{Com-Mon} - Command \& Monitoring - system.
+It negatively affects the failure probability, but the integrity, meaning that the system is able to react to a possible failure due
+to noticing it.
+A number of different concepts is shown in the figures below, which also serves as a guideline to the level design of the game,
+since the presentation and understanding of exactly these concepts is the core of the game.
+\subsection{Game Design}\label{subsec:game-design}
+Game design is the conceptional process taking place at the very beginning of game development.
+Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
+reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
+\subsubsection{Educational Games}\label{subsubsec:educational-games}
+Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
+specifically intended to be educational.
+However, there exist also games with the specified purpose of education, this may include simulations, persuasive games,
+games for studying and games that support health and growth.
+Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
+while maintaining a factor of entertainment.
+Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
