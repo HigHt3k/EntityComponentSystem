@@ -28,12 +28,12 @@ public class MenuScene extends Scene {
         // Create the Menu GUI
         Entity background = new Entity("Background", IdGenerator.generateId());
         GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
-        System.out.println(Game.config().renderConfiguration().getResolution());
         backgroundGraphicsComponent.setBounds(new Rectangle(
                 0,
                 0,
-                Game.config().renderConfiguration().getResolution().width,
-                Game.config().renderConfiguration().getResolution().height)
+                1920,
+                1080
+                )
         );
 
         try {
