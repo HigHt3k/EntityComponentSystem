@@ -1,5 +1,8 @@
 package com;
 
+/**
+ * Contains meta information about the game [title, author, version number and description]
+ */
 public class GameInformation {
     private String title;
     private String author;
