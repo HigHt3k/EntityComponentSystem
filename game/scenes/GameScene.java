@@ -281,4 +281,8 @@ public class GameScene extends Scene {
 
         addEntityToScene(descriptionPanel);
     }
+
+    public int getCellSize() {
+        return CELL_SIZE;
+    }
 }
