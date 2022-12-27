@@ -68,10 +68,15 @@ public class ResourceManager {
                     String id = tile.getAttribute("id");
                     String type = tile.getAttribute("type");
                     String imagePath = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("source");
+                    String description = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("description");
+                    if(description.equals("")) {
+                        description = "Default description";
+                    }
 
                     BufferedImage img = ImageIO.read(new File(imagePath));
 
                     t.getTiles().put(Integer.parseInt(id), img);
+                    t.getDescriptions().put(Integer.parseInt(id), description);
                 }
             }
         } catch (SAXException | IOException e) {
@@ -285,8 +290,6 @@ public class ResourceManager {
      * @return a description of given id
      */
     public String loadDescription(int id) {
-        String description = "";
-
-        return description;
+        return tileSet.getDescription(id);
     }
 }

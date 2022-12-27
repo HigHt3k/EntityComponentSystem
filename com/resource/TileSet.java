@@ -6,9 +6,11 @@ import java.util.logging.Logger;
 
 public class TileSet {
     private final HashMap<Integer, BufferedImage> tiles;
+    private final HashMap<Integer, String> descriptions;
 
     public TileSet() {
         this.tiles = new HashMap<>();
+        this.descriptions = new HashMap<>();
         Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Tileset loaded.");
     }
 
@@ -24,4 +26,11 @@ public class TileSet {
         return tiles.get(Integer.parseInt(id));
     }
 
+    public String getDescription(int id) {
+        return descriptions.get(id);
+    }
+
+    public HashMap<Integer, String> getDescriptions() {
+        return descriptions;
+    }
 }

@@ -14,7 +14,7 @@
   <image width="32" height="32" source="game/res/avionics/default.png"/>
  </tile>
  <tile id="201" type="SENSOR">
-  <image width="32" height="32" source="game/res/avionics/cpiom.png"/>
+  <image width="32" height="32" source="game/res/avionics/cpiom.png" description="This is a sensor component."/>
  </tile>
  <tile id="202" type="ACTUATOR">
   <image width="32" height="32" source="game/res/avionics/cpiom_blade.png"/>

@@ -194,7 +194,7 @@ public class GameScene extends Scene {
         buildElementGC.setHoverColor(HOVER_COLOR);
         ToolTip tt = new ToolTip();
         tt.setFont(buildElementGC.getFont());
-        tt.setText("Default tooltip");
+        tt.setText(Game.res().loadDescription(imgId));
         buildElementGC.setToolTip(tt);
         buildElementGC.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
         buildElementGC.addText(String.valueOf(amount));
