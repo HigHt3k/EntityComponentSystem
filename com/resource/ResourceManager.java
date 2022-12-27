@@ -108,6 +108,11 @@ public class ResourceManager {
                 GameScene scene = new GameScene(levelName, mapId);
                 scene.setDescription(description);
 
+                if(level.getElementsByTagName("goal").item(0) != null) {
+                    double goal = Double.parseDouble(level.getElementsByTagName("goal").item(0).getTextContent());
+                    scene.setGoal(goal);
+                }
+
                 // Add background to scene
                 for(int i = 0; i < width; i++) {
                     for (int j = 0; j < height; j++) {
@@ -158,6 +163,7 @@ public class ResourceManager {
                     }
 
                 }
+                scene.init();
                 Game.scene().addScene(scene);
             }
         } catch (IOException e) {

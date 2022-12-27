@@ -1,6 +1,7 @@
 package com.ecs.component;
 
 import com.Game;
+import com.graphics.elements.ToolTip;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -22,9 +23,19 @@ public class GraphicsComponent extends Component {
     ArrayList<String> texts = new ArrayList<>();
     ArrayList<Point2D> locations = new ArrayList<>();
 
+    ToolTip toolTip;
+
     @Override
     public void update() {
 
+    }
+
+    public void setToolTip(ToolTip toolTip) {
+        this.toolTip = toolTip;
+    }
+
+    public ToolTip getToolTip() {
+        return toolTip;
     }
 
     public Rectangle getBounds() {

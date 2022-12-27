@@ -8,6 +8,7 @@ import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.ExitIntent;
 import com.ecs.intent.HoverIntent;
+import com.graphics.elements.ToolTip;
 import com.graphics.scene.Scene;
 import game.components.BuildComponent;
 import game.components.GridComponent;
@@ -32,19 +33,26 @@ public class GameScene extends Scene {
     private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
     private static final int CELL_SIZE = 128;
     private String description;
+    private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
 
     public GameScene(String name, int id) {
         super(name, id);
-
-        // Create the GUI including buttons going back to menu, exit etc.
-        setupButtons();
         setupBuildPanel();
+    }
+
+    public void init() {
+        // Create the GUI including buttons going back to menu, exit etc.
         setupDescriptionPanel();
+        setupButtons();
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setGoal(double goal) {
+        this.goal = goal;
     }
 
     public String getDescription() {
@@ -146,6 +154,10 @@ public class GameScene extends Scene {
         buildElementGC.setBounds(buildElementBounds);
         buildElementGC.setImage(Game.res().loadTile(imgId));
         buildElementGC.setHoverColor(HOVER_COLOR);
+        ToolTip tt = new ToolTip();
+        tt.setFont(buildElementGC.getFont());
+        tt.setText("Default tooltip");
+        buildElementGC.setToolTip(tt);
         buildElementGC.setEntity(buildElement);
         buildElement.addComponent(buildElementGC);
         numberOfBuildPanelElements++;
@@ -278,6 +290,15 @@ public class GameScene extends Scene {
         } catch (IOException e) {
             Game.logger().severe("Could not load image from file\n" + e.getMessage());
         }
+
+        descriptionPanelGC.setTextColor(TEXT_COLOR);
+        descriptionPanelGC.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
+
+        descriptionPanelGC.addText(description);
+        descriptionPanelGC.addLocation(descriptionPanelBounds.getLocation());
+        descriptionPanelGC.addText(String.valueOf(goal));
+        descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x, descriptionPanelBounds.getLocation().y + 600));
+
         descriptionPanel.addComponent(descriptionPanelGC);
         descriptionPanelGC.setEntity(descriptionPanel);
 

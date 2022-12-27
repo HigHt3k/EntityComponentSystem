@@ -154,6 +154,29 @@ public class RenderingEngine {
                                 gc.getHoverColor()
                         );
                     }
+                    if (gc.getToolTip() != null) {
+                        renderShape(
+                                g,
+                                new Rectangle(
+                                        gc.getBounds().x + 80,
+                                        gc.getBounds().y + 50,
+                                        200,
+                                        150
+                                ),
+                                gc.getToolTip().getBorderColor(),
+                                gc.getToolTip().getToolTipColor()
+                        );
+                        renderText(
+                                g,
+                                gc.getToolTip().getText(),
+                                gc.getToolTip().getTextColor(),
+                                gc.getToolTip().getFont(),
+                                gc.getBounds().x + 80,
+                                gc.getBounds().y + 50,
+                                200,
+                                150
+                        );
+                    }
                 }
             }
         }
