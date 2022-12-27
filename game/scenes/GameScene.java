@@ -118,7 +118,8 @@ public class GameScene extends Scene {
         Rectangle exitButtonBounds = new Rectangle(1600, 900, ITEM_WIDTH, ITEM_HEIGHT);
         exitButtonGraphicsComponent.setBounds(exitButtonBounds);
         exitButtonGraphicsComponent.setShape(exitButtonBounds);
-        exitButtonGraphicsComponent.setText("EXIT");
+        exitButtonGraphicsComponent.addText("EXIT");
+        exitButtonGraphicsComponent.addLocation(exitButtonBounds.getLocation());
         exitButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
         exitButtonGraphicsComponent.setTextColor(TEXT_COLOR);
         exitButtonGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
@@ -153,7 +154,8 @@ public class GameScene extends Scene {
         Rectangle mainMenuButtonBounds = new Rectangle(1600, 800, ITEM_WIDTH, ITEM_HEIGHT);
         mainMenuButtonGraphicsComponent.setBounds(mainMenuButtonBounds);
         mainMenuButtonGraphicsComponent.setShape(mainMenuButtonBounds);
-        mainMenuButtonGraphicsComponent.setText("MAIN MENU");
+        mainMenuButtonGraphicsComponent.addText("MAIN MENU");
+        mainMenuButtonGraphicsComponent.addLocation(mainMenuButtonBounds.getLocation());
         mainMenuButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
         mainMenuButtonGraphicsComponent.setTextColor(TEXT_COLOR);
         mainMenuButtonGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);

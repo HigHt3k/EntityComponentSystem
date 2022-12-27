@@ -6,18 +6,22 @@ import com.graphics.render.ScalingEngine;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class GraphicsComponent extends Component {
     Rectangle bounds;
     Shape shape;
     BufferedImage image;
-    String text;
     Font font;
     Color fillColor;
     Color textColor;
     Color borderColor;
     boolean hovered = false;
     Color hoverColor;
+
+    ArrayList<String> texts = new ArrayList<>();
+    ArrayList<Point2D> locations = new ArrayList<>();
 
     @Override
     public void update() {
@@ -40,8 +44,12 @@ public class GraphicsComponent extends Component {
         return image;
     }
 
-    public String getText() {
-        return text;
+    public ArrayList<String> getTexts() {
+        return texts;
+    }
+
+    public ArrayList<Point2D> getLocations() {
+        return locations;
     }
 
     public Color getFillColor() {
@@ -64,8 +72,12 @@ public class GraphicsComponent extends Component {
         this.shape = Game.scale().scaleShape(shape);
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void addText(String text) {
+        texts.add(text);
+    }
+
+    public void addLocation(Point p) {
+        locations.add(Game.scale().scalePoint(p));
     }
 
     public void setFillColor(Color fillColor) {

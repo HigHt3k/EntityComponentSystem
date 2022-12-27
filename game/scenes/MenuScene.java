@@ -60,7 +60,8 @@ public class MenuScene extends Scene {
                 );
                 menuItemGraphicsComponent.setBounds(rectangle);
                 menuItemGraphicsComponent.setShape(rectangle);
-                menuItemGraphicsComponent.setText(s.getName());
+                menuItemGraphicsComponent.addText(s.getName());
+                menuItemGraphicsComponent.addLocation(rectangle.getLocation());
                 menuItemGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 14f));
                 menuItemGraphicsComponent.setTextColor(TEXT_COLOR);
                 menuItemGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
@@ -97,7 +98,8 @@ public class MenuScene extends Scene {
         Rectangle exitButtonBounds = new Rectangle(1600, 900, ITEM_WIDTH, ITEM_HEIGHT);
         exitButtonGraphicsComponent.setBounds(exitButtonBounds);
         exitButtonGraphicsComponent.setShape(exitButtonBounds);
-        exitButtonGraphicsComponent.setText("EXIT");
+        exitButtonGraphicsComponent.addText("EXIT");
+        exitButtonGraphicsComponent.addLocation(new Point(1600, 900));
         exitButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
         exitButtonGraphicsComponent.setTextColor(TEXT_COLOR);
         exitButtonGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);

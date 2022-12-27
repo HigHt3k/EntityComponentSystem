@@ -129,17 +129,19 @@ public class RenderingEngine {
                             gc.getBounds().height
                     );
                 }
-                if (gc.getText() != null) {
-                    renderText(
-                            g,
-                            gc.getText(),
-                            gc.getTextColor(),
-                            gc.getFont(),
-                            gc.getBounds().x,
-                            gc.getBounds().y,
-                            gc.getBounds().width,
-                            gc.getBounds().height
-                    );
+                if (!gc.getTexts().isEmpty() && !gc.getLocations().isEmpty()) {
+                    for(int i = 0; i < gc.getTexts().size(); i++) {
+                        renderText(
+                                g,
+                                gc.getTexts().get(i),
+                                gc.getTextColor(),
+                                gc.getFont(),
+                                (int) gc.getLocations().get(i).getX(),
+                                (int) gc.getLocations().get(i).getY(),
+                                gc.getBounds().width,
+                                gc.getBounds().height
+                        );
+                    }
                 }
 
                 if(gc.isHovered() ) {
