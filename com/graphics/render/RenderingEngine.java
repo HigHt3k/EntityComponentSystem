@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Objects;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * The Rendering Engine is the backbone of the graphics generation. It contains different methods which access sub-rendering engines
@@ -67,8 +68,12 @@ public class RenderingEngine {
                 .orElse(null)).length();
 
         String regex = "(\\w{1,}.{1," + charactersPerLine + "})(\\s+|\\.)";
-        if (textWidth > maxWidth) {
-            text = text.replaceAll(regex, "$1\n");
+        try {
+            if (textWidth > maxWidth) {
+                text = text.replaceAll(regex, "$1\n");
+            }
+        } catch(PatternSyntaxException ex) {
+            // HANDLE
         }
         TextRenderer.render(g, text, color, font, new Point(x + MARGIN,y));
     }

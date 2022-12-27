@@ -158,6 +158,11 @@ public class GameScene extends Scene {
         tt.setFont(buildElementGC.getFont());
         tt.setText("Default tooltip");
         buildElementGC.setToolTip(tt);
+        buildElementGC.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
+        buildElementGC.addText(String.valueOf(amount));
+        buildElementGC.addLocation(new Point((int) buildElementBounds.getX() + buildElementBounds.width/2,
+                (int) buildElementBounds.getY() + buildElementBounds.height/2));
+
         buildElementGC.setEntity(buildElement);
         buildElement.addComponent(buildElementGC);
         numberOfBuildPanelElements++;
