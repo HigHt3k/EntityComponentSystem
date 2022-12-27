@@ -1,4 +1,6 @@
-package com.ecs;
+package com.ecs.component;
+
+import com.ecs.Entity;
 
 public abstract class Component {
     private Entity entity;

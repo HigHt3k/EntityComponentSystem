@@ -1,0 +1,35 @@
+%! Author = johan
+%! Date = 11/18/2022
+
+% Preamble
+\documentclass{article}
+
+% Packages
+\usepackage{amsmath}
+\usepackage{tabularx}
+\usepackage{listliketab}
+\usepackage{graphicx}
+\usepackage{rotating}
+\usepackage[% Seitenlayout anzeigen
+    left=4cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2cm,
+%includeheadfoot
+]{geometry}
+
+
+
+\begin{document}
+    \pagenumbering{arabic}
+    \include{sections/titlepage}
+    \include{sections/abstract}
+    \tableofcontents
+    \include{sections/introduction}
+    \include{sections/basics}
+    \include{sections/conception}
+    \include{sections/implementation}
+    \include{sections/results}
+    \bibliographystyle{ieeetr} % We choose the "plain" reference style
+    \bibliography{bibliography}
+\end{document}

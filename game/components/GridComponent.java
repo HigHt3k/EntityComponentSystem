@@ -1,6 +1,6 @@
 package game.components;
 
-import com.ecs.Component;
+import com.ecs.component.Component;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

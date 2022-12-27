@@ -74,13 +74,6 @@ public class RenderConfiguration {
     }
 
     /**
-     * @return grid pixel size (width and height, square)
-     */
-    public int getGridPx() {
-        return DEFAULT_GRID_PX;
-    }
-
-    /**
      * @return scaling factor for width
      */
     public float getScaleWidth() {

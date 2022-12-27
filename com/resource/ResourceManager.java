@@ -140,6 +140,24 @@ public class ResourceManager {
                         }
                     }
                 }
+
+                NodeList buildNodes = level.getElementsByTagName("build");
+                for(int temp=0; temp<buildNodes.getLength(); temp++) {
+                    if(buildNodes.item(temp).getNodeType() == Node.ELEMENT_NODE) {
+                        Element build = (Element) buildNodes.item(temp);
+                        NodeList entityNodes = build.getElementsByTagName("entity");
+                        for (int e = 0; e < entityNodes.getLength(); e++) {
+                            Element entity = (Element) entityNodes.item(e);
+
+                            int entityId = Integer.parseInt(entity.getAttribute("id"));
+                            int amount = Integer.parseInt(entity.getAttribute("amount"));
+                            float failureRatio = Float.parseFloat(entity.getAttribute("amount"));
+
+                            scene.addToBuildPanel(entityId, amount, failureRatio);
+                        }
+                    }
+
+                }
                 Game.scene().addScene(scene);
             }
         } catch (IOException e) {
@@ -253,5 +271,16 @@ public class ResourceManager {
             e.printStackTrace();
         }
         System.out.println("File saved!");
+    }
+
+    /**
+     * from a file, load the description of a component based on its id
+     * @param id: the id to look up
+     * @return a description of given id
+     */
+    public String loadDescription(int id) {
+        String description = "";
+
+        return description;
     }
 }

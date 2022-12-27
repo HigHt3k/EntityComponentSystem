@@ -3,6 +3,9 @@ package game.scenes;
 import com.Game;
 import com.IdGenerator;
 import com.ecs.*;
+import com.ecs.component.CollisionComponent;
+import com.ecs.component.GraphicsComponent;
+import com.ecs.component.IntentComponent;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
 import com.ecs.intent.HoverIntent;
@@ -28,12 +31,12 @@ public class MenuScene extends Scene {
         // Create the Menu GUI
         Entity background = new Entity("Background", IdGenerator.generateId());
         GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
-        System.out.println(Game.config().renderConfiguration().getResolution());
         backgroundGraphicsComponent.setBounds(new Rectangle(
                 0,
                 0,
-                Game.config().renderConfiguration().getResolution().width,
-                Game.config().renderConfiguration().getResolution().height)
+                1920,
+                1080
+                )
         );
 
         try {

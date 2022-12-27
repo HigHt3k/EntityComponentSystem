@@ -1,7 +1,6 @@
-package com.ecs;
+package com.ecs.component;
 
 import com.Game;
-import com.graphics.render.ScalingEngine;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
