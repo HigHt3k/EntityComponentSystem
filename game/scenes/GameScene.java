@@ -160,8 +160,8 @@ public class GameScene extends Scene {
         buildElementGC.setToolTip(tt);
         buildElementGC.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
         buildElementGC.addText(String.valueOf(amount));
-        buildElementGC.addLocation(new Point((int) buildElementBounds.getX() + buildElementBounds.width/2,
-                (int) buildElementBounds.getY() + buildElementBounds.height/2));
+        buildElementGC.addLocation(new Point((int) buildElementBounds.getX(),
+                (int) buildElementBounds.getY() + buildElementBounds.height));
 
         buildElementGC.setEntity(buildElement);
         buildElement.addComponent(buildElementGC);
