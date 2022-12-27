@@ -112,7 +112,7 @@ public class RenderingEngine {
      * Collects all entities and detects if they have a @{@link GraphicsComponent} which should be rendered
      */
     public void collectAndRenderEntities() {
-        ArrayList<Entity> entities = Game.scene().current().getEntities();
+        ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
         for(Entity e : entities) {
             GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
             if(gc != null) {

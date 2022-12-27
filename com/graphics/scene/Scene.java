@@ -30,6 +30,10 @@ public abstract class Scene {
         }
     }
 
+    public void removeEntityFromScene(Entity e) {
+        entities.remove(e);
+    }
+
     public ArrayList<Entity> getEntities() {
         return entities;
     }

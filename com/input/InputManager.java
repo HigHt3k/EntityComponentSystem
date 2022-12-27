@@ -20,7 +20,7 @@ public class InputManager {
     }
 
     public void handle() {
-        ArrayList<Entity> entities = Game.scene().current().getEntities();
+        ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
 
         while(!keyEvents.isEmpty()) {
             KeyEvent e = keyEvents.get(0);

@@ -5,15 +5,10 @@ import com.IdGenerator;
 import com.ecs.Entity;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
-import com.ecs.component.IntentComponent;
-import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;
-import game.components.GridComponent;
-import game.components.SimulationComponent;
-import game.components.TooltipComponent;
+import game.components.BuildComponent;
 import game.scenes.GameScene;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -27,12 +22,82 @@ public class BuildIntent extends Intent {
 
     @Override
     public void handleIntent(MouseEvent e) {
-        if(getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())) {
-            if(e.getButton() == MouseEvent.BUTTON1) {
+        if(Game.scene().current() instanceof GameScene) {
+            GameScene gs = (GameScene) Game.scene().current();
+            if (getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint()) &&
+                    e.getButton() == MouseEvent.BUTTON1
+                        && !isBuilding
+                        && this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getAmount() > 0) {
+                // now building; create a new entity that can be dragged around
+                System.out.println("Starting to build");
+
+                Entity entity = new Entity(this.getIntentComponent().getEntity().getName() + "_simulation",
+                        IdGenerator.generateId());
+
+                GraphicsComponent gc = new GraphicsComponent();
+                gc.setBounds(this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).getBounds());
+                gc.setImage(this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).getImage());
+
+                entity.addComponent(gc);
+                gc.setEntity(entity);
+
+                CollisionComponent cc = new CollisionComponent();
+                cc.setCollisionBox(this.getIntentComponent().getEntity().getComponent(CollisionComponent.class).getCollisionBox());
+                cc.setEntity(entity);
+                entity.addComponent(cc);
+
+                gs.setCurrentlyBuilding(entity);
+                gs.addEntityToScene(entity);
+
+                this.getIntentComponent().getEntity().getComponent(BuildComponent.class).subtractFromAmount();
+                this.getIntentComponent()
+                        .getEntity()
+                        .getComponent(GraphicsComponent.class)
+                        .getTexts()
+                        .set(0,
+                                String.valueOf(this.getIntentComponent()
+                                        .getEntity()
+                                        .getComponent(BuildComponent.class)
+                                        .getAmount()
+                                )
+                        );
                 isBuilding = true;
             }
 
+            else if (isBuilding && (e.getButton() == MouseEvent.BUTTON3)) {
+                System.out.println("Resetting build");
+                gs.removeEntityFromScene(gs.getCurrentlyBuilding());
+                gs.setCurrentlyBuilding(null);
+                this.getIntentComponent().getEntity().getComponent(BuildComponent.class).addToAmount();
 
+                this.getIntentComponent()
+                        .getEntity()
+                        .getComponent(GraphicsComponent.class)
+                        .getTexts()
+                        .set(0,
+                                String.valueOf(this.getIntentComponent()
+                                        .getEntity()
+                                        .getComponent(BuildComponent.class)
+                                        .getAmount()
+                                )
+                        );
+
+                isBuilding = false;
+            }
+
+            else if(isBuilding && e.getButton() == MouseEvent.BUTTON1) {
+                // Finalize building
+                System.out.println("Finalizing");
+
+                gs.finalizeBuilding();
+                isBuilding = false;
+            }
+
+            else if (isBuilding) {
+                System.out.println("moving around");
+                // handle graphics position
+                gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).reposition(e.getPoint());
+            }
         }
     }
 }

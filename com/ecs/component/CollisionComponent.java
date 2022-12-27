@@ -28,4 +28,8 @@ public class CollisionComponent extends Component {
     public void setCollisionBox(Rectangle collisionBox) {
         this.collisionBox = Game.scale().scaleRect(collisionBox);
     }
+
+    public Rectangle getCollisionBox() {
+        return collisionBox;
+    }
 }

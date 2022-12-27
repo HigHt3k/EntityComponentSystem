@@ -1,11 +1,13 @@
 package com.ecs;
 
+import com.IdGenerator;
 import com.ecs.component.Component;
+import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
 
 
-public class Entity {
+public class Entity implements Cloneable {
 
     private ArrayList<Component> components;
     private String name;

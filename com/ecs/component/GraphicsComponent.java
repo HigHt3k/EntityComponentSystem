@@ -136,4 +136,15 @@ public class GraphicsComponent extends Component {
         }
         return false;
     }
+
+    public void reposition(Point p) {
+        if(this.shape != null) {
+            this.shape.getBounds().x = Game.scale().scaleX(p.x);
+            this.shape.getBounds().y = Game.scale().scaleY(p.y);
+        }
+        if(this.bounds != null) {
+            this.bounds.x = Game.scale().scaleX(p.x);
+            this.bounds.y = Game.scale().scaleY(p.y);
+        }
+    }
 }

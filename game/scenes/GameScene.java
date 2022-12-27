@@ -35,6 +35,15 @@ public class GameScene extends Scene {
     private String description;
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
+    private Entity currentlyBuilding = null;
+
+    public Entity getCurrentlyBuilding() {
+        return currentlyBuilding;
+    }
+
+    public void setCurrentlyBuilding(Entity entity) {
+        currentlyBuilding = entity;
+    }
 
     public GameScene(String name, int id) {
         super(name, id);
@@ -62,6 +71,31 @@ public class GameScene extends Scene {
     @Override
     public void update() {
 
+    }
+
+    public void finalizeBuilding() {
+        for(Entity e : getEntities()) {
+            if(e.getComponent(GridComponent.class) != null) {
+                if(e.getComponent(GraphicsComponent.class)
+                        .getBounds()
+                        .contains(currentlyBuilding
+                        .getComponent(GraphicsComponent.class)
+                        .getBounds()
+                        .getLocation())) {
+                    GridComponent gc = new GridComponent();
+                    gc.setGridLocation((Point) e.getComponent(GridComponent.class).getGridLocation());
+                    currentlyBuilding.addComponent(gc);
+                    gc.setEntity(currentlyBuilding);
+
+                    currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
+                            .getBounds().getLocation());
+
+                    return;
+                }
+            }
+        }
+
+        currentlyBuilding = null;
     }
 
     public void addGridElement(int x, int y) {
@@ -92,6 +126,10 @@ public class GameScene extends Scene {
         gridElementIntentComponent.setEntity(gridElement);
 
         addEntityToScene(gridElement);
+    }
+
+    public void buildElement(int imgId, float failureRatio, boolean interactable) {
+
     }
 
     public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean interactable) {
