@@ -184,10 +184,10 @@ public class GameScene extends Scene {
 
         GraphicsComponent buildElementGC = new GraphicsComponent();
         Rectangle buildElementBounds = new Rectangle((int) (150 +
-                numberOfBuildPanelElements * (CELL_SIZE * 0.7 + ITEM_MARGIN)),
-                900,
-                (int) (CELL_SIZE*0.7),
-                (int) (CELL_SIZE*0.7)
+                numberOfBuildPanelElements * (CELL_SIZE + ITEM_MARGIN)),
+                875,
+                (int) (CELL_SIZE),
+                (int) (CELL_SIZE)
                 );
         buildElementGC.setBounds(buildElementBounds);
         buildElementGC.setImage(Game.res().loadTile(imgId));
