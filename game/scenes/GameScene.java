@@ -73,22 +73,24 @@ public class GameScene extends Scene {
 
     }
 
-    public void finalizeBuilding() {
+    public void finalizeBuilding(Point mousePos) {
         for(Entity e : getEntities()) {
             if(e.getComponent(GridComponent.class) != null) {
                 if(e.getComponent(GraphicsComponent.class)
                         .getBounds()
-                        .contains(currentlyBuilding
-                        .getComponent(GraphicsComponent.class)
-                        .getBounds()
-                        .getLocation())) {
+                        .contains(mousePos)
+                ) {
                     GridComponent gc = new GridComponent();
-                    gc.setGridLocation((Point) e.getComponent(GridComponent.class).getGridLocation());
+                    gc.setGridLocation(new Point(
+                                (int) e.getComponent(GridComponent.class).getGridLocation().getX(),
+                                (int) e.getComponent(GridComponent.class).getGridLocation().getY()
+                            )
+                    );
                     currentlyBuilding.addComponent(gc);
                     gc.setEntity(currentlyBuilding);
 
                     currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
-                            .getBounds().getLocation());
+                            .get_BOUNDS().getLocation());
 
                     return;
                 }
