@@ -10,10 +10,20 @@ import java.util.ArrayList;
 import java.util.Map;
 
 public class GraphicsComponent extends Component {
+    // original input sizes, needed when rescaling is done or entity is copied
+    Rectangle _BOUNDS;
+    Shape _SHAPE;
+    Font _FONT;
+    ArrayList<Point2D> _LOCATIONS = new ArrayList<>();
+
+    // temporary sizes
     Rectangle bounds;
     Shape shape;
-    BufferedImage image;
     Font font;
+    ArrayList<Point2D> locations;
+
+    // non scalable content
+    BufferedImage image;
     Color fillColor;
     Color textColor;
     Color borderColor;
@@ -21,13 +31,30 @@ public class GraphicsComponent extends Component {
     Color hoverColor;
 
     ArrayList<String> texts = new ArrayList<>();
-    ArrayList<Point2D> locations = new ArrayList<>();
 
     ToolTip toolTip;
 
     @Override
     public void update() {
 
+    }
+
+    public void updateSize() {
+        if(_BOUNDS != null)
+            this.bounds = Game.scale().scaleRect(_BOUNDS);
+
+        if(_SHAPE != null)
+            this.shape = Game.scale().scaleShape(_SHAPE);
+
+        if(_FONT != null)
+            this.font = Game.scale().scaleFont(_FONT);
+
+        if(!_LOCATIONS.isEmpty()) {
+            locations = new ArrayList<>();
+            for (int i = 0; i < _LOCATIONS.size(); i++) {
+                locations.add(Game.scale().scalePoint((Point) _LOCATIONS.get(i)));
+            }
+        }
     }
 
     public void setToolTip(ToolTip toolTip) {
@@ -43,7 +70,8 @@ public class GraphicsComponent extends Component {
     }
 
     public void setBounds(Rectangle bounds) {
-        this.bounds = Game.scale().scaleRect(bounds);
+        this._BOUNDS = bounds;
+        updateSize();
     }
 
     public void setImage(BufferedImage image) {
@@ -79,7 +107,8 @@ public class GraphicsComponent extends Component {
     }
 
     public void setShape(Shape shape) {
-        this.shape = Game.scale().scaleShape(shape);
+        this._SHAPE = shape;
+        updateSize();
     }
 
     public void addText(String text) {
@@ -87,7 +116,8 @@ public class GraphicsComponent extends Component {
     }
 
     public void addLocation(Point p) {
-        locations.add(Game.scale().scalePoint(p));
+        _LOCATIONS.add(p);
+        updateSize();
     }
 
     public void setFillColor(Color fillColor) {
@@ -103,7 +133,8 @@ public class GraphicsComponent extends Component {
     }
 
     public void setFont(Font font) {
-        this.font = Game.scale().scaleFont(font);
+        this._FONT = font;
+        updateSize();
     }
 
     public Font getFont() {
@@ -138,13 +169,32 @@ public class GraphicsComponent extends Component {
     }
 
     public void reposition(Point p) {
-        if(this.shape != null) {
-            this.shape.getBounds().x = Game.scale().scaleX(p.x);
-            this.shape.getBounds().y = Game.scale().scaleY(p.y);
+        if(this._SHAPE != null) {
+            this._SHAPE.getBounds().x = p.x;
+            this._SHAPE.getBounds().y = p.y;
         }
-        if(this.bounds != null) {
-            this.bounds.x = Game.scale().scaleX(p.x);
-            this.bounds.y = Game.scale().scaleY(p.y);
+
+        if(this._BOUNDS != null) {
+            this._BOUNDS.x = p.x;
+            this._BOUNDS.y = p.y;
         }
+
+        updateSize();
+    }
+
+    public Rectangle get_BOUNDS() {
+        return _BOUNDS;
+    }
+
+    public Shape get_SHAPE() {
+        return _SHAPE;
+    }
+
+    public Font get_FONT() {
+        return _FONT;
+    }
+
+    public ArrayList<Point2D> get_LOCATIONS() {
+        return _LOCATIONS;
     }
 }

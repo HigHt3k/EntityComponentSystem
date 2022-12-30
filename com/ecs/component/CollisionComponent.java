@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 public class CollisionComponent extends Component {
+    Rectangle _COLLISIONBOX;
     Rectangle collisionBox;
 
     @Override
@@ -26,10 +27,16 @@ public class CollisionComponent extends Component {
     }
 
     public void setCollisionBox(Rectangle collisionBox) {
-        this.collisionBox = Game.scale().scaleRect(collisionBox);
+        this._COLLISIONBOX = collisionBox;
+        updateSize();
     }
 
     public Rectangle getCollisionBox() {
         return collisionBox;
+    }
+
+    public void updateSize() {
+        if(this._COLLISIONBOX != null)
+            this.collisionBox = Game.scale().scaleRect(_COLLISIONBOX);
     }
 }
