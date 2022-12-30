@@ -393,7 +393,8 @@ public class GameScene extends Scene {
         descriptionPanelGC.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
 
         descriptionPanelGC.addText(description);
-        descriptionPanelGC.addLocation(descriptionPanelBounds.getLocation());
+        descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x,
+                descriptionPanelBounds.getLocation().y + 50));
         descriptionPanelGC.addText(String.valueOf(goal));
         descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x, descriptionPanelBounds.getLocation().y + 600));
 
