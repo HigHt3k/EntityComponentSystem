@@ -9,6 +9,7 @@ import com.ecs.intent.Intent;
 import game.components.BuildComponent;
 import game.scenes.GameScene;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -34,15 +35,30 @@ public class BuildIntent extends Intent {
                 Entity entity = new Entity(this.getIntentComponent().getEntity().getName() + "_simulation",
                         IdGenerator.generateId());
 
+                GraphicsComponent other = this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class);
+
                 GraphicsComponent gc = new GraphicsComponent();
-                gc.setBounds(this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).getBounds());
+                gc.setBounds(new Rectangle(
+                            other.get_BOUNDS().x,
+                            other.get_BOUNDS().y,
+                            other.get_BOUNDS().width,
+                            other.get_BOUNDS().height
+                        )
+                );
                 gc.setImage(this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).getImage());
 
                 entity.addComponent(gc);
                 gc.setEntity(entity);
 
                 CollisionComponent cc = new CollisionComponent();
-                cc.setCollisionBox(this.getIntentComponent().getEntity().getComponent(CollisionComponent.class).getCollisionBox());
+                cc.setCollisionBox(
+                        new Rectangle(
+                                other.get_BOUNDS().x,
+                                other.get_BOUNDS().y,
+                                other.get_BOUNDS().width,
+                                other.get_BOUNDS().height
+                        )
+                );
                 cc.setEntity(entity);
                 entity.addComponent(cc);
 
