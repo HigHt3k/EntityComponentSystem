@@ -7,5 +7,6 @@ public class GenericButton extends Entity {
         super(name, id);
 
         // TODO: Implement a generic button
+
     }
 }
