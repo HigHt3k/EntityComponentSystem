@@ -7,6 +7,7 @@ import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.intent.Intent;
 import game.components.BuildComponent;
+import game.components.SimulationComponent;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -49,6 +50,11 @@ public class BuildIntent extends Intent {
 
                 entity.addComponent(gc);
                 gc.setEntity(entity);
+
+                SimulationComponent sc = new SimulationComponent();
+                sc.setFailureRatio(this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getFailureRatio());
+                entity.addComponent(sc);
+                sc.setEntity(entity);
 
                 CollisionComponent cc = new CollisionComponent();
                 cc.setCollisionBox(

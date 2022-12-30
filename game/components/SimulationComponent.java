@@ -4,6 +4,7 @@ import com.ecs.component.Component;
 
 public class SimulationComponent extends Component {
     private float failureRatio;
+    private SimulationType simulationType;
 
     @Override
     public void update() {
@@ -16,5 +17,13 @@ public class SimulationComponent extends Component {
 
     public float getFailureRatio() {
         return failureRatio;
+    }
+
+    public SimulationType getSimulationType() {
+        return simulationType;
+    }
+
+    public void setSimulationType(SimulationType simulationType) {
+        this.simulationType = simulationType;
     }
 }

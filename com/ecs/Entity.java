@@ -2,7 +2,6 @@ package com.ecs;
 
 import com.IdGenerator;
 import com.ecs.component.Component;
-import com.rits.cloning.Cloner;
 
 import java.util.ArrayList;
 
@@ -17,6 +16,10 @@ public class Entity implements Cloneable {
         this.name = name;
         this.id = id;
         components = new ArrayList<>();
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {

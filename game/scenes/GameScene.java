@@ -22,6 +22,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class GameScene extends Scene {
     private static final int ITEM_MARGIN = 20;
@@ -92,6 +94,38 @@ public class GameScene extends Scene {
                         .getBounds()
                         .contains(mousePos)
                 ) {
+                    for(Entity check : getEntities()) {
+                        if(e.getComponent(GridComponent.class) != null && check.getComponent(GridComponent.class) != null
+                        && e != check) {
+                            if(e.getComponent(GridComponent.class).getGridLocation().equals(
+                                    check.getComponent(GridComponent.class).getGridLocation())) {
+                                if(check.getComponent(SimulationComponent.class) != null) {
+                                    //replace the component
+                                    Pattern p = Pattern.compile("_\\d{3}");
+                                    Matcher m1 = p.matcher(check.getName());
+                                    if(m1.find()) {
+                                        for (Entity build : getEntities()) {
+                                            Matcher m2 = p.matcher(build.getName());
+                                            if (m2.find()) {
+                                                if (build.getComponent(BuildComponent.class) != null) {
+                                                    if (m1.group(0).equals(m2.group(0))) {
+                                                        System.out.println(m1.group(0) + " " + m2.group(0));
+                                                        build.getComponent(BuildComponent.class).addToAmount();
+                                                        build.getComponent(GraphicsComponent.class).getTexts().set(0,
+                                                                String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    getEntities().remove(check);
+                                    break;
+                                }
+                            }
+                        }
+                    }
                     GridComponent gc = new GridComponent();
                     gc.setGridLocation(new Point(
                                 (int) e.getComponent(GridComponent.class).getGridLocation().getX(),
@@ -103,9 +137,8 @@ public class GameScene extends Scene {
 
                     currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
                             .get_BOUNDS().getLocation());
-
-                    currentlyBuilding = null;
                     Game.logger().info("Successfully added a new entity to the grid: " + currentlyBuilding.getName());
+                    currentlyBuilding = null;
                     return true;
                 }
             }
@@ -151,12 +184,8 @@ public class GameScene extends Scene {
         addEntityToScene(gridElement);
     }
 
-    public void buildElement(int imgId, float failureRatio, boolean interactable) {
-
-    }
-
     public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean interactable) {
-        Entity simElement = new Entity("simulation_element_" + x + ":" + y, IdGenerator.generateId());
+        Entity simElement = new Entity("simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId());
 
         GraphicsComponent simElementGraphicsComponent = new GraphicsComponent();
         Rectangle simElementBounds = new Rectangle(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
