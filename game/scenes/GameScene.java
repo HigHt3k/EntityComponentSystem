@@ -6,6 +6,7 @@ import com.ecs.component.CollisionComponent;
 import com.ecs.Entity;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
+import com.ecs.entity.GenericButton;
 import com.ecs.intent.ExitIntent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.elements.ToolTip;
@@ -85,6 +86,7 @@ public class GameScene extends Scene {
     /**
      * place a new entity to the grid if possible. Don't build if the entity is placed outside the grid.
      * Replace if an entity is already on the grid. The "replaced" entity will go back to the building panel stack.
+     * TODO: make this method more transparent and possibly use methods for identifying if a grid tile is already used or not.
      * @param mousePos
      */
     public boolean finalizeBuilding(Point mousePos) {
@@ -287,77 +289,28 @@ public class GameScene extends Scene {
     }
 
     private void setupButtons() {
-        // Exit button
-        Entity exitButton = new Entity("Exit", IdGenerator.generateId());
-        GraphicsComponent exitButtonGraphicsComponent = new GraphicsComponent();
-        Rectangle exitButtonBounds = new Rectangle(1600, 900, ITEM_WIDTH, ITEM_HEIGHT);
-        exitButtonGraphicsComponent.setBounds(exitButtonBounds);
-        exitButtonGraphicsComponent.setShape(exitButtonBounds);
-        exitButtonGraphicsComponent.addText("EXIT");
-        exitButtonGraphicsComponent.addLocation(exitButtonBounds.getLocation());
-        exitButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
-        exitButtonGraphicsComponent.setTextColor(TEXT_COLOR);
-        exitButtonGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
-        exitButtonGraphicsComponent.setFillColor(BOX_COLOR);
-        exitButtonGraphicsComponent.setHoverColor(HOVER_COLOR);
+        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
+        GenericButton exitButton = new GenericButton(
+                "Exit",
+                IdGenerator.generateId(),
+                1600, 900,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "EXIT",
+                font
+        );
+        exitButton.addIntent(new ExitIntent());
+        this.addEntityToScene(exitButton);
 
-        exitButton.addComponent(exitButtonGraphicsComponent);
-        exitButtonGraphicsComponent.setEntity(exitButton);
-
-        CollisionComponent exitButtonCollisionComponent = new CollisionComponent();
-        exitButtonCollisionComponent.setCollisionBox(exitButtonBounds);
-
-        exitButton.addComponent(exitButtonCollisionComponent);
-        exitButtonCollisionComponent.setEntity(exitButton);
-
-        IntentComponent exitButtonIntentComponent = new IntentComponent();
-        HoverIntent hi = new HoverIntent();
-        hi.setIntentComponent(exitButtonIntentComponent);
-        exitButtonIntentComponent.addIntent(hi);
-        ExitIntent ei = new ExitIntent();
-        ei.setIntentComponent(exitButtonIntentComponent);
-        exitButtonIntentComponent.addIntent(ei);
-
-        exitButtonIntentComponent.setEntity(exitButton);
-        exitButton.addComponent(exitButtonIntentComponent);
-
-        addEntityToScene(exitButton);
-
-        // back to menu button
-        Entity mainMenuButton = new Entity("Menu_button", IdGenerator.generateId());
-        GraphicsComponent mainMenuButtonGraphicsComponent = new GraphicsComponent();
-        Rectangle mainMenuButtonBounds = new Rectangle(1600, 800, ITEM_WIDTH, ITEM_HEIGHT);
-        mainMenuButtonGraphicsComponent.setBounds(mainMenuButtonBounds);
-        mainMenuButtonGraphicsComponent.setShape(mainMenuButtonBounds);
-        mainMenuButtonGraphicsComponent.addText("MAIN MENU");
-        mainMenuButtonGraphicsComponent.addLocation(mainMenuButtonBounds.getLocation());
-        mainMenuButtonGraphicsComponent.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
-        mainMenuButtonGraphicsComponent.setTextColor(TEXT_COLOR);
-        mainMenuButtonGraphicsComponent.setBorderColor(BOX_BORDER_COLOR);
-        mainMenuButtonGraphicsComponent.setFillColor(BOX_COLOR);
-        mainMenuButtonGraphicsComponent.setHoverColor(HOVER_COLOR);
-
-        mainMenuButton.addComponent(mainMenuButtonGraphicsComponent);
-        mainMenuButtonGraphicsComponent.setEntity(mainMenuButton);
-
-        CollisionComponent mainMenuButtonCollisionComponent = new CollisionComponent();
-        mainMenuButtonCollisionComponent.setCollisionBox(mainMenuButtonBounds);
-
-        mainMenuButton.addComponent(mainMenuButtonCollisionComponent);
-        mainMenuButtonCollisionComponent.setEntity(mainMenuButton);
-
-        IntentComponent mainMenuButtonIntentComponent = new IntentComponent();
-        HoverIntent mainMenuButtonHoverIntent = new HoverIntent();
-        mainMenuButtonHoverIntent.setIntentComponent(mainMenuButtonIntentComponent);
-        mainMenuButtonIntentComponent.addIntent(mainMenuButtonHoverIntent);
-        StartIntent mainMenuButtonStartIntent = new StartIntent();
-        mainMenuButtonStartIntent.setIntentComponent(mainMenuButtonIntentComponent);
-        mainMenuButtonIntentComponent.addIntent(mainMenuButtonStartIntent);
-
-        mainMenuButtonIntentComponent.setEntity(mainMenuButton);
-        mainMenuButton.addComponent(mainMenuButtonIntentComponent);
-
-        addEntityToScene(mainMenuButton);
+        GenericButton mainMenuButton = new GenericButton(
+                "Menu_button",
+                IdGenerator.generateId(),
+                1600, 800,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "MAIN MENU",
+                font
+        );
+        mainMenuButton.addIntent(new StartIntent());
+        this.addEntityToScene(mainMenuButton);
     }
 
     private void setupBuildPanel() {
