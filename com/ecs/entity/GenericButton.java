@@ -44,6 +44,7 @@ public class GenericButton extends Entity {
         GraphicsComponent graphics = new GraphicsComponent();
         graphics.setEntity(this);
         graphics.setBounds(bounds);
+        graphics.setShape(bounds);
         graphics.setFont(font);
         graphics.setTextColor(TEXT_COLOR);
         graphics.setBorderColor(BOX_BORDER_COLOR);
