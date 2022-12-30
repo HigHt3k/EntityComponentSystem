@@ -103,15 +103,11 @@ public class BuildIntent extends Intent {
 
             else if(isBuilding && e.getButton() == MouseEvent.BUTTON1) {
                 // Finalize building
-                System.out.println("Finalizing");
-
                 if(gs.finalizeBuilding(e.getPoint()))
                     isBuilding = false;
             }
 
             else if (isBuilding) {
-                System.out.println("moving around");
-                // handle graphics position
                 gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).reposition(e.getPoint());
             }
         }

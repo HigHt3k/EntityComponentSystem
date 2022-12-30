@@ -60,10 +60,17 @@ public class GameScene extends Scene {
         this.description = description;
     }
 
+    /**
+     * set the goal of the level
+     * @param goal: target failure rate
+     */
     public void setGoal(double goal) {
         this.goal = goal;
     }
 
+    /**
+     * @return the description as defined in the level.xml data
+     */
     public String getDescription() {
         return description;
     }
@@ -74,7 +81,8 @@ public class GameScene extends Scene {
     }
 
     /**
-     * place a new component to the grid if possible. Don't build if the component is placed outside the grid.
+     * place a new entity to the grid if possible. Don't build if the entity is placed outside the grid.
+     * Replace if an entity is already on the grid. The "replaced" entity will go back to the building panel stack.
      * @param mousePos
      */
     public boolean finalizeBuilding(Point mousePos) {
@@ -97,6 +105,7 @@ public class GameScene extends Scene {
                             .get_BOUNDS().getLocation());
 
                     currentlyBuilding = null;
+                    Game.logger().info("Successfully added a new entity to the grid: " + currentlyBuilding.getName());
                     return true;
                 }
             }
@@ -104,6 +113,14 @@ public class GameScene extends Scene {
         return false;
     }
 
+    /**
+     * add an Entity that snaps to the grid. This method can e.g. be called from the {@link com.resource.ResourceManager} to parse
+     * the level.XML file to the actual {@link GameScene}.
+     * A {@link GridComponent} is added to the Entity to store the grid position data, which can be called to validate entities against
+     * each other without having to calculate their grid position based on the actual screen position.
+     * @param x: x position in the grid
+     * @param y: y position in the grid
+     */
     public void addGridElement(int x, int y) {
         Entity gridElement = new Entity("grid_element_" + x + ":" + y, IdGenerator.generateId());
         GraphicsComponent gridElementGraphicsComponent = new GraphicsComponent();
