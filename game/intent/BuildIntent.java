@@ -105,8 +105,8 @@ public class BuildIntent extends Intent {
                 // Finalize building
                 System.out.println("Finalizing");
 
-                gs.finalizeBuilding(e.getPoint());
-                isBuilding = false;
+                if(gs.finalizeBuilding(e.getPoint()))
+                    isBuilding = false;
             }
 
             else if (isBuilding) {

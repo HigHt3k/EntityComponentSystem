@@ -73,7 +73,11 @@ public class GameScene extends Scene {
 
     }
 
-    public void finalizeBuilding(Point mousePos) {
+    /**
+     * place a new component to the grid if possible. Don't build if the component is placed outside the grid.
+     * @param mousePos
+     */
+    public boolean finalizeBuilding(Point mousePos) {
         for(Entity e : getEntities()) {
             if(e.getComponent(GridComponent.class) != null) {
                 if(e.getComponent(GraphicsComponent.class)
@@ -92,12 +96,12 @@ public class GameScene extends Scene {
                     currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
                             .get_BOUNDS().getLocation());
 
-                    return;
+                    currentlyBuilding = null;
+                    return true;
                 }
             }
         }
-
-        currentlyBuilding = null;
+        return false;
     }
 
     public void addGridElement(int x, int y) {
