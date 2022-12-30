@@ -1,5 +1,7 @@
 package com.resource;
 
+import com.Game;
+
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.logging.Logger;
@@ -11,7 +13,7 @@ public class TileSet {
     public TileSet() {
         this.tiles = new HashMap<>();
         this.descriptions = new HashMap<>();
-        Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).info("Tileset loaded.");
+        Game.logger().info("Tileset loaded.");
     }
 
     public HashMap<Integer, BufferedImage> getTiles() {
