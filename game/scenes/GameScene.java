@@ -109,15 +109,17 @@ public class GameScene extends Scene {
                                             if (m2.find()) {
                                                 if (build.getComponent(BuildComponent.class) != null) {
                                                     if (m1.group(0).equals(m2.group(0))) {
-                                                        System.out.println(m1.group(0) + " " + m2.group(0));
                                                         build.getComponent(BuildComponent.class).addToAmount();
                                                         build.getComponent(GraphicsComponent.class).getTexts().set(0,
                                                                 String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
+                                                        Game.logger().info("Found component and putting back to build stack.");
                                                         break;
                                                     }
                                                 }
                                             }
                                         }
+                                        Game.logger().info("If no log found for putting component back to stack: add component to levels" +
+                                                "xml file: " + check.getName());
                                     }
 
                                     getEntities().remove(check);
@@ -126,6 +128,7 @@ public class GameScene extends Scene {
                             }
                         }
                     }
+
                     GridComponent gc = new GridComponent();
                     gc.setGridLocation(new Point(
                                 (int) e.getComponent(GridComponent.class).getGridLocation().getX(),
