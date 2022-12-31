@@ -22,7 +22,7 @@ import java.util.regex.PatternSyntaxException;
 public class RenderingEngine {
     private static final float scaleW = Game.config().renderConfiguration().getScaleWidth();
     private static final float scaleH = Game.config().renderConfiguration().getScaleHeight();
-    public static final int MARGIN = (int) (75 * scaleW); //px
+    public static final int MARGIN = (int) (50 * scaleW); //px
 
     private Graphics2D g;
 
