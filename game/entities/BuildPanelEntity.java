@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
  */
 public class BuildPanelEntity extends Entity {
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
 
     public BuildPanelEntity(String name, int id,
                             int x, int y, int width, int height,
@@ -43,6 +44,7 @@ public class BuildPanelEntity extends Entity {
         graphics.setBounds(bounds);
         graphics.setImage(img);
         graphics.setHoverColor(HOVER_COLOR);
+        graphics.setTextColor(TEXT_COLOR);
         graphics.setEntity(this);
         this.addComponent(graphics);
 
