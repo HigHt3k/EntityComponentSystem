@@ -15,12 +15,16 @@ public class GraphicsComponent extends Component {
     Shape _SHAPE;
     Font _FONT;
     ArrayList<Point2D> _LOCATIONS = new ArrayList<>();
+    Point _LINESTART;
+    Point _LINEEND;
 
     // temporary sizes
     Rectangle bounds;
     Shape shape;
     Font font;
     ArrayList<Point2D> locations;
+    Point lineStart;
+    Point lineEnd;
 
     // non scalable content
     BufferedImage image;
@@ -54,6 +58,11 @@ public class GraphicsComponent extends Component {
             for (int i = 0; i < _LOCATIONS.size(); i++) {
                 locations.add(Game.scale().scalePoint((Point) _LOCATIONS.get(i)));
             }
+        }
+
+        if(_LINESTART != null && _LINEEND != null) {
+            lineStart = Game.scale().scalePoint(_LINESTART);
+            lineEnd = Game.scale().scalePoint(_LINEEND);
         }
     }
 
@@ -196,5 +205,27 @@ public class GraphicsComponent extends Component {
 
     public ArrayList<Point2D> get_LOCATIONS() {
         return _LOCATIONS;
+    }
+
+    public Point get_LINESTART() {
+        return _LINESTART;
+    }
+
+    public Point get_LINEEND() {
+        return _LINEEND;
+    }
+
+    public Point getLineStart() {
+        return lineStart;
+    }
+
+    public Point getLineEnd() {
+        return lineEnd;
+    }
+
+    public void setLine(Point p1, Point p2) {
+        this._LINESTART = p1;
+        this._LINEEND = p2;
+        updateSize();
     }
 }

@@ -108,6 +108,13 @@ public class RenderingEngine {
         ImageRenderer.render(g, img, x, y, width, height);
     }
 
+    public static void renderLine(Graphics2D g, Point p1, Point p2, Color color, int thickness) {
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                Game.config().renderConfiguration().getAntialiasing());
+
+        LineRenderer.render(g, p1, p2, color, thickness);
+    }
+
     /**
      * Collects all entities and detects if they have a @{@link GraphicsComponent} which should be rendered
      */
