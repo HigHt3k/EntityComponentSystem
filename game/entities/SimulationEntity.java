@@ -10,7 +10,7 @@ import game.components.CablePortsComponent;
 import game.components.GridComponent;
 import game.components.SimulationComponent;
 import game.components.SimulationType;
-import game.intent.SimulationIntent;
+import game.intent.BuildIntent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -85,10 +85,10 @@ public class SimulationEntity extends Entity {
         hover.setIntentComponent(intents);
         intents.addIntent(hover);
 
-        // define SimulationIntent by default
-        SimulationIntent simIntent = new SimulationIntent();
-        simIntent.setIntentComponent(intents);
-        intents.addIntent(simIntent);
+        // define BuildIntent by default
+        BuildIntent build = new BuildIntent();
+        build.setIntentComponent(intents);
+        intents.addIntent(build);
     }
 
     public void addIntent(Intent intent) {
