@@ -9,6 +9,12 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Map;
 
+/**
+ * Stores all graphical information such as shapes, colors, text, lines, fonts, ...
+ * Add this component to any {@link com.ecs.Entity} to render it to the screen properly.
+ * Scaling is handled by the {@link com.graphics.render.ScalingEngine} that is applied to the graphics component upon
+ * updating the size of any scalable context
+ */
 public class GraphicsComponent extends Component {
     // original input sizes, needed when rescaling is done or entity is copied
     Rectangle _BOUNDS;
