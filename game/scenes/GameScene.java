@@ -12,6 +12,8 @@ import com.ecs.intent.HoverIntent;
 import com.graphics.elements.ToolTip;
 import com.graphics.scene.Scene;
 import game.components.*;
+import game.entities.BuildPanelEntity;
+import game.entities.GridEntity;
 import game.entities.SimulationEntity;
 import game.intent.BuildIntent;
 import game.intent.SimulationIntent;
@@ -192,33 +194,12 @@ public class GameScene extends Scene {
      * @param y: y position in the grid
      */
     public void addGridElement(int x, int y) {
-        Entity gridElement = new Entity("grid_element_" + x + ":" + y, IdGenerator.generateId());
-        GraphicsComponent gridElementGraphicsComponent = new GraphicsComponent();
-        Rectangle gridElementBounds = new Rectangle(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-        gridElementGraphicsComponent.setBounds(gridElementBounds);
-        gridElementGraphicsComponent.setHoverColor(HOVER_COLOR);
-        gridElementGraphicsComponent.setImage(Game.res().loadTile(1));
-        gridElement.addComponent(gridElementGraphicsComponent);
-        gridElementGraphicsComponent.setEntity(gridElement);
-
-        GridComponent gridElementGridComponent = new GridComponent();
-        gridElementGridComponent.setGridLocation(new Point(x, y));
-        gridElement.addComponent(gridElementGridComponent);
-        gridElementGridComponent.setEntity(gridElement);
-
-        CollisionComponent gridElementCollisionComponent = new CollisionComponent();
-        gridElementCollisionComponent.setCollisionBox(gridElementBounds);
-        gridElement.addComponent(gridElementCollisionComponent);
-        gridElementCollisionComponent.setEntity(gridElement);
-
-        IntentComponent gridElementIntentComponent = new IntentComponent();
-        HoverIntent gridElementIntentComponentHoverIntent = new HoverIntent();
-        gridElementIntentComponentHoverIntent.setIntentComponent(gridElementIntentComponent);
-        gridElementIntentComponent.addIntent(gridElementIntentComponentHoverIntent);
-        gridElement.addComponent(gridElementIntentComponent);
-        gridElementIntentComponent.setEntity(gridElement);
-
-        addEntityToScene(gridElement);
+        GridEntity gridEntity = new GridEntity("grid_element_" + x + ":" + y, IdGenerator.generateId(),
+                CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                x, y,
+                Game.res().loadTile(1)
+        );
+        addEntityToScene(gridEntity);
     }
 
     public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean removable) {
@@ -235,55 +216,14 @@ public class GameScene extends Scene {
     }
 
     public void addToBuildPanel(int imgId, int amount, float failureRatio) {
-        Entity buildElement = new Entity("build_element_" + imgId, IdGenerator.generateId());
-
-        GraphicsComponent buildElementGC = new GraphicsComponent();
-        Rectangle buildElementBounds = new Rectangle((int) (150 +
-                numberOfBuildPanelElements * (CELL_SIZE + ITEM_MARGIN)),
-                875,
-                (int) (CELL_SIZE),
-                (int) (CELL_SIZE)
-                );
-        buildElementGC.setBounds(buildElementBounds);
-        buildElementGC.setImage(Game.res().loadTile(imgId));
-        buildElementGC.setHoverColor(HOVER_COLOR);
-        ToolTip tt = new ToolTip();
-        tt.setFont(buildElementGC.getFont());
-        tt.setText(Game.res().loadDescription(imgId));
-        buildElementGC.setToolTip(tt);
-        buildElementGC.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
-        buildElementGC.addText(String.valueOf(amount));
-        buildElementGC.addLocation(new Point((int) buildElementBounds.getX(),
-                (int) buildElementBounds.getY() + buildElementBounds.height));
-
-        buildElementGC.setEntity(buildElement);
-        buildElement.addComponent(buildElementGC);
+        BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
+                150 + numberOfBuildPanelElements * (CELL_SIZE + ITEM_MARGIN), 875, CELL_SIZE, CELL_SIZE,
+                Game.res().loadTile(imgId),
+                amount, failureRatio,
+                Game.res().loadDescription(imgId)
+        );
+        addEntityToScene(buildPanelEntity);
         numberOfBuildPanelElements++;
-
-        BuildComponent buildElementBC = new BuildComponent();
-        buildElementBC.setAmount(amount);
-        buildElementBC.setFailureRatio(failureRatio);
-        buildElementBC.setEntity(buildElement);
-        buildElement.addComponent(buildElementBC);
-
-        CollisionComponent buildElementCC = new CollisionComponent();
-        buildElementCC.setCollisionBox(buildElementBounds);
-        buildElementCC.setEntity(buildElement);
-        buildElement.addComponent(buildElementCC);
-
-        IntentComponent buildElementIC = new IntentComponent();
-        buildElementIC.setEntity(buildElement);
-        buildElement.addComponent(buildElementIC);
-
-        HoverIntent buildElementICHI = new HoverIntent();
-        buildElementICHI.setIntentComponent(buildElementIC);
-        buildElementIC.addIntent(buildElementICHI);
-
-        BuildIntent buildElementICBI = new BuildIntent();
-        buildElementICBI.setIntentComponent(buildElementIC);
-        buildElementIC.addIntent(buildElementICBI);
-
-        addEntityToScene(buildElement);
     }
 
     private void setupButtons() {
