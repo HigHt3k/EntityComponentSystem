@@ -2,6 +2,7 @@ package com.resource;
 
 import com.Game;
 import com.ecs.Entity;
+import game.components.SimulationType;
 import game.scenes.GameScene;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -71,6 +72,10 @@ public class ResourceManager {
                     String description = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("description");
                     if(description.equals("")) {
                         description = "Default description";
+                    }
+                    if(SimulationType.contains(type)) {
+                        SimulationType simType = SimulationType.valueOf(type);
+                        t.getTypes().put(Integer.parseInt(id), SimulationType.valueOf(type));
                     }
 
                     BufferedImage img = ImageIO.read(new File(imagePath));
