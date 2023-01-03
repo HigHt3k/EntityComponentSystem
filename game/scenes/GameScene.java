@@ -11,10 +11,8 @@ import com.ecs.intent.ExitIntent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.elements.ToolTip;
 import com.graphics.scene.Scene;
-import game.components.BuildComponent;
-import game.components.GridComponent;
-import game.components.SimulationComponent;
-import game.components.TooltipComponent;
+import game.components.*;
+import game.entities.SimulationEntity;
 import game.intent.BuildIntent;
 import game.intent.SimulationIntent;
 import game.intent.StartIntent;
@@ -192,50 +190,16 @@ public class GameScene extends Scene {
     }
 
     public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean interactable) {
-        Entity simElement = new Entity("simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId());
+        SimulationEntity simulationEntity = new SimulationEntity(
+                "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
+                CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                x, y,
+                Game.res().loadTile(imgId),
+                failureRatio, Game.res().getTileSet().getType(imgId),
+                4
+        );
 
-        GraphicsComponent simElementGraphicsComponent = new GraphicsComponent();
-        Rectangle simElementBounds = new Rectangle(CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-        simElementGraphicsComponent.setBounds(simElementBounds);
-        simElementGraphicsComponent.setImage(Game.res().loadTile(imgId));
-        simElementGraphicsComponent.setHoverColor(HOVER_COLOR);
-        simElement.addComponent(simElementGraphicsComponent);
-        simElementGraphicsComponent.setEntity(simElement);
-
-        GridComponent simElementGridComponent = new GridComponent();
-        simElementGridComponent.setGridLocation(new Point(x, y));
-        simElement.addComponent(simElementGridComponent);
-        simElementGridComponent.setEntity(simElement);
-
-        SimulationComponent simElementSimulationComponent = new SimulationComponent();
-        simElementSimulationComponent.setFailureRatio(failureRatio);
-        simElement.addComponent(simElementSimulationComponent);
-        simElementSimulationComponent.setEntity(simElement);
-
-        CollisionComponent simElementCollisionComponent = new CollisionComponent();
-        simElementCollisionComponent.setCollisionBox(simElementBounds);
-        simElement.addComponent(simElementCollisionComponent);
-        simElementCollisionComponent.setEntity(simElement);
-
-        IntentComponent simElementIntentComponent = new IntentComponent();
-        simElement.addComponent(simElementIntentComponent);
-        simElementIntentComponent.setEntity(simElement);
-
-        HoverIntent simElementIntentComponentHoverIntent = new HoverIntent();
-        simElementIntentComponentHoverIntent.setIntentComponent(simElementIntentComponent);
-        simElementIntentComponent.addIntent(simElementIntentComponentHoverIntent);
-
-        SimulationIntent simElementIntentComponentSimulationIntent = new SimulationIntent();
-        simElementIntentComponentSimulationIntent.setIntentComponent(simElementIntentComponent);
-        simElementIntentComponent.addIntent(simElementIntentComponentSimulationIntent);
-
-        TooltipComponent simElementTooltipComponent = new TooltipComponent();
-        simElementTooltipComponent.setTooltipText(Game.res().loadDescription(imgId));
-        simElementTooltipComponent.setFailureRatio(String.valueOf(failureRatio));
-        simElementTooltipComponent.setEntity(simElement);
-        simElement.addComponent(simElementTooltipComponent);
-
-        addEntityToScene(simElement);
+        addEntityToScene(simulationEntity);
     }
 
     public void addToBuildPanel(int imgId, int amount, float failureRatio) {
