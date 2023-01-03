@@ -2,6 +2,8 @@ package game.components;
 
 import com.ecs.component.Component;
 
+import java.util.Calendar;
+
 public class CablePortsComponent extends Component {
     private int cablePortAmount;
     private CablePort[] cablePorts;
@@ -22,6 +24,10 @@ public class CablePortsComponent extends Component {
     public void generateCablePorts() {
         if(cablePortAmount != 0)
             cablePorts = new CablePort[cablePortAmount];
+    }
+
+    public CablePort getCablePort(int id) {
+        return cablePorts[id];
     }
 
 }
