@@ -156,6 +156,14 @@ public class RenderingEngine {
                         );
                     }
                 }
+                if(gc.getLineStart() != null && gc.getLineEnd() != null) {
+                    renderLine(g,
+                            gc.getLineStart(),
+                            gc.getLineEnd(),
+                            gc.getFillColor(),
+                            gc.getThickness()
+                    );
+                }
 
                 if(gc.isHovered() ) {
                     if (gc.getHoverColor() != null) {

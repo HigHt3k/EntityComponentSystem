@@ -17,6 +17,7 @@ public class GraphicsComponent extends Component {
     ArrayList<Point2D> _LOCATIONS = new ArrayList<>();
     Point _LINESTART;
     Point _LINEEND;
+    int _THICKNESS = 0;
 
     // temporary sizes
     Rectangle bounds;
@@ -25,6 +26,7 @@ public class GraphicsComponent extends Component {
     ArrayList<Point2D> locations;
     Point lineStart;
     Point lineEnd;
+    int thickness;
 
     // non scalable content
     BufferedImage image;
@@ -60,10 +62,23 @@ public class GraphicsComponent extends Component {
             }
         }
 
+        if(_THICKNESS != 0) {
+            thickness = Game.scale().scaleX(_THICKNESS);
+        }
+
         if(_LINESTART != null && _LINEEND != null) {
             lineStart = Game.scale().scalePoint(_LINESTART);
             lineEnd = Game.scale().scalePoint(_LINEEND);
         }
+    }
+
+    public void setThickness(int thickness) {
+        this._THICKNESS = thickness;
+        updateSize();
+    }
+
+    public int getThickness() {
+        return thickness;
     }
 
     public void setToolTip(ToolTip toolTip) {
