@@ -2,7 +2,7 @@
 <tileset name="tiles" tilewidth="16" tileheight="16" tilecount="3" columns="0">
  <grid width="1" height="1"/>
  <tile id="0" type="CABLE">
-  <image width="16" height="16" source="game/res/tiles/cable.png"/>
+  <image width="16" height="16" source="game/res/tiles/cable.png" description="Cables can be used to connect components with each other."/>
  </tile>
  <tile id="1" type="BACKGROUND">
   <image width="16" height="16" source="game/res/tiles/concrete.png"/>
@@ -14,22 +14,22 @@
   <image width="32" height="32" source="game/res/avionics/default.png"/>
  </tile>
  <tile id="201" type="SENSOR">
-  <image width="32" height="32" source="game/res/avionics/cpiom.png" description="This is a sensor component."/>
+  <image width="32" height="32" source="game/res/avionics/cpiom.png" description="This is a sensor component It reads specified parameters from a system."/>
  </tile>
  <tile id="202" type="ACTUATOR">
-  <image width="32" height="32" source="game/res/avionics/cpiom_blade.png"/>
+  <image width="32" height="32" source="game/res/avionics/cpiom_blade.png" description="Actuator components are executing the actual movement on the aircraft."/>
  </tile>
  <tile id="203" type="COMPUTER">
-  <image width="32" height="32" source="game/res/avionics/crdc.png"/>
+  <image width="32" height="32" source="game/res/avionics/crdc.png" description="A computer/CPU processes the different sensor inputs it receives and decides on a truth value."/>
  </tile>
  <tile id="204" type="COMPUTER">
-  <image width="32" height="32" source="game/res/avionics/rce.png"/>
+  <image width="32" height="32" source="game/res/avionics/rce.png" description="A computer/CPU processes the different sensor inputs it receives and decides on a truth value."/>
  </tile>
  <tile id="205" type="ACTUATOR">
-  <image width="32" height="32" source="game/res/avionics/rpc.png"/>
+  <image width="32" height="32" source="game/res/avionics/rpc.png" description="Actuator components are executing the actual movement on the aircraft."/>
  </tile>
  <tile id="501" type="CABLE">
-   <image width="32" height="32" source="game/res/tiles/cable-left-right.png"/>
+   <image width="32" height="32" source="game/res/tiles/cable-left-right.png" description="Cables are used to connect components with eath other."/>
  </tile>
  <tile id="1000" type="BACKGROUND">
   <image width="32" height="32" source="game/res/tiles/air.png"/>
