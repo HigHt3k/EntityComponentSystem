@@ -2,21 +2,17 @@ package game.scenes;
 
 import com.Game;
 import com.IdGenerator;
-import com.ecs.component.CollisionComponent;
 import com.ecs.Entity;
 import com.ecs.component.GraphicsComponent;
-import com.ecs.component.IntentComponent;
 import com.ecs.entity.GenericButton;
 import com.ecs.intent.ExitIntent;
-import com.ecs.intent.HoverIntent;
-import com.graphics.elements.ToolTip;
 import com.graphics.scene.Scene;
-import game.components.*;
+import game.components.BuildComponent;
+import game.components.GridComponent;
+import game.components.SimulationComponent;
 import game.entities.BuildPanelEntity;
 import game.entities.GridEntity;
 import game.entities.SimulationEntity;
-import game.intent.BuildIntent;
-import game.intent.SimulationIntent;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
