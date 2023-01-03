@@ -1,14 +1,24 @@
 package game.components;
 
+import com.IdGenerator;
 import com.ecs.component.Component;
 
 public class BuildComponent extends Component {
     private int amount;
     private float failureRatio;
+    private SimulationType simulationType;
 
     @Override
     public void update() {
 
+    }
+
+    public SimulationType getSimulationType() {
+        return simulationType;
+    }
+
+    public void setSimulationType(SimulationType simulationType) {
+        this.simulationType = simulationType;
     }
 
     public void setAmount(int amount) {

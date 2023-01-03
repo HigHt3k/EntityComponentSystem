@@ -3,6 +3,7 @@ package game.scenes;
 import com.Game;
 import com.IdGenerator;
 import com.ecs.Entity;
+import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.GenericButton;
 import com.ecs.intent.ExitIntent;
@@ -96,18 +97,24 @@ public class GameScene extends Scene {
                 ) {
                     checkEntity(e);
 
-                    GridComponent gc = new GridComponent();
-                    gc.setGridLocation(new Point(
+                    currentlyBuilding.getComponent(GridComponent.class).setGridLocation(new Point(
                                 (int) e.getComponent(GridComponent.class).getGridLocation().getX(),
                                 (int) e.getComponent(GridComponent.class).getGridLocation().getY()
                             )
                     );
-                    currentlyBuilding.addComponent(gc);
-                    gc.setEntity(currentlyBuilding);
 
                     currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
                             .get_BOUNDS().getLocation());
-                    Game.logger().info("Successfully added a new entity to the grid: " + currentlyBuilding.getName());
+                    currentlyBuilding.getComponent(CollisionComponent.class)
+                            .setCollisionBox(
+                                currentlyBuilding
+                                    .getComponent(GraphicsComponent.class)
+                                    .get_BOUNDS()
+                    );
+                    Game.logger().info("Successfully added a new entity to the grid.\n" +
+                            "Name: " + currentlyBuilding.getName() +
+                            "\nPosition: " + currentlyBuilding.getComponent(GridComponent.class).getGridLocation() +
+                            "\nRemovable: " + currentlyBuilding.isRemovable());
                     currentlyBuilding = null;
                     return true;
                 }
@@ -216,6 +223,7 @@ public class GameScene extends Scene {
                 150 + numberOfBuildPanelElements * (CELL_SIZE + ITEM_MARGIN), 875, CELL_SIZE, CELL_SIZE,
                 Game.res().loadTile(imgId),
                 amount, failureRatio,
+                Game.res().getTileSet().getType(imgId),
                 Game.res().loadDescription(imgId)
         );
         addEntityToScene(buildPanelEntity);

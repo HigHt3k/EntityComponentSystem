@@ -7,10 +7,7 @@ import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.elements.ToolTip;
-import game.components.BuildComponent;
-import game.components.CablePortsComponent;
-import game.components.GridComponent;
-import game.components.SimulationComponent;
+import game.components.*;
 import game.intent.BuildIntent;
 
 import java.awt.*;
@@ -34,6 +31,7 @@ public class BuildPanelEntity extends Entity {
                             int x, int y, int width, int height,
                             BufferedImage img,
                             int amount, float failureRatio,
+                            SimulationType simulationType,
                             String description) {
         super(name, id);
 
@@ -68,6 +66,7 @@ public class BuildPanelEntity extends Entity {
         builder.setAmount(amount);
         builder.setFailureRatio(failureRatio);
         builder.setEntity(this);
+        builder.setSimulationType(simulationType);
         this.addComponent(builder);
 
         // define IntentComponent

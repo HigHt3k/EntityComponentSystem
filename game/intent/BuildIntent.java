@@ -8,6 +8,7 @@ import com.ecs.component.GraphicsComponent;
 import com.ecs.intent.Intent;
 import game.components.BuildComponent;
 import game.components.SimulationComponent;
+import game.entities.SimulationEntity;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -32,43 +33,22 @@ public class BuildIntent extends Intent {
                         && this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getAmount() > 0) {
                 // now building; create a new entity that can be dragged around
 
-                Entity entity = new Entity(this.getIntentComponent().getEntity().getName() + "_simulation",
-                        IdGenerator.generateId());
-
-                GraphicsComponent other = this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class);
-
-                GraphicsComponent gc = new GraphicsComponent();
-                gc.setBounds(new Rectangle(
-                            other.get_BOUNDS().x,
-                            other.get_BOUNDS().y,
-                            other.get_BOUNDS().width,
-                            other.get_BOUNDS().height
-                        )
+                SimulationEntity newEntity = new SimulationEntity(
+                        this.getIntentComponent().getEntity().getName() + "_simulation", IdGenerator.generateId(),
+                        this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).get_BOUNDS().x,
+                        this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                        this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).get_BOUNDS().width,
+                        this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                        -1, -1,
+                        this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).getImage(),
+                        this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getFailureRatio(),
+                        this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getSimulationType(),
+                        this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getAmount(),
+                        true
                 );
-                gc.setImage(this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).getImage());
 
-                entity.addComponent(gc);
-                gc.setEntity(entity);
-
-                SimulationComponent sc = new SimulationComponent();
-                sc.setFailureRatio(this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getFailureRatio());
-                entity.addComponent(sc);
-                sc.setEntity(entity);
-
-                CollisionComponent cc = new CollisionComponent();
-                cc.setCollisionBox(
-                        new Rectangle(
-                                other.get_BOUNDS().x,
-                                other.get_BOUNDS().y,
-                                other.get_BOUNDS().width,
-                                other.get_BOUNDS().height
-                        )
-                );
-                cc.setEntity(entity);
-                entity.addComponent(cc);
-
-                gs.setCurrentlyBuilding(entity);
-                gs.addEntityToScene(entity);
+                gs.setCurrentlyBuilding(newEntity);
+                gs.addEntityToScene(newEntity);
 
                 this.getIntentComponent().getEntity().getComponent(BuildComponent.class).subtractFromAmount();
                 this.getIntentComponent()
@@ -121,6 +101,7 @@ public class BuildIntent extends Intent {
                 && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
                 && getIntentComponent().getEntity().isRemovable()
         ) {
+            Game.logger().info("Removing from grid: " + getIntentComponent().getEntity().getName());
             // delete object if right clicked but put back to the stack for building; only if component is interactable
             GameScene gs = (GameScene) Game.scene().current();
             gs.removeComponent(this.getIntentComponent().getEntity());
