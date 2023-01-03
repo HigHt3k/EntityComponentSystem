@@ -116,7 +116,11 @@ public class BuildIntent extends Intent {
                 gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).reposition(e.getPoint());
             }
 
-        } else if (Game.scene().current() instanceof GameScene && e.getButton() == MouseEvent.BUTTON3 && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())) {
+        } else if (Game.scene().current() instanceof GameScene
+                && e.getButton() == MouseEvent.BUTTON3
+                && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
+                && getIntentComponent().getEntity().isRemovable()
+        ) {
             // delete object if right clicked but put back to the stack for building; only if component is interactable
             GameScene gs = (GameScene) Game.scene().current();
             gs.removeComponent(this.getIntentComponent().getEntity());
