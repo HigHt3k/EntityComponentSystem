@@ -221,14 +221,14 @@ public class GameScene extends Scene {
         addEntityToScene(gridElement);
     }
 
-    public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean interactable) {
+    public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean removable) {
         SimulationEntity simulationEntity = new SimulationEntity(
                 "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
                 CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
                 x, y,
                 Game.res().loadTile(imgId),
                 failureRatio, Game.res().getTileSet().getType(imgId),
-                4
+                4, removable
         );
 
         addEntityToScene(simulationEntity);

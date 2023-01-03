@@ -35,8 +35,9 @@ public class SimulationEntity extends Entity {
                             int xGrid, int yGrid,
                             BufferedImage img,
                             float failureRatio, SimulationType type,
-                            int cablePortAmount) {
+                            int cablePortAmount, boolean removable) {
         super(name, id);
+        this.setRemovable(removable);
 
         // define the size
         Rectangle bounds = new Rectangle(x, y, width, height);

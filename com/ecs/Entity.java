@@ -11,6 +11,7 @@ public class Entity implements Cloneable {
     private ArrayList<Component> components;
     private String name;
     private int id;
+    private boolean removable = true;
 
     public Entity(String name, int id) {
         this.name = name;
@@ -20,6 +21,14 @@ public class Entity implements Cloneable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isRemovable() {
+        return removable;
+    }
+
+    public void setRemovable(boolean removable) {
+        this.removable = removable;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass) {
