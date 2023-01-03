@@ -80,7 +80,9 @@ public class GameScene extends Scene {
 
     @Override
     public void update() {
-
+        for(Entity e : getEntities()) {
+            e.update();
+        }
     }
 
     /**
@@ -309,6 +311,7 @@ public class GameScene extends Scene {
                 "MAIN MENU",
                 font
         );
+
         mainMenuButton.addIntent(new StartIntent());
         this.addEntityToScene(mainMenuButton);
     }
@@ -336,6 +339,7 @@ public class GameScene extends Scene {
         GraphicsComponent descriptionPanelGC = new GraphicsComponent();
         Rectangle descriptionPanelBounds = new Rectangle(1500, 0, 420, 1080);
         descriptionPanelGC.setBounds(descriptionPanelBounds);
+
         try {
             descriptionPanelGC.setImage(ImageIO.read(new File("game/res/menus/box1.png")));
         } catch (IOException e) {
