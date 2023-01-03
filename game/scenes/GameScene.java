@@ -96,40 +96,7 @@ public class GameScene extends Scene {
                         .getBounds()
                         .contains(mousePos)
                 ) {
-                    for(Entity check : getEntities()) {
-                        if(e.getComponent(GridComponent.class) != null && check.getComponent(GridComponent.class) != null
-                        && e != check) {
-                            if(e.getComponent(GridComponent.class).getGridLocation().equals(
-                                    check.getComponent(GridComponent.class).getGridLocation())) {
-                                if(check.getComponent(SimulationComponent.class) != null) {
-                                    //replace the component
-                                    Pattern p = Pattern.compile("_\\d{3}");
-                                    Matcher m1 = p.matcher(check.getName());
-                                    if(m1.find()) {
-                                        for (Entity build : getEntities()) {
-                                            Matcher m2 = p.matcher(build.getName());
-                                            if (m2.find()) {
-                                                if (build.getComponent(BuildComponent.class) != null) {
-                                                    if (m1.group(0).equals(m2.group(0))) {
-                                                        build.getComponent(BuildComponent.class).addToAmount();
-                                                        build.getComponent(GraphicsComponent.class).getTexts().set(0,
-                                                                String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
-                                                        Game.logger().info("Found component and putting back to build stack.");
-                                                        break;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        Game.logger().info("If no log found for putting component back to stack: add component to levels" +
-                                                "xml file: " + check.getName());
-                                    }
-
-                                    getEntities().remove(check);
-                                    break;
-                                }
-                            }
-                        }
-                    }
+                    checkEntity(e);
 
                     GridComponent gc = new GridComponent();
                     gc.setGridLocation(new Point(
@@ -149,6 +116,71 @@ public class GameScene extends Scene {
             }
         }
         return false;
+    }
+
+    public void checkEntity(Entity e) {
+        for(Entity check : getEntities()) {
+            if(e.getComponent(GridComponent.class) != null && check.getComponent(GridComponent.class) != null
+                    && e != check) {
+                if(e.getComponent(GridComponent.class).getGridLocation().equals(
+                        check.getComponent(GridComponent.class).getGridLocation())) {
+                    if(check.getComponent(SimulationComponent.class) != null) {
+                        //replace the component
+                        Pattern p = Pattern.compile("_\\d{3}");
+                        Matcher m1 = p.matcher(check.getName());
+                        if(m1.find()) {
+                            for (Entity build : getEntities()) {
+                                Matcher m2 = p.matcher(build.getName());
+                                if (m2.find()) {
+                                    if (build.getComponent(BuildComponent.class) != null) {
+                                        if (m1.group(0).equals(m2.group(0))) {
+                                            build.getComponent(BuildComponent.class).addToAmount();
+                                            build.getComponent(GraphicsComponent.class).getTexts().set(0,
+                                                    String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
+                                            Game.logger().info("Found component and putting back to build stack.");
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                            Game.logger().info("If no log found for putting component back to stack: add component to levels" +
+                                    "xml file: " + check.getName());
+                        }
+
+                        getEntities().remove(check);
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    public void removeComponent(Entity e) {
+        if(e.getComponent(SimulationComponent.class) != null) {
+            //replace the component
+            Pattern p = Pattern.compile("_\\d{3}");
+            Matcher m1 = p.matcher(e.getName());
+            if(m1.find()) {
+                for (Entity build : getEntities()) {
+                    Matcher m2 = p.matcher(build.getName());
+                    if (m2.find()) {
+                        if (build.getComponent(BuildComponent.class) != null) {
+                            if (m1.group(0).equals(m2.group(0))) {
+                                build.getComponent(BuildComponent.class).addToAmount();
+                                build.getComponent(GraphicsComponent.class).getTexts().set(0,
+                                        String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
+                                Game.logger().info("Found component and putting back to build stack.");
+                                break;
+                            }
+                        }
+                    }
+                }
+                Game.logger().info("If no log found for putting component back to stack: add component to levels" +
+                        "xml file: " + e.getName());
+            }
+
+            getEntities().remove(e);
+        }
     }
 
     /**

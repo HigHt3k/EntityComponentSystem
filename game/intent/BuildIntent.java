@@ -24,14 +24,13 @@ public class BuildIntent extends Intent {
 
     @Override
     public void handleIntent(MouseEvent e) {
-        if(Game.scene().current() instanceof GameScene) {
+        if(Game.scene().current() instanceof GameScene && this.getIntentComponent().getEntity().getComponent(BuildComponent.class) != null) {
             GameScene gs = (GameScene) Game.scene().current();
             if (getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint()) &&
                     e.getButton() == MouseEvent.BUTTON1
                         && !isBuilding
                         && this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getAmount() > 0) {
                 // now building; create a new entity that can be dragged around
-                System.out.println("Starting to build");
 
                 Entity entity = new Entity(this.getIntentComponent().getEntity().getName() + "_simulation",
                         IdGenerator.generateId());
@@ -116,6 +115,11 @@ public class BuildIntent extends Intent {
             else if (isBuilding) {
                 gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).reposition(e.getPoint());
             }
+
+        } else if (Game.scene().current() instanceof GameScene && e.getButton() == MouseEvent.BUTTON3 && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())) {
+            // delete object if right clicked but put back to the stack for building; only if component is interactable
+            GameScene gs = (GameScene) Game.scene().current();
+            gs.removeComponent(this.getIntentComponent().getEntity());
         }
     }
 }
