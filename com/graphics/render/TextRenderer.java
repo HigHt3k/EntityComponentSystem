@@ -32,8 +32,8 @@ public class TextRenderer {
      * @param location: location on screen
      */
     public static void render(Graphics2D g, String text, Color color, Font font, Point location) {
-        g.setFont(font);
         g.setColor(color);
+        g.setFont(font);
 
         for (String line : text.split("\n"))
             g.drawString(line, location.x, location.y += g.getFontMetrics().getHeight());

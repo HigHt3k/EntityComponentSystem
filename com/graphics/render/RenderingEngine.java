@@ -160,7 +160,7 @@ public class RenderingEngine {
                     renderLine(g,
                             gc.getLineStart(),
                             gc.getLineEnd(),
-                            gc.getFillColor(),
+                            gc.getLineColor(),
                             gc.getThickness()
                     );
                 }

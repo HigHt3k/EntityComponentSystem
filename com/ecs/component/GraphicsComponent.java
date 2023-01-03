@@ -39,6 +39,7 @@ public class GraphicsComponent extends Component {
     Color fillColor;
     Color textColor;
     Color borderColor;
+    Color lineColor;
     boolean hovered = false;
     Color hoverColor;
 
@@ -242,6 +243,14 @@ public class GraphicsComponent extends Component {
 
     public Point getLineEnd() {
         return lineEnd;
+    }
+
+    public Color getLineColor() {
+        return lineColor;
+    }
+
+    public void setLineColor(Color color) {
+        this.lineColor = color;
     }
 
     public void setLine(Point p1, Point p2) {
