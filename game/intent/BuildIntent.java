@@ -8,6 +8,7 @@ import com.ecs.component.GraphicsComponent;
 import com.ecs.intent.Intent;
 import game.components.BuildComponent;
 import game.components.SimulationComponent;
+import game.entities.CableEntity;
 import game.entities.SimulationEntity;
 import game.scenes.GameScene;
 
@@ -15,22 +16,34 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+/**
+ * this intent is used to build new entities.
+ */
 public class BuildIntent extends Intent {
     private boolean isBuilding = false;
 
+    /**
+     * handle the intent based on given key events
+     * @param e
+     */
     @Override
     public void handleIntent(KeyEvent e) {
 
     }
 
+    /**
+     * handle the intent based on given mouse events
+     * @param e
+     */
     @Override
     public void handleIntent(MouseEvent e) {
-        if(Game.scene().current() instanceof GameScene && this.getIntentComponent().getEntity().getComponent(BuildComponent.class) != null) {
-            GameScene gs = (GameScene) Game.scene().current();
-            if (getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint()) &&
-                    e.getButton() == MouseEvent.BUTTON1
-                        && !isBuilding
-                        && this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getAmount() > 0) {
+        // check if current scene is a GameScene instance & handle the build panel
+        if(Game.scene().current() instanceof GameScene gs
+                && this.getIntentComponent().getEntity().getComponent(BuildComponent.class) != null) {
+            if (getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
+                    && e.getButton() == MouseEvent.BUTTON1
+                    && !isBuilding
+                    && this.getIntentComponent().getEntity().getComponent(BuildComponent.class).getAmount() > 0) {
                 // now building; create a new entity that can be dragged around
 
                 SimulationEntity newEntity = new SimulationEntity(
@@ -96,6 +109,7 @@ public class BuildIntent extends Intent {
                 gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).reposition(e.getPoint());
             }
 
+        // Handle removed items from grid
         } else if (Game.scene().current() instanceof GameScene
                 && e.getButton() == MouseEvent.BUTTON3
                 && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
@@ -105,6 +119,26 @@ public class BuildIntent extends Intent {
             // delete object if right clicked but put back to the stack for building; only if component is interactable
             GameScene gs = (GameScene) Game.scene().current();
             gs.removeComponent(this.getIntentComponent().getEntity());
+        // handle cable build
+        } else if (!isBuilding
+                && Game.scene().current() instanceof GameScene gs
+                && e.getButton() == MouseEvent.BUTTON1
+                && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
+        ) {
+            CableEntity newCable = new CableEntity(
+                    "cable", IdGenerator.generateId(),
+                    e.getPoint().x,
+                    e.getPoint().y,
+                    this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).get_BOUNDS().width,
+                    this.getIntentComponent().getEntity().getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                    -1, -1,
+                    this.getIntentComponent().getEntity(), null
+            );
+            gs.setCurrentlyBuilding(newCable);
+            gs.addEntityToScene(newCable);
+            isBuilding = true;
+        } else if(isBuilding && Game.scene().current() instanceof GameScene gs && gs.getCurrentlyBuilding() instanceof CableEntity) {
+            gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).setLine(gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).get_LINESTART(), e.getPoint());
         }
     }
 }
