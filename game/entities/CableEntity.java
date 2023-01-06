@@ -38,6 +38,7 @@ public class CableEntity extends Entity {
         // Graphics
         GraphicsComponent graphics = new GraphicsComponent();
         graphics.setLineColor(LINE_COLOR);
+        graphics.setThickness(5);
         // Cable rendering needs to be redesigned here
         graphics.setLine(new Point(x, y), new Point(x + 50, y + 50));
         graphics.setBounds(bounds);
@@ -54,6 +55,7 @@ public class CableEntity extends Entity {
         CablePortsComponent cablePorts = new CablePortsComponent();
         cablePorts.setCablePortAmount(2);
         cablePorts.generateCablePorts();
+        System.out.println(cablePorts.getCablePortAmount());
         cablePorts.getCablePort(0).setConnectedEntity(connectedEntityPort1);
         cablePorts.getCablePort(1).setConnectedEntity(connectedEntityPort2);
         cablePorts.setEntity(this);
