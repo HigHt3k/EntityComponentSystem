@@ -24,38 +24,60 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class GameScene extends Scene {
-    private static final int ITEM_MARGIN = 20;
-    private static final int ITEM_WIDTH = 300;
-    private static final int ITEM_HEIGHT = 60;
-    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
-    private static final Color BOX_COLOR = new Color(200, 90, 0, 240);
-    private static final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
-    private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
-    private static final int CELL_SIZE = 128;
+    private final int ITEM_MARGIN = 20;
+    private final int ITEM_WIDTH = 300;
+    private final int ITEM_HEIGHT = 60;
+    private final int X_MARGIN = 200;
+    private final int Y_MARGIN = 300;
+    private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
+    private final Color BOX_COLOR = new Color(200, 90, 0, 240);
+    private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
+    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private final int CELL_SIZE = 128;
     private String description;
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
 
+    /**
+     * get the currently built entity
+     * @return: the entity
+     */
     public Entity getCurrentlyBuilding() {
         return currentlyBuilding;
     }
 
+    /**
+     * set the currently built entity
+     * @param entity: the entity
+     */
     public void setCurrentlyBuilding(Entity entity) {
         currentlyBuilding = entity;
     }
 
+    /**
+     * create a new GameScene object;
+     * @param name
+     * @param id
+     */
     public GameScene(String name, int id) {
         super(name, id);
         setupBuildPanel();
     }
 
+    /**
+     * initialize the game scene; sets up the description panel and buttons
+     */
     public void init() {
         // Create the GUI including buttons going back to menu, exit etc.
         setupDescriptionPanel();
         setupButtons();
     }
 
+    /**
+     * set the description of the game scene
+     * @param description: the description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -95,41 +117,47 @@ public class GameScene extends Scene {
                         .getBounds()
                         .contains(mousePos)
                 ) {
-                    checkEntity(e);
-
-                    currentlyBuilding.getComponent(GridComponent.class).setGridLocation(new Point(
+                    if(checkEntity(e)) {
+                        currentlyBuilding.getComponent(GridComponent.class).setGridLocation(new Point(
                                 (int) e.getComponent(GridComponent.class).getGridLocation().getX(),
                                 (int) e.getComponent(GridComponent.class).getGridLocation().getY()
-                            )
-                    );
+                                )
+                        );
 
-                    currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
-                            .get_BOUNDS().getLocation());
-                    currentlyBuilding.getComponent(CollisionComponent.class)
-                            .setCollisionBox(
-                                currentlyBuilding
-                                    .getComponent(GraphicsComponent.class)
-                                    .get_BOUNDS()
-                    );
-                    Game.logger().info("Successfully added a new entity to the grid.\n" +
-                            "Name: " + currentlyBuilding.getName() +
-                            "\nPosition: " + currentlyBuilding.getComponent(GridComponent.class).getGridLocation() +
-                            "\nRemovable: " + currentlyBuilding.isRemovable());
-                    currentlyBuilding = null;
-                    return true;
+                        currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
+                                .get_BOUNDS().getLocation());
+                        currentlyBuilding.getComponent(CollisionComponent.class)
+                                .setCollisionBox(
+                                        currentlyBuilding
+                                                .getComponent(GraphicsComponent.class)
+                                                .get_BOUNDS()
+                                );
+                        Game.logger().info("Successfully added a new entity to the grid.\n" +
+                                "Name: " + currentlyBuilding.getName() +
+                                "\nPosition: " + currentlyBuilding.getComponent(GridComponent.class).getGridLocation() +
+                                "\nRemovable: " + currentlyBuilding.isRemovable());
+                        currentlyBuilding = null;
+                        return true;
+                    }
                 }
             }
         }
         return false;
     }
 
-    public void checkEntity(Entity e) {
+    /**
+     * check if the entity can be placed at this position. if another entity is overwritten,
+     * remove it and put it back to the build stack
+     * @param e: the entity to check against
+     * @return true if can build; false if can not build at the grid location
+     */
+    public boolean checkEntity(Entity e) {
         for(Entity check : getEntities()) {
             if(e.getComponent(GridComponent.class) != null && check.getComponent(GridComponent.class) != null
                     && e != check) {
                 if(e.getComponent(GridComponent.class).getGridLocation().equals(
                         check.getComponent(GridComponent.class).getGridLocation())) {
-                    if(check.getComponent(SimulationComponent.class) != null) {
+                    if(check.getComponent(SimulationComponent.class) != null && check.isRemovable()) {
                         //replace the component
                         Pattern p = Pattern.compile("_\\d{3}");
                         Matcher m1 = p.matcher(check.getName());
@@ -153,13 +181,25 @@ public class GameScene extends Scene {
                         }
 
                         getEntities().remove(check);
-                        break;
+                        return true;
+                    } else {
+                        return false;
                     }
                 }
             }
         }
+
+        if(e instanceof GridEntity) {
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * remove an entity and put it back to the buildpanel stack
+     * @param e: the entity
+     */
     public void removeComponent(Entity e) {
         if(e.getComponent(SimulationComponent.class) != null) {
             //replace the component
@@ -198,17 +238,25 @@ public class GameScene extends Scene {
      */
     public void addGridElement(int x, int y) {
         GridEntity gridEntity = new GridEntity("grid_element_" + x + ":" + y, IdGenerator.generateId(),
-                CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
                 x, y,
                 Game.res().loadTile(1)
         );
         addEntityToScene(gridEntity);
     }
 
+    /**
+     * adds a SimulationEntity to the scene
+     * @param x: grid position at x
+     * @param y: grid position at y
+     * @param imgId: entity / image id
+     * @param failureRatio: failure ratio of the entity
+     * @param removable: can be removed or not
+     */
     public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean removable) {
         SimulationEntity simulationEntity = new SimulationEntity(
                 "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
-                CELL_SIZE * x, CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
                 x, y,
                 Game.res().loadTile(imgId),
                 failureRatio, Game.res().getTileSet().getType(imgId),
@@ -218,6 +266,12 @@ public class GameScene extends Scene {
         addEntityToScene(simulationEntity);
     }
 
+    /**
+     * add an Entity to the buildpanel
+     * @param imgId: the entity/img id
+     * @param amount: how many times can this be built?
+     * @param failureRatio: failure ratio of the entity
+     */
     public void addToBuildPanel(int imgId, int amount, float failureRatio) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 150 + numberOfBuildPanelElements * (CELL_SIZE + ITEM_MARGIN), 875, CELL_SIZE, CELL_SIZE,
@@ -230,6 +284,9 @@ public class GameScene extends Scene {
         numberOfBuildPanelElements++;
     }
 
+    /**
+     * setup method for buttons in the GameScene
+     */
     private void setupButtons() {
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
         GenericButton exitButton = new GenericButton(
@@ -256,6 +313,9 @@ public class GameScene extends Scene {
         this.addEntityToScene(mainMenuButton);
     }
 
+    /**
+     * Setup method for the build panel
+     */
     private void setupBuildPanel() {
         Entity buildPanel = new Entity("Build Panel", IdGenerator.generateId());
 
@@ -273,6 +333,9 @@ public class GameScene extends Scene {
         addEntityToScene(buildPanel);
     }
 
+    /**
+     * setup method for the description panel (right side)
+     */
     private void setupDescriptionPanel() {
         Entity descriptionPanel = new Entity("Description Panel", IdGenerator.generateId());
 
