@@ -22,8 +22,12 @@ public class CablePortsComponent extends Component {
     }
 
     public void generateCablePorts() {
-        if(cablePortAmount != 0)
+        if(cablePortAmount != 0) {
             cablePorts = new CablePort[cablePortAmount];
+            for(int i = 0; i < cablePortAmount; i++) {
+                cablePorts[i] = new CablePort();
+            }
+        }
     }
 
     public CablePort getCablePort(int id) {
