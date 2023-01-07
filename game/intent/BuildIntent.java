@@ -124,6 +124,7 @@ public class BuildIntent extends Intent {
                 && Game.scene().current() instanceof GameScene gs
                 && e.getButton() == MouseEvent.BUTTON1
                 && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
+                && gs.getCurrentlyBuilding() == null
         ) {
             CableEntity newCable = new CableEntity(
                     "cable", IdGenerator.generateId(),
@@ -137,8 +138,29 @@ public class BuildIntent extends Intent {
             gs.setCurrentlyBuilding(newCable);
             gs.addEntityToScene(newCable);
             isBuilding = true;
-        } else if(isBuilding && Game.scene().current() instanceof GameScene gs && gs.getCurrentlyBuilding() instanceof CableEntity) {
+        } else if(isBuilding
+                && Game.scene().current() instanceof GameScene gs
+                && gs.getCurrentlyBuilding() instanceof CableEntity
+                && e.getButton() == MouseEvent.NOBUTTON
+        ) {
             gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).setLine(gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).get_LINESTART(), e.getPoint());
+        } else if(isBuilding
+                && Game.scene().current() instanceof GameScene gs
+                && gs.getCurrentlyBuilding() instanceof CableEntity
+                && e.getButton() == MouseEvent.BUTTON1
+        ) {
+            System.out.println("trying to finalize");
+            if(gs.finalizeBuilding(e.getPoint())) {
+                isBuilding = false;
+            }
+        } else if(isBuilding
+                && Game.scene().current() instanceof GameScene gs
+                && gs.getCurrentlyBuilding() instanceof CableEntity
+                && e.getButton() == MouseEvent.BUTTON3
+        ) {
+            Game.logger().info("Removing from grid: " + getIntentComponent().getEntity().getName());
+            // delete object if right clicked but put back to the stack for building; only if component is interactable
+            gs.removeComponent(gs.getCurrentlyBuilding());
         }
     }
 }

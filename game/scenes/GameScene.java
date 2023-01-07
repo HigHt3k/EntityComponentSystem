@@ -9,9 +9,11 @@ import com.ecs.entity.GenericButton;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
 import game.components.BuildComponent;
+import game.components.CablePortsComponent;
 import game.components.GridComponent;
 import game.components.SimulationComponent;
 import game.entities.BuildPanelEntity;
+import game.entities.CableEntity;
 import game.entities.GridEntity;
 import game.entities.SimulationEntity;
 import game.intent.StartIntent;
@@ -110,34 +112,55 @@ public class GameScene extends Scene {
      * TODO: make this method more transparent and possibly use methods for identifying if a grid tile is already used or not.
      * @param mousePos
      */
-    public boolean finalizeBuilding(Point mousePos) {
-        for(Entity e : getEntities()) {
-            if(e.getComponent(GridComponent.class) != null) {
-                if(e.getComponent(GraphicsComponent.class)
-                        .getBounds()
-                        .contains(mousePos)
-                ) {
-                    if(checkEntity(e)) {
-                        currentlyBuilding.getComponent(GridComponent.class).setGridLocation(new Point(
-                                (int) e.getComponent(GridComponent.class).getGridLocation().getX(),
-                                (int) e.getComponent(GridComponent.class).getGridLocation().getY()
-                                )
-                        );
+    public boolean  finalizeBuilding(Point mousePos) {
+        if(currentlyBuilding instanceof SimulationEntity) {
+            for (Entity e : getEntities()) {
+                if (e.getComponent(GridComponent.class) != null) {
+                    if (e.getComponent(GraphicsComponent.class)
+                            .getBounds()
+                            .contains(mousePos)
+                    ) {
+                        if (checkEntity(e)) {
+                            currentlyBuilding.getComponent(GridComponent.class).setGridLocation(new Point(
+                                    (int) e.getComponent(GridComponent.class).getGridLocation().getX(),
+                                    (int) e.getComponent(GridComponent.class).getGridLocation().getY()
+                                    )
+                            );
 
-                        currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
-                                .get_BOUNDS().getLocation());
-                        currentlyBuilding.getComponent(CollisionComponent.class)
-                                .setCollisionBox(
-                                        currentlyBuilding
-                                                .getComponent(GraphicsComponent.class)
-                                                .get_BOUNDS()
-                                );
-                        Game.logger().info("Successfully added a new entity to the grid.\n" +
-                                "Name: " + currentlyBuilding.getName() +
-                                "\nPosition: " + currentlyBuilding.getComponent(GridComponent.class).getGridLocation() +
-                                "\nRemovable: " + currentlyBuilding.isRemovable());
-                        currentlyBuilding = null;
-                        return true;
+                            currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)
+                                    .get_BOUNDS().getLocation());
+                            currentlyBuilding.getComponent(CollisionComponent.class)
+                                    .setCollisionBox(
+                                            currentlyBuilding
+                                                    .getComponent(GraphicsComponent.class)
+                                                    .get_BOUNDS()
+                                    );
+                            Game.logger().info("Successfully added a new entity to the grid.\n" +
+                                    "Name: " + currentlyBuilding.getName() +
+                                    "\nPosition: " + currentlyBuilding.getComponent(GridComponent.class).getGridLocation() +
+                                    "\nRemovable: " + currentlyBuilding.isRemovable());
+                            currentlyBuilding = null;
+                            return true;
+                        }
+                    }
+                }
+            }
+        } else if(currentlyBuilding instanceof CableEntity) {
+            System.out.println("instance found");
+            for (Entity e : getEntities()) {
+                if(e.getComponent(GridComponent.class) != null) {
+                    if(e.getComponent(GraphicsComponent.class).getBounds().contains(mousePos)) {
+                        System.out.println("mouse in grid");
+                        if(e.getComponent(CablePortsComponent.class) != null && !e.getComponent(CablePortsComponent.class).getAvailablePorts().isEmpty()) {
+                            System.out.println("ports free");
+                            currentlyBuilding.getComponent(CablePortsComponent.class).getCablePort(1).setConnectedEntity(currentlyBuilding);
+                            currentlyBuilding.getComponent(GraphicsComponent.class).setLine(
+                                    currentlyBuilding.getComponent(GraphicsComponent.class).get_LINESTART(),
+                                    e.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation()
+                            );
+                            currentlyBuilding = null;
+                            return true;
+                        }
                     }
                 }
             }
@@ -201,29 +224,33 @@ public class GameScene extends Scene {
      * @param e: the entity
      */
     public void removeComponent(Entity e) {
-        if(e.getComponent(SimulationComponent.class) != null) {
-            //replace the component
-            Pattern p = Pattern.compile("_\\d{3}");
-            Matcher m1 = p.matcher(e.getName());
-            if(m1.find()) {
-                for (Entity build : getEntities()) {
-                    Matcher m2 = p.matcher(build.getName());
-                    if (m2.find()) {
-                        if (build.getComponent(BuildComponent.class) != null) {
-                            if (m1.group(0).equals(m2.group(0))) {
-                                build.getComponent(BuildComponent.class).addToAmount();
-                                build.getComponent(GraphicsComponent.class).getTexts().set(0,
-                                        String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
-                                Game.logger().info("Found component and putting back to build stack.");
-                                break;
+        if(currentlyBuilding instanceof SimulationEntity) {
+            if (e.getComponent(SimulationComponent.class) != null) {
+                //replace the component
+                Pattern p = Pattern.compile("_\\d{3}");
+                Matcher m1 = p.matcher(e.getName());
+                if (m1.find()) {
+                    for (Entity build : getEntities()) {
+                        Matcher m2 = p.matcher(build.getName());
+                        if (m2.find()) {
+                            if (build.getComponent(BuildComponent.class) != null) {
+                                if (m1.group(0).equals(m2.group(0))) {
+                                    build.getComponent(BuildComponent.class).addToAmount();
+                                    build.getComponent(GraphicsComponent.class).getTexts().set(0,
+                                            String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
+                                    Game.logger().info("Found component and putting back to build stack.");
+                                    break;
+                                }
                             }
                         }
                     }
+                    Game.logger().info("If no log found for putting component back to stack: add component to levels" +
+                            "xml file: " + e.getName());
                 }
-                Game.logger().info("If no log found for putting component back to stack: add component to levels" +
-                        "xml file: " + e.getName());
-            }
 
+                getEntities().remove(e);
+            }
+        } else if(currentlyBuilding instanceof CableEntity) {
             getEntities().remove(e);
         }
     }

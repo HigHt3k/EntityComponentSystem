@@ -2,7 +2,7 @@ package game.components;
 
 import com.ecs.component.Component;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 
 public class CablePortsComponent extends Component {
     private int cablePortAmount;
@@ -34,4 +34,13 @@ public class CablePortsComponent extends Component {
         return cablePorts[id];
     }
 
+    public ArrayList<CablePort> getAvailablePorts() {
+        ArrayList<CablePort> availPorts = new ArrayList<CablePort>();
+        for(int i = 0; i < cablePortAmount; i++) {
+            if(cablePorts[i].getConnectedEntity() == null) {
+                availPorts.add(cablePorts[i]);
+            }
+        }
+        return availPorts;
+    }
 }
