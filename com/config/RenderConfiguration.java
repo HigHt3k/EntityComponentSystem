@@ -102,10 +102,18 @@ public class RenderConfiguration {
         this.fullscreenMode = fullscreenMode;
     }
 
+    /**
+     * get the antialiasing mode for rendering graphics
+     * @return the antialiasing mode
+     */
     public Object getAntialiasing() {
         return aliasing;
     }
 
+    /**
+     * get the antialiasing mode for rendering text
+     * @return the antialiasing mode
+     */
     public Object getAliasingText() {
         return aliasingText;
     }
