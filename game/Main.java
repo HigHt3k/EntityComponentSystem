@@ -12,6 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
         Game.info().setTitle("Entity Component System Test");
+        Game.info().setAuthor("Johann Töpfer");
+        Game.info().setVersion("v0.0.1-SNAPSHOT");
+        Game.info().setDescription("Educational game to show the concept of redundancy in aircraft system engineering.");
         Game.init();
 
         Game.logger().setLevel(Level.ALL);

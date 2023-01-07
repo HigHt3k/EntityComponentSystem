@@ -86,8 +86,8 @@ public class Game {
         sceneManager = new SceneManager();
         gameLogic = new GameLogic();
         gameLoop = new GameLoop();
-        logger.info("Game initialized successfully");
-
+        logger.info(info.getTitle() + " by " + info.getAuthor() + "\nVersion: " + info.getVersion() + "\n" + info.getDescription());
+        logger.info("Game initialized successfully.");
     }
 
     /**
