@@ -15,6 +15,7 @@ public class Main {
         Game.info().setAuthor("Johann Töpfer");
         Game.info().setVersion("v0.0.1-SNAPSHOT");
         Game.info().setDescription("Educational game to show the concept of redundancy in aircraft system engineering.");
+        Game.config().setDebug(true);
         Game.init();
 
         Game.logger().setLevel(Level.ALL);
