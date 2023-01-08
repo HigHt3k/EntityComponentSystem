@@ -1,6 +1,6 @@
 package game.components;
 
-import com.ecs.Entity;
+import com.ecs.entity.Entity;
 
 public class CablePort {
     private Entity connectedEntity;

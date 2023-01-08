@@ -1,9 +1,11 @@
 package game.entities;
 
-import com.ecs.Entity;
+import com.Game;
+import com.ecs.entity.Entity;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
+import com.ecs.intent.DebugIntent;
 import com.ecs.intent.HoverIntent;
 import game.components.CablePortsComponent;
 import game.components.GridComponent;
@@ -55,7 +57,6 @@ public class CableEntity extends Entity {
         CablePortsComponent cablePorts = new CablePortsComponent();
         cablePorts.setCablePortAmount(2);
         cablePorts.generateCablePorts();
-        System.out.println(cablePorts.getCablePortAmount());
         cablePorts.getCablePort(0).setConnectedEntity(connectedEntityPort1);
         cablePorts.getCablePort(1).setConnectedEntity(connectedEntityPort2);
         cablePorts.setEntity(this);
@@ -79,6 +80,12 @@ public class CableEntity extends Entity {
         BuildIntent build = new BuildIntent();
         build.setIntentComponent(intents);
         intents.addIntent(build);
+
+        if(Game.config().isDebug()) {
+            DebugIntent debug = new DebugIntent();
+            debug.setIntentComponent(intents);
+            intents.addIntent(debug);
+        }
 
     }
 }

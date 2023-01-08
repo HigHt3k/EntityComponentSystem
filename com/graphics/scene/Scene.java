@@ -1,6 +1,6 @@
 package com.graphics.scene;
 
-import com.ecs.Entity;
+import com.ecs.entity.Entity;
 
 import java.util.ArrayList;
 

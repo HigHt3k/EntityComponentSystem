@@ -1,15 +1,11 @@
 package game.entities;
 
-import com.ecs.Entity;
+import com.ecs.entity.Entity;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
-import com.ecs.intent.Intent;
-import game.components.CablePortsComponent;
 import game.components.GridComponent;
-import game.components.SimulationComponent;
-import game.intent.BuildIntent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

@@ -1,6 +1,5 @@
 package com.ecs.entity;
 
-import com.ecs.Entity;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;

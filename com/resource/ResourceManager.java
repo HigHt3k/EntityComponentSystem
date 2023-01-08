@@ -1,7 +1,6 @@
 package com.resource;
 
 import com.Game;
-import com.ecs.Entity;
 import game.components.SimulationType;
 import game.scenes.GameScene;
 import org.w3c.dom.Document;
@@ -25,7 +24,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class ResourceManager {
     private static final LanguageManager language = new LanguageManager();

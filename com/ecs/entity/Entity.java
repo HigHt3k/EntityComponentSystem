@@ -1,7 +1,10 @@
-package com.ecs;
+package com.ecs.entity;
 
+import com.Game;
 import com.IdGenerator;
 import com.ecs.component.Component;
+import com.ecs.component.IntentComponent;
+import com.ecs.intent.DebugIntent;
 
 import java.util.ArrayList;
 

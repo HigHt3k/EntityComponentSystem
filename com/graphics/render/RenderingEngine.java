@@ -1,7 +1,7 @@
 package com.graphics.render;
 
 import com.Game;
-import com.ecs.Entity;
+import com.ecs.entity.Entity;
 import com.ecs.component.GraphicsComponent;
 
 import java.awt.*;
