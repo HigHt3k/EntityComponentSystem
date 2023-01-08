@@ -2,17 +2,14 @@ package game.intent;
 
 import com.Game;
 import com.IdGenerator;
-import com.ecs.Entity;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.intent.Intent;
 import game.components.BuildComponent;
-import game.components.SimulationComponent;
 import game.entities.CableEntity;
 import game.entities.SimulationEntity;
 import game.scenes.GameScene;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -79,7 +76,6 @@ public class BuildIntent extends Intent {
             }
 
             else if (isBuilding && (e.getButton() == MouseEvent.BUTTON3)) {
-                System.out.println("Resetting build");
                 gs.removeEntityFromScene(gs.getCurrentlyBuilding());
                 gs.setCurrentlyBuilding(null);
                 this.getIntentComponent().getEntity().getComponent(BuildComponent.class).addToAmount();
@@ -116,7 +112,7 @@ public class BuildIntent extends Intent {
                 && getIntentComponent().getEntity().isRemovable()
         ) {
             Game.logger().info("Removing from grid: " + getIntentComponent().getEntity().getName());
-            // delete object if right clicked but put back to the stack for building; only if component is interactable
+            // delete object if right-clicked but put back to the stack for building; only if component is interactable
             GameScene gs = (GameScene) Game.scene().current();
             gs.removeComponent(this.getIntentComponent().getEntity());
         // handle cable build
@@ -149,7 +145,6 @@ public class BuildIntent extends Intent {
                 && gs.getCurrentlyBuilding() instanceof CableEntity
                 && e.getButton() == MouseEvent.BUTTON1
         ) {
-            System.out.println("trying to finalize");
             if(gs.finalizeBuilding(e.getPoint())) {
                 isBuilding = false;
             }
@@ -160,7 +155,9 @@ public class BuildIntent extends Intent {
         ) {
             Game.logger().info("Removing from grid: " + getIntentComponent().getEntity().getName());
             // delete object if right clicked but put back to the stack for building; only if component is interactable
+            isBuilding = false;
             gs.removeComponent(gs.getCurrentlyBuilding());
+            gs.setCurrentlyBuilding(null);
         }
     }
 }
