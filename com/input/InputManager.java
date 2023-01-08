@@ -1,7 +1,7 @@
 package com.input;
 
 import com.Game;
-import com.ecs.Entity;
+import com.ecs.entity.Entity;
 import com.ecs.component.IntentComponent;
 
 import java.awt.event.KeyEvent;
