@@ -100,6 +100,7 @@ public class RenderConfiguration {
      */
     public void setFullscreenMode(boolean fullscreenMode) {
         this.fullscreenMode = fullscreenMode;
+        //TODO: Implement fullscreen mode
     }
 
     /**
