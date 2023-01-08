@@ -41,7 +41,7 @@ public class RenderConfiguration {
         if(screenRatio > DEFAULT_SCREEN_RATIO) {
             this.resolution.width = (int) (this.resolution.height * DEFAULT_SCREEN_RATIO);
         } else if(screenRatio < DEFAULT_SCREEN_RATIO) {
-            this.resolution.height = (int) (this.resolution.width * 1/DEFAULT_SCREEN_RATIO);
+            this.resolution.height = (int) (this.resolution.width /DEFAULT_SCREEN_RATIO);
         }
         scale();
         Game.logger().info("Screen size: " + this.resolution);
