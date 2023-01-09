@@ -6,13 +6,10 @@ import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.input.handler.Handler;
-import game.components.BuildComponent;
-import game.components.GridComponent;
-import game.components.SimulationComponent;
+import game.components.*;
 import game.customexceptions.TooManyEntitiesAtGridPositionException;
 import game.entities.CableEntity;
 import game.entities.SimulationEntity;
-import game.scenes.GameScene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -56,13 +53,12 @@ public class BuildHandler extends Handler {
                                         entity.getComponent(GraphicsComponent.class).getImage(),
                                         entity.getComponent(BuildComponent.class).getFailureRatio(),
                                         entity.getComponent(BuildComponent.class).getSimulationType(),
-                                        entity.getComponent(BuildComponent.class).getAmount(),
+                                        4,
                                         true
                                 );
 
-                                GameScene gs = (GameScene) Game.scene().current();
                                 currentBuilding = newEntity;
-                                gs.addEntityToScene(newEntity);
+                                Game.scene().current().addEntityToScene(newEntity);
 
                                 entity.getComponent(BuildComponent.class)
                                         .subtractFromAmount();
@@ -80,7 +76,29 @@ public class BuildHandler extends Handler {
                         // check if the click was on a SimulationComponent second, this will automatically exclude being a
                         // Build Panel Entity because of the previous if query -> create a new Cable Entity
                         else if (entity.getComponent(SimulationComponent.class) != null) {
-
+                            // handle the cable placement
+                            if(entity.getComponent(CablePortsComponent.class) != null) {
+                                // check for available cable ports on the clicked entity
+                                ArrayList<CablePort> ports = entity.getComponent(CablePortsComponent.class).getAvailablePorts();
+                                if(!ports.isEmpty()) {
+                                    CableEntity cable = new CableEntity(
+                                            "cable", IdGenerator.generateId(),
+                                            e.getPoint().x,
+                                            e.getPoint().y,
+                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().width,
+                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                                            -1, -1,
+                                            entity, null
+                                    );
+                                    ports.get(0).setConnectedEntity(cable);
+                                    Game.scene().current().addEntityToScene(cable);
+                                    currentBuilding = cable;
+                                    currentBuildState = BuilderState.BUILDING_CABLE;
+                                    break;
+                                } else {
+                                    return;
+                                }
+                            }
                         }
                     }
                 }
@@ -88,6 +106,14 @@ public class BuildHandler extends Handler {
                 else if (currentBuildState == BuilderState.BUILDING_SIMULATION) {
                     // try to place the component
                     if(placeComponent(currentBuilding)) {
+                        currentBuilding = null;
+                        currentBuildState = BuilderState.NOT_BUILDING;
+                    }
+                }
+                // check if state is building cable
+                else if (currentBuildState == BuilderState.BUILDING_CABLE) {
+                    // try to connect the cable to a neighboring grid tile.
+                    if(placeCable(currentBuilding, e.getPoint())) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
                     }
@@ -102,6 +128,26 @@ public class BuildHandler extends Handler {
                         currentBuildState = BuilderState.NOT_BUILDING;
                         currentBuilding = null;
                     }
+                }
+                // handle if building cable -> remove cable
+                else if(currentBuildState == BuilderState.BUILDING_CABLE) {
+                    CablePort[] ports = currentBuilding.getComponent(CablePortsComponent.class).getCablePorts();
+                    for(CablePort port : ports) {
+                        if(port != null) {
+                            if(port.getConnectedEntity() != null) {
+                                CablePort[] otherPorts = port.getConnectedEntity().getComponent(CablePortsComponent.class).getCablePorts();
+                                for (CablePort otherPort : otherPorts) {
+                                    if (otherPort.getConnectedEntity() == currentBuilding) {
+                                        otherPort.setConnectedEntity(null);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    Game.scene().current().removeEntityFromScene(currentBuilding);
+
+                    currentBuildState = BuilderState.NOT_BUILDING;
+                    currentBuilding = null;
                 }
                 // handle if not building state -> remove component
                 else if(currentBuildState == BuilderState.NOT_BUILDING) {
@@ -126,10 +172,20 @@ public class BuildHandler extends Handler {
                         }
                     }
                 }
-            // check if not button is clicked
+            // check if no button is clicked
             } else if(e.getButton() == MouseEvent.NOBUTTON) {
                 if (currentBuildState == BuilderState.BUILDING_SIMULATION) {
                     currentBuilding.getComponent(GraphicsComponent.class).reposition(e.getPoint());
+                }
+                else if(currentBuildState == BuilderState.BUILDING_CABLE) {
+                    // Reposition the cable end
+                    currentBuilding
+                            .getComponent(GraphicsComponent.class)
+                            .setLine(currentBuilding
+                                    .getComponent(GraphicsComponent.class)
+                                    .getLineStart(),
+                                    e.getPoint()
+                            );
                 }
             }
         }
@@ -276,5 +332,131 @@ public class BuildHandler extends Handler {
         }
 
         return entitiesAtGridPosition;
+    }
+
+    private boolean placeCable(Entity e, Point mousePos) {
+        Point gridPos = findEntityGridPosition(e.getComponent(GraphicsComponent.class).getBounds().getLocation());
+        ArrayList<Entity> clickedEntities = new ArrayList<>();
+
+        Point mouseGridPos = findEntityGridPosition(mousePos);
+        if(mouseGridPos == null) {
+            return false;
+        }
+        try {
+            clickedEntities.addAll(getEntitiesAtGridPosition(mouseGridPos));
+        } catch(TooManyEntitiesAtGridPositionException ex) {
+            ex.printStackTrace();
+        }
+        ArrayList<Entity> neighbors = getEntitiesNeighboringGridPosition(gridPos);
+
+        // check if any of the two lists is empty, if so, it isn't possible to establish a connection here -> return false
+        if(clickedEntities.isEmpty() || neighbors.isEmpty()) {
+            Game.logger().info("any of the two lists is empty");
+            return false;
+        }
+
+        // if both lists have content, check if the clicked entities are a subset of the neighbors list, if not, return false
+        if(!neighbors.containsAll(clickedEntities)) {
+            Game.logger().info("not all entities in clicked list are in neighbors list");
+            System.out.println("---- debug : Neighbors");
+            for(Entity debug : neighbors) {
+                System.out.println(debug.getName() + " at: " + debug.getComponent(GridComponent.class).getGridLocation());
+            }
+
+            System.out.println("---- debug : clicked");
+            for(Entity debug : clickedEntities) {
+                System.out.println(debug.getName() + " at: " + debug.getComponent(GridComponent.class).getGridLocation());
+            }
+            return false;
+        }
+
+        // check if there is already a cable at mouseGridPos, cables can have two entities at the same location
+
+        for(Entity clicked : clickedEntities) {
+            // check if entity has cable ports available; there should be only one with cable ports?
+            // TODO: (what about cables)
+            if(clicked.getComponent(CablePortsComponent.class) != null) {
+                if(!clicked.getComponent(CablePortsComponent.class).getAvailablePorts().isEmpty()) {
+                    // set the interconnection
+                    currentBuilding.getComponent(CablePortsComponent.class).getCablePort(1).setConnectedEntity(clicked);
+                    clicked.getComponent(CablePortsComponent.class).getAvailablePorts().get(0).setConnectedEntity(currentBuilding);
+
+                    currentBuilding.getComponent(GridComponent.class).setGridLocation(mouseGridPos);
+                    System.out.println(mouseGridPos);
+
+                    currentBuilding.getComponent(GraphicsComponent.class).setBounds(
+                            clicked.getComponent(GraphicsComponent.class).get_BOUNDS()
+                    );
+                    currentBuilding.getComponent(CollisionComponent.class).setCollisionBox(
+                            currentBuilding.getComponent(GraphicsComponent.class).get_BOUNDS()
+                    );
+                    currentBuilding.getComponent(GraphicsComponent.class).setLine(
+                            new Point((int) (currentBuilding.getComponent(CablePortsComponent.class).getCablePort(0).getConnectedEntity()
+                                    .getComponent(GraphicsComponent.class).getBounds().getX() + 50),
+                                    (int) (currentBuilding.getComponent(CablePortsComponent.class).getCablePort(0).getConnectedEntity()
+                                            .getComponent(GraphicsComponent.class).getBounds().getY() + 40)
+                            ),
+                            new Point(currentBuilding.getComponent(GraphicsComponent.class).getBounds().x + 50,
+                                    currentBuilding.getComponent(GraphicsComponent.class).getBounds().y + 40)
+                    );
+                    return true;
+                }
+            }
+        }
+
+        for(Entity clicked : clickedEntities) {
+            if(clicked.getComponent(CablePortsComponent.class) == null
+                    && clicked.getComponent(SimulationComponent.class) == null) {
+                // leave the second port of a cable at null, because there is no connection here. however, move the cable
+                // entity here
+                currentBuilding.getComponent(GridComponent.class).setGridLocation(mouseGridPos);
+                System.out.println(mouseGridPos);
+
+                currentBuilding.getComponent(GraphicsComponent.class).setBounds(
+                        clicked.getComponent(GraphicsComponent.class).get_BOUNDS()
+                );
+                currentBuilding.getComponent(CollisionComponent.class).setCollisionBox(
+                        currentBuilding.getComponent(GraphicsComponent.class).get_BOUNDS()
+                );
+                currentBuilding.getComponent(GraphicsComponent.class).setLine(
+                        new Point((int) (currentBuilding.getComponent(CablePortsComponent.class).getCablePort(0).getConnectedEntity()
+                                                        .getComponent(GraphicsComponent.class).getBounds().getX() + 50),
+                                (int) (currentBuilding.getComponent(CablePortsComponent.class).getCablePort(0).getConnectedEntity()
+                                                                        .getComponent(GraphicsComponent.class).getBounds().getY() + 20)
+                        ),
+                        new Point(currentBuilding.getComponent(GraphicsComponent.class).getBounds().x + 50,
+                                currentBuilding.getComponent(GraphicsComponent.class).getBounds().y + 20)
+                );
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private ArrayList<Entity> getEntitiesNeighboringGridPosition(Point p) {
+        ArrayList<Entity> neighbors = new ArrayList<>();
+
+        for(Entity e : Game.scene().current().getEntities()) {
+            if(e.getComponent(GridComponent.class) != null) {
+                if(e == currentBuilding) {
+                    continue;
+                }
+                Point possibleNeighbor = (Point) e.getComponent(GridComponent.class).getGridLocation();
+                if(calculateDistanceBetweenPoints(p.x, p.y, possibleNeighbor.x, possibleNeighbor.y) <= 1) {
+                    neighbors.add(e);
+                }
+            }
+        }
+
+        return neighbors;
+    }
+
+    private double calculateDistanceBetweenPoints(
+            double x1,
+            double y1,
+            double x2,
+            double y2) {
+        return Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
     }
 }
