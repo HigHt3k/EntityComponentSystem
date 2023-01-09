@@ -4,6 +4,7 @@ import com.Game;
 import com.ecs.entity.Entity;
 import com.ecs.component.IntentComponent;
 import com.input.handler.Handler;
+import com.input.handler.HandlerType;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -35,7 +36,8 @@ public class InputManager {
 
 
             for(Handler h : handlers) {
-                h.handle(e);
+                if(h.getHandlerType() == HandlerType.EVENT)
+                    h.handle(e);
             }
 
             // send key event to all components with intents and check wether the intent is applicable
@@ -57,7 +59,8 @@ public class InputManager {
             }
 
             for(Handler h : handlers) {
-                h.handle(e);
+                if(h.getHandlerType() == HandlerType.EVENT)
+                    h.handle(e);
             }
 
             // send mouse event to all components with intents and check wether the intent is applicable

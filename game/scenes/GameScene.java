@@ -17,7 +17,7 @@ import game.entities.CableEntity;
 import game.entities.GridEntity;
 import game.entities.SimulationEntity;
 import game.handler.BuildHandler;
-import game.handler.SimulationHandler;
+import game.handler.SimulationSystem;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -75,10 +75,11 @@ public class GameScene extends Scene {
     public void init() {
         // Create the GUI including buttons going back to menu, exit etc.
         Game.input().removeAllHandlers();
+        Game.system().resetSystems();
         setupDescriptionPanel();
         setupButtons();
         Game.input().addHandler(new BuildHandler());
-        Game.input().addHandler(new SimulationHandler());
+        Game.system().addSystem(new SimulationSystem());
     }
 
     /**

@@ -6,6 +6,7 @@ import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.input.handler.Handler;
+import com.input.handler.HandlerType;
 import game.components.*;
 import game.customexceptions.TooManyEntitiesAtGridPositionException;
 import game.entities.CableEntity;
@@ -21,6 +22,10 @@ import java.util.regex.Pattern;
 public class BuildHandler extends Handler {
     public BuilderState currentBuildState = BuilderState.NOT_BUILDING;
     public Entity currentBuilding = null;
+
+    public BuildHandler() {
+        super(HandlerType.EVENT);
+    }
 
     @Override
     public void handle(KeyEvent e) {

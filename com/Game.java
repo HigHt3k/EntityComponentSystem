@@ -1,6 +1,8 @@
 package com;
 
 import com.config.GameConfiguration;
+import com.ecs.system.System;
+import com.ecs.system.SystemManager;
 import com.graphics.SceneManager;
 import com.graphics.elements.GameFrame;
 import com.graphics.render.RenderingEngine;
@@ -26,6 +28,7 @@ public class Game {
     private static final ResourceManager res = new ResourceManager();
     private static SceneManager sceneManager;
     private static InputManager inputManager;
+    private static SystemManager systemManager;
 
 
     // Display stuff
@@ -72,6 +75,10 @@ public class Game {
         return inputManager;
     }
 
+    public static SystemManager system() {
+        return systemManager;
+    }
+
     public static RenderingEngine graphics() {return graphics;}
 
     public static ScalingEngine scale() {return scale;}
@@ -81,6 +88,7 @@ public class Game {
      * initialized in a certain in order due to class interconnection
      */
     public static synchronized void init() {
+        systemManager = new SystemManager();
         inputManager = new InputManager();
         gameFrame = new GameFrame();
         sceneManager = new SceneManager();
