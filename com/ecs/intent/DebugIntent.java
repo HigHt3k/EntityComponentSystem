@@ -32,7 +32,7 @@ public class DebugIntent extends Intent {
 
             for(Entity e : entities) {
                 if(e.getComponent(CablePortsComponent.class) != null) {
-                    System.out.println("------- " + e.getName() + " --------");
+                    System.out.println("------- " + e.getName() + " - " + e.getId() + " --------");
                     System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
                     System.out.println("Ports-Amount: " + e.getComponent(CablePortsComponent.class).getCablePortAmount());
                     for(int i = 0; i < e.getComponent(CablePortsComponent.class).getCablePortAmount(); i++) {
@@ -40,7 +40,8 @@ public class DebugIntent extends Intent {
                             System.out.println("Port" + i + ": " + "null");
                         } else {
                             System.out.println("Port" + i + ": " +
-                                    e.getComponent(CablePortsComponent.class).getCablePort(i).getConnectedEntity().getName());
+                                    e.getComponent(CablePortsComponent.class).getCablePort(i).getConnectedEntity().getName() + " - " +
+                                    e.getComponent(CablePortsComponent.class).getCablePort(i).getConnectedEntity().getId());
                         }
                     }
                 }
