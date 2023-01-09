@@ -91,4 +91,8 @@ public class InputManager {
     public void addHandler(Handler h) {
         this.handlers.add(h);
     }
+
+    public void removeAllHandlers() {
+        this.handlers = new ArrayList<>();
+    }
 }
