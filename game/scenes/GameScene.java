@@ -17,6 +17,7 @@ import game.entities.CableEntity;
 import game.entities.GridEntity;
 import game.entities.SimulationEntity;
 import game.handler.BuildHandler;
+import game.handler.SimulationHandler;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -77,6 +78,7 @@ public class GameScene extends Scene {
         setupDescriptionPanel();
         setupButtons();
         Game.input().addHandler(new BuildHandler());
+        Game.input().addHandler(new SimulationHandler());
     }
 
     /**
