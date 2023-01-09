@@ -55,7 +55,8 @@ public class CableEntity extends Entity {
 
         // CablePorts
         CablePortsComponent cablePorts = new CablePortsComponent();
-        cablePorts.setCablePortAmount(2);
+        // correlation always between port 0 - 1, 2 - 3, 4 - 5, 6 - 7
+        cablePorts.setCablePortAmount(8);
         cablePorts.generateCablePorts();
         cablePorts.getCablePort(0).setConnectedEntity(connectedEntityPort1);
         cablePorts.getCablePort(1).setConnectedEntity(connectedEntityPort2);
