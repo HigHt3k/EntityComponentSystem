@@ -349,9 +349,12 @@ public class GameScene extends Scene {
      * @param e: the entity
      */
     public void removeComponent(Entity e) {
-        if(currentlyBuilding instanceof SimulationEntity) {
+        System.out.println("removing component: " + e.getName());
+        if(e instanceof SimulationEntity) {
+            System.out.println("entity is sim entity");
             if (e.getComponent(SimulationComponent.class) != null) {
                 //replace the component
+                System.out.println("Sim component non null");
                 Pattern p = Pattern.compile("_\\d{3}");
                 Matcher m1 = p.matcher(e.getName());
                 if (m1.find()) {
@@ -372,10 +375,11 @@ public class GameScene extends Scene {
                     Game.logger().info("If no log found for putting component back to stack: add component to levels" +
                             "xml file: " + e.getName());
                 }
+                System.out.println("removing");
 
                 getEntities().remove(e);
             }
-        } else if(currentlyBuilding instanceof CableEntity) {
+        } else if(e instanceof CableEntity) {
 
             getEntities().remove(e);
         }
