@@ -17,6 +17,8 @@ public abstract class Scene {
         entities = new ArrayList<>();
     }
 
+    public abstract void init();
+
     public void start() {
         for(Entity e : entities) {
             e.start();

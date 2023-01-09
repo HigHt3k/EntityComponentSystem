@@ -76,6 +76,11 @@ public class MenuScene extends Scene {
     }
 
     @Override
+    public void init() {
+
+    }
+
+    @Override
     public void update() {
         for(Entity e : getEntities()) {
             e.update();

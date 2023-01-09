@@ -171,7 +171,6 @@ public class ResourceManager {
                     }
 
                 }
-                scene.init();
                 Game.scene().addScene(scene);
             }
         } catch (IOException e) {

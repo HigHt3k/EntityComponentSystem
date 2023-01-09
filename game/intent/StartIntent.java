@@ -21,6 +21,7 @@ public class StartIntent extends Intent {
             if(ic.getEntity().getComponent(CollisionComponent.class).contains(e.getPoint()) && e.getButton() == MouseEvent.BUTTON1) {
                 Game.logger().info("Setting scene to: " + getIntentComponent().getEntity().getName());
                 Game.scene().setCurrentScene(getIntentComponent().getEntity().getName().replace("_button",""));
+                Game.scene().current().init();
             }
         }
     }

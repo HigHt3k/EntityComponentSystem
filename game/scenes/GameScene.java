@@ -16,10 +16,10 @@ import game.entities.BuildPanelEntity;
 import game.entities.CableEntity;
 import game.entities.GridEntity;
 import game.entities.SimulationEntity;
+import game.handler.BuildHandler;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
-import javax.sound.midi.SysexMessage;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -73,8 +73,10 @@ public class GameScene extends Scene {
      */
     public void init() {
         // Create the GUI including buttons going back to menu, exit etc.
+        Game.input().removeAllHandlers();
         setupDescriptionPanel();
         setupButtons();
+        Game.input().addHandler(new BuildHandler());
     }
 
     /**
@@ -113,7 +115,7 @@ public class GameScene extends Scene {
      * TODO: make this method more transparent and possibly use methods for identifying if a grid tile is already used or not.
      * @param mousePos
      */
-    public boolean  finalizeBuilding(Point mousePos) {
+    public boolean finalizeBuilding(Point mousePos) {
         if(currentlyBuilding instanceof SimulationEntity) {
             for (Entity e : getEntities()) {
                 if (e.getComponent(GridComponent.class) != null) {
@@ -349,12 +351,9 @@ public class GameScene extends Scene {
      * @param e: the entity
      */
     public void removeComponent(Entity e) {
-        System.out.println("removing component: " + e.getName());
         if(e instanceof SimulationEntity) {
-            System.out.println("entity is sim entity");
             if (e.getComponent(SimulationComponent.class) != null) {
                 //replace the component
-                System.out.println("Sim component non null");
                 Pattern p = Pattern.compile("_\\d{3}");
                 Matcher m1 = p.matcher(e.getName());
                 if (m1.find()) {
@@ -375,12 +374,10 @@ public class GameScene extends Scene {
                     Game.logger().info("If no log found for putting component back to stack: add component to levels" +
                             "xml file: " + e.getName());
                 }
-                System.out.println("removing");
 
                 getEntities().remove(e);
             }
         } else if(e instanceof CableEntity) {
-
             getEntities().remove(e);
         }
     }
