@@ -14,7 +14,7 @@
   <image width="32" height="32" source="game/res/avionics/default.png"/>
  </tile>
  <tile id="201" type="SENSOR">
-  <image width="32" height="32" source="game/res/avionics/cpiom.png" description="This is a sensor component It reads specified parameters from a system."/>
+  <image width="32" height="32" source="game/res/avionics/sensor.png" description="This is a sensor component It reads specified parameters from a system."/>
  </tile>
  <tile id="202" type="ACTUATOR">
   <image width="32" height="32" source="game/res/avionics/cpiom_blade.png" description="Actuator components are executing the actual movement on the aircraft."/>
@@ -26,7 +26,7 @@
   <image width="32" height="32" source="game/res/avionics/rce.png" description="A computer/CPU processes the different sensor inputs it receives and decides on a truth value."/>
  </tile>
  <tile id="205" type="ACTUATOR">
-  <image width="32" height="32" source="game/res/avionics/rpc.png" description="Actuator components are executing the actual movement on the aircraft."/>
+  <image width="32" height="32" source="game/res/avionics/actuator.png" description="Actuator components are executing the actual movement on the aircraft."/>
  </tile>
  <tile id="501">
    <image width="32" height="32" source="game/res/tiles/cable-left-right.png" description="Cables are used to connect components with eath other."/>
