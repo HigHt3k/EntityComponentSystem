@@ -496,10 +496,6 @@ public class GameScene extends Scene {
         //TODO: investigate why the numbers are not 420 and 1080 to correctly show this panel on Surface Pro 7
         Rectangle descriptionPanelBounds = new Rectangle(1500, 0, 402, 1037);
         descriptionPanelGC.setBounds(descriptionPanelBounds);
-        System.out.println(descriptionPanelBounds);
-        System.out.println(Game.config().renderConfiguration().getResolution());
-        System.out.println(descriptionPanelGC.getBounds());
-        System.out.println(Game.config().renderConfiguration().getScaleHeight() * 1080);
 
         try {
             descriptionPanelGC.setImage(ImageIO.read(new File("game/res/menus/box_new.png")));

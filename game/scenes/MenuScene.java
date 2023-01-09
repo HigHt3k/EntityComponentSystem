@@ -26,7 +26,7 @@ public class MenuScene extends Scene {
     public MenuScene(String name, int id) {
         super(name, id);
 
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
+        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
 
         // Create the Menu GUI
         Entity background = new Entity("Background", IdGenerator.generateId());
@@ -54,7 +54,7 @@ public class MenuScene extends Scene {
             if(s instanceof GameScene) {
                 GenericButton menuItem = new GenericButton(
                         s.getName() + "_button", IdGenerator.generateId(),
-                        700, 300 + (ITEM_HEIGHT + ITEM_MARGIN) * item,
+                        1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * item,
                         ITEM_WIDTH, ITEM_HEIGHT,
                         s.getName(), font
                 );
