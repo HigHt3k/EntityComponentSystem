@@ -19,6 +19,7 @@ import game.entities.SimulationEntity;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
+import javax.sound.midi.SysexMessage;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -327,7 +328,6 @@ public class GameScene extends Scene {
                             Game.logger().info("If no log found for putting component back to stack: add component to levels" +
                                     "xml file: " + check.getName());
                         }
-
                         getEntities().remove(check);
                         return true;
                     } else {
@@ -493,11 +493,16 @@ public class GameScene extends Scene {
         Entity descriptionPanel = new Entity("Description Panel", IdGenerator.generateId());
 
         GraphicsComponent descriptionPanelGC = new GraphicsComponent();
-        Rectangle descriptionPanelBounds = new Rectangle(1500, 0, 420, 1080);
+        //TODO: investigate why the numbers are not 420 and 1080 to correctly show this panel on Surface Pro 7
+        Rectangle descriptionPanelBounds = new Rectangle(1500, 0, 402, 1037);
         descriptionPanelGC.setBounds(descriptionPanelBounds);
+        System.out.println(descriptionPanelBounds);
+        System.out.println(Game.config().renderConfiguration().getResolution());
+        System.out.println(descriptionPanelGC.getBounds());
+        System.out.println(Game.config().renderConfiguration().getScaleHeight() * 1080);
 
         try {
-            descriptionPanelGC.setImage(ImageIO.read(new File("game/res/menus/box1.png")));
+            descriptionPanelGC.setImage(ImageIO.read(new File("game/res/menus/box_new.png")));
         } catch (IOException e) {
             Game.logger().severe("Could not load image from file\n" + e.getMessage());
         }
