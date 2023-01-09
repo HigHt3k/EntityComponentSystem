@@ -6,6 +6,9 @@ import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.intent.Intent;
 import game.components.BuildComponent;
+import game.components.CablePort;
+import game.components.CablePortsComponent;
+import game.components.SimulationType;
 import game.entities.CableEntity;
 import game.entities.SimulationEntity;
 import game.scenes.GameScene;
@@ -18,6 +21,7 @@ import java.awt.event.MouseEvent;
  */
 public class BuildIntent extends Intent {
     private boolean isBuilding = false;
+    private boolean skippedFirst = false;
 
     /**
      * handle the intent based on given key events
@@ -33,8 +37,9 @@ public class BuildIntent extends Intent {
      * @param e
      */
     @Override
-    public void handleIntent(MouseEvent e) {
+    public synchronized void handleIntent(MouseEvent e) {
         // check if current scene is a GameScene instance & handle the build panel
+        /*
         if(Game.scene().current() instanceof GameScene gs
                 && this.getIntentComponent().getEntity().getComponent(BuildComponent.class) != null) {
             if (getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
@@ -106,17 +111,18 @@ public class BuildIntent extends Intent {
             }
 
         // Handle removed items from grid
-        } else if (Game.scene().current() instanceof GameScene
+        } else if (Game.scene().current() instanceof GameScene gs
                 && e.getButton() == MouseEvent.BUTTON3
                 && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
                 && getIntentComponent().getEntity().isRemovable()
         ) {
             Game.logger().info("Removing from grid: " + getIntentComponent().getEntity().getName());
             // delete object if right-clicked but put back to the stack for building; only if component is interactable
-            GameScene gs = (GameScene) Game.scene().current();
+            isBuilding = false;
             gs.removeComponent(this.getIntentComponent().getEntity());
         // handle cable build
-        } else if (!isBuilding
+        }
+        /* else if (!isBuilding
                 && Game.scene().current() instanceof GameScene gs
                 && e.getButton() == MouseEvent.BUTTON1
                 && getIntentComponent().getEntity().getComponent(CollisionComponent.class).contains(e.getPoint())
@@ -131,6 +137,7 @@ public class BuildIntent extends Intent {
                     -1, -1,
                     this.getIntentComponent().getEntity(), null
             );
+            this.getIntentComponent().getEntity().getComponent(CablePortsComponent.class).getAvailablePorts().get(0).setConnectedEntity(newCable);
             gs.setCurrentlyBuilding(newCable);
             gs.addEntityToScene(newCable);
             isBuilding = true;
@@ -153,11 +160,11 @@ public class BuildIntent extends Intent {
                 && gs.getCurrentlyBuilding() instanceof CableEntity
                 && e.getButton() == MouseEvent.BUTTON3
         ) {
-            Game.logger().info("Removing from grid: " + getIntentComponent().getEntity().getName());
+            Game.logger().info("Removing cable from grid: " + getIntentComponent().getEntity().getName() + " with id: " + getIntentComponent().getEntity().getId());
             // delete object if right clicked but put back to the stack for building; only if component is interactable
             isBuilding = false;
             gs.removeComponent(gs.getCurrentlyBuilding());
             gs.setCurrentlyBuilding(null);
-        }
+        } */
     }
 }
