@@ -193,17 +193,15 @@ public class GraphicsComponent extends Component {
     }
 
     public void reposition(Point p) {
-        if(this._SHAPE != null) {
-            this._SHAPE.getBounds().x = p.x;
-            this._SHAPE.getBounds().y = p.y;
+        if(this.shape != null) {
+            this.shape.getBounds().x = p.x;
+            this.shape.getBounds().y = p.y;
         }
 
-        if(this._BOUNDS != null) {
-            this._BOUNDS.x = p.x;
-            this._BOUNDS.y = p.y;
+        if(this.bounds != null) {
+            this.bounds.x = p.x;
+            this.bounds.y = p.y;
         }
-
-        updateSize();
     }
 
     public Rectangle get_BOUNDS() {
