@@ -329,7 +329,7 @@ public class BuildHandler extends Handler {
             }
         }
 
-        if(entitiesAtGridPosition.size() > 2) {
+        if(entitiesAtGridPosition.size() > 3) {
             throw new TooManyEntitiesAtGridPositionException();
         }
 
@@ -354,6 +354,11 @@ public class BuildHandler extends Handler {
         // check if any of the two lists is empty, if so, it isn't possible to establish a connection here -> return false
         if(clickedEntities.isEmpty() || neighbors.isEmpty()) {
             Game.logger().info("any of the two lists is empty");
+            return false;
+        }
+
+        if(clickedEntities.size() == 3) {
+            // TODO: implement multi cables on a single grid
             return false;
         }
 
