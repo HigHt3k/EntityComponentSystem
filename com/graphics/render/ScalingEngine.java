@@ -37,4 +37,20 @@ public class ScalingEngine {
     public Font scaleFont(Font f) {
         return f.deriveFont(scaleW * f.getSize());
     }
+
+    public int upscaleX(double x) {
+        return (int) Math.round(x * 1 / scaleW);
+    }
+
+    public int upscaleY(double y) {
+        return (int) Math.round(y * 1 / scaleH);
+    }
+
+    public Point upscalePoint(Point p) {
+        return new Point(upscaleX(p.getX()), upscaleY(p.getY()));
+    }
+
+    public Rectangle upscaleRect(Rectangle r) {
+        return new Rectangle(upscaleX(r.getX()), upscaleY(r.getY()), upscaleX(r.getWidth()), upscaleY(r.getHeight()));
+    }
 }
