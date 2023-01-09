@@ -196,11 +196,17 @@ public class GraphicsComponent extends Component {
         if(this.shape != null) {
             this.shape.getBounds().x = p.x;
             this.shape.getBounds().y = p.y;
+
+            this._SHAPE.getBounds().x = Game.scale().upscaleX(p.x);
+            this._SHAPE.getBounds().y = Game.scale().upscaleY(p.y);
         }
 
         if(this.bounds != null) {
             this.bounds.x = p.x;
             this.bounds.y = p.y;
+
+            this._BOUNDS.x = Game.scale().upscaleX(p.x);
+            this._BOUNDS.y = Game.scale().upscaleY(p.y);
         }
     }
 
