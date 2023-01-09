@@ -75,7 +75,7 @@ public class BuildHandler extends Handler {
                         }
                         // check if the click was on a SimulationComponent second, this will automatically exclude being a
                         // Build Panel Entity because of the previous if query -> create a new Cable Entity
-                        else if (entity.getComponent(SimulationComponent.class) != null) {
+                        else if (entity.getComponent(GridComponent.class) != null) {
                             // handle the cable placement
                             if(entity.getComponent(CablePortsComponent.class) != null) {
                                 // check for available cable ports on the clicked entity
@@ -108,6 +108,7 @@ public class BuildHandler extends Handler {
                     if(placeComponent(currentBuilding)) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
+                        break;
                     }
                 }
                 // check if state is building cable
@@ -116,6 +117,7 @@ public class BuildHandler extends Handler {
                     if(placeCable(currentBuilding, e.getPoint())) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
+                        break;
                     }
                 }
             }
@@ -382,7 +384,6 @@ public class BuildHandler extends Handler {
                     clicked.getComponent(CablePortsComponent.class).getAvailablePorts().get(0).setConnectedEntity(currentBuilding);
 
                     currentBuilding.getComponent(GridComponent.class).setGridLocation(mouseGridPos);
-                    System.out.println(mouseGridPos);
 
                     currentBuilding.getComponent(GraphicsComponent.class).setBounds(
                             clicked.getComponent(GraphicsComponent.class).get_BOUNDS()
@@ -399,6 +400,7 @@ public class BuildHandler extends Handler {
                             new Point(currentBuilding.getComponent(GraphicsComponent.class).getBounds().x + 50,
                                     currentBuilding.getComponent(GraphicsComponent.class).getBounds().y + 40)
                     );
+
                     return true;
                 }
             }
