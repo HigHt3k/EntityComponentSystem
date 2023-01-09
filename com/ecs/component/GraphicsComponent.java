@@ -21,8 +21,6 @@ public class GraphicsComponent extends Component {
     Shape _SHAPE;
     Font _FONT;
     ArrayList<Point2D> _LOCATIONS = new ArrayList<>();
-    Point _LINESTART;
-    Point _LINEEND;
     int _THICKNESS = 0;
 
     // temporary sizes
@@ -71,11 +69,6 @@ public class GraphicsComponent extends Component {
 
         if(_THICKNESS != 0) {
             thickness = Game.scale().scaleX(_THICKNESS);
-        }
-
-        if(_LINESTART != null && _LINEEND != null) {
-            lineStart = Game.scale().scalePoint(_LINESTART);
-            lineEnd = Game.scale().scalePoint(_LINEEND);
         }
     }
 
@@ -229,14 +222,6 @@ public class GraphicsComponent extends Component {
         return _LOCATIONS;
     }
 
-    public Point get_LINESTART() {
-        return _LINESTART;
-    }
-
-    public Point get_LINEEND() {
-        return _LINEEND;
-    }
-
     public Point getLineStart() {
         return lineStart;
     }
@@ -254,8 +239,7 @@ public class GraphicsComponent extends Component {
     }
 
     public void setLine(Point p1, Point p2) {
-        this._LINESTART = p1;
-        this._LINEEND = p2;
-        updateSize();
+        this.lineStart = p1;
+        this.lineEnd = p2;
     }
 }

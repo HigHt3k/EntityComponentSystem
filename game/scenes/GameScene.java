@@ -198,18 +198,30 @@ public class GameScene extends Scene {
                                             .getCablePort(0)
                                             .getConnectedEntity()
                                             .getComponent(GraphicsComponent.class)
-                                            .get_BOUNDS()
-                                            .getLocation().x + CELL_SIZE/2,
+                                            .getBounds()
+                                            .getLocation().x +
                                             currentlyBuilding
                                                     .getComponent(CablePortsComponent.class)
                                                     .getCablePort(0)
                                                     .getConnectedEntity()
                                                     .getComponent(GraphicsComponent.class)
-                                                    .get_BOUNDS()
-                                                    .getLocation().y + CELL_SIZE/5
+                                                    .getBounds().width / 2,
+                                            currentlyBuilding
+                                                    .getComponent(CablePortsComponent.class)
+                                                    .getCablePort(0)
+                                                    .getConnectedEntity()
+                                                    .getComponent(GraphicsComponent.class)
+                                                    .getBounds()
+                                                    .getLocation().y +
+                                                    currentlyBuilding
+                                                    .getComponent(CablePortsComponent.class)
+                                                    .getCablePort(0)
+                                                    .getConnectedEntity()
+                                                    .getComponent(GraphicsComponent.class)
+                                                    .getBounds().height / 5
                                     ),
-                                    new Point(e.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().x + CELL_SIZE/2,
-                                            e.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().y + CELL_SIZE/5
+                                    new Point(e.getComponent(GraphicsComponent.class).getBounds().getLocation().x + e.getComponent(GraphicsComponent.class).getBounds().width / 2,
+                                            e.getComponent(GraphicsComponent.class).getBounds().getLocation().y + e.getComponent(GraphicsComponent.class).getBounds().height / 5
                                     )
                             );
                             currentlyBuilding
@@ -237,18 +249,30 @@ public class GameScene extends Scene {
                                             .getCablePort(0)
                                             .getConnectedEntity()
                                             .getComponent(GraphicsComponent.class)
-                                            .get_BOUNDS()
-                                            .getLocation().x + CELL_SIZE/2,
+                                            .getBounds()
+                                            .getLocation().x +
                                             currentlyBuilding
                                                     .getComponent(CablePortsComponent.class)
                                                     .getCablePort(0)
                                                     .getConnectedEntity()
                                                     .getComponent(GraphicsComponent.class)
-                                                    .get_BOUNDS()
-                                                    .getLocation().y + CELL_SIZE/5
+                                                    .getBounds().width / 2,
+                                            currentlyBuilding
+                                                    .getComponent(CablePortsComponent.class)
+                                                    .getCablePort(0)
+                                                    .getConnectedEntity()
+                                                    .getComponent(GraphicsComponent.class)
+                                                    .getBounds()
+                                                    .getLocation().y +
+                                                    currentlyBuilding
+                                                            .getComponent(CablePortsComponent.class)
+                                                            .getCablePort(0)
+                                                            .getConnectedEntity()
+                                                            .getComponent(GraphicsComponent.class)
+                                                            .getBounds().height / 5
                                     ),
-                                    new Point(e.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().x + CELL_SIZE/2,
-                                            e.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().y + CELL_SIZE/5
+                                    new Point(e.getComponent(GraphicsComponent.class).getBounds().getLocation().x + e.getComponent(GraphicsComponent.class).getBounds().width / 2,
+                                            e.getComponent(GraphicsComponent.class).getBounds().getLocation().y + e.getComponent(GraphicsComponent.class).getBounds().height / 5
                                     )
                             );
                             currentlyBuilding.getComponent(GraphicsComponent.class).reposition(e.getComponent(GraphicsComponent.class)

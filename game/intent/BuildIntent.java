@@ -139,7 +139,7 @@ public class BuildIntent extends Intent {
                 && gs.getCurrentlyBuilding() instanceof CableEntity
                 && e.getButton() == MouseEvent.NOBUTTON
         ) {
-            gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).setLine(gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).get_LINESTART(), e.getPoint());
+            gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).setLine(gs.getCurrentlyBuilding().getComponent(GraphicsComponent.class).getLineStart(), e.getPoint());
         } else if(isBuilding
                 && Game.scene().current() instanceof GameScene gs
                 && gs.getCurrentlyBuilding() instanceof CableEntity
