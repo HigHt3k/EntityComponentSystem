@@ -30,6 +30,10 @@ public class CablePortsComponent extends Component {
         }
     }
 
+    public CablePort[] getCablePorts() {
+        return cablePorts;
+    }
+
     public CablePort getCablePort(int id) {
         return cablePorts[id];
     }
