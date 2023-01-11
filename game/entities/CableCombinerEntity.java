@@ -40,7 +40,7 @@ public class CableCombinerEntity extends Entity {
         GraphicsComponent graphics = new GraphicsComponent();
         graphics.setBounds(bounds);
         graphics.setShape(bounds);
-        graphics.setFillColor(Color.BLUE);
+        graphics.setFillColor(Color.darkGray);
         graphics.setEntity(this);
         this.addComponent(graphics);
 
@@ -52,7 +52,7 @@ public class CableCombinerEntity extends Entity {
 
         // CablePorts
         CablePortsComponent cablePorts = new CablePortsComponent();
-        cablePorts.setCablePortAmount(8);
+        cablePorts.setCablePortAmount(4);
         cablePorts.generateCablePorts();
         cablePorts.setEntity(this);
         this.addComponent(cablePorts);

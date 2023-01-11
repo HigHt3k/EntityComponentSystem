@@ -7,7 +7,8 @@ import java.util.ArrayList;
 
 public class CablePortsComponent extends Component {
     private int cablePortAmount;
-    private CablePort[] cablePorts;
+    private CablePort[] cablePortsIn;
+    private CablePort[] cablePortsOut;
 
     @Override
     public void update() {
@@ -24,34 +25,62 @@ public class CablePortsComponent extends Component {
 
     public void generateCablePorts() {
         if(cablePortAmount != 0) {
-            cablePorts = new CablePort[cablePortAmount];
+            cablePortsIn = new CablePort[cablePortAmount];
+            cablePortsOut = new CablePort[cablePortAmount];
             for(int i = 0; i < cablePortAmount; i++) {
-                cablePorts[i] = new CablePort();
+                cablePortsIn[i] = new CablePort();
+                cablePortsOut[i] = new CablePort();
             }
         }
     }
 
-    public CablePort[] getCablePorts() {
-        return cablePorts;
+    public CablePort[] getCablePortsIn() {
+        return cablePortsIn;
     }
 
-    public CablePort getCablePort(int id) {
-        return cablePorts[id];
+    public CablePort[] getCablePortsOut() {
+        return cablePortsOut;
     }
 
-    public ArrayList<CablePort> getAvailablePorts() {
-        ArrayList<CablePort> availPorts = new ArrayList<CablePort>();
+    public CablePort getCablePortIn(int id) {
+        return cablePortsIn[id];
+    }
+    public CablePort getCablePortOut(int id) {
+        return cablePortsOut[id];
+    }
+
+    public ArrayList<CablePort> getAvailablePortsIn() {
+        ArrayList<CablePort> availPorts = new ArrayList<>();
         for(int i = 0; i < cablePortAmount; i++) {
-            if(cablePorts[i].getConnectedEntity() == null) {
-                availPorts.add(cablePorts[i]);
+            if(cablePortsIn[i].getConnectedEntity() == null) {
+                availPorts.add(cablePortsIn[i]);
             }
         }
         return availPorts;
     }
 
-    public int getPortId(Entity e) {
+    public ArrayList<CablePort> getAvailablePortsOut() {
+        ArrayList<CablePort> availPorts = new ArrayList<>();
         for(int i = 0; i < cablePortAmount; i++) {
-            if(cablePorts[i].getConnectedEntity() == e) {
+            if(cablePortsOut[i].getConnectedEntity() == null) {
+                availPorts.add(cablePortsOut[i]);
+            }
+        }
+        return availPorts;
+    }
+
+    public int getPortIdIn(Entity e) {
+        for(int i = 0; i < cablePortAmount; i++) {
+            if(cablePortsIn[i].getConnectedEntity() == e) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getPortIdOut(Entity e) {
+        for(int i = 0; i < cablePortAmount; i++) {
+            if(cablePortsOut[i].getConnectedEntity() == e) {
                 return i;
             }
         }

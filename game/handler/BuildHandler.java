@@ -85,7 +85,7 @@ public class BuildHandler extends Handler {
                             // handle the cable placement
                             if(entity.getComponent(CablePortsComponent.class) != null) {
                                 // check for available cable ports on the clicked entity
-                                ArrayList<CablePort> ports = entity.getComponent(CablePortsComponent.class).getAvailablePorts();
+                                ArrayList<CablePort> ports = entity.getComponent(CablePortsComponent.class).getAvailablePortsOut();
                                 if(!ports.isEmpty()) {
                                     /*CableEntity cable = new CableEntity(
                                             "cable", IdGenerator.generateId(),
@@ -149,11 +149,11 @@ public class BuildHandler extends Handler {
                 }
                 // handle if building cable -> remove cable
                 else if(currentBuildState == BuilderState.BUILDING_CABLE) {
-                    CablePort[] ports = currentBuilding.getComponent(CablePortsComponent.class).getCablePorts();
+                    CablePort[] ports = currentBuilding.getComponent(CablePortsComponent.class).getCablePortsIn();
                     for(CablePort port : ports) {
                         if(port != null) {
                             if(port.getConnectedEntity() != null) {
-                                CablePort[] otherPorts = port.getConnectedEntity().getComponent(CablePortsComponent.class).getCablePorts();
+                                CablePort[] otherPorts = port.getConnectedEntity().getComponent(CablePortsComponent.class).getCablePortsOut();
                                 for (CablePort otherPort : otherPorts) {
                                     if (otherPort.getConnectedEntity() == currentBuilding) {
                                         otherPort.setConnectedEntity(null);
@@ -424,12 +424,12 @@ public class BuildHandler extends Handler {
 
         for(Entity entity : clickedEntities) {
             // If clicked entity is not a neighbor, dont place.
-            if(!isNeighbor(e.getComponent(CablePortsComponent.class).getCablePort(0).getConnectedEntity(), entity)) {
+            if(!isNeighbor(e.getComponent(CablePortsComponent.class).getCablePortIn(0).getConnectedEntity(), entity)) {
                 return false;
             }
             // Cant connect components besides each other without a space in between for cables.
             if(entity.getComponent(SimulationComponent.class) != null
-                    && e.getComponent(CablePortsComponent.class).getCablePort(0).getConnectedEntity().getComponent(SimulationComponent.class) != null) {
+                    && e.getComponent(CablePortsComponent.class).getCablePortIn(0).getConnectedEntity().getComponent(SimulationComponent.class) != null) {
                 return false;
             }
         }
@@ -437,11 +437,11 @@ public class BuildHandler extends Handler {
         // check if clicked instance is a cable combiner
         for(Entity entity : clickedEntities) {
             if(entity instanceof CableCombinerEntity ccer) {
-                if(ccer.getComponent(CablePortsComponent.class).getAvailablePorts().isEmpty()) {
+                if(ccer.getComponent(CablePortsComponent.class).getAvailablePortsIn().isEmpty()) {
                     return false;
                 }
-                ccer.getComponent(CablePortsComponent.class).getAvailablePorts().get(0).setConnectedEntity(e);
-                e.getComponent(CablePortsComponent.class).getCablePort(1).setConnectedEntity(ccer);
+                ccer.getComponent(CablePortsComponent.class).getAvailablePortsIn().get(0).setConnectedEntity(e);
+                e.getComponent(CablePortsComponent.class).getCablePortOut(0).setConnectedEntity(ccer);
                 return true;
             }
         }
@@ -449,11 +449,11 @@ public class BuildHandler extends Handler {
         // check if clicked instance is a sim entity
         for(Entity entity : clickedEntities) {
             if(entity instanceof SimulationEntity se) {
-                if(se.getComponent(CablePortsComponent.class).getAvailablePorts().isEmpty()) {
+                if(se.getComponent(CablePortsComponent.class).getAvailablePortsIn().isEmpty()) {
                     return false;
                 }
-                se.getComponent(CablePortsComponent.class).getAvailablePorts().get(0).setConnectedEntity(e);
-                e.getComponent(CablePortsComponent.class).getCablePort(1).setConnectedEntity(se);
+                se.getComponent(CablePortsComponent.class).getAvailablePortsIn().get(0).setConnectedEntity(e);
+                e.getComponent(CablePortsComponent.class).getCablePortOut(0).setConnectedEntity(se);
                 return true;
             }
         }
@@ -471,8 +471,8 @@ public class BuildHandler extends Handler {
                         (int) entity.getComponent(GridComponent.class).getGridLocation().getY()
                 );
                 Game.scene().current().addEntityToScene(ccer);
-                ccer.getComponent(CablePortsComponent.class).getAvailablePorts().get(0).setConnectedEntity(e);
-                e.getComponent(CablePortsComponent.class).getCablePort(1).setConnectedEntity(ccer);
+                ccer.getComponent(CablePortsComponent.class).getAvailablePortsIn().get(0).setConnectedEntity(e);
+                e.getComponent(CablePortsComponent.class).getCablePortOut(0).setConnectedEntity(ccer);
                 return true;
             }
         }
@@ -489,14 +489,14 @@ public class BuildHandler extends Handler {
 
     private void colorizeAndPositionCable(CableEntity e) {
         CablePortsComponent cpc = e.getComponent(CablePortsComponent.class);
-        int leftId = cpc.getCablePort(0)
+        int leftId = cpc.getCablePortIn(0)
                 .getConnectedEntity()
                 .getComponent(CablePortsComponent.class)
-                .getPortId(e);
-        int rightId = cpc.getCablePort(1)
+                .getPortIdOut(e);
+        int rightId = cpc.getCablePortOut(0)
                 .getConnectedEntity()
                 .getComponent(CablePortsComponent.class)
-                .getPortId(e);
+                .getPortIdIn(e);
 
         System.out.println(leftId + " " + rightId);
 
@@ -508,16 +508,16 @@ public class BuildHandler extends Handler {
         }
 
         e.getComponent(GraphicsComponent.class).setLine(new Point(
-                        cpc.getCablePort(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().x +
-                        cpc.getCablePort(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2,
-                        (int) (cpc.getCablePort(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().y + (leftId%4 + 1.0) *
-                                                cpc.getCablePort(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().height/5)
+                        cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().x +
+                        cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2,
+                        (int) (cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().y + (leftId%4 + 1.0) *
+                                                cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().height/5)
                 ),
                 new Point(
-                        cpc.getCablePort(1).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().x +
-                                cpc.getCablePort(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2,
-                        (int) (cpc.getCablePort(1).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().y + (rightId%4 + 1.0) *
-                                cpc.getCablePort(1).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().height/5)
+                        cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().x +
+                                cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2,
+                        (int) (cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().y + (rightId%4 + 1.0) *
+                                cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().height/5)
                 )
         );
     }
