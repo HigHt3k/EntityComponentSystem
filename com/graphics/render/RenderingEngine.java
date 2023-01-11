@@ -120,9 +120,43 @@ public class RenderingEngine {
      */
     public void collectAndRenderEntities() {
         ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
+
+        renderImages(entities);
+        renderShapes(entities);
+        renderLines(entities);
+        renderTexts(entities);
+        renderHovered(entities);
+        renderToolTips(entities);
+    }
+
+    /**
+     * set the graphics context to render to
+     * @param g: the graphics context
+     */
+    public void setGraphics(Graphics2D g) {
+        this.g = g;
+    }
+
+    private void renderLines(ArrayList<Entity> entities) {
         for(Entity e : entities) {
             GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if(gc != null) {
+            if (gc != null) {
+                if (gc.getLineStart() != null && gc.getLineEnd() != null) {
+                    renderLine(g,
+                            gc.getLineStart(),
+                            gc.getLineEnd(),
+                            gc.getLineColor(),
+                            gc.getThickness()
+                    );
+                }
+            }
+        }
+    }
+
+    private void renderShapes(ArrayList<Entity> entities) {
+        for(Entity e : entities) {
+            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+            if (gc != null) {
                 // render based on the given content of the component
                 if (gc.getShape() != null) {
                     renderShape(
@@ -132,6 +166,15 @@ public class RenderingEngine {
                             gc.getFillColor()
                     );
                 }
+            }
+        }
+    }
+
+    private void renderImages(ArrayList<Entity> entities) {
+        for(Entity e : entities) {
+            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+            if (gc != null) {
+                // render based on the given content of the component
                 if (gc.getImage() != null) {
                     renderImage(
                             g,
@@ -142,8 +185,16 @@ public class RenderingEngine {
                             gc.getBounds().height
                     );
                 }
+            }
+        }
+    }
+
+    private void renderTexts(ArrayList<Entity> entities) {
+        for(Entity e : entities) {
+            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+            if (gc != null) {
                 if (!gc.getTexts().isEmpty() && !gc.getLocations().isEmpty()) {
-                    for(int i = 0; i < gc.getTexts().size(); i++) {
+                    for (int i = 0; i < gc.getTexts().size(); i++) {
                         renderText(
                                 g,
                                 gc.getTexts().get(i),
@@ -156,24 +207,15 @@ public class RenderingEngine {
                         );
                     }
                 }
-                if(gc.getLineStart() != null && gc.getLineEnd() != null) {
-                    renderLine(g,
-                            gc.getLineStart(),
-                            gc.getLineEnd(),
-                            gc.getLineColor(),
-                            gc.getThickness()
-                    );
-                }
+            }
+        }
+    }
 
+    private void renderToolTips(ArrayList<Entity> entities) {
+        for(Entity e : entities) {
+            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+            if(gc != null) {
                 if(gc.isHovered() ) {
-                    if (gc.getHoverColor() != null) {
-                        renderShape(
-                                g,
-                                gc.getBounds(),
-                                gc.getHoverColor(),
-                                gc.getHoverColor()
-                        );
-                    }
                     if (gc.getToolTip() != null) {
                         renderShape(
                                 g,
@@ -202,11 +244,21 @@ public class RenderingEngine {
         }
     }
 
-    /**
-     * set the graphics context to render to
-     * @param g: the graphics context
-     */
-    public void setGraphics(Graphics2D g) {
-        this.g = g;
+    private void renderHovered(ArrayList<Entity> entities) {
+        for(Entity e : entities) {
+            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+            if (gc != null) {
+                if (gc.isHovered()) {
+                    if (gc.getHoverColor() != null) {
+                        renderShape(
+                                g,
+                                gc.getBounds(),
+                                gc.getHoverColor(),
+                                gc.getHoverColor()
+                        );
+                    }
+                }
+            }
+        }
     }
 }
