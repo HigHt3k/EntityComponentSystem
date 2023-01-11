@@ -4,6 +4,7 @@ import com.Game;
 import com.ecs.entity.Entity;
 import game.components.CablePortsComponent;
 import game.components.GridComponent;
+import game.components.SimulationComponent;
 import game.scenes.GameScene;
 
 import java.awt.event.KeyEvent;
@@ -33,6 +34,9 @@ public class DebugIntent extends Intent {
             for(Entity e : entities) {
                 if(e.getComponent(CablePortsComponent.class) != null) {
                     System.out.println("------- " + e.getName() + " - " + e.getId() + " --------");
+                    if(e.getComponent(SimulationComponent.class) != null) {
+                        System.out.println("Group ID: " + e.getComponent(SimulationComponent.class).getGroupId());
+                    }
                     System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
                     System.out.println("Ports-Amount: " + e.getComponent(CablePortsComponent.class).getCablePortAmount());
                     for(int i = 0; i < e.getComponent(CablePortsComponent.class).getCablePortAmount(); i++) {
