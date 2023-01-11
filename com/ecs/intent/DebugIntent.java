@@ -37,15 +37,24 @@ public class DebugIntent extends Intent {
                     if(e.getComponent(SimulationComponent.class) != null) {
                         System.out.println("Group ID: " + e.getComponent(SimulationComponent.class).getGroupId());
                     }
-                    System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
+                    if(e.getComponent(GridComponent.class) != null)
+                        System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
                     System.out.println("Ports-Amount: " + e.getComponent(CablePortsComponent.class).getCablePortAmount());
                     for(int i = 0; i < e.getComponent(CablePortsComponent.class).getCablePortAmount(); i++) {
-                        if(e.getComponent(CablePortsComponent.class).getCablePort(i).getConnectedEntity() == null) {
-                            System.out.println("Port" + i + ": " + "null");
+                        if(e.getComponent(CablePortsComponent.class).getCablePortIn(i).getConnectedEntity() == null) {
+                            System.out.println("Port" + i + "In: " + "null");
                         } else {
-                            System.out.println("Port" + i + ": " +
-                                    e.getComponent(CablePortsComponent.class).getCablePort(i).getConnectedEntity().getName() + " - " +
-                                    e.getComponent(CablePortsComponent.class).getCablePort(i).getConnectedEntity().getId());
+                            System.out.println("Port" + i + "In: " +
+                                    e.getComponent(CablePortsComponent.class).getCablePortIn(i).getConnectedEntity().getName() + " - " +
+                                    e.getComponent(CablePortsComponent.class).getCablePortIn(i).getConnectedEntity().getId());
+                        }
+
+                        if(e.getComponent(CablePortsComponent.class).getCablePortOut(i).getConnectedEntity() == null) {
+                            System.out.println("Port" + i + "Out: " + "null");
+                        } else {
+                            System.out.println("Port" + i + "Out: " +
+                                    e.getComponent(CablePortsComponent.class).getCablePortOut(i).getConnectedEntity().getName() + " - " +
+                                    e.getComponent(CablePortsComponent.class).getCablePortOut(i).getConnectedEntity().getId());
                         }
                     }
                 }
