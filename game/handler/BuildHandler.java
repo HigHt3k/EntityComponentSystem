@@ -509,13 +509,13 @@ public class BuildHandler extends Handler {
 
         e.getComponent(GraphicsComponent.class).setLine(new Point(
                         cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().x +
-                        cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2,
+                        cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2+40,
                         (int) (cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().y + (leftId%4 + 1.0) *
                                                 cpc.getCablePortIn(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().height/5)
                 ),
                 new Point(
                         cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().x +
-                                cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2,
+                                cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().width/2-40,
                         (int) (cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().y + (rightId%4 + 1.0) *
                                 cpc.getCablePortOut(0).getConnectedEntity().getComponent(GraphicsComponent.class).getBounds().height/5)
                 )
