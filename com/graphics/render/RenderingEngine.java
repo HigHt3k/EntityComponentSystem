@@ -166,6 +166,17 @@ public class RenderingEngine {
                             gc.getFillColor()
                     );
                 }
+
+                if(gc.getShapes() != null) {
+                    for(Shape s : gc.getShapes()) {
+                        renderShape(
+                                g,
+                                s,
+                                gc.getBorderColor(),
+                                gc.getFillColor()
+                        );
+                    }
+                }
             }
         }
     }

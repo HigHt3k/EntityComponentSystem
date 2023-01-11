@@ -7,6 +7,7 @@ import com.ecs.component.IntentComponent;
 import com.ecs.entity.Entity;
 import com.ecs.intent.DebugIntent;
 import com.ecs.intent.HoverIntent;
+import game.components.CablePort;
 import game.components.CablePortsComponent;
 import game.components.GridComponent;
 import game.intent.BuildIntent;
@@ -20,6 +21,7 @@ import java.awt.*;
  *      |_ CabelPortComponent
  *          |_ Port1: In
  *          |_ Port2: Out
+ *      |_ CableCollidersComponent
 *       |_ CollisionComponent
  *      |_ IntentComponent
  *          |_ BuildIntent
@@ -41,6 +43,7 @@ public class CableCombinerEntity extends Entity {
         graphics.setBounds(bounds);
         graphics.setShape(bounds);
         graphics.setFillColor(Color.darkGray);
+        graphics.setBorderColor(Color.RED);
         graphics.setEntity(this);
         this.addComponent(graphics);
 
@@ -54,6 +57,14 @@ public class CableCombinerEntity extends Entity {
         CablePortsComponent cablePorts = new CablePortsComponent();
         cablePorts.setCablePortAmount(4);
         cablePorts.generateCablePorts();
+        cablePorts.generatePortColliders(graphics.getBounds().x, graphics.getBounds().y, graphics.getBounds().width, graphics.getBounds().height);
+        for(CablePort cp : cablePorts.getCablePortsIn()) {
+            graphics.addShape(Game.scale().upscaleShape(cp.getCollider()));
+        }
+        for(CablePort cp : cablePorts.getCablePortsOut()) {
+            graphics.addShape(Game.scale().upscaleShape(cp.getCollider()));
+        }
+
         cablePorts.setEntity(this);
         this.addComponent(cablePorts);
 

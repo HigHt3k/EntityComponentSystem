@@ -22,6 +22,7 @@ public class GraphicsComponent extends Component {
     Font _FONT;
     ArrayList<Point2D> _LOCATIONS = new ArrayList<>();
     int _THICKNESS = 0;
+    ArrayList<Shape> _SHAPES = new ArrayList<>();
 
     // temporary sizes
     Rectangle bounds;
@@ -31,6 +32,7 @@ public class GraphicsComponent extends Component {
     Point lineStart;
     Point lineEnd;
     int thickness;
+    ArrayList<Shape> shapes = new ArrayList<>();
 
     // non scalable content
     BufferedImage image;
@@ -64,6 +66,13 @@ public class GraphicsComponent extends Component {
             locations = new ArrayList<>();
             for (int i = 0; i < _LOCATIONS.size(); i++) {
                 locations.add(Game.scale().scalePoint((Point) _LOCATIONS.get(i)));
+            }
+        }
+
+        if(!_SHAPES.isEmpty()) {
+            shapes = new ArrayList<>();
+            for (int i = 0; i < _SHAPES.size(); i++) {
+                shapes.add(Game.scale().scaleShape(_SHAPES.get(i)));
             }
         }
 
@@ -245,5 +254,14 @@ public class GraphicsComponent extends Component {
     public void setLine(Point p1, Point p2) {
         this.lineStart = p1;
         this.lineEnd = p2;
+    }
+
+    public void addShape(Shape s) {
+        _SHAPES.add(s);
+        updateSize();
+    }
+
+    public ArrayList<Shape> getShapes() {
+        return shapes;
     }
 }

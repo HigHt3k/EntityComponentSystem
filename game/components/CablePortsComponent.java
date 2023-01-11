@@ -3,6 +3,7 @@ package game.components;
 import com.ecs.component.Component;
 import com.ecs.entity.Entity;
 
+import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 public class CablePortsComponent extends Component {
@@ -28,8 +29,8 @@ public class CablePortsComponent extends Component {
             cablePortsIn = new CablePort[cablePortAmount];
             cablePortsOut = new CablePort[cablePortAmount];
             for(int i = 0; i < cablePortAmount; i++) {
-                cablePortsIn[i] = new CablePort();
-                cablePortsOut[i] = new CablePort();
+                cablePortsIn[i] = new CablePort(i, CablePortType.IN);
+                cablePortsOut[i] = new CablePort(i, CablePortType.OUT);
             }
         }
     }
@@ -85,5 +86,23 @@ public class CablePortsComponent extends Component {
             }
         }
         return -1;
+    }
+
+    /**
+     * generate the colliders based on the size and position of the graphics component
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     */
+    public void generatePortColliders(int x, int y, int width, int height) {
+        for(CablePort port : cablePortsIn) {
+            int id = port.getId();
+            port.setCollider(new Ellipse2D.Double(x, y + height/5*(id+1) - height/10, width/5, height/5));
+        }
+        for(CablePort port : cablePortsOut) {
+            int id = port.getId();
+            port.setCollider(new Ellipse2D.Double(x + width - width/5, y + height/5*(id+1)  - height/10, width/5, height/5));
+        }
     }
 }
