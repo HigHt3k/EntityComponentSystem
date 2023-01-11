@@ -1,6 +1,7 @@
 package game.components;
 
 import com.ecs.component.Component;
+import com.ecs.entity.Entity;
 
 import java.util.ArrayList;
 
@@ -46,5 +47,14 @@ public class CablePortsComponent extends Component {
             }
         }
         return availPorts;
+    }
+
+    public int getPortId(Entity e) {
+        for(int i = 0; i < cablePortAmount; i++) {
+            if(cablePorts[i].getConnectedEntity() == e) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
