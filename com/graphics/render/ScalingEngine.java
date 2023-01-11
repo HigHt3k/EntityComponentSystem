@@ -9,9 +9,11 @@ public class ScalingEngine {
     private static float scaleW = Game.config().renderConfiguration().getScaleWidth();
     private static float scaleH = Game.config().renderConfiguration().getScaleHeight();
     AffineTransform af = new AffineTransform();
+    AffineTransform upscaleAf = new AffineTransform();
 
     public ScalingEngine() {
         af.scale(scaleW, scaleH);
+        upscaleAf.scale(1/scaleW, 1/scaleH);
     }
 
     public Point scalePoint(Point p) {
@@ -32,6 +34,10 @@ public class ScalingEngine {
 
     public Shape scaleShape(Shape s) {
         return af.createTransformedShape(s);
+    }
+
+    public Shape upscaleShape(Shape s) {
+        return upscaleAf.createTransformedShape(s);
     }
 
     public Font scaleFont(Font f) {
