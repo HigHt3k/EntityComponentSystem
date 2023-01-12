@@ -31,7 +31,7 @@ public class SimulationComponent extends Component {
             groupId = IdGenerator.generateId();
     }
 
-    public void setGroupId() {
+    public void setGroupId(int groupId) {
         this.groupId = groupId;
     }
 

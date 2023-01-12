@@ -32,6 +32,7 @@ public class GameLoop extends Thread {
                 Game.logic().update();
             }
             Game.input().handle();
+            Game.system().handle();
             Game.scene().current().update();
             Game.frame().getRenderPanel().repaint();
         }

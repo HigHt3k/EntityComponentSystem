@@ -3,13 +3,13 @@ package com.ecs.system;
 import java.util.ArrayList;
 
 public class SystemManager {
-    private ArrayList<System> systems;
+    private ArrayList<SystemHandle> systems;
 
     public SystemManager() {
         this.systems = new ArrayList<>();
     }
 
-    public void addSystem(System system) {
+    public void addSystem(SystemHandle system) {
         this.systems.add(system);
     }
 
@@ -18,7 +18,7 @@ public class SystemManager {
     }
 
     public void handle() {
-        for(System s : systems) {
+        for(SystemHandle s : systems) {
             s.handle();
         }
     }

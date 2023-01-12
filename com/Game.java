@@ -1,7 +1,6 @@
 package com;
 
 import com.config.GameConfiguration;
-import com.ecs.system.System;
 import com.ecs.system.SystemManager;
 import com.graphics.SceneManager;
 import com.graphics.elements.GameFrame;
