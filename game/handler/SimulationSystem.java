@@ -25,6 +25,22 @@ public class SimulationSystem extends SystemHandle {
         }
     }
 
+    private void medianVoter() {
+
+    }
+
+    private void averageVoter() {
+
+    }
+
+    private void MNVoter() {
+
+    }
+
+    private void winnerTakesItAllVoter() {
+
+    }
+
     private void calculateGroupFailureRatio(ArrayList<Entity> group) {
         ArrayList<Entity> sensors = new ArrayList<>();
         ArrayList<Entity> actuators = new ArrayList<>();
