@@ -91,7 +91,7 @@ public class SimulationSystem extends SystemHandle {
 
         for(Entity relevantEntity : relevantEntities) {
             if(relevantEntity.getComponent(SimulationComponent.class) != null
-                    && relevantEntity.getComponent(SimulationComponent.class).getGroupId() == id) {
+                    && relevantEntity.getComponent(SimulationComponent.class).getGroupIds().contains(id)) {
                 group.add(relevantEntity);
             }
         }
@@ -115,8 +115,10 @@ public class SimulationSystem extends SystemHandle {
         ArrayList<Entity> relevantEntities = gatherRelevantEntities();
 
         for(Entity relevantEntity : relevantEntities) {
-            if(!distinctIds.contains(relevantEntity.getComponent(SimulationComponent.class).getGroupId())) {
-                distinctIds.add(relevantEntity.getComponent(SimulationComponent.class).getGroupId());
+            for(int id : relevantEntity.getComponent(SimulationComponent.class).getGroupIds()) {
+                if(!distinctIds.contains(id)) {
+                    distinctIds.add(id);
+                }
             }
         }
 
@@ -136,16 +138,17 @@ public class SimulationSystem extends SystemHandle {
         for(Entity sensor : sensors) {
             ArrayList<Entity> connectedTo = getInterconnection(sensor);
             connectedTo.add(sensor);
-            ArrayList<Entity> cpus = findCPUs(connectedTo);
 
-            if(cpus.isEmpty()) {
+            if(sensors.isEmpty()) {
                 continue;
             }
 
             for(Entity e : connectedTo) {
                 if(e.getComponent(SimulationComponent.class) != null) {
-                    if(!cpus.contains(e))
-                        e.getComponent(SimulationComponent.class).setGroupId(cpus.get(0).getComponent(SimulationComponent.class).getGroupId());
+                    if(!sensors.contains(e)) {
+                        if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensors.get(0).getComponent(SimulationComponent.class).getGroupIds().get(0)))
+                            e.getComponent(SimulationComponent.class).addGroupId(sensors.get(0).getComponent(SimulationComponent.class).getGroupIds().get(0));
+                    }
                 }
             }
         }

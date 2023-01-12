@@ -36,7 +36,7 @@ public class DebugIntent extends Intent {
                 if(e.getComponent(CablePortsComponent.class) != null) {
                     System.out.println("------- " + e.getName() + " - " + e.getId() + " --------");
                     if(e.getComponent(SimulationComponent.class) != null) {
-                        System.out.println("Group ID: " + e.getComponent(SimulationComponent.class).getGroupId());
+                        System.out.println("Group ID: " + e.getComponent(SimulationComponent.class).getGroupIds());
                     }
                     if(e.getComponent(GridComponent.class) != null)
                         System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
