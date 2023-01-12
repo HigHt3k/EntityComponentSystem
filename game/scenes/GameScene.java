@@ -253,19 +253,33 @@ public class GameScene extends Scene {
         descriptionPanelGC.addText(description);
         descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x,
                 descriptionPanelBounds.getLocation().y + 50));
-        descriptionPanelGC.addText("Target failure ratio: \n<=" + goal);
-        descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x, descriptionPanelBounds.getLocation().y + 600));
+        descriptionPanelGC.addText("Target Failure Probability: \n<=" + goal);
+        descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x, descriptionPanelBounds.getLocation().y + 450));
 
         descriptionPanel.addComponent(descriptionPanelGC);
         descriptionPanelGC.setEntity(descriptionPanel);
 
         addEntityToScene(descriptionPanel);
 
-        Entity failureProbabilityPanel = new Entity("failureProb", IdGenerator.generateId());
+        Entity failureProbabilityPanel = new Entity("failureProbabilityDisplay", IdGenerator.generateId());
+
+        Rectangle failurePanelBounds = new Rectangle(1400 + (402/8), 750, 402/2, 402/2);
+        GraphicsComponent graphics = new GraphicsComponent();
+        graphics.setTextColor(TEXT_COLOR);
+        graphics.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
+        graphics.setBounds(failurePanelBounds);
+        graphics.addText("Current calculated\nmaximum failure\nprobability:\n 0.0000");
+        graphics.addLocation(new Point(1500, 650));
+        graphics.setEntity(failureProbabilityPanel);
+        failureProbabilityPanel.addComponent(graphics);
+
+        addEntityToScene(failureProbabilityPanel);
 
     }
 
     public int getCellSize() {
         return CELL_SIZE;
     }
+
+
 }

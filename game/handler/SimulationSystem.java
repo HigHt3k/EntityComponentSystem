@@ -1,11 +1,13 @@
 package game.handler;
 
 import com.Game;
+import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.system.SystemHandle;
 import game.components.*;
 import game.entities.CableCombinerEntity;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
@@ -285,6 +287,15 @@ public class SimulationSystem extends SystemHandle {
         for(Entity e : fcc) {
             e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
         }
+        DecimalFormat format = new DecimalFormat("0.00E00");
+        String print = format.format(max);
+
+        Game.scene()
+                .current()
+                .getEntityByName("failureProbabilityDisplay")
+                .getComponent(GraphicsComponent.class)
+                .getTexts()
+                .set(0, "Current calculated\nmaximum failure\nprobability:\n " + print);
     }
 
     private void markov4() {
