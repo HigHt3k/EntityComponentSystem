@@ -4,8 +4,6 @@ import com.Game;
 import com.ecs.entity.Entity;
 import com.ecs.system.SystemHandle;
 import game.components.*;
-import game.entities.CableEntity;
-import game.scenes.GameScene;
 
 import java.util.ArrayList;
 
@@ -19,8 +17,35 @@ public class SimulationSystem extends SystemHandle {
         for(int i : groupIds) {
             ArrayList<Entity> group = getEntitiesByGroupdId(i);
             boolean valid = validateGroup(group);
-            System.out.println("group with id: " + i + " is " + valid);
+            if(valid) {
+                calculateGroupFailureRatio(group);
+            }
         }
+    }
+
+    private void calculateGroupFailureRatio(ArrayList<Entity> group) {
+        ArrayList<Entity> sensors = new ArrayList<>();
+        ArrayList<Entity> actuators = new ArrayList<>();
+        ArrayList<Entity> cpus = new ArrayList<>();
+
+        // distinct components
+        for(Entity e : group) {
+            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CPU) {
+                cpus.add(e);
+            } else if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.SENSOR) {
+                sensors.add(e);
+            } else if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
+                actuators.add(e);
+            }
+        }
+
+        // Single Component Failure
+        float failureProbability = 0f;
+        for(Entity e : group) {
+            failureProbability += e.getComponent(SimulationComponent.class).getFailureRatio();
+        }
+        System.out.println("Failure Probability for Single Component Failure: " + failureProbability);
+        System.out.println("... for a 2hrs flight: " + failureProbability * 120);
     }
 
     private boolean validateGroup(ArrayList<Entity> group) {
