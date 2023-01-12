@@ -1,7 +1,6 @@
 package game;
 
 import com.Game;
-import game.scenes.GameScene;
 import game.scenes.MenuScene;
 
 import java.io.File;
