@@ -21,11 +21,32 @@ public class DebugIntent extends Intent {
         if(e.getKeyCode() == KeyEvent.VK_P) {
             printAllCablePorts();
         }
+        if(e.getKeyCode() == KeyEvent.VK_O) {
+            printAllSimComponents();
+        }
     }
 
     @Override
     public void handleIntent(MouseEvent e) {
 
+    }
+
+    private void printAllSimComponents() {
+        if(Game.scene().current() instanceof GameScene gs) {
+            ArrayList<Entity> entities = gs.getEntities();
+            System.out.println("-------- SIMULATION ENTITIES --------");
+
+            for(Entity e : entities) {
+                if(e.getComponent(SimulationComponent.class) != null) {
+                    System.out.println("------- " + e.getName() + " - " + e.getId() + " --------");
+                    if(e.getComponent(SimulationComponent.class) != null) {
+                        System.out.println("Group ID: " + e.getComponent(SimulationComponent.class).getGroupIds());
+                    }
+                    if(e.getComponent(GridComponent.class) != null)
+                        System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
+                }
+            }
+        }
     }
 
     public void printAllCablePorts() {
