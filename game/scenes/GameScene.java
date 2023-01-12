@@ -146,6 +146,7 @@ public class GameScene extends Scene {
         );
 
         addEntityToScene(simulationEntity);
+        simulationEntity.initCablePorts(this);
     }
 
     /**

@@ -94,6 +94,7 @@ public class ResourceManager {
      * @param levelPath: the path to the xml file
      */
     public void loadLevel(String levelPath) {
+        System.out.println("loading level: " + levelPath);
         //Todo: exception handling
         //TODO: change xml files so that each component contains its attributes
         String levelName = "Default";

@@ -1,15 +1,15 @@
 package game.entities;
 
+import com.Game;
+import com.IdGenerator;
 import com.ecs.entity.Entity;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;
-import game.components.CablePortsComponent;
-import game.components.GridComponent;
-import game.components.SimulationComponent;
-import game.components.SimulationType;
+import com.graphics.scene.Scene;
+import game.components.*;
 import game.intent.BuildIntent;
 
 import java.awt.*;
@@ -72,8 +72,6 @@ public class SimulationEntity extends Entity {
 
         // define CablePortsComponent
         CablePortsComponent cablePorts = new CablePortsComponent();
-        cablePorts.setCablePortAmount(cablePortAmount);
-        cablePorts.generateCablePorts();
         cablePorts.setEntity(this);
         this.addComponent(cablePorts);
 
@@ -97,5 +95,30 @@ public class SimulationEntity extends Entity {
         IntentComponent intents = this.getComponent(IntentComponent.class);
         intent.setIntentComponent(intents);
         intents.addIntent(intent);
+    }
+
+    public void initCablePorts(Scene s) {
+        for(int i = 0; i < 4; i++) {
+            CablePortEntity port = new CablePortEntity(
+                    "CablePortIn" + i + this.getName(), IdGenerator.generateId(),
+                    this.getComponent(GraphicsComponent.class).get_BOUNDS().x, this.getComponent(GraphicsComponent.class).get_BOUNDS().y + (i+1) * this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5 - this.getComponent(GraphicsComponent.class).get_BOUNDS().height/10,
+                    this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5, this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5, i, CablePortType.IN
+            );
+            s.addEntityToScene(port);
+            this.getComponent(CablePortsComponent.class).addCablePort(port);
+
+            CablePortEntity portOut = new CablePortEntity(
+                    "CablePortOut" + i + this.getName(), IdGenerator.generateId(),
+                    this.getComponent(GraphicsComponent.class).get_BOUNDS().x +
+                            this.getComponent(GraphicsComponent.class).get_BOUNDS().width -
+                            this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5,
+                    this.getComponent(GraphicsComponent.class).get_BOUNDS().y + (i+1) *
+                            this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5 -
+                            this.getComponent(GraphicsComponent.class).get_BOUNDS().height/10,
+                    this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5, this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5, i, CablePortType.OUT
+            );
+            s.addEntityToScene(portOut);
+            this.getComponent(CablePortsComponent.class).addCablePort(portOut);
+        }
     }
 }

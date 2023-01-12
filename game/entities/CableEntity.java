@@ -1,11 +1,15 @@
 package game.entities;
 
 import com.Game;
+import com.IdGenerator;
 import com.ecs.entity.Entity;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.DebugIntent;
 import com.ecs.intent.HoverIntent;
+import com.graphics.scene.Scene;
+import game.components.CablePortEntity;
+import game.components.CablePortType;
 import game.components.CablePortsComponent;
 import game.intent.BuildIntent;
 
@@ -25,11 +29,15 @@ import java.awt.*;
  */
 public class CableEntity extends Entity {
     private final Color LINE_COLOR = new Color(150, 0, 0, 255);
+    private Entity connectedEntityPort1;
+    private Entity connectedEntityPort2;
 
     public CableEntity(String name, int id,
                        int x, int y, int width, int height,
                        Entity connectedEntityPort1, Entity connectedEntityPort2) {
         super(name, id);
+        this.connectedEntityPort1 = connectedEntityPort1;
+        this.connectedEntityPort2 = connectedEntityPort2;
 
         // set bounds
         Rectangle bounds = new Rectangle(x, y, width, height);
@@ -46,11 +54,6 @@ public class CableEntity extends Entity {
 
         // CablePorts
         CablePortsComponent cablePorts = new CablePortsComponent();
-        // correlation always between port 0 - 1, 2 - 3, 4 - 5, 6 - 7
-        cablePorts.setCablePortAmount(1);
-        cablePorts.generateCablePorts();
-        cablePorts.getCablePortIn(0).setConnectedEntity(connectedEntityPort1);
-        cablePorts.getCablePortOut(0).setConnectedEntity(connectedEntityPort2);
         cablePorts.setEntity(this);
         this.addComponent(cablePorts);
 
@@ -73,5 +76,23 @@ public class CableEntity extends Entity {
             intents.addIntent(debug);
         }
 
+    }
+
+    public void initCablePorts(Scene s) {
+        CablePortEntity portIn = new CablePortEntity(
+                "CablePortIn_cable", IdGenerator.generateId(),
+                0, 0, 0, 0, 0, CablePortType.IN
+        );
+        this.getComponent(CablePortsComponent.class).addCablePort(portIn);
+        portIn.setConnectedEntity(connectedEntityPort1);
+        s.addEntityToScene(portIn);
+
+        CablePortEntity portOut = new CablePortEntity(
+                "CablePortOut_cable", IdGenerator.generateId(),
+                0, 0, 0, 0, 0, CablePortType.OUT
+        );
+        this.getComponent(CablePortsComponent.class).addCablePort(portOut);
+        portOut.setConnectedEntity(connectedEntityPort2);
+        s.addEntityToScene(portOut);
     }
 }

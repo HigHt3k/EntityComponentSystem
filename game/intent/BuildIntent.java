@@ -6,7 +6,6 @@ import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.intent.Intent;
 import game.components.BuildComponent;
-import game.components.CablePort;
 import game.components.CablePortsComponent;
 import game.components.SimulationType;
 import game.entities.CableEntity;
