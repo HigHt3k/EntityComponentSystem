@@ -4,10 +4,12 @@ import com.Game;
 import com.ecs.entity.Entity;
 import com.ecs.system.SystemHandle;
 import game.components.*;
+import game.entities.CableCombinerEntity;
 
 import java.util.ArrayList;
 
 public class SimulationSystem extends SystemHandle {
+    private ArrayList<Entity> tempGroup = new ArrayList<>();
 
     @Override
     public void handle() {
@@ -44,8 +46,13 @@ public class SimulationSystem extends SystemHandle {
         for(Entity e : group) {
             failureProbability += e.getComponent(SimulationComponent.class).getFailureRatio();
         }
+        /*
+
+        System.out.println(group);
         System.out.println("Failure Probability for Single Component Failure: " + failureProbability);
         System.out.println("... for a 2hrs flight: " + failureProbability * 120);
+
+         */
     }
 
     private boolean validateGroup(ArrayList<Entity> group) {
@@ -133,9 +140,12 @@ public class SimulationSystem extends SystemHandle {
      * Update the group id of each simulation entity based on cable connections
      */
     private void updateGroupIds() {
+        // TODO: Implement that cable port in 0 and out 0 only lead to group id update / connection. if 0, 1 and 0 is connected, only 0
+        // should be used
         ArrayList<Entity> sensors = getSensors();
 
         for(Entity sensor : sensors) {
+            tempGroup = new ArrayList<>();
             ArrayList<Entity> connectedTo = getInterconnection(sensor);
             connectedTo.add(sensor);
 
@@ -146,8 +156,8 @@ public class SimulationSystem extends SystemHandle {
             for(Entity e : connectedTo) {
                 if(e.getComponent(SimulationComponent.class) != null) {
                     if(!sensors.contains(e)) {
-                        if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensors.get(0).getComponent(SimulationComponent.class).getGroupIds().get(0)))
-                            e.getComponent(SimulationComponent.class).addGroupId(sensors.get(0).getComponent(SimulationComponent.class).getGroupIds().get(0));
+                        if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0)))
+                            e.getComponent(SimulationComponent.class).addGroupId(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0));
                     }
                 }
             }
@@ -195,10 +205,6 @@ public class SimulationSystem extends SystemHandle {
             ArrayList<CablePortEntity> ports = e.getComponent(CablePortsComponent.class).getCablePorts();
 
             for(CablePortEntity port : ports) {
-                if(port.getConnectedEntity() == null) {
-                    continue;
-                }
-
                 if(group.contains(port.getConnectedEntity())) {
                     continue;
                 }
@@ -206,9 +212,32 @@ public class SimulationSystem extends SystemHandle {
                 if(port.getType() == CablePortType.IN) {
                     continue;
                 }
-                group.add(port.getConnectedEntity());
 
+                if(port.getConnectedEntity() == null) {
+                    continue;
+                }
+
+                if(e instanceof CableCombinerEntity) {
+                    CablePortType portType = port.getType();
+                    CablePortType otherSide;
+                    if(port.getType() == CablePortType.IN) {
+                        otherSide = CablePortType.OUT;
+                    } else {
+                        otherSide = CablePortType.IN;
+                    }
+
+                    // only add to group if port in - out is 0-0, 1-1, 2-2, 3-3
+                    if(!tempGroup.contains(e.getComponent(CablePortsComponent.class)
+                            .getCablePort(port.getPortId(), CablePortType.IN)
+                            .getConnectedEntity())) {
+                        continue;
+                    }
+                }
+
+                group.add(port.getConnectedEntity());
+                tempGroup.addAll(group);
                 group.addAll(getInterconnection(port.getConnectedEntity()));
+                tempGroup.addAll(group);
             }
         }
 
