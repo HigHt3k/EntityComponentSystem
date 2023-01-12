@@ -121,4 +121,10 @@ public class SimulationEntity extends Entity {
             this.getComponent(CablePortsComponent.class).addCablePort(portOut);
         }
     }
+
+    public void removeCablePorts(Scene s) {
+        for(CablePortEntity cpe : this.getComponent(CablePortsComponent.class).getCablePorts()) {
+            s.removeEntityFromScene(cpe);
+        }
+    }
 }

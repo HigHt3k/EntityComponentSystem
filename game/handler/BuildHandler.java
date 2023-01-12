@@ -75,7 +75,6 @@ public class BuildHandler extends Handler {
                                                         .getAmount()
                                                 )
                                         );
-                                newEntity.initCablePorts(Game.scene().current());
                                 currentBuildState = BuilderState.BUILDING_SIMULATION;
                                 break;
                             }
@@ -211,7 +210,7 @@ public class BuildHandler extends Handler {
     }
 
     private boolean putBackToStack(Entity e) {
-        if(e instanceof SimulationEntity) {
+        if(e instanceof SimulationEntity se) {
             if (e.getComponent(SimulationComponent.class) != null) {
                 //replace the component
                 Pattern p = Pattern.compile("_\\d{3}");
@@ -225,6 +224,7 @@ public class BuildHandler extends Handler {
                                     build.getComponent(BuildComponent.class).addToAmount();
                                     build.getComponent(GraphicsComponent.class).getTexts().set(0,
                                             String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
+                                    se.removeCablePorts(Game.scene().current());
                                     Game.logger().info("Found component and putting back to build stack.");
                                     break;
                                 }
@@ -278,6 +278,8 @@ public class BuildHandler extends Handler {
                                 .getBounds().getLocation());
                         e.getComponent(CollisionComponent.class)
                                 .setCollisionBox(e.getComponent(GraphicsComponent.class).get_BOUNDS());
+                        if(e instanceof SimulationEntity se)
+                            se.initCablePorts(Game.scene().current());
                         Game.logger().info("Successfully added a new entity to the grid.\n" +
                                 "Name: " + e.getName() +
                                 "\nPosition: " + e.getComponent(GridComponent.class).getGridLocation() +
@@ -301,6 +303,8 @@ public class BuildHandler extends Handler {
                             .getBounds().getLocation());
                     e.getComponent(CollisionComponent.class)
                             .setCollisionBox(e.getComponent(GraphicsComponent.class).get_BOUNDS());
+                    if(e instanceof SimulationEntity se)
+                        se.initCablePorts(Game.scene().current());
                     Game.logger().info("Successfully added a new entity to the grid.\n" +
                             "Name: " + e.getName() +
                             "\nPosition: " + e.getComponent(GridComponent.class).getGridLocation() +
