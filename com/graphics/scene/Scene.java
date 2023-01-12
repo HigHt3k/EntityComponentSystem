@@ -49,4 +49,13 @@ public abstract class Scene {
     public int getId() {
         return id;
     }
+
+    public Entity getEntityByName(String name) {
+        for(Entity e : getEntities()) {
+            if(e.getName().equals(name)) {
+                return e;
+            }
+        }
+        return null;
+    }
 }
