@@ -148,8 +148,10 @@ public class ResourceManager {
                             if (!entity.getAttribute("interactable").equals(""))
                                 interactable = Boolean.parseBoolean(entity.getAttribute("interactable"));
                             float safety = 0f;
-                            if(!entity.getAttribute("safety").equals(""))
+                            if(!entity.getAttribute("safety").equals("")) {
                                 safety = Float.parseFloat(entity.getAttribute("safety"));
+                                System.out.println(safety);
+                            }
 
                             scene.addSimulationElement(x, y, entityId, safety, interactable);
                         }

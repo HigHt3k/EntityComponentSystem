@@ -253,13 +253,16 @@ public class GameScene extends Scene {
         descriptionPanelGC.addText(description);
         descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x,
                 descriptionPanelBounds.getLocation().y + 50));
-        descriptionPanelGC.addText("Target failure ratio: <=" + goal);
+        descriptionPanelGC.addText("Target failure ratio: \n<=" + goal);
         descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x, descriptionPanelBounds.getLocation().y + 600));
 
         descriptionPanel.addComponent(descriptionPanelGC);
         descriptionPanelGC.setEntity(descriptionPanel);
 
         addEntityToScene(descriptionPanel);
+
+        Entity failureProbabilityPanel = new Entity("failureProb", IdGenerator.generateId());
+
     }
 
     public int getCellSize() {

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="1" name ="Level X: Triplex" width="5" height="3">
+    <description>Example Triplex system with 3 sensors, 3 cpus and one actuator. Sensors and Actuators are not to be considered here.</description>
+    <goalDescription>Reach a failure ratio of 3e-3</goalDescription>
+    <goal>3e-3</goal>
+    <tileset source="base_tiles.xml"/>
+    <build>
+        <entity id="201" amount="0" safety="1e-4"/>
+        <entity id="203" amount="3" safety="1e-4"/>
+        <entity id="205" amount="0" safety="1e-4"/>
+    </build>
+    <layer id="0" name="Tile Layer 1">
+        <entity x="0" y="0" id="201" interactable="false" safety="1e-9"/>
+        <entity x="0" y="1" id="201" interactable="false" safety="1e-9"/>
+        <entity x="0" y="2" id="201" interactable="false" safety="1e-9"/>
+        <entity x="4" y="1" id="205" interactable="false" safety="1e-9"/>
+    </layer>
+</map>

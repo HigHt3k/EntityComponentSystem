@@ -7,6 +7,8 @@ import game.components.*;
 import game.entities.CableCombinerEntity;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulationSystem extends SystemHandle {
     private ArrayList<Entity> tempGroup = new ArrayList<>();
@@ -66,9 +68,11 @@ public class SimulationSystem extends SystemHandle {
 
         System.out.println(group);
         System.out.println("Failure Probability for Single Component Failure: " + failureProbability);
-        System.out.println("... for a 2hrs flight: " + failureProbability * 120);
+        System.out.println("... for a 2hrs flight: " + failureProbability * 2);
 
          */
+
+        markov();
     }
 
     private boolean validateGroup(ArrayList<Entity> group) {
@@ -150,6 +154,141 @@ public class SimulationSystem extends SystemHandle {
 
     private void markov() {
         //TODO: Implement Markov Chain Detection
+
+        // recognize how many times markov should run through the system
+        int distinctIdCount = getDistinctGroupIds().length;
+
+        // check how many are validated, choose then which markov function to use
+        switch (distinctIdCount) {
+            case 2 -> markov2();
+            case 3 -> markov3();
+            case 4 -> markov4();
+        }
+    }
+
+    private void markov2() {
+
+    }
+
+    private void markov3() {
+        float t = 1; // hrs
+        // mindestes 1 intakter FCC, kein Out of Control FCC, sensor/actuator: ignore for now
+        ArrayList<Entity> fcc = new ArrayList<>();
+
+        int[] groupIds = getDistinctGroupIds();
+
+
+        for(int i : groupIds) {
+            ArrayList<Entity> group = getEntitiesByGroupdId(i);
+            if(validateGroup(group)) {
+                for (Entity e : group) {
+                    if (e.getComponent(SimulationComponent.class) != null && e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CPU) {
+                        fcc.add(e);
+                    }
+                }
+            }
+        }
+
+        if(fcc.size() != 3) {
+            return;
+        }
+
+        // starting point
+        float p1 = 1;
+
+        // first failure
+        float p2_dot = (fcc.get(0).getComponent(SimulationComponent.class).getFailureRatio() +
+                fcc.get(1).getComponent(SimulationComponent.class).getFailureRatio() +
+                fcc.get(2).getComponent(SimulationComponent.class).getFailureRatio()) * p1;
+
+        // randomize which one failed
+        int iRand = ThreadLocalRandom.current().nextInt(0, 2 + 1);
+        fcc.get(iRand).getComponent(SimulationComponent.class).setSimulationState(SimulationState.FAIL);
+
+        // calc p3, p8
+        float p3_dot = fcc.get(iRand).getComponent(SimulationComponent.class).getFailureRecognitionRatio() * p2_dot;
+
+        float p8_dot = 0f; //SA
+        for(Entity e : fcc) {
+            if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.FAIL) {
+                p8_dot += p2_dot * (1 - e.getComponent(SimulationComponent.class).getFailureRecognitionRatio());
+            }
+        }
+
+        // second failure
+        float p4_dot_dot = 0f;
+        for(Entity e : fcc) {
+            if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.CORRECT) {
+                p4_dot_dot += p3_dot * e.getComponent(SimulationComponent.class).getFailureRatio();
+            }
+        }
+        // next step
+        switch(iRand) {
+            case 0 -> iRand = 1;
+            case 1 -> iRand = 2;
+            case 2 -> iRand = 0;
+        }
+        fcc.get(iRand).getComponent(SimulationComponent.class).setSimulationState(SimulationState.FAIL);
+
+        // passivation 2
+        float p5_dot_dot = fcc.get(iRand).getComponent(SimulationComponent.class).getFailureRecognitionRatio() * p4_dot_dot;
+
+        // ooc
+        float p9_dot_dot = 0f; //SA
+        for(Entity e : fcc) {
+            if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.FAIL) {
+                p9_dot_dot += p4_dot_dot * (1 - e.getComponent(SimulationComponent.class).getFailureRecognitionRatio());
+            }
+        }
+
+        // third fail
+        float p6_dot_dot_dot = 0f;
+        for(Entity e : fcc) {
+            if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.CORRECT) {
+                p6_dot_dot_dot += p5_dot_dot * e.getComponent(SimulationComponent.class).getFailureRatio();
+            }
+        }
+        // next step
+        Entity lastFailed = null;
+        for(Entity e : fcc) {
+            if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.CORRECT) {
+                e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.FAIL);
+                lastFailed = e;
+                break;
+            }
+        }
+
+        // passivation 2
+        float p7_dot_dot_dot = lastFailed.getComponent(SimulationComponent.class).getFailureRecognitionRatio() * p6_dot_dot_dot; //SA
+
+        // ooc
+        float p10_dot_dot_dot = 0f; //SA
+        for(Entity e : fcc) {
+            if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.FAIL) {
+                p10_dot_dot_dot += p6_dot_dot_dot * (1 - e.getComponent(SimulationComponent.class).getFailureRecognitionRatio());
+            }
+        }
+
+        // calculate the highest actual failure after t hours
+        float p8 = p8_dot * t;
+        float p9 = p9_dot_dot * t * t;
+        float p10 = p10_dot_dot_dot * t * t * t;
+        float p7 = p7_dot_dot_dot * t * t * t;
+
+        System.out.println("Passivated Failure of all 3 components: " + p7);
+        System.out.println("OOC1-3: " + p8 + " - " + p9 + " - " + p10);
+
+        double[] vals = {p7, p8, p9, p10};
+
+        double max = Arrays.stream(vals).max().getAsDouble();
+
+        for(Entity e : fcc) {
+            e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
+        }
+    }
+
+    private void markov4() {
+
     }
 
     /**
