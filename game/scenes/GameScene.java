@@ -29,8 +29,8 @@ public class GameScene extends Scene {
     private final int ITEM_MARGIN = 20;
     private final int ITEM_WIDTH = 300;
     private final int ITEM_HEIGHT = 60;
-    private final int X_MARGIN = 200;
-    private final int Y_MARGIN = 300;
+    private int X_MARGIN = 200;
+    private int Y_MARGIN = 300;
     private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
     private final Color BOX_COLOR = new Color(200, 90, 0, 240);
     private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
@@ -40,6 +40,11 @@ public class GameScene extends Scene {
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
+
+    public void setGridSize(int x, int y) {
+        X_MARGIN = (1500 - x*CELL_SIZE)/2;
+        Y_MARGIN = (850 - y*CELL_SIZE)/2;
+    }
 
     /**
      * get the currently built entity

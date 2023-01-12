@@ -116,6 +116,7 @@ public class ResourceManager {
 
                 GameScene scene = new GameScene(levelName, mapId);
                 scene.setDescription(description);
+                scene.setGridSize(width, height);
 
                 if(level.getElementsByTagName("goal").item(0) != null) {
                     double goal = Double.parseDouble(level.getElementsByTagName("goal").item(0).getTextContent());
