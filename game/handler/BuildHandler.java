@@ -429,8 +429,6 @@ public class BuildHandler extends Handler {
 
         for(Entity entity : clickedEntities) {
             // If clicked entity is not a neighbor, dont place.
-            if(entity.getComponent(CablePortsComponent.class) == null)
-                continue;
             if (e.getComponent(CablePortsComponent.class).getCablePort(0, CablePortType.IN).getConnectedEntity() != null) {
                 if(!isNeighbor(e.getComponent(CablePortsComponent.class).getCablePort(0, CablePortType.IN).getConnectedEntity(), entity)) {
                     return false;
