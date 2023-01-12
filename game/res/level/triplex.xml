@@ -5,9 +5,9 @@
     <goal>3e-3</goal>
     <tileset source="base_tiles.xml"/>
     <build>
-        <entity id="201" amount="2" safety="1e-4"/>
-        <entity id="203" amount="2" safety="1e-4"/>
-        <entity id="205" amount="2" safety="1e-4"/>
+        <entity id="201" amount="0" safety="1e-4"/>
+        <entity id="203" amount="0" safety="1e-4"/>
+        <entity id="205" amount="0" safety="1e-4"/>
     </build>
     <layer id="0" name="Tile Layer 1">
         <entity x="0" y="0" id="201" interactable="false" safety="1e-9"/>
