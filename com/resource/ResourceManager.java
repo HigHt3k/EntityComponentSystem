@@ -168,7 +168,7 @@ public class ResourceManager {
 
                             int entityId = Integer.parseInt(entity.getAttribute("id"));
                             int amount = Integer.parseInt(entity.getAttribute("amount"));
-                            float failureRatio = Float.parseFloat(entity.getAttribute("amount"));
+                            float failureRatio = Float.parseFloat(entity.getAttribute("safety"));
 
                             scene.addToBuildPanel(entityId, amount, failureRatio);
                         }
