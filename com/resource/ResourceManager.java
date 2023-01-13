@@ -68,6 +68,7 @@ public class ResourceManager {
                     String type = tile.getAttribute("type");
                     String imagePath = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("source");
                     String description = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("description");
+                    String minNonPassive = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("minNonPassive");
                     if(description.equals("")) {
                         description = "Default description";
                     }
@@ -75,11 +76,15 @@ public class ResourceManager {
                         SimulationType simType = SimulationType.valueOf(type);
                         t.getTypes().put(Integer.parseInt(id), SimulationType.valueOf(type));
                     }
+                    if(minNonPassive.equals("")) {
+                        minNonPassive = "1";
+                    }
 
                     BufferedImage img = ImageIO.read(new File(imagePath));
 
                     t.getTiles().put(Integer.parseInt(id), img);
                     t.getDescriptions().put(Integer.parseInt(id), description);
+                    t.getMinNonPassives().put(Integer.parseInt(id), Integer.parseInt(minNonPassive));
                 }
             }
         } catch (SAXException | IOException e) {
@@ -121,6 +126,14 @@ public class ResourceManager {
                 if(level.getElementsByTagName("goal").item(0) != null) {
                     double goal = Double.parseDouble(level.getElementsByTagName("goal").item(0).getTextContent());
                     scene.setGoal(goal);
+                }
+
+                if(level.getElementsByTagName("goalDefinition").item(0) != null) {
+                    Element goalDefinition = (Element) level.getElementsByTagName("goalDefinition").item(0);
+                    int accGoal = Integer.parseInt(goalDefinition.getAttribute("workingActuators"));
+                    int sensGoal = Integer.parseInt(goalDefinition.getAttribute("workingSensors"));
+                    int cGoal = Integer.parseInt(goalDefinition.getAttribute("workingComputers"));
+                    scene.setGoal(accGoal, sensGoal, cGoal);
                 }
 
                 // Add background to scene
