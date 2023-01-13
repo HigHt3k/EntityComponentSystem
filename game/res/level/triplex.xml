@@ -3,6 +3,7 @@
     <description>Example Triplex system with 3 sensors, 3 cpus and one actuator. Sensors and Actuators are not to be considered here.</description>
     <goalDescription>Reach a failure ratio of 3e-3</goalDescription>
     <goal>3e-3</goal>
+    <goalDefinition workingActuators="2" workingSensors="-1" workingComputers="-1"/>
     <tileset source="base_tiles.xml"/>
     <build>
         <entity id="201" amount="0" safety="1e-4"/>
