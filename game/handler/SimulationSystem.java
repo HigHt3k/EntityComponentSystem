@@ -8,10 +8,11 @@ import game.components.*;
 import game.entities.CableCombinerEntity;
 import game.entities.CablePortEntity;
 
+import java.awt.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
+
 
 public class SimulationSystem extends SystemHandle {
     private ArrayList<Entity> tempGroup = new ArrayList<>();
@@ -28,6 +29,7 @@ public class SimulationSystem extends SystemHandle {
                 calculateGroupFailureRatio(group);
             }
         }
+        updateGraphics();
     }
 
     private void medianVoter() {
@@ -42,8 +44,27 @@ public class SimulationSystem extends SystemHandle {
 
     }
 
-    private void winnerTakesItAllVoter() {
+    private SimulationState winnerTakesItAllVoter(ArrayList<Entity> inputs) {
+        HashMap<SimulationState, Integer> counter = new HashMap<>();
 
+        // fill the hashmap counter
+        for(Entity e : inputs) {
+            counter.put(e.getComponent(SimulationComponent.class).getSimulationState(), 0);
+        }
+
+        // add if same
+        for(Entity e : inputs) {
+            counter.merge(e.getComponent(SimulationComponent.class).getSimulationState(), 1, Integer::sum);
+        }
+
+        Map.Entry<SimulationState, Integer> max = null;
+        for(Map.Entry<SimulationState, Integer> entry : counter.entrySet()) {
+            if(entry.getValue() > 0) {
+                max = entry;
+            }
+        }
+
+        return max.getKey();
     }
 
     private void calculateGroupFailureRatio(ArrayList<Entity> group) {
@@ -278,8 +299,12 @@ public class SimulationSystem extends SystemHandle {
         float p10 = p10_dot_dot_dot * t * t * t;
         float p7 = p7_dot_dot_dot * t * t * t;
 
+        /*
+
         System.out.println("Passivated Failure of all 3 components: " + p7);
         System.out.println("OOC1-3: " + p8 + " - " + p9 + " - " + p10);
+
+         */
 
         double[] vals = {p7, p8, p9, p10};
 
@@ -330,6 +355,8 @@ public class SimulationSystem extends SystemHandle {
             }
         }
 
+
+
         // debugger
         /*System.out.println("-----groups---------");
         for(Entity e : gatherRelevantEntities()) {
@@ -339,6 +366,21 @@ public class SimulationSystem extends SystemHandle {
         }
         */
 
+    }
+
+    private void updateGraphics() {
+        for(Entity e : gatherRelevantEntities()) {
+            if(e.getComponent(SimulationComponent.class) == null) {
+                continue;
+            }
+            switch(e.getComponent(SimulationComponent.class).getSimulationState()) {
+
+                case CORRECT -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 255, 0, 40));
+                case FAIL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 255, 0, 40));
+                case PASSIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 0, 255, 40));
+                case OUT_OF_CONTROL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 0, 0, 40));
+            }
+        }
     }
 
     private ArrayList<Entity> findCPUs(ArrayList<Entity> group) {
