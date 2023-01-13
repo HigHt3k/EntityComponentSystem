@@ -11,11 +11,17 @@ public class TileSet {
     private final HashMap<Integer, BufferedImage> tiles;
     private final HashMap<Integer, String> descriptions;
     private final HashMap<Integer, SimulationType> types;
+    private final HashMap<Integer, Integer> minNonPassives;
+
+    public HashMap<Integer, Integer> getMinNonPassives() {
+        return minNonPassives;
+    }
 
     public TileSet() {
         this.tiles = new HashMap<>();
         this.descriptions = new HashMap<>();
         this.types = new HashMap<>();
+        this.minNonPassives = new HashMap<>();
         Game.logger().info("Tileset loaded.");
     }
 
