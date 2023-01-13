@@ -2,6 +2,7 @@ package game.components;
 
 import com.ecs.component.Component;
 import com.ecs.entity.Entity;
+import game.entities.CablePortEntity;
 
 import java.util.ArrayList;
 

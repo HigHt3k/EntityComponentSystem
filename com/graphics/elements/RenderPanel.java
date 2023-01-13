@@ -13,6 +13,7 @@ public class RenderPanel extends JPanel {
 
     public RenderPanel(final Dimension size) {
         this.setSize(size);
+        this.setBackground(new Color(80, 80, 80));
         this.setPreferredSize(size);
         this.setFocusable(true);
         this.requestFocusInWindow();

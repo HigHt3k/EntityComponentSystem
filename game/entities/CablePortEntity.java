@@ -1,10 +1,11 @@
-package game.components;
+package game.entities;
 
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.entity.Entity;
 import com.ecs.intent.HoverIntent;
+import game.components.CablePortType;
 
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
@@ -26,8 +27,8 @@ public class CablePortEntity extends Entity {
 
         GraphicsComponent graphics = new GraphicsComponent();
         graphics.setShape(shape);
-        graphics.setFillColor(Color.WHITE);
-        graphics.setBorderColor(Color.RED);
+        graphics.setFillColor(new Color(240, 240, 80, 120));
+        graphics.setBorderColor(Color.BLUE);
         graphics.setHoverColor(Color.BLUE);
         graphics.setEntity(this);
         this.addComponent(graphics);

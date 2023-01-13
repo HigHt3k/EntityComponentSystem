@@ -8,7 +8,6 @@ import com.ecs.component.IntentComponent;
 import com.ecs.intent.DebugIntent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.scene.Scene;
-import game.components.CablePortEntity;
 import game.components.CablePortType;
 import game.components.CablePortsComponent;
 import game.intent.BuildIntent;

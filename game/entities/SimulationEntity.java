@@ -1,6 +1,5 @@
 package game.entities;
 
-import com.Game;
 import com.IdGenerator;
 import com.ecs.entity.Entity;
 import com.ecs.component.CollisionComponent;

@@ -2,7 +2,7 @@ package com.ecs.intent;
 
 import com.Game;
 import com.ecs.entity.Entity;
-import game.components.CablePortEntity;
+import game.entities.CablePortEntity;
 import game.components.CablePortsComponent;
 import game.components.GridComponent;
 import game.components.SimulationComponent;

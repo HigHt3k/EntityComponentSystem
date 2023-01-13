@@ -9,7 +9,6 @@ import com.ecs.entity.Entity;
 import com.ecs.intent.DebugIntent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.scene.Scene;
-import game.components.CablePortEntity;
 import game.components.CablePortType;
 import game.components.CablePortsComponent;
 import game.components.GridComponent;
@@ -45,8 +44,8 @@ public class CableCombinerEntity extends Entity {
         GraphicsComponent graphics = new GraphicsComponent();
         graphics.setBounds(bounds);
         graphics.setShape(bounds);
-        graphics.setFillColor(Color.darkGray);
-        graphics.setBorderColor(Color.RED);
+        graphics.setFillColor(new Color(120, 120, 120, 130));
+        graphics.setBorderColor(Color.BLUE);
         graphics.setEntity(this);
         this.addComponent(graphics);
 

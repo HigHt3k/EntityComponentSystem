@@ -6,6 +6,7 @@ import com.ecs.entity.Entity;
 import com.ecs.system.SystemHandle;
 import game.components.*;
 import game.entities.CableCombinerEntity;
+import game.entities.CablePortEntity;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
