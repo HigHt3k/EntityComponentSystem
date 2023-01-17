@@ -3,6 +3,7 @@ package game.components;
 public enum SimulationType {
     CPU,
     ACTUATOR,
+    CABLE,
     SENSOR;
 
     public static boolean contains(String test) {
