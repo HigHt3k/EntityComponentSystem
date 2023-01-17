@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class BuildHandler extends Handler {
     public BuilderState currentBuildState = BuilderState.NOT_BUILDING;
     public Entity currentBuilding = null;
+    public int currentCableLayer = 0;
 
     public BuildHandler() {
         super(HandlerType.EVENT);
@@ -38,6 +39,10 @@ public class BuildHandler extends Handler {
         if(e.getKeyCode() == KeyEvent.VK_P) {
             printAllSimComponents();
         }
+    }
+
+    public void setCurrentCableLayer(int id) {
+        this.currentCableLayer = id;
     }
 
     private void printAllSimComponents() {
@@ -211,9 +216,11 @@ public class BuildHandler extends Handler {
                         else if(entity.getComponent(SimulationComponent.class) != null) {
                             if(entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
                                 int outId = entity.getComponent(CablePortsComponent.class).getOutIds()[0];
-                                entity.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT).cyclePosition();
-                                entity.getComponent(CablePortsComponent.class).updateImage();
-                                updateConnection(entity, CablePortType.OUT);
+                                if(outId == currentCableLayer) {
+                                    entity.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT).cyclePosition();
+                                    entity.getComponent(CablePortsComponent.class).updateImage();
+                                    updateConnection(entity, CablePortType.OUT);
+                                }
                             }
                         }
                     }
@@ -247,6 +254,24 @@ public class BuildHandler extends Handler {
                     }
                 }
             }
+            // check mid click to rotate
+
+            else if(e.getButton() == MouseEvent.BUTTON2) {
+                if (entity.getComponent(CollisionComponent.class) != null
+                        && entity.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                    if (entity.getComponent(SimulationComponent.class) != null) {
+                        if (entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+                            int inId = entity.getComponent(CablePortsComponent.class).getInIds()[0];
+                            if (inId == currentCableLayer) {
+                                entity.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN).cyclePosition();
+                                entity.getComponent(CablePortsComponent.class).updateImage();
+                                updateConnection(entity, CablePortType.IN);
+                            }
+                        }
+                    }
+                }
+            }
+
             // check the button clicked is right click
             else if (e.getButton() == MouseEvent.BUTTON3) {
                 // handle if is building simulation component
