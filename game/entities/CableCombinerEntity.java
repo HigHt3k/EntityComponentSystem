@@ -88,30 +88,4 @@ public class CableCombinerEntity extends Entity {
         }
 
     }
-
-    public void initCablePorts(Scene s) {
-        for(int i = 0; i < 4; i++) {
-            CablePortEntity port = new CablePortEntity(
-                    "CablePortIn" + i + this.getName(), IdGenerator.generateId(),
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().x, this.getComponent(GraphicsComponent.class).get_BOUNDS().y + (i+1) * this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5 - this.getComponent(GraphicsComponent.class).get_BOUNDS().height/10,
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5, this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5, i, CablePortType.IN
-            );
-            s.addEntityToScene(port);
-            this.getComponent(CablePortsComponent.class).addCablePort(port);
-
-            CablePortEntity portOut = new CablePortEntity(
-                    "CablePortOut" + i + this.getName(), IdGenerator.generateId(),
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().x + this.getComponent(GraphicsComponent.class).get_BOUNDS().width - this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5, this.getComponent(GraphicsComponent.class).get_BOUNDS().y + (i+1) * this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5 - this.getComponent(GraphicsComponent.class).get_BOUNDS().height/10,
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5, this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5, i, CablePortType.OUT
-            );
-            s.addEntityToScene(portOut);
-            this.getComponent(CablePortsComponent.class).addCablePort(portOut);
-        }
-    }
-
-    public void removeCablePorts(Scene s) {
-        for(CablePortEntity cpe : this.getComponent(CablePortsComponent.class).getCablePorts()) {
-            s.removeEntityFromScene(cpe);
-        }
-    }
 }

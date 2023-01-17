@@ -76,22 +76,4 @@ public class CableEntity extends Entity {
         }
 
     }
-
-    public void initCablePorts(Scene s) {
-        CablePortEntity portIn = new CablePortEntity(
-                "CablePortIn_cable", IdGenerator.generateId(),
-                0, 0, 0, 0, 0, CablePortType.IN
-        );
-        this.getComponent(CablePortsComponent.class).addCablePort(portIn);
-        portIn.setConnectedEntity(connectedEntityPort1);
-        s.addEntityToScene(portIn);
-
-        CablePortEntity portOut = new CablePortEntity(
-                "CablePortOut_cable", IdGenerator.generateId(),
-                0, 0, 0, 0, 0, CablePortType.OUT
-        );
-        this.getComponent(CablePortsComponent.class).addCablePort(portOut);
-        portOut.setConnectedEntity(connectedEntityPort2);
-        s.addEntityToScene(portOut);
-    }
 }

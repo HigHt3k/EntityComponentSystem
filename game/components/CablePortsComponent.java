@@ -2,24 +2,39 @@ package game.components;
 
 import com.ecs.component.Component;
 import com.ecs.entity.Entity;
-import game.entities.CablePortEntity;
+import game.entities.CablePort;
 
 import java.util.ArrayList;
 
 public class CablePortsComponent extends Component {
-    private ArrayList<CablePortEntity> cablePorts = new ArrayList<>();
+    private ArrayList<CablePort> cablePorts = new ArrayList<>();
+    private int[] inIds;
+    private int[] outIds;
 
     @Override
     public void update() {
 
     }
 
-    public ArrayList<CablePortEntity> getCablePorts() {
+    public void setIds(int[] inIds, int[] outIds) {
+        this.inIds = inIds;
+        this.outIds = outIds;
+    }
+
+    public int[] getInIds() {
+        return inIds;
+    }
+
+    public int[] getOutIds() {
+        return outIds;
+    }
+
+    public ArrayList<CablePort> getCablePorts() {
         return cablePorts;
     }
 
-    public CablePortEntity getCablePort(int id, CablePortType type) {
-        for(CablePortEntity port : cablePorts) {
+    public CablePort getCablePort(int id, CablePortType type) {
+        for(CablePort port : cablePorts) {
             if(port.getType() == type) {
                 if(port.getPortId() == id) {
                     return port;
@@ -29,8 +44,8 @@ public class CablePortsComponent extends Component {
         return null;
     }
 
-    public CablePortEntity getNextFreePort(CablePortType type) {
-        for(CablePortEntity port : cablePorts) {
+    public CablePort getNextFreePort(CablePortType type) {
+        for(CablePort port : cablePorts) {
             if(port.getType() == type) {
                 if(port.getConnectedEntity() == null) {
                     return port;
@@ -40,16 +55,25 @@ public class CablePortsComponent extends Component {
         return null;
     }
 
-    public void addCablePort(CablePortEntity cablePortEntity) {
+    public void addCablePort(CablePort cablePortEntity) {
         this.cablePorts.add(cablePortEntity);
     }
 
     public int getPortIdOfConnectedEntity(Entity e) {
-        for(CablePortEntity port : cablePorts) {
+        for(CablePort port : cablePorts) {
             if(port.getConnectedEntity() == e) {
                 return port.getPortId();
             }
         }
         return -1;
+    }
+
+    public CablePortType getPortTypeOfConnectedEntity(Entity e) {
+        for(CablePort port : cablePorts) {
+            if(port.getConnectedEntity() == e) {
+                return port.getType();
+            }
+        }
+        return null;
     }
 }

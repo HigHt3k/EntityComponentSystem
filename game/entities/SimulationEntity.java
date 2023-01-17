@@ -35,7 +35,8 @@ public class SimulationEntity extends Entity {
                             int xGrid, int yGrid,
                             BufferedImage img,
                             float failureRatio, SimulationType type,
-                            int cablePortAmount, boolean removable) {
+                            int[] cablePortIdsIn, int[] cablePortIdsOut,
+                            boolean removable) {
         super(name, id);
         this.setRemovable(removable);
 
@@ -45,7 +46,9 @@ public class SimulationEntity extends Entity {
         // define GraphicsComponent
         GraphicsComponent graphics = new GraphicsComponent();
         graphics.setBounds(bounds);
+        graphics.setShape(bounds);
         graphics.setImage(img);
+        graphics.setBorderColor(new Color(0, 0, 0, 0));
         graphics.setHoverColor(HOVER_COLOR);
         graphics.setEntity(this);
         this.addComponent(graphics);
@@ -71,6 +74,13 @@ public class SimulationEntity extends Entity {
 
         // define CablePortsComponent
         CablePortsComponent cablePorts = new CablePortsComponent();
+        cablePorts.setIds(cablePortIdsIn, cablePortIdsOut);
+        for(int portId : cablePortIdsIn) {
+            cablePorts.addCablePort(new CablePort(portId, CablePortType.IN));
+        }
+        for(int portId : cablePortIdsOut) {
+            cablePorts.addCablePort(new CablePort(portId, CablePortType.OUT));
+        }
         cablePorts.setEntity(this);
         this.addComponent(cablePorts);
 
@@ -94,36 +104,5 @@ public class SimulationEntity extends Entity {
         IntentComponent intents = this.getComponent(IntentComponent.class);
         intent.setIntentComponent(intents);
         intents.addIntent(intent);
-    }
-
-    public void initCablePorts(Scene s) {
-        for(int i = 0; i < 4; i++) {
-            CablePortEntity port = new CablePortEntity(
-                    "CablePortIn" + i + this.getName(), IdGenerator.generateId(),
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().x, this.getComponent(GraphicsComponent.class).get_BOUNDS().y + (i+1) * this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5 - this.getComponent(GraphicsComponent.class).get_BOUNDS().height/10,
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5, this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5, i, CablePortType.IN
-            );
-            s.addEntityToScene(port);
-            this.getComponent(CablePortsComponent.class).addCablePort(port);
-
-            CablePortEntity portOut = new CablePortEntity(
-                    "CablePortOut" + i + this.getName(), IdGenerator.generateId(),
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().x +
-                            this.getComponent(GraphicsComponent.class).get_BOUNDS().width -
-                            this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5,
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().y + (i+1) *
-                            this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5 -
-                            this.getComponent(GraphicsComponent.class).get_BOUNDS().height/10,
-                    this.getComponent(GraphicsComponent.class).get_BOUNDS().width/5, this.getComponent(GraphicsComponent.class).get_BOUNDS().height/5, i, CablePortType.OUT
-            );
-            s.addEntityToScene(portOut);
-            this.getComponent(CablePortsComponent.class).addCablePort(portOut);
-        }
-    }
-
-    public void removeCablePorts(Scene s) {
-        for(CablePortEntity cpe : this.getComponent(CablePortsComponent.class).getCablePorts()) {
-            s.removeEntityFromScene(cpe);
-        }
     }
 }

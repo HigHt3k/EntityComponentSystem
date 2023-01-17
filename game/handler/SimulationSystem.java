@@ -6,7 +6,7 @@ import com.ecs.entity.Entity;
 import com.ecs.system.SystemHandle;
 import game.components.*;
 import game.entities.CableCombinerEntity;
-import game.entities.CablePortEntity;
+import game.entities.CablePort;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -411,9 +411,9 @@ public class SimulationSystem extends SystemHandle {
         ArrayList<Entity> group = new ArrayList<>();
 
         if(e.getComponent(CablePortsComponent.class) != null) {
-            ArrayList<CablePortEntity> ports = e.getComponent(CablePortsComponent.class).getCablePorts();
+            ArrayList<CablePort> ports = e.getComponent(CablePortsComponent.class).getCablePorts();
 
-            for(CablePortEntity port : ports) {
+            for(CablePort port : ports) {
                 if(group.contains(port.getConnectedEntity())) {
                     continue;
                 }

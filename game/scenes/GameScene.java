@@ -10,6 +10,7 @@ import com.graphics.scene.Scene;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.SimulationComponent;
+import game.components.SimulationType;
 import game.entities.BuildPanelEntity;
 import game.entities.CableEntity;
 import game.entities.GridEntity;
@@ -40,6 +41,10 @@ public class GameScene extends Scene {
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
+
+    private int accGoal;
+    private int sensGoal;
+    private int cGoal;
 
     public void setGridSize(int x, int y) {
         X_MARGIN = (1500 - x*CELL_SIZE)/2;
@@ -81,6 +86,10 @@ public class GameScene extends Scene {
         Game.system().resetSystems();
         setupDescriptionPanel();
         setupButtons();
+        addToBuildPanel(500, 1000, 1e-25f);
+        addToBuildPanel(501, 1000, 1e-25f);
+        addToBuildPanel(502, 1000, 1e-25f);
+        addToBuildPanel(503, 1000, 1e-25f);
         Game.input().addHandler(new BuildHandler());
         Game.system().addSystem(new SimulationSystem());
     }
@@ -150,17 +159,47 @@ public class GameScene extends Scene {
      * @param removable: can be removed or not
      */
     public void addSimulationElement(int x, int y, int imgId, float failureRatio, boolean removable) {
-        SimulationEntity simulationEntity = new SimulationEntity(
-                "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
-                X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
-                x, y,
-                Game.res().loadTile(imgId),
-                failureRatio, Game.res().getTileSet().getType(imgId),
-                4, removable
-        );
-
-        addEntityToScene(simulationEntity);
-        simulationEntity.initCablePorts(this);
+        if(Game.res().getTileSet().getType(imgId) == SimulationType.CPU) {
+            SimulationEntity simulationEntity = new SimulationEntity(
+                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
+                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                    x, y,
+                    Game.res().loadTile(imgId),
+                    failureRatio, Game.res().getTileSet().getType(imgId),
+                    new int[] {0,1,2,3}, new int[] {0,1,2,3}, removable
+            );
+            addEntityToScene(simulationEntity);
+        } else if(Game.res().getTileSet().getType(imgId) == SimulationType.SENSOR) {
+            SimulationEntity simulationEntity = new SimulationEntity(
+                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
+                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                    x, y,
+                    Game.res().loadTile(imgId),
+                    failureRatio, Game.res().getTileSet().getType(imgId),
+                    new int[] {}, new int[] {0,1,2,3}, removable
+            );
+            addEntityToScene(simulationEntity);
+        } else if(Game.res().getTileSet().getType(imgId) == SimulationType.ACTUATOR) {
+            SimulationEntity simulationEntity = new SimulationEntity(
+                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
+                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                    x, y,
+                    Game.res().loadTile(imgId),
+                    failureRatio, Game.res().getTileSet().getType(imgId),
+                    new int[] {0,1,2,3}, new int[] {}, removable
+            );
+            addEntityToScene(simulationEntity);
+        } else if(Game.res().getTileSet().getType(imgId) == SimulationType.CABLE) {
+            SimulationEntity simulationEntity = new SimulationEntity(
+                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
+                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                    x, y,
+                    Game.res().loadTile(imgId),
+                    failureRatio, Game.res().getTileSet().getType(imgId),
+                    new int[] {imgId - 500}, new int[] {imgId - 500}, removable
+            );
+            addEntityToScene(simulationEntity);
+        }
     }
 
     /**
@@ -177,6 +216,7 @@ public class GameScene extends Scene {
                 Game.res().getTileSet().getType(imgId),
                 Game.res().loadDescription(imgId)
         );
+        buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId-500);
         addEntityToScene(buildPanelEntity);
         numberOfBuildPanelElements++;
     }
@@ -281,5 +321,13 @@ public class GameScene extends Scene {
         return CELL_SIZE;
     }
 
+    public void setGoal(int act, int sens, int c) {
+        this.accGoal = act;
+        this.sensGoal = sens;
+        this.cGoal = c;
+    }
 
+    public int getAccGoal() {
+        return accGoal;
+    }
 }

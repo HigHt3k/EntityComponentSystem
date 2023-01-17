@@ -7,10 +7,19 @@ public class BuildComponent extends Component {
     private int amount;
     private float failureRatio;
     private SimulationType simulationType;
+    private int portId;
 
     @Override
     public void update() {
 
+    }
+
+    public void setPortId(int portId) {
+        this.portId = portId;
+    }
+
+    public int getPortId() {
+        return portId;
     }
 
     public SimulationType getSimulationType() {

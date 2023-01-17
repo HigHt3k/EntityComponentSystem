@@ -54,7 +54,11 @@ public class BuildPanelEntity extends Entity {
         tt.setText(description);
         graphics.setToolTip(tt);
         graphics.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
-        graphics.addText(String.valueOf(amount));
+        if(amount > 100) {
+            graphics.addText("");
+        } else {
+            graphics.addText(String.valueOf(amount));
+        }
         graphics.addLocation(new Point(x, y + height));
 
         // define CollisionComponent
