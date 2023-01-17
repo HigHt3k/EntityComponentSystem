@@ -76,10 +76,10 @@ public class SimulationEntity extends Entity {
         CablePortsComponent cablePorts = new CablePortsComponent();
         cablePorts.setIds(cablePortIdsIn, cablePortIdsOut);
         for(int portId : cablePortIdsIn) {
-            cablePorts.addCablePort(new CablePort(portId, CablePortType.IN));
+            cablePorts.addCablePort(new CablePort(portId, CablePortType.IN, CablePortPosition.LEFT));
         }
         for(int portId : cablePortIdsOut) {
-            cablePorts.addCablePort(new CablePort(portId, CablePortType.OUT));
+            cablePorts.addCablePort(new CablePort(portId, CablePortType.OUT, CablePortPosition.RIGHT));
         }
         cablePorts.setEntity(this);
         this.addComponent(cablePorts);

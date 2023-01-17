@@ -14,11 +14,22 @@ public class CablePort {
     private int portId;
     private CablePortType type;
     private Entity connectedEntity;
+    private CablePortPosition position;
 
     public CablePort(int portId,
-                     CablePortType type) {
+                     CablePortType type,
+                     CablePortPosition position) {
         this.portId = portId;
         this.type = type;
+        this.position = position;
+    }
+
+    public void setPosition(CablePortPosition position) {
+        this.position = position;
+    }
+
+    public CablePortPosition getPosition() {
+        return position;
     }
 
     public void setConnectedEntity(Entity e) {
