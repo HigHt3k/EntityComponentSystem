@@ -79,9 +79,9 @@ public class BuildHandler extends Handler {
                         System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
                     for(CablePort cpe : e.getComponent(CablePortsComponent.class).getCablePorts()) {
                         if(cpe.getConnectedEntity() != null)
-                            System.out.println(cpe.getPortId() + "-" + cpe.getType() + ": " + cpe.getConnectedEntity().getName());
+                            System.out.println(cpe.getPortId() + "-" + cpe.getType() + "-" + cpe.getPosition() + ": " + cpe.getConnectedEntity().getName() + "-" + cpe.getConnectedEntity().getId());
                         else
-                            System.out.println(cpe.getPortId() + "-" + cpe.getType() + ": " + cpe.getConnectedEntity());
+                            System.out.println(cpe.getPortId() + "-" + cpe.getType() + "-" + cpe.getPosition() + ": " + cpe.getConnectedEntity());
                     }
                     System.out.println("");
                 }
@@ -312,11 +312,7 @@ public class BuildHandler extends Handler {
                         return;
                     } else {
                         ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
-                        try {
-                            entitiesAtSameCell = getEntitiesAtGridPosition(gridLocation);
-                        } catch(TooManyEntitiesAtGridPositionException ex) {
-                            ex.printStackTrace();
-                        }
+                        entitiesAtSameCell = getEntitiesAtGridPosition(gridLocation);
 
                         for(Entity remove : entitiesAtSameCell) {
                             if(remove.isRemovable() && remove.getComponent(SimulationComponent.class) != null) {
@@ -379,31 +375,24 @@ public class BuildHandler extends Handler {
         ArrayList<Entity> right = new ArrayList<>();
         ArrayList<Entity> bottom = new ArrayList<>();
         // left
-        try {
-            left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
-            right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
-            top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
-            bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
+        left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
+        right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
+        top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
+        bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
 
-        } catch (TooManyEntitiesAtGridPositionException ex) {
-            ex.printStackTrace();
-        }
         int inId = e.getComponent(CablePortsComponent.class).getInIds()[0];
         int outId = e.getComponent(CablePortsComponent.class).getInIds()[0];
         CablePort in = e.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN);
         CablePort out = e.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT);
 
-        System.out.println(c.getPosition());
-
         if(type == CablePortType.OUT) {
             switch (c.getPosition()) {
                 case RIGHT -> {
-                    System.out.println(right.size());
                     if (!right.isEmpty()) {
                         for (Entity r : right) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.LEFT) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -412,12 +401,11 @@ public class BuildHandler extends Handler {
                     }
                 }
                 case LEFT -> {
-                    System.out.println(left.size());
                     if (!left.isEmpty()) {
                         for (Entity r : bottom) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.RIGHT) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -426,12 +414,11 @@ public class BuildHandler extends Handler {
                     }
                 }
                 case BOTTOM -> {
-                    System.out.println(bottom.size());
                     if (!bottom.isEmpty()) {
                         for (Entity r : bottom) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.TOP) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -440,12 +427,11 @@ public class BuildHandler extends Handler {
                     }
                 }
                 case TOP -> {
-                    System.out.println(top.size());
                     if (!top.isEmpty()) {
                         for (Entity r : top) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.BOTTOM) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -457,12 +443,11 @@ public class BuildHandler extends Handler {
         } else if(type == CablePortType.IN) {
             switch (c.getPosition()) {
                 case RIGHT -> {
-                    System.out.println(right.size());
                     if (!right.isEmpty()) {
                         for (Entity r : right) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.LEFT) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -471,12 +456,11 @@ public class BuildHandler extends Handler {
                     }
                 }
                 case LEFT -> {
-                    System.out.println(left.size());
                     if (!left.isEmpty()) {
                         for (Entity r : bottom) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.RIGHT) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -485,12 +469,11 @@ public class BuildHandler extends Handler {
                     }
                 }
                 case BOTTOM -> {
-                    System.out.println(bottom.size());
                     if (!bottom.isEmpty()) {
                         for (Entity r : bottom) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.TOP) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -499,12 +482,11 @@ public class BuildHandler extends Handler {
                     }
                 }
                 case TOP -> {
-                    System.out.println(top.size());
                     if (!top.isEmpty()) {
                         for (Entity r : top) {
                             if (r.getComponent(CablePortsComponent.class) != null) {
                                 CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
-                                if (connect != null && connect.getConnectedEntity() == null) {
+                                if (connect != null && connect.getConnectedEntity() == null && connect.getPosition() == CablePortPosition.BOTTOM) {
                                     connect.setConnectedEntity(e);
                                     out.setConnectedEntity(r);
                                 }
@@ -579,11 +561,7 @@ public class BuildHandler extends Handler {
         }
 
         ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
-        try {
-            entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
-        } catch(TooManyEntitiesAtGridPositionException ex) {
-            ex.printStackTrace();
-        }
+        entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
 
         if(entitiesAtSameCell.size() == 2) {
             for (Entity replace : entitiesAtSameCell) {
@@ -618,15 +596,10 @@ public class BuildHandler extends Handler {
                         ArrayList<Entity> right = new ArrayList<>();
                         ArrayList<Entity> bottom = new ArrayList<>();
                         // left
-                        try {
-                            left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
-                            right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
-                            top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
-                            bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
-
-                        } catch (TooManyEntitiesAtGridPositionException ex) {
-                            ex.printStackTrace();
-                        }
+                        left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
+                        right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
+                        top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
+                        bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
 
                         if(!left.isEmpty()) {
                             for(Entity l : left) {
@@ -687,15 +660,10 @@ public class BuildHandler extends Handler {
                     ArrayList<Entity> right = new ArrayList<>();
                     ArrayList<Entity> bottom = new ArrayList<>();
                     // left
-                    try {
-                        left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
-                        right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
-                        top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
-                        bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
-
-                    } catch (TooManyEntitiesAtGridPositionException ex) {
-                        ex.printStackTrace();
-                    }
+                    left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
+                    right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
+                    top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
+                    bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
 
                     if(!left.isEmpty()) {
                         for(Entity l : left) {
@@ -742,88 +710,82 @@ public class BuildHandler extends Handler {
         }
 
         ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
-        try {
-            entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
-        } catch(TooManyEntitiesAtGridPositionException ex) {
-            ex.printStackTrace();
+        entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
+
+        // check for other components at the cell
+        for(Entity check : entitiesAtSameCell) {
+            if(check.getComponent(SimulationComponent.class) != null && check.getComponent(SimulationComponent.class).getSimulationType() != SimulationType.CABLE) {
+                return false;
+            }
         }
+        for (Entity replace : entitiesAtSameCell) {
+            if (replace.getComponent(GridComponent.class) != null) {
+                // place a component
 
-        // dont replace other components if this is a cable
-        if(entitiesAtSameCell.size() == 2) {
-            return false;
-        } else if(entitiesAtSameCell.size() == 1) {
-            for (Entity replace : entitiesAtSameCell) {
-                if (replace.getComponent(GridComponent.class) != null) {
-                    // place a component
+                e.getComponent(GridComponent.class).setGridLocation(new Point(
+                        (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
+                        (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
+                ));
+                // Set Grapics and Collision box
+                e.getComponent(GraphicsComponent.class).reposition(new Point(replace.getComponent(GraphicsComponent.class)
+                        .getBounds().getLocation()));
+                e.getComponent(GraphicsComponent.class).setShape(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
+                e.getComponent(CollisionComponent.class)
+                        .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
 
-                    e.getComponent(GridComponent.class).setGridLocation(new Point(
-                            (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
-                            (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
-                    ));
-                    // Set Grapics and Collision box
-                    e.getComponent(GraphicsComponent.class).reposition(new Point(replace.getComponent(GraphicsComponent.class)
-                            .getBounds().getLocation()));
-                    e.getComponent(GraphicsComponent.class).setShape(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
-                    e.getComponent(CollisionComponent.class)
-                            .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
+                Game.logger().info("Successfully added a new entity to the grid.\n" +
+                        "Name: " + e.getName() +
+                        "\nPosition: " + e.getComponent(GridComponent.class).getGridLocation() +
+                        "\nRemovable: " + e.isRemovable());
 
-                    Game.logger().info("Successfully added a new entity to the grid.\n" +
-                            "Name: " + e.getName() +
-                            "\nPosition: " + e.getComponent(GridComponent.class).getGridLocation() +
-                            "\nRemovable: " + e.isRemovable());
+                // connect the cables
+                // gridPos (x,y) -> check (x+1,y),(x-1,y),(x,y+1),(x,y-1)
+                ArrayList<Entity> left = new ArrayList<>();
+                ArrayList<Entity> top = new ArrayList<>();
+                ArrayList<Entity> right = new ArrayList<>();
+                ArrayList<Entity> bottom = new ArrayList<>();
+                // left
+                left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
+                right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
+                top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
+                bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
 
-                    // connect the cables
-                    // gridPos (x,y) -> check (x+1,y),(x-1,y),(x,y+1),(x,y-1)
-                    ArrayList<Entity> left = new ArrayList<>();
-                    ArrayList<Entity> top = new ArrayList<>();
-                    ArrayList<Entity> right = new ArrayList<>();
-                    ArrayList<Entity> bottom = new ArrayList<>();
-                    // left
-                    try {
-                        left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
-                        right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
-                        top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
-                        bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
+                int inId = e.getComponent(CablePortsComponent.class).getInIds()[0];
+                int outId = e.getComponent(CablePortsComponent.class).getInIds()[0];
+                CablePort in = e.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN);
+                CablePort out = e.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT);
 
-                    } catch (TooManyEntitiesAtGridPositionException ex) {
-                        ex.printStackTrace();
-                    }
-                    int inId = e.getComponent(CablePortsComponent.class).getInIds()[0];
-                    int outId = e.getComponent(CablePortsComponent.class).getInIds()[0];
-                    CablePort in = e.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN);
-                    CablePort out = e.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT);
-
-                    if(!left.isEmpty()) {
-                        for(Entity l : left) {
-                            if(l.getComponent(CablePortsComponent.class) != null) {
-                                CablePort leftOut = l.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
-                                if(leftOut != null && leftOut.getConnectedEntity() == null) {
-                                    leftOut.setConnectedEntity(e);
-                                    in.setConnectedEntity(l);
-                                }
+                if(!left.isEmpty()) {
+                    for(Entity l : left) {
+                        if(l.getComponent(CablePortsComponent.class) != null) {
+                            CablePort leftOut = l.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
+                            if(leftOut != null && leftOut.getConnectedEntity() == null) {
+                                leftOut.setConnectedEntity(e);
+                                in.setConnectedEntity(l);
                             }
                         }
                     }
-                    if(!right.isEmpty()) {
-                        for(Entity r : right) {
-                            if(r.getComponent(CablePortsComponent.class) != null) {
-                                CablePort rightOut = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
-                                if(rightOut != null && rightOut.getConnectedEntity() == null) {
-                                    rightOut.setConnectedEntity(e);
-                                    out.setConnectedEntity(r);
-                                }
-                            }
-                        }
-                    }
-                    if(!top.isEmpty()) {
-                        // TODO: implement corner cables
-                    }
-                    if(!bottom.isEmpty()) {
-                        // TODO: implement corner cables
-                    }
-
-                    return true;
                 }
+                if(!right.isEmpty()) {
+                    for(Entity r : right) {
+                        if(r.getComponent(CablePortsComponent.class) != null) {
+                            CablePort rightOut = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
+                            if(rightOut != null && rightOut.getConnectedEntity() == null) {
+                                rightOut.setConnectedEntity(e);
+                                out.setConnectedEntity(r);
+                            }
+                        }
+                    }
+                }
+                if(!top.isEmpty()) {
+                    // TODO: implement corner cables
+                }
+                if(!bottom.isEmpty()) {
+                    // TODO: implement corner cables
+                }
+                e.getComponent(CablePortsComponent.class).updateImage();
+
+                return true;
             }
         }
         return false;
@@ -850,7 +812,7 @@ public class BuildHandler extends Handler {
      * @param p
      * @return
      */
-    private ArrayList<Entity> getEntitiesAtGridPosition(Point p) throws TooManyEntitiesAtGridPositionException {
+    private ArrayList<Entity> getEntitiesAtGridPosition(Point p) {
         ArrayList<Entity> entitiesAtGridPosition = new ArrayList<>();
 
         for(Entity e : Game.scene().current().getEntities()) {
@@ -861,11 +823,6 @@ public class BuildHandler extends Handler {
                 }
             }
         }
-
-        if(entitiesAtGridPosition.size() > 3) {
-            throw new TooManyEntitiesAtGridPositionException();
-        }
-
         return entitiesAtGridPosition;
     }
 
@@ -927,11 +884,7 @@ public class BuildHandler extends Handler {
         if(mouseGridPos == null) {
             return false;
         }
-        try {
-            clickedEntities.addAll(getEntitiesAtGridPosition(mouseGridPos));
-        } catch(TooManyEntitiesAtGridPositionException ex) {
-            ex.printStackTrace();
-        }
+        clickedEntities.addAll(getEntitiesAtGridPosition(mouseGridPos));
 
         // If not entity was clicked, dont place
         if(clickedEntities.isEmpty()) {
@@ -1042,8 +995,6 @@ public class BuildHandler extends Handler {
                 .getConnectedEntity()
                 .getComponent(CablePortsComponent.class)
                 .getPortIdOfConnectedEntity(e);
-
-        System.out.println(leftId + " " + rightId);
 
         switch (leftId) {
             case 0 -> e.getComponent(GraphicsComponent.class).setLineColor(CableColors.PORT_1_COLOR);
