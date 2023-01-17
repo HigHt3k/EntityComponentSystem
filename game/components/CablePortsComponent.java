@@ -1,9 +1,13 @@
 package game.components;
 
+import com.Game;
 import com.ecs.component.Component;
+import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import game.entities.CablePort;
+import game.entities.CablePortPosition;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class CablePortsComponent extends Component {
@@ -14,6 +18,18 @@ public class CablePortsComponent extends Component {
     @Override
     public void update() {
 
+    }
+
+    public void updateImage() {
+        if(this.getEntity().getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+            int baseId = inIds[0] + 500;
+
+            CablePortPosition in = getCablePort(inIds[0], CablePortType.IN).getPosition();
+            CablePortPosition out = getCablePort(outIds[0], CablePortType.OUT).getPosition();
+            int imgToLoad = baseId*100 + CablePortPosition.valueOf(in) * 10 + CablePortPosition.valueOf(out);
+
+            this.getEntity().getComponent(GraphicsComponent.class).setImage(Game.res().getTileSet().getTile(imgToLoad));
+        }
     }
 
     public void setIds(int[] inIds, int[] outIds) {

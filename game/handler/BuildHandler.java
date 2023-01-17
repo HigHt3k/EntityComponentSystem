@@ -207,37 +207,13 @@ public class BuildHandler extends Handler {
                                 break;
                             }
                         }
-                        // check if the click was on a SimulationComponent second, this will automatically exclude being a
-                        // Build Panel Entity because of the previous if query -> create a new Cable Entity
-                        else if (entity.getComponent(GridComponent.class) != null) {
-                            // handle the cable placement
-                            if(entity.getComponent(CablePortsComponent.class) != null) {
-                                // check for available cable ports on the clicked entity
-                                ArrayList<CablePort> ports = entity.getComponent(CablePortsComponent.class).getCablePorts();
-                                if(!ports.isEmpty()) {
-                                    // add cable
-                                    CableEntity cable = new CableEntity(
-                                            "cable_ref", IdGenerator.generateId(),
-                                            e.getPoint().x, e.getPoint().y,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().width,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().height,
-                                            entity, null
-                                    );
-                                    Game.scene().current().addEntityToScene(cable);
-
-                                    for(CablePort port : ports) {
-                                        if(port.getConnectedEntity() == null && port.getType() == CablePortType.OUT) {
-                                            port.setConnectedEntity(cable);
-                                            break;
-                                        }
-                                    }
-
-                                    currentBuilding = cable;
-                                    currentBuildState = BuilderState.BUILDING_CABLE;
-                                    break;
-                                } else {
-                                    return;
-                                }
+                        // check if clicked component is a cable; left click changes the output direction, mid click the input direction
+                        else if(entity.getComponent(SimulationComponent.class) != null) {
+                            if(entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+                                int outId = entity.getComponent(CablePortsComponent.class).getOutIds()[0];
+                                entity.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT).cyclePosition();
+                                entity.getComponent(CablePortsComponent.class).updateImage();
+                                updateConnection(entity, CablePortType.OUT);
                             }
                         }
                     }
@@ -340,6 +316,176 @@ public class BuildHandler extends Handler {
                                     .getLineStart(),
                                     e.getPoint()
                             );
+                }
+            }
+        }
+    }
+
+    private void updateConnection(Entity e, CablePortType type) {
+        int id = 0;
+        if(type == CablePortType.IN) {
+            id = e.getComponent(CablePortsComponent.class).getInIds()[0];
+        } else {
+            id = e.getComponent(CablePortsComponent.class).getOutIds()[0];
+        }
+
+        // disconnect the component
+        CablePort c = e.getComponent(CablePortsComponent.class).getCablePort(id, type);
+
+        if(c.getConnectedEntity() != null) {
+            c.getConnectedEntity()
+                    .getComponent(CablePortsComponent.class)
+                    .getCablePort(
+                            c.getConnectedEntity()
+                                    .getComponent(CablePortsComponent.class)
+                                    .getPortIdOfConnectedEntity(e),
+                            c.getConnectedEntity()
+                                    .getComponent(CablePortsComponent.class)
+                                    .getPortTypeOfConnectedEntity(e)
+                    )
+                    .setConnectedEntity(null);
+            c.setConnectedEntity(null);
+        }
+
+        Point gridPos = (Point) e.getComponent(GridComponent.class).getGridLocation();
+
+        ArrayList<Entity> left = new ArrayList<>();
+        ArrayList<Entity> top = new ArrayList<>();
+        ArrayList<Entity> right = new ArrayList<>();
+        ArrayList<Entity> bottom = new ArrayList<>();
+        // left
+        try {
+            left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
+            right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
+            top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
+            bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
+
+        } catch (TooManyEntitiesAtGridPositionException ex) {
+            ex.printStackTrace();
+        }
+        int inId = e.getComponent(CablePortsComponent.class).getInIds()[0];
+        int outId = e.getComponent(CablePortsComponent.class).getInIds()[0];
+        CablePort in = e.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN);
+        CablePort out = e.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT);
+
+        System.out.println(c.getPosition());
+
+        if(type == CablePortType.OUT) {
+            switch (c.getPosition()) {
+                case RIGHT -> {
+                    System.out.println(right.size());
+                    if (!right.isEmpty()) {
+                        for (Entity r : right) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
+                }
+                case LEFT -> {
+                    System.out.println(left.size());
+                    if (!left.isEmpty()) {
+                        for (Entity r : bottom) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
+                }
+                case BOTTOM -> {
+                    System.out.println(bottom.size());
+                    if (!bottom.isEmpty()) {
+                        for (Entity r : bottom) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
+                }
+                case TOP -> {
+                    System.out.println(top.size());
+                    if (!top.isEmpty()) {
+                        for (Entity r : top) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.IN);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } else if(type == CablePortType.IN) {
+            switch (c.getPosition()) {
+                case RIGHT -> {
+                    System.out.println(right.size());
+                    if (!right.isEmpty()) {
+                        for (Entity r : right) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
+                }
+                case LEFT -> {
+                    System.out.println(left.size());
+                    if (!left.isEmpty()) {
+                        for (Entity r : bottom) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
+                }
+                case BOTTOM -> {
+                    System.out.println(bottom.size());
+                    if (!bottom.isEmpty()) {
+                        for (Entity r : bottom) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
+                }
+                case TOP -> {
+                    System.out.println(top.size());
+                    if (!top.isEmpty()) {
+                        for (Entity r : top) {
+                            if (r.getComponent(CablePortsComponent.class) != null) {
+                                CablePort connect = r.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.OUT);
+                                if (connect != null && connect.getConnectedEntity() == null) {
+                                    connect.setConnectedEntity(e);
+                                    out.setConnectedEntity(r);
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

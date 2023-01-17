@@ -31,16 +31,28 @@
  <tile id="1000">
   <image width="32" height="32" source="game/res/tiles/air.png"/>
  </tile>
- <tile id="501" type="CABLE">
+ <tile id="500" type="CABLE">
    <image width="32" height="32" source="game/res/tiles/cable-red.png"/>
  </tile>
- <tile id="502" type="CABLE">
+ <tile id="50000" type="CABLE">
+  <image width="32" height="32" source="game/res/tiles/cable-red-left-left.png"/>
+ </tile>
+ <tile id="50001" type="CABLE">
+  <image width="32" height="32" source="game/res/tiles/cable-red-left-top.png"/>
+ </tile>
+ <tile id="50002" type="CABLE">
+  <image width="32" height="32" source="game/res/tiles/cable-red-left-right.png"/>
+ </tile>
+ <tile id="50003" type="CABLE">
+  <image width="32" height="32" source="game/res/tiles/cable-red-left-bottom.png"/>
+ </tile>
+ <tile id="501" type="CABLE">
    <image width="32" height="32" source="game/res/tiles/cable-blue.png"/>
  </tile>
- <tile id="503" type="CABLE">
+ <tile id="502" type="CABLE">
   <image width="32" height="32" source="game/res/tiles/cable-green.png"/>
  </tile>
- <tile id="504" type="CABLE">
+ <tile id="503" type="CABLE">
   <image width="32" height="32" source="game/res/tiles/cable-yellow.png"/>
  </tile>
 </tileset>

@@ -28,6 +28,10 @@ public class CablePort {
         this.position = position;
     }
 
+    public void cyclePosition() {
+        position = CablePortPosition.next(position);
+    }
+
     public CablePortPosition getPosition() {
         return position;
     }
