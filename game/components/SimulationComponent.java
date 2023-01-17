@@ -55,6 +55,10 @@ public class SimulationComponent extends Component {
         groupIds.add(groupId);
     }
 
+    public void resetGroupIds() {
+        groupIds.clear();
+    }
+
     public ArrayList<Integer> getGroupIds() {
         return groupIds;
     }

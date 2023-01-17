@@ -338,20 +338,22 @@ public class SimulationSystem extends SystemHandle {
 
         for(Entity sensor : sensors) {
             tempGroup = new ArrayList<>();
-            ArrayList<Entity> connectedTo = getInterconnection(sensor);
-            connectedTo.add(sensor);
+            try {
+                ArrayList<Entity> connectedTo = getInterconnection(sensor);
+                connectedTo.add(sensor);
 
-            if(sensors.isEmpty()) {
-                continue;
-            }
-
-            for(Entity e : connectedTo) {
-                if(e.getComponent(SimulationComponent.class) != null) {
-                    if(!sensors.contains(e)) {
-                        if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0)))
-                            e.getComponent(SimulationComponent.class).addGroupId(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0));
+                for(Entity e : connectedTo) {
+                    if(e.getComponent(SimulationComponent.class) != null) {
+                        if(!sensors.contains(e)) {
+                            if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0)))
+                                e.getComponent(SimulationComponent.class).addGroupId(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0));
+                        }
                     }
                 }
+            } catch(StackOverflowError ex) {
+                ex.printStackTrace();
+                Game.input().getHandler(BuildHandler.class).printAllCablePorts();
+                System.exit(1);
             }
         }
 
@@ -425,21 +427,29 @@ public class SimulationSystem extends SystemHandle {
                     continue;
                 }
 
-                if(e instanceof CableCombinerEntity) {
-                    CablePortType portType = port.getType();
-                    CablePortType otherSide;
-                    if(port.getType() == CablePortType.IN) {
-                        otherSide = CablePortType.OUT;
-                    } else {
-                        otherSide = CablePortType.IN;
-                    }
+                group.add(port.getConnectedEntity());
+                group.addAll(getInterconnection(port.getConnectedEntity()));
+            }
+        }
 
-                    // only add to group if port in - out is 0-0, 1-1, 2-2, 3-3
-                    if(!tempGroup.contains(e.getComponent(CablePortsComponent.class)
-                            .getCablePort(port.getPortId(), CablePortType.IN)
-                            .getConnectedEntity())) {
-                        continue;
-                    }
+        // refactored version:
+
+        // TODO: old version (delete when the other one is finished):
+        /*
+        if(e.getComponent(CablePortsComponent.class) != null) {
+            ArrayList<CablePort> ports = e.getComponent(CablePortsComponent.class).getCablePorts();
+
+            for(CablePort port : ports) {
+                if(group.contains(port.getConnectedEntity())) {
+                    continue;
+                }
+
+                if(port.getType() == CablePortType.IN) {
+                    continue;
+                }
+
+                if(port.getConnectedEntity() == null) {
+                    continue;
                 }
 
                 group.add(port.getConnectedEntity());
@@ -448,6 +458,8 @@ public class SimulationSystem extends SystemHandle {
                 tempGroup.addAll(group);
             }
         }
+
+         */
 
         return group;
     }
