@@ -98,4 +98,22 @@ public class InputManager {
     public void removeAllHandlers() {
         this.handlers = new ArrayList<>();
     }
+
+    public ArrayList<Handler> getHandlers() {
+        return handlers;
+    }
+
+    public <T extends Handler> T getHandler(Class<T> componentClass) {
+        for(Handler h : handlers) {
+            if(componentClass.isAssignableFrom(h.getClass())) {
+                try {
+                    return componentClass.cast(h);
+                } catch(ClassCastException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
 }
