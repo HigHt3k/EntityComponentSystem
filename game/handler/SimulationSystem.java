@@ -370,11 +370,10 @@ public class SimulationSystem extends SystemHandle {
 
     private void updateGraphics() {
         for(Entity e : gatherRelevantEntities()) {
-            if(e.getComponent(SimulationComponent.class) == null) {
+            if(e.getComponent(SimulationComponent.class) == null || e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
                 continue;
             }
             switch(e.getComponent(SimulationComponent.class).getSimulationState()) {
-
                 case CORRECT -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 255, 0, 40));
                 case FAIL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 255, 0, 40));
                 case PASSIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 0, 255, 40));
