@@ -17,6 +17,7 @@ import game.entities.GridEntity;
 import game.entities.SimulationEntity;
 import game.handler.BuildHandler;
 import game.handler.SimulationSystem;
+import game.intent.CableLayerSwitchIntent;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -248,6 +249,43 @@ public class GameScene extends Scene {
 
         mainMenuButton.addIntent(new StartIntent());
         this.addEntityToScene(mainMenuButton);
+
+        // cable switch buttons
+        GenericButton layer0 = new GenericButton(
+                "Layer1_button", IdGenerator.generateId(),
+                50, 50, 50, 50,
+                "0",
+                font
+        );
+        layer0.addIntent(new CableLayerSwitchIntent(0));
+        this.addEntityToScene(layer0);
+
+        GenericButton layer1 = new GenericButton(
+                "Layer1_button", IdGenerator.generateId(),
+                120, 50, 50, 50,
+                "1",
+                font
+        );
+        layer1.addIntent(new CableLayerSwitchIntent(1));
+        this.addEntityToScene(layer1);
+
+        GenericButton layer2 = new GenericButton(
+                "Layer1_button", IdGenerator.generateId(),
+                190, 50, 50, 50,
+                "2",
+                font
+        );
+        layer2.addIntent(new CableLayerSwitchIntent(2));
+        this.addEntityToScene(layer2);
+
+        GenericButton layer3 = new GenericButton(
+                "Layer1_button", IdGenerator.generateId(),
+                260, 50, 50, 50,
+                "3",
+                font
+        );
+        layer3.addIntent(new CableLayerSwitchIntent(3));
+        this.addEntityToScene(layer3);
     }
 
     /**
