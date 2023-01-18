@@ -11,7 +11,6 @@ import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
 
 import java.awt.*;
-import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -46,9 +45,14 @@ public class SimulationSystem extends SystemHandle {
                     continue;
                 } else {
                     e.getComponent(SimulationComponent.class).resetInputIds();
+                    e.getComponent(SimulationComponent.class).resetInputStates();
                 }
                 for(Entity connected : e.getComponent(CablePortsComponent.class).getAllConnectedEntities()) {
+                    if(e.getComponent(SimulationComponent.class).getInputIds().contains(connected.getComponent(SimulationComponent.class).getOwnId())) {
+                        continue;
+                    }
                     e.getComponent(SimulationComponent.class).addInputId(connected.getComponent(SimulationComponent.class).getOwnId());
+                    e.getComponent(SimulationComponent.class).addInputState(connected.getComponent(SimulationComponent.class).getSimulationState());
                 }
             }
         }
@@ -56,7 +60,16 @@ public class SimulationSystem extends SystemHandle {
 
     private void updateStates() {
         for(Entity e : gatherRelevantEntities()) {
+            if(e.getComponent(SimulationComponent.class) == null) {
+                continue;
+            }
 
+            if(Collections.frequency(e.getComponent(SimulationComponent.class).getInputStates(), SimulationState.CORRECT)
+                    >= e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
+                e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
+            } else {
+                e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.INOPERATIVE);
+            }
         }
     }
 

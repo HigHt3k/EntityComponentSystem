@@ -16,6 +16,7 @@ public class SimulationComponent extends Component {
     private ArrayList<Integer> groupIds = new ArrayList<>();
     private int ownId = IdGenerator.generateId();
     private ArrayList<Integer> inputIds = new ArrayList<>();
+    private ArrayList<SimulationState> inputStates = new ArrayList<>();
 
 
     // stuff for markov simulation chain
@@ -25,6 +26,22 @@ public class SimulationComponent extends Component {
     @Override
     public void update() {
 
+    }
+
+    public void setOwnId(int id) {
+        ownId = id;
+    }
+
+    public ArrayList<SimulationState> getInputStates() {
+        return inputStates;
+    }
+
+    public void addInputState(SimulationState state) {
+        this.inputStates.add(state);
+    }
+
+    public void resetInputStates() {
+        inputStates.clear();
     }
 
     public ArrayList<Integer> getInputIds() {
