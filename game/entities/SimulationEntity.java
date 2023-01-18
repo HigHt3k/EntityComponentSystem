@@ -9,7 +9,6 @@ import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;
 import com.graphics.scene.Scene;
 import game.components.*;
-import game.intent.BuildIntent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -94,10 +93,6 @@ public class SimulationEntity extends Entity {
         hover.setIntentComponent(intents);
         intents.addIntent(hover);
 
-        // define BuildIntent by default
-        BuildIntent build = new BuildIntent();
-        build.setIntentComponent(intents);
-        intents.addIntent(build);
     }
 
     public void addIntent(Intent intent) {

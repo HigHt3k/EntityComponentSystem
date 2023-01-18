@@ -12,7 +12,6 @@ import com.graphics.scene.Scene;
 import game.components.CablePortType;
 import game.components.CablePortsComponent;
 import game.components.GridComponent;
-import game.intent.BuildIntent;
 
 import java.awt.*;
 
@@ -77,9 +76,6 @@ public class CableCombinerEntity extends Entity {
         hover.setIntentComponent(intents);
         intents.addIntent(hover);
 
-        BuildIntent build = new BuildIntent();
-        build.setIntentComponent(intents);
-        intents.addIntent(build);
 
         if(Game.config().isDebug()) {
             DebugIntent debug = new DebugIntent();

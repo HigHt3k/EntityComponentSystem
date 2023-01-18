@@ -178,6 +178,7 @@ public class SimulationSystem extends SystemHandle {
 
     private void markov() {
         //TODO: Implement Markov Chain Detection
+        markovChain();
 
         // recognize how many times markov should run through the system
         int distinctIdCount = getDistinctGroupIds().length;
@@ -188,6 +189,26 @@ public class SimulationSystem extends SystemHandle {
             case 3 -> markov3();
             case 4 -> markov4();
         }
+    }
+
+    private void markovChain() {
+        ArrayList<Entity> entities = new ArrayList<>();
+        int[] groupIds = getDistinctGroupIds();
+
+        for(int i : groupIds) {
+            ArrayList<Entity> group = getEntitiesByGroupdId(i);
+            if(!validateGroup(group)) {
+                continue;
+            }
+
+            for(Entity e : group) {
+                if(e.getComponent(SimulationComponent.class) != null && e.getComponent(SimulationComponent.class).getSimulationType() != SimulationType.CABLE) {
+                    entities.add(e);
+                }
+            }
+        }
+
+
     }
 
     private void markov2() {

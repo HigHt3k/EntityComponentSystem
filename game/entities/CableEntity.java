@@ -10,7 +10,6 @@ import com.ecs.intent.HoverIntent;
 import com.graphics.scene.Scene;
 import game.components.CablePortType;
 import game.components.CablePortsComponent;
-import game.intent.BuildIntent;
 
 import java.awt.*;
 
@@ -64,10 +63,6 @@ public class CableEntity extends Entity {
         HoverIntent hover = new HoverIntent();
         hover.setIntentComponent(intents);
         intents.addIntent(hover);
-
-        BuildIntent build = new BuildIntent();
-        build.setIntentComponent(intents);
-        intents.addIntent(build);
 
         if(Game.config().isDebug()) {
             DebugIntent debug = new DebugIntent();

@@ -37,7 +37,7 @@ public class GameScene extends Scene {
     private final Color BOX_COLOR = new Color(200, 90, 0, 240);
     private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
-    private final int CELL_SIZE = 128;
+    private int CELL_SIZE = 128;
     private String description;
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
@@ -48,6 +48,7 @@ public class GameScene extends Scene {
     private int cGoal;
 
     public void setGridSize(int x, int y) {
+        CELL_SIZE = 750/y;
         X_MARGIN = (1500 - x*CELL_SIZE)/2;
         Y_MARGIN = (850 - y*CELL_SIZE)/2;
     }

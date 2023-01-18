@@ -8,7 +8,6 @@ import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.elements.ToolTip;
 import game.components.*;
-import game.intent.BuildIntent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -85,9 +84,5 @@ public class BuildPanelEntity extends Entity {
         hover.setIntentComponent(intents);
         intents.addIntent(hover);
 
-        // define BuildIntent by default
-        BuildIntent build = new BuildIntent();
-        build.setIntentComponent(intents);
-        intents.addIntent(build);
     }
 }
