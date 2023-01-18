@@ -8,7 +8,6 @@ import com.ecs.entity.Entity;
 import com.input.handler.Handler;
 import com.input.handler.HandlerType;
 import game.components.*;
-import game.customexceptions.TooManyEntitiesAtGridPositionException;
 import game.entities.*;
 import game.scenes.GameScene;
 
@@ -750,15 +749,27 @@ public class BuildHandler extends Handler {
             return false;
         }
 
-        ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
-        entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
+        ArrayList<Entity> entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
+
+
+        int inId = e.getComponent(CablePortsComponent.class).getInIds()[0];
+        int outId = e.getComponent(CablePortsComponent.class).getInIds()[0];
 
         // check for other components at the cell
         for(Entity check : entitiesAtSameCell) {
             if(check.getComponent(SimulationComponent.class) != null && check.getComponent(SimulationComponent.class).getSimulationType() != SimulationType.CABLE) {
                 return false;
             }
+            // check if a cable of the same type is here already
+            if(check.getComponent(SimulationComponent.class) != null
+                    && check.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE
+                    && check.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN) != null) {
+                return false;
+            }
         }
+
+
+
         for (Entity replace : entitiesAtSameCell) {
             if (replace.getComponent(GridComponent.class) != null) {
                 // place a component
@@ -781,18 +792,11 @@ public class BuildHandler extends Handler {
 
                 // connect the cables
                 // gridPos (x,y) -> check (x+1,y),(x-1,y),(x,y+1),(x,y-1)
-                ArrayList<Entity> left = new ArrayList<>();
-                ArrayList<Entity> top = new ArrayList<>();
-                ArrayList<Entity> right = new ArrayList<>();
-                ArrayList<Entity> bottom = new ArrayList<>();
-                // left
-                left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
-                right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
-                top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
-                bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
+                ArrayList<Entity> left = getEntitiesAtGridPosition(new Point(gridPos.x - 1, gridPos.y));
+                ArrayList<Entity> right = getEntitiesAtGridPosition(new Point(gridPos.x + 1, gridPos.y));
+                ArrayList<Entity> top = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y - 1));
+                ArrayList<Entity> bottom = getEntitiesAtGridPosition(new Point(gridPos.x, gridPos.y + 1));
 
-                int inId = e.getComponent(CablePortsComponent.class).getInIds()[0];
-                int outId = e.getComponent(CablePortsComponent.class).getInIds()[0];
                 CablePort in = e.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN);
                 CablePort out = e.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT);
 
