@@ -10,6 +10,7 @@ import com.input.handler.HandlerType;
 import game.components.*;
 import game.entities.*;
 import game.handler.simulation.SimulationType;
+import game.handler.simulation.markov.MarkovProcessor;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -39,6 +40,9 @@ public class BuildHandler extends Handler {
         }
         if(e.getKeyCode() == KeyEvent.VK_P) {
             printAllSimComponents();
+        }
+        if(e.getKeyCode() == KeyEvent.VK_M) {
+            MarkovProcessor.printMarkov();
         }
     }
 
@@ -75,6 +79,8 @@ public class BuildHandler extends Handler {
                     System.out.println("------- " + e.getName() + " - " + e.getId() + " --------");
                     if(e.getComponent(SimulationComponent.class) != null) {
                         System.out.println("Group ID: " + e.getComponent(SimulationComponent.class).getGroupIds());
+                        System.out.println("Own ID: " + e.getComponent(SimulationComponent.class).getOwnId());
+                        System.out.println("Input Ids: " + e.getComponent(SimulationComponent.class).getInputIds());
                         System.out.println("Current State: " + e.getComponent(SimulationComponent.class).getSimulationState());
                         System.out.println("Minimum Correct signals: " + e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded());
                         System.out.println("Maximum Out Of Control signals: " + e.getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted());
@@ -195,7 +201,7 @@ public class BuildHandler extends Handler {
                                         entity.getComponent(GraphicsComponent.class).getImage(),
                                         entity.getComponent(BuildComponent.class).getFailureRatio(),
                                         entity.getComponent(BuildComponent.class).getSimulationType(),
-                                        0, 0,
+                                        1, 0,
                                         new int[] {entity.getComponent(BuildComponent.class).getPortId()},
                                         new int[] {entity.getComponent(BuildComponent.class).getPortId()},
                                         true
@@ -264,7 +270,7 @@ public class BuildHandler extends Handler {
                                     cableBuildRepetitive.getComponent(GraphicsComponent.class).getImage(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getFailureRatio(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType(),
-                                    0, 0,
+                                    1, 0,
                                     new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
                                     new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
                                     true

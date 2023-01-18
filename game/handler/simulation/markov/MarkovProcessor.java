@@ -1,6 +1,8 @@
 package game.handler.simulation.markov;
 
 import com.ecs.entity.Entity;
+import game.components.SimulationComponent;
+import game.handler.simulation.SimulationType;
 
 import java.util.ArrayList;
 
@@ -44,7 +46,35 @@ public class MarkovProcessor {
      * Print the markov chain
      */
     public static void printMarkov() {
+        ArrayList<Entity> sensors = new ArrayList<>();
+        ArrayList<Entity> cpus = new ArrayList<>();
+        ArrayList<Entity> actuators = new ArrayList<>();
 
+        for(Entity e : entities) {
+            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.SENSOR) {
+                sensors.add(e);
+            } else if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CPU) {
+                cpus.add(e);
+            } else if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
+                actuators.add(e);
+            }
+        }
+
+        System.out.println("--------Markov Debugging --------");
+        System.out.println("Total size: " + entities.size());
+        System.out.println("Distinct groups: " + groupIds);
+        for(Entity e : sensors) {
+            System.out.println(e.getComponent(SimulationComponent.class).getSimulationType()
+                    + ": " + e.getComponent(SimulationComponent.class).getSimulationState());
+        }
+        for(Entity e : cpus) {
+            System.out.println(e.getComponent(SimulationComponent.class).getSimulationType()
+                    + ": " + e.getComponent(SimulationComponent.class).getSimulationState());
+        }
+        for(Entity e : actuators) {
+            System.out.println(e.getComponent(SimulationComponent.class).getSimulationType()
+                    + ": " + e.getComponent(SimulationComponent.class).getSimulationState());
+        }
     }
 
 }

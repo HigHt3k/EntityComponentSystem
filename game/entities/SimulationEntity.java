@@ -65,7 +65,7 @@ public class SimulationEntity extends Entity {
         sim.setFailureRatio(failureRatio);
         sim.setCorrectSignalsNeeded(correctSignalsNeeded);
         sim.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
-        if(type == SimulationType.SENSOR || type == SimulationType.CABLE) {
+        if(type == SimulationType.SENSOR) {
             sim.setSimulationState(SimulationState.CORRECT);
         }
         sim.setEntity(this);

@@ -60,6 +60,23 @@ public class CablePortsComponent extends Component {
         return null;
     }
 
+    /**
+     * get all entities connected to the input ports of this component, only non null
+     * @return
+     */
+    public ArrayList<Entity> getAllConnectedEntities() {
+        ArrayList<Entity> all = new ArrayList<>();
+
+        for(CablePort c : cablePorts) {
+            if(c.getType() == CablePortType.IN) {
+                if(c.getConnectedEntity() != null) {
+                    all.add(c.getConnectedEntity());
+                }
+            }
+        }
+        return all;
+    }
+
     public CablePort getNextFreePort(CablePortType type) {
         for(CablePort port : cablePorts) {
             if(port.getType() == type) {

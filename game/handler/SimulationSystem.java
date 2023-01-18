@@ -23,6 +23,7 @@ public class SimulationSystem extends SystemHandle {
     @Override
     public void handle() {
         updateGroupIds();
+        updateInputIds();
         int[] groupIds = getDistinctGroupIds();
 
         for(int i : groupIds) {
@@ -32,7 +33,31 @@ public class SimulationSystem extends SystemHandle {
                 calculateGroupFailureRatio(group);
             }
         }
+
+        markov();
+        updateStates();
         updateGraphics();
+    }
+
+    private void updateInputIds() {
+        for(Entity e : gatherRelevantEntities()) {
+            if(e.getComponent(CablePortsComponent.class) != null) {
+                if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.SENSOR) {
+                    continue;
+                } else {
+                    e.getComponent(SimulationComponent.class).resetInputIds();
+                }
+                for(Entity connected : e.getComponent(CablePortsComponent.class).getAllConnectedEntities()) {
+                    e.getComponent(SimulationComponent.class).addInputId(connected.getComponent(SimulationComponent.class).getOwnId());
+                }
+            }
+        }
+    }
+
+    private void updateStates() {
+        for(Entity e : gatherRelevantEntities()) {
+
+        }
     }
 
     private void medianVoter() {
@@ -98,8 +123,6 @@ public class SimulationSystem extends SystemHandle {
         System.out.println("... for a 2hrs flight: " + failureProbability * 2);
 
          */
-
-        markov();
     }
 
     private boolean validateGroup(ArrayList<Entity> group) {
@@ -184,6 +207,8 @@ public class SimulationSystem extends SystemHandle {
         markovChain();
 
         // recognize how many times markov should run through the system
+        /*
+
         int distinctIdCount = getDistinctGroupIds().length;
 
         // check how many are validated, choose then which markov function to use
@@ -192,6 +217,8 @@ public class SimulationSystem extends SystemHandle {
             case 3 -> markov3();
             case 4 -> markov4();
         }
+
+         */
     }
 
     private void markovChain() {
@@ -200,12 +227,9 @@ public class SimulationSystem extends SystemHandle {
 
         for(int i : groupIds) {
             ArrayList<Entity> group = getEntitiesByGroupdId(i);
-            if(!validateGroup(group)) {
-                continue;
-            }
 
             for(Entity e : group) {
-                if(e.getComponent(SimulationComponent.class) != null && e.getComponent(SimulationComponent.class).getSimulationType() != SimulationType.CABLE) {
+                if(e.getComponent(SimulationComponent.class) != null) {
                     entities.add(e);
                 }
             }
@@ -371,8 +395,8 @@ public class SimulationSystem extends SystemHandle {
                 for(Entity e : connectedTo) {
                     if(e.getComponent(SimulationComponent.class) != null) {
                         if(!sensors.contains(e)) {
-                            if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0))) {
-                                e.getComponent(SimulationComponent.class).addGroupId(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0));
+                            if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensor.getComponent(SimulationComponent.class).getOwnId())) {
+                                e.getComponent(SimulationComponent.class).addGroupId(sensor.getComponent(SimulationComponent.class).getOwnId());
                             }
                         }
                     }
