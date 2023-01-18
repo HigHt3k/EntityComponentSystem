@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="1" name ="Quadruplex Test" width="15" height="15">
+    <description>Testlevel for quadruplex</description>
+    <goalDescription>Reach a failure ratio of 3e-3</goalDescription>
+    <goal>3e-3</goal>
+ <tileset source="base_tiles.xml"/>
+    <build>
+        <entity id="201" amount="8" safety="1e-4"/>
+        <entity id="203" amount="8" safety="1e-4"/>
+        <entity id="205" amount="8" safety="1e-4"/>
+    </build>
+ <layer id="0" name="Tile Layer 1">
+ </layer>
+</map>
