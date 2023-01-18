@@ -23,6 +23,7 @@ public class BuildHandler extends Handler {
     public BuilderState currentBuildState = BuilderState.NOT_BUILDING;
     public Entity currentBuilding = null;
     public int currentCableLayer = 0;
+    public Entity cableBuildRepetitive = null;
 
     public BuildHandler() {
         super(HandlerType.EVENT);
@@ -189,7 +190,7 @@ public class BuildHandler extends Handler {
                                         new int[] {entity.getComponent(BuildComponent.class).getPortId()},
                                         true
                                 );
-
+                                cableBuildRepetitive = entity;
                                 currentBuilding = newEntity;
                                 Game.scene().current().addEntityToScene(newEntity);
 
@@ -240,7 +241,45 @@ public class BuildHandler extends Handler {
                     if(placeCableRefactored(currentBuilding)) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
-                        break;
+
+                        if(cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 0
+                                && cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
+                            SimulationEntity newEntity = new SimulationEntity(
+                                    cableBuildRepetitive.getName() + "_cable", IdGenerator.generateId(),
+                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().x,
+                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().width,
+                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                                    -1, -1,
+                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).getImage(),
+                                    cableBuildRepetitive.getComponent(BuildComponent.class).getFailureRatio(),
+                                    cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType(),
+                                    new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
+                                    new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
+                                    true
+                            );
+
+                            currentBuilding = newEntity;
+                            Game.scene().current().addEntityToScene(newEntity);
+
+                            cableBuildRepetitive.getComponent(BuildComponent.class)
+                                    .subtractFromAmount();
+                            if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 100) {
+                                cableBuildRepetitive.getComponent(GraphicsComponent.class)
+                                        .getTexts()
+                                        .set(0, "");
+                            } else {
+                                cableBuildRepetitive.getComponent(GraphicsComponent.class)
+                                        .getTexts()
+                                        .set(0,
+                                                String.valueOf(cableBuildRepetitive.getComponent(BuildComponent.class)
+                                                        .getAmount()
+                                                )
+                                        );
+                            }
+                            currentBuildState = BuilderState.BUILDING_CABLE_REFACTORED;
+                            break;
+                        }
                     }
                 }
                 // check if state is building cable
@@ -279,6 +318,7 @@ public class BuildHandler extends Handler {
                     // remove the component
                     if(putBackToStack(currentBuilding)) {
                         currentBuildState = BuilderState.NOT_BUILDING;
+                        cableBuildRepetitive = null;
                         currentBuilding = null;
                     }
                 }
