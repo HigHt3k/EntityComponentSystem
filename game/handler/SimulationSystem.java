@@ -11,6 +11,7 @@ import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -357,6 +358,7 @@ public class SimulationSystem extends SystemHandle {
      */
     private void updateGroupIds() {
         // TODO: Implement that cable port in 0 and out 0 only lead to group id update / connection. if 0, 1 and 0 is connected, only 0
+
         // should be used
         ArrayList<Entity> sensors = getSensors();
 
@@ -369,8 +371,9 @@ public class SimulationSystem extends SystemHandle {
                 for(Entity e : connectedTo) {
                     if(e.getComponent(SimulationComponent.class) != null) {
                         if(!sensors.contains(e)) {
-                            if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0)))
+                            if(!e.getComponent(SimulationComponent.class).getGroupIds().contains(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0))) {
                                 e.getComponent(SimulationComponent.class).addGroupId(sensor.getComponent(SimulationComponent.class).getGroupIds().get(0));
+                            }
                         }
                     }
                 }
@@ -399,11 +402,13 @@ public class SimulationSystem extends SystemHandle {
             if(e.getComponent(SimulationComponent.class) == null || e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
                 continue;
             }
+
             switch(e.getComponent(SimulationComponent.class).getSimulationState()) {
                 case CORRECT -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 255, 0, 40));
-                case FAIL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 255, 0, 40));
+                case FAIL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 132, 0, 40));
                 case PASSIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 0, 255, 40));
                 case OUT_OF_CONTROL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 0, 0, 40));
+                case INOPERATIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 235, 0, 40));
             }
         }
     }

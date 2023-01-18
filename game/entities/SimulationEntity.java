@@ -7,6 +7,7 @@ import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;
 import game.components.*;
+import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 
 import java.awt.*;
@@ -64,6 +65,9 @@ public class SimulationEntity extends Entity {
         sim.setFailureRatio(failureRatio);
         sim.setCorrectSignalsNeeded(correctSignalsNeeded);
         sim.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
+        if(type == SimulationType.SENSOR || type == SimulationType.CABLE) {
+            sim.setSimulationState(SimulationState.CORRECT);
+        }
         sim.setEntity(this);
         this.addComponent(sim);
 

@@ -405,6 +405,7 @@ public class BuildHandler extends Handler {
         CablePort c = e.getComponent(CablePortsComponent.class).getCablePort(id, type);
 
         if(c.getConnectedEntity() != null) {
+            c.getConnectedEntity().getComponent(SimulationComponent.class).resetGroupIds();
             c.getConnectedEntity()
                     .getComponent(CablePortsComponent.class)
                     .getCablePort(
@@ -553,6 +554,11 @@ public class BuildHandler extends Handler {
     private boolean putBackToStack(Entity e) {
         if(e instanceof SimulationEntity se) {
             if (e.getComponent(SimulationComponent.class) != null) {
+                if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+                    if (e.getComponent(CablePortsComponent.class).getCablePort(e.getComponent(CablePortsComponent.class).getOutIds()[0], CablePortType.OUT).getConnectedEntity() != null) {
+                        e.getComponent(CablePortsComponent.class).getCablePort(e.getComponent(CablePortsComponent.class).getOutIds()[0], CablePortType.OUT).getConnectedEntity().getComponent(SimulationComponent.class).resetGroupIds();
+                    }
+                }
                 //replace the component
                 Pattern p = Pattern.compile("_\\d{3}");
                 Matcher m1 = p.matcher(e.getName());
@@ -833,12 +839,6 @@ public class BuildHandler extends Handler {
                             }
                         }
                     }
-                }
-                if(!top.isEmpty()) {
-                    // TODO: implement corner cables
-                }
-                if(!bottom.isEmpty()) {
-                    // TODO: implement corner cables
                 }
                 e.getComponent(CablePortsComponent.class).updateImage();
 
