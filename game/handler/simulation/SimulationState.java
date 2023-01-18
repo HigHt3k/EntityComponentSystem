@@ -4,5 +4,6 @@ public enum SimulationState {
     CORRECT,
     FAIL,
     PASSIVE,
-    OUT_OF_CONTROL
+    OUT_OF_CONTROL,
+    INOPERATIVE
 }

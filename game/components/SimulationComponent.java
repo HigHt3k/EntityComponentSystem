@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class SimulationComponent extends Component {
     private float failureRatio;
     private float failureRecognitionRatio = 0.9f;
-    private SimulationState simulationState = SimulationState.CORRECT;
+    private SimulationState simulationState = SimulationState.INOPERATIVE;
     private SimulationType simulationType;
     private ArrayList<Integer> groupIds = new ArrayList<>();
 
