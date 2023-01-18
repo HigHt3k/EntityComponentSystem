@@ -1,4 +1,4 @@
-package game.components;
+package game.handler.simulation;
 
 public enum SimulationState {
     CORRECT,

@@ -1,11 +1,10 @@
 package com.resource;
 
 import com.Game;
-import game.components.SimulationType;
+import game.handler.simulation.SimulationType;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
-import java.util.logging.Logger;
 
 public class TileSet {
     private final HashMap<Integer, BufferedImage> tiles;

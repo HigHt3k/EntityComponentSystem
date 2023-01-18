@@ -9,6 +9,7 @@ import com.input.handler.Handler;
 import com.input.handler.HandlerType;
 import game.components.*;
 import game.entities.*;
+import game.handler.simulation.SimulationType;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -68,12 +69,15 @@ public class BuildHandler extends Handler {
         if(Game.scene().current() instanceof GameScene gs) {
             ArrayList<Entity> entities = gs.getEntities();
 
-            System.out.println("--------- CABLE PORTS ---------");
+            System.out.println("--------- Grid Elements ---------");
             for(Entity e : entities) {
                 if(e.getComponent(CablePortsComponent.class) != null) {
                     System.out.println("------- " + e.getName() + " - " + e.getId() + " --------");
                     if(e.getComponent(SimulationComponent.class) != null) {
                         System.out.println("Group ID: " + e.getComponent(SimulationComponent.class).getGroupIds());
+                        System.out.println("Current State: " + e.getComponent(SimulationComponent.class).getSimulationState());
+                        System.out.println("Minimum Correct signals: " + e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded());
+                        System.out.println("Maximum Out Of Control signals: " + e.getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted());
                     }
                     if(e.getComponent(GridComponent.class) != null)
                         System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());

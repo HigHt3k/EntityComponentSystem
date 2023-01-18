@@ -8,6 +8,7 @@ import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.elements.ToolTip;
 import game.components.*;
+import game.handler.simulation.SimulationType;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

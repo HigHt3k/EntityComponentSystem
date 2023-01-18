@@ -9,10 +9,8 @@ import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
 import game.components.BuildComponent;
 import game.components.GridComponent;
-import game.components.SimulationComponent;
-import game.components.SimulationType;
+import game.handler.simulation.SimulationType;
 import game.entities.BuildPanelEntity;
-import game.entities.CableEntity;
 import game.entities.GridEntity;
 import game.entities.SimulationEntity;
 import game.handler.BuildHandler;
@@ -24,8 +22,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GameScene extends Scene {
     private final int ITEM_MARGIN = 20;

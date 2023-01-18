@@ -5,8 +5,9 @@ import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.system.SystemHandle;
 import game.components.*;
-import game.entities.CableCombinerEntity;
 import game.entities.CablePort;
+import game.handler.simulation.SimulationState;
+import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
 
 import java.awt.*;

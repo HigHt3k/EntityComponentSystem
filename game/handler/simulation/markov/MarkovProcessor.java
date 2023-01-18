@@ -1,8 +1,6 @@
 package game.handler.simulation.markov;
 
 import com.ecs.entity.Entity;
-import game.components.SimulationComponent;
-import game.components.SimulationType;
 
 import java.util.ArrayList;
 

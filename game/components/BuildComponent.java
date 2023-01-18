@@ -1,7 +1,7 @@
 package game.components;
 
-import com.IdGenerator;
 import com.ecs.component.Component;
+import game.handler.simulation.SimulationType;
 
 public class BuildComponent extends Component {
     private int amount;

@@ -6,8 +6,8 @@ import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import game.entities.CablePort;
 import game.entities.CablePortPosition;
+import game.handler.simulation.SimulationType;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
 public class CablePortsComponent extends Component {

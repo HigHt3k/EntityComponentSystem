@@ -1,7 +1,7 @@
 package com.resource;
 
 import com.Game;
-import game.components.SimulationType;
+import game.handler.simulation.SimulationType;
 import game.scenes.GameScene;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
