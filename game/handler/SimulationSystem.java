@@ -7,6 +7,7 @@ import com.ecs.system.SystemHandle;
 import game.components.*;
 import game.entities.CableCombinerEntity;
 import game.entities.CablePort;
+import game.handler.simulation.markov.MarkovProcessor;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -208,7 +209,8 @@ public class SimulationSystem extends SystemHandle {
             }
         }
 
-
+        MarkovProcessor.entities = entities;
+        MarkovProcessor.groupIds = groupIds;
     }
 
     private void markov2() {

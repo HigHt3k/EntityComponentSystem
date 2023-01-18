@@ -163,10 +163,12 @@ public class ResourceManager {
                             float safety = 0f;
                             if(!entity.getAttribute("safety").equals("")) {
                                 safety = Float.parseFloat(entity.getAttribute("safety"));
-                                System.out.println(safety);
                             }
 
-                            scene.addSimulationElement(x, y, entityId, safety, interactable);
+                            int correctSignalsNeeded = Integer.parseInt(entity.getAttribute("correctSignalsNeeded"));
+                            int outOfControlSignalsAccepted = Integer.parseInt(entity.getAttribute("outOfControlSignalsAccepted"));
+
+                            scene.addSimulationElement(x, y, entityId, safety,correctSignalsNeeded, outOfControlSignalsAccepted, interactable);
                         }
                     }
                 }
@@ -182,8 +184,10 @@ public class ResourceManager {
                             int entityId = Integer.parseInt(entity.getAttribute("id"));
                             int amount = Integer.parseInt(entity.getAttribute("amount"));
                             float failureRatio = Float.parseFloat(entity.getAttribute("safety"));
+                            int correctSignalsNeeded = Integer.parseInt(entity.getAttribute("correctSignalsNeeded"));
+                            int outOfControlSignalsAccepted = Integer.parseInt(entity.getAttribute("outOfControlSignalsAccepted"));
 
-                            scene.addToBuildPanel(entityId, amount, failureRatio);
+                            scene.addToBuildPanel(entityId, amount, failureRatio, correctSignalsNeeded, outOfControlSignalsAccepted);
                         }
                     }
 
@@ -193,6 +197,8 @@ public class ResourceManager {
         } catch (IOException e) {
             e.printStackTrace();
         } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
         Game.logger().info("Loaded level, now available levels: " + Game.scene().getSceneAmount());

@@ -34,6 +34,7 @@ public class SimulationEntity extends Entity {
                             int xGrid, int yGrid,
                             BufferedImage img,
                             float failureRatio, SimulationType type,
+                            int correctSignalsNeeded, int outOfControlSignalsAccepted,
                             int[] cablePortIdsIn, int[] cablePortIdsOut,
                             boolean removable) {
         super(name, id);
@@ -62,6 +63,8 @@ public class SimulationEntity extends Entity {
         SimulationComponent sim = new SimulationComponent();
         sim.setSimulationType(type);
         sim.setFailureRatio(failureRatio);
+        sim.setCorrectSignalsNeeded(correctSignalsNeeded);
+        sim.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
         sim.setEntity(this);
         this.addComponent(sim);
 

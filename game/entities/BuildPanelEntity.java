@@ -32,6 +32,7 @@ public class BuildPanelEntity extends Entity {
                             BufferedImage img,
                             int amount, float failureRatio,
                             SimulationType simulationType,
+                            int correctSignalsNeeded, int outOfControlSignalsAccepted,
                             String description) {
         super(name, id);
 
@@ -72,6 +73,8 @@ public class BuildPanelEntity extends Entity {
         builder.setFailureRatio(failureRatio);
         builder.setEntity(this);
         builder.setSimulationType(simulationType);
+        builder.setCorrectSignalsNeeded(correctSignalsNeeded);
+        builder.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
         this.addComponent(builder);
 
         // define IntentComponent

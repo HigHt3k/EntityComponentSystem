@@ -119,6 +119,8 @@ public class BuildHandler extends Handler {
                                             entity.getComponent(GraphicsComponent.class).getImage(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
                                             entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
                                             new int[] {0,1,2,3}, new int[] {0,1,2,3},
                                             true
                                     );
@@ -133,6 +135,8 @@ public class BuildHandler extends Handler {
                                             entity.getComponent(GraphicsComponent.class).getImage(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
                                             entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
                                             new int[] {}, new int[] {0,1,2,3},
                                             true
                                     );
@@ -147,6 +151,8 @@ public class BuildHandler extends Handler {
                                             entity.getComponent(GraphicsComponent.class).getImage(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
                                             entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
                                             new int[] {0,1,2,3}, new int[] {},
                                             true
                                     );
@@ -185,6 +191,7 @@ public class BuildHandler extends Handler {
                                         entity.getComponent(GraphicsComponent.class).getImage(),
                                         entity.getComponent(BuildComponent.class).getFailureRatio(),
                                         entity.getComponent(BuildComponent.class).getSimulationType(),
+                                        0, 0,
                                         new int[] {entity.getComponent(BuildComponent.class).getPortId()},
                                         new int[] {entity.getComponent(BuildComponent.class).getPortId()},
                                         true
@@ -253,6 +260,7 @@ public class BuildHandler extends Handler {
                                     cableBuildRepetitive.getComponent(GraphicsComponent.class).getImage(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getFailureRatio(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType(),
+                                    0, 0,
                                     new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
                                     new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
                                     true

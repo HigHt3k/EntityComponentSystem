@@ -12,9 +12,29 @@ public class SimulationComponent extends Component {
     private SimulationType simulationType;
     private ArrayList<Integer> groupIds = new ArrayList<>();
 
+    // stuff for markov simulation chain
+    private int correctSignalsNeeded = 1;
+    private int outOfControlSignalsAccepted = 0;
+
     @Override
     public void update() {
 
+    }
+
+    public void setCorrectSignalsNeeded(int correctSignalsNeeded) {
+        this.correctSignalsNeeded = correctSignalsNeeded;
+    }
+
+    public void setOutOfControlSignalsAccepted(int outOfControlSignalsAccepted) {
+        this.outOfControlSignalsAccepted = outOfControlSignalsAccepted;
+    }
+
+    public int getCorrectSignalsNeeded() {
+        return correctSignalsNeeded;
+    }
+
+    public int getOutOfControlSignalsAccepted() {
+        return outOfControlSignalsAccepted;
     }
 
     public void setSimulationState(SimulationState simulationState) {

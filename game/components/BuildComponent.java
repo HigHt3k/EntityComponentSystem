@@ -8,10 +8,28 @@ public class BuildComponent extends Component {
     private float failureRatio;
     private SimulationType simulationType;
     private int portId;
+    private int outOfControlSignalsAccepted;
+    private int correctSignalsNeeded;
 
     @Override
     public void update() {
 
+    }
+
+    public int getOutOfControlSignalsAccepted() {
+        return outOfControlSignalsAccepted;
+    }
+
+    public int getCorrectSignalsNeeded() {
+        return correctSignalsNeeded;
+    }
+
+    public void setOutOfControlSignalsAccepted(int outOfControlSignalsAccepted) {
+        this.outOfControlSignalsAccepted = outOfControlSignalsAccepted;
+    }
+
+    public void setCorrectSignalsNeeded(int correctSignalsNeeded) {
+        this.correctSignalsNeeded = correctSignalsNeeded;
     }
 
     public void setPortId(int portId) {
