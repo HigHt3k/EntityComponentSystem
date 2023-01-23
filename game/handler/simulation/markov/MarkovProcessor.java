@@ -1,6 +1,7 @@
 package game.handler.simulation.markov;
 
 import com.ecs.entity.Entity;
+import game.components.CablePortsComponent;
 import game.components.SimulationComponent;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
@@ -51,7 +52,8 @@ public class MarkovProcessor {
                             e.getComponent(SimulationComponent.class).getSimulationType(),
                             e.getComponent(SimulationComponent.class).getSimulationState(),
                             e.getComponent(SimulationComponent.class).getFailureRatio(),
-                            e.getComponent(SimulationComponent.class).getFailureRecognitionRatio()
+                            e.getComponent(SimulationComponent.class).getFailureRecognitionRatio(),
+                            e.getComponent(SimulationComponent.class).getInputStates()
                     )
             );
         }
@@ -108,7 +110,11 @@ public class MarkovProcessor {
 
             ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
             for(MarkovStateObject mso : start.getMarkovStateObjects()) {
-                markovStateObjects.add(new MarkovStateObject(mso.getEntity(), mso.getType(), mso.getState(), mso.getFailureProbability(), mso.getFailureRecognitionProbability()));
+                markovStateObjects.add(new MarkovStateObject(
+                        mso.getEntity(), mso.getType(),
+                        mso.getState(), mso.getFailureProbability(),
+                        mso.getFailureRecognitionProbability(),
+                        mso.getInputStates()));
             }
 
             markovStateObjects.get(i).setState(SimulationState.FAIL);
@@ -128,9 +134,36 @@ public class MarkovProcessor {
                     ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
 
                     for(MarkovStateObject mso : tempStates.get(i).getMarkovStateObjects()) {
-                        markovStateObjects.add(new MarkovStateObject(mso.getEntity(), mso.getType(), mso.getState(), mso.getFailureProbability(), mso.getFailureRecognitionProbability()));
+                        markovStateObjects.add(new MarkovStateObject(
+                                mso.getEntity(), mso.getType(),
+                                mso.getState(), mso.getFailureProbability(),
+                                mso.getFailureRecognitionProbability(),
+                                mso.getInputStates()));
                     }
                     markovStateObjects.get(j).setState(SimulationState.PASSIVE);
+
+                    // update other connected components with the same state.
+                    for(MarkovStateObject mso : markovStateObjects) {
+                        for(MarkovStateObject msoOther : markovStateObjects) {
+                            if(msoOther == mso) {
+                                continue;
+                            }
+
+                            if(mso.getEntity().getComponent(SimulationComponent.class).getInputIds().contains(msoOther.getEntity().getComponent(SimulationComponent.class).getOwnId())) {
+                                int index = mso.getEntity().getComponent(SimulationComponent.class).getInputIds().indexOf(msoOther.getEntity().getComponent(SimulationComponent.class).getOwnId());
+                                mso.getInputStates().set(index, SimulationState.PASSIVE);
+                            }
+                        }
+                    }
+
+                    for(MarkovStateObject mso : markovStateObjects) {
+                        if(Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
+                                >= mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
+                            mso.setState(SimulationState.CORRECT);
+                        } else {
+                            mso.setState(SimulationState.PASSIVE);
+                        }
+                    }
 
                     temporaryStates.add(new MarkovState(tempStates.get(i),
                             markovStateObjects,
@@ -138,9 +171,37 @@ public class MarkovProcessor {
 
                     markovStateObjects = new ArrayList<>();
                     for(MarkovStateObject mso : tempStates.get(i).getMarkovStateObjects()) {
-                        markovStateObjects.add(new MarkovStateObject(mso.getEntity(), mso.getType(), mso.getState(), mso.getFailureProbability(), mso.getFailureRecognitionProbability()));
+                        markovStateObjects.add(new MarkovStateObject(
+                                mso.getEntity(), mso.getType(),
+                                mso.getState(), mso.getFailureProbability(),
+                                mso.getFailureRecognitionProbability(),
+                                mso.getInputStates()));
                     }
                     markovStateObjects.get(j).setState(SimulationState.OUT_OF_CONTROL);
+
+                    // update other connected components with the same state.
+                    for(MarkovStateObject mso : markovStateObjects) {
+
+                        for(MarkovStateObject msoOther : markovStateObjects) {
+                            if(msoOther == mso) {
+                                continue;
+                            }
+
+                            if(mso.getEntity().getComponent(SimulationComponent.class).getInputIds().contains(msoOther.getEntity().getComponent(SimulationComponent.class).getOwnId())) {
+                                int index = mso.getEntity().getComponent(SimulationComponent.class).getInputIds().indexOf(msoOther.getEntity().getComponent(SimulationComponent.class).getOwnId());
+                                mso.getInputStates().set(index, SimulationState.OUT_OF_CONTROL);
+                            }
+                        }
+                    }
+
+                    for(MarkovStateObject mso : markovStateObjects) {
+                        if(Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
+                                <= mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
+                            mso.setState(SimulationState.CORRECT);
+                        } else {
+                            mso.setState(SimulationState.OUT_OF_CONTROL);
+                        }
+                    }
 
                     temporaryStates.add(new MarkovState(tempStates.get(i),
                             markovStateObjects,
@@ -208,9 +269,6 @@ public class MarkovProcessor {
             StringBuilder line2 = new StringBuilder();
             line2.append("|");
             for(MarkovStateObject ms : states.getMarkovStateObjects()) {
-                if(ms.getType() == SimulationType.CABLE) {
-                    continue;
-                }
                 switch(ms.getType()) {
                     case SENSOR -> line1.append("S|");
                     case CPU -> line1.append("C|");
@@ -229,6 +287,28 @@ public class MarkovProcessor {
             System.out.println(line2 + " - " + states.getStateProbability());
             System.out.println("");
         }
+    }
+
+    public static double getProbabilityForState(MarkovState state) {
+        for(MarkovState possibleEqual : allStates) {
+            if(state.getMarkovStateObjects().size() != possibleEqual.getMarkovStateObjects().size()) {
+                continue;
+            }
+
+            boolean returnHere = true;
+            for(int i = 0; i < state.getMarkovStateObjects().size(); i++) {
+                if(state.getMarkovStateObjects().get(i).getType() != possibleEqual.getMarkovStateObjects().get(i).getType()
+                        && state.getMarkovStateObjects().get(i).getState() != possibleEqual.getMarkovStateObjects().get(i).getState()) {
+                    returnHere = false;
+                    break;
+                }
+            }
+            if(returnHere) {
+                return possibleEqual.getStateProbability();
+            }
+        }
+
+        return 0.0;
     }
 
 }

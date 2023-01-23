@@ -20,29 +20,22 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulationSystem extends SystemHandle {
     private ArrayList<Entity> tempGroup = new ArrayList<>();
+    int frameCount = 0;
 
     @Override
     public void handle() {
-        if(this.needsUpdate) {
-            updateGroupIds();
-            updateInputIds();
-            int[] groupIds = getDistinctGroupIds();
+        updateGroupIds();
+        updateInputIds();
+        updateStates();
 
-            for(int i : groupIds) {
-                ArrayList<Entity> group = getEntitiesByGroupdId(i);
-                boolean valid = validateGroup(group);
-                if(valid) {
-                    calculateGroupFailureRatio(group);
-                }
-            }
-
-            updateStates();
+        if(frameCount >= 244 * 2) {
             markov();
             validateGoal();
-
-            updateGraphics();
-            this.needsUpdate = false;
+            frameCount = 0;
         }
+        frameCount++;
+
+        updateGraphics();
     }
 
     private void validateGoal() {
@@ -56,10 +49,8 @@ public class SimulationSystem extends SystemHandle {
         }
 
         if(validSensors >= ((GameScene) Game.scene().current()).getAccGoal()) {
-            // Get Markov State's failure probability
-            if(((GameScene) Game.scene().current()).getGoal() <= MarkovProcessor.getMarkovStateProbability()) {
-                // TODO: set level finished screen
-            }
+            // Get Markov State's failure probability for the minimum requirements
+
         }
     }
 

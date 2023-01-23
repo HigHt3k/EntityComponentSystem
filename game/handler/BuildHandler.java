@@ -195,7 +195,7 @@ public class BuildHandler extends Handler {
                                             );
                                 }
                                 currentBuildState = BuilderState.BUILDING_SIMULATION;
-                                Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                                 break;
                             }
                             else if(entity.getComponent(BuildComponent.class).getAmount() > 0
@@ -234,7 +234,7 @@ public class BuildHandler extends Handler {
                                                     )
                                             );
                                 }
-                                Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                                 currentBuildState = BuilderState.BUILDING_CABLE_REFACTORED;
                                 break;
                             }
@@ -249,7 +249,7 @@ public class BuildHandler extends Handler {
                                     updateConnection(entity, CablePortType.OUT);
                                 }
                             }
-                            Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                         }
                     }
                 }
@@ -306,7 +306,7 @@ public class BuildHandler extends Handler {
                                         );
                             }
                             currentBuildState = BuilderState.BUILDING_CABLE_REFACTORED;
-                            Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                             break;
                         }
                     }
@@ -318,7 +318,7 @@ public class BuildHandler extends Handler {
                         colorizeAndPositionCable((CableEntity) currentBuilding);
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
-                        Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                         break;
                     }
                 }
@@ -336,7 +336,7 @@ public class BuildHandler extends Handler {
                                 entity.getComponent(CablePortsComponent.class).updateImage();
                                 updateConnection(entity, CablePortType.IN);
                             }
-                            Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                         }
                     }
                 }
@@ -349,7 +349,7 @@ public class BuildHandler extends Handler {
                     // remove the component
                     if(putBackToStack(currentBuilding)) {
                         currentBuildState = BuilderState.NOT_BUILDING;
-                        Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                         cableBuildRepetitive = null;
                         currentBuilding = null;
                     }
@@ -369,7 +369,7 @@ public class BuildHandler extends Handler {
                             }
                         }
                         port.setConnectedEntity(null);
-                        Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                     }
 
                     Game.scene().current().removeEntityFromScene(currentBuilding);
@@ -395,7 +395,7 @@ public class BuildHandler extends Handler {
                             }
                         }
                     }
-                    Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                 }
             // check if no button is clicked
             } else if(e.getButton() == MouseEvent.NOBUTTON) {
@@ -579,7 +579,7 @@ public class BuildHandler extends Handler {
         } else {
             e.getComponent(SimulationComponent.class).setOwnId(in.getConnectedEntity().getComponent(SimulationComponent.class).getOwnId());
         }
-        Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
     }
 
     private boolean putBackToStack(Entity e) {
@@ -638,7 +638,7 @@ public class BuildHandler extends Handler {
         } else if(e instanceof CableEntity) {
             Game.scene().current().getEntities().remove(e);
         }
-        Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
         //TODO: implement not found in build panel
         return true;
     }
@@ -721,7 +721,7 @@ public class BuildHandler extends Handler {
                         if(!bottom.isEmpty()) {
                             // TODO: implement corner cables
                         }
-                        Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                         return true;
                     }
                 }
@@ -786,7 +786,7 @@ public class BuildHandler extends Handler {
                     if(!bottom.isEmpty()) {
                         // TODO: implement corner cables
                     }
-                    Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                     return true;
                 }
             }
@@ -885,7 +885,7 @@ public class BuildHandler extends Handler {
 
                 e.getComponent(CablePortsComponent.class).updateImage();
 
-                Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                 return true;
             }
         }
@@ -1041,7 +1041,7 @@ public class BuildHandler extends Handler {
                 }
                 ccer.getComponent(CablePortsComponent.class).getNextFreePort(connectingToType).setConnectedEntity(e);
                 e.getComponent(CablePortsComponent.class).getNextFreePort(connectingFromType).setConnectedEntity(ccer);
-                Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                 return true;
             }
         }
@@ -1055,7 +1055,7 @@ public class BuildHandler extends Handler {
                 se.getComponent(CablePortsComponent.class).getNextFreePort(connectingToType).setConnectedEntity(e);
                 e.getComponent(CablePortsComponent.class).getNextFreePort(connectingFromType).setConnectedEntity(se);
 
-                Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                 return true;
             }
         }
@@ -1075,7 +1075,7 @@ public class BuildHandler extends Handler {
                 Game.scene().current().addEntityToScene(ccer);
                 ccer.getComponent(CablePortsComponent.class).getNextFreePort(connectingToType).setConnectedEntity(e);
                 e.getComponent(CablePortsComponent.class).getNextFreePort(connectingFromType).setConnectedEntity(ccer);
-                Game.system().getSystem(SimulationSystem.class).needsUpdate();
+
                 return true;
             }
         }
