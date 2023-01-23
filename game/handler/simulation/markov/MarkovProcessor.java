@@ -98,9 +98,12 @@ public class MarkovProcessor {
             if(start.getMarkovStateObjects().get(i).getType() == SimulationType.CABLE) {
                 continue;
             }
-            if(start.getMarkovStateObjects().get(i).getState() == SimulationState.FAIL || start.getMarkovStateObjects().get(i).getState() == SimulationState.OUT_OF_CONTROL ||
+            if(start.getMarkovStateObjects().get(i).getState() == SimulationState.OUT_OF_CONTROL ||
                     start.getMarkovStateObjects().get(i).getState() == SimulationState.PASSIVE) {
                 continue;
+            }
+            if(start.getMarkovStateObjects().get(i).getState() == SimulationState.FAIL) {
+                return;
             }
 
             ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
@@ -205,6 +208,9 @@ public class MarkovProcessor {
             StringBuilder line2 = new StringBuilder();
             line2.append("|");
             for(MarkovStateObject ms : states.getMarkovStateObjects()) {
+                if(ms.getType() == SimulationType.CABLE) {
+                    continue;
+                }
                 switch(ms.getType()) {
                     case SENSOR -> line1.append("S|");
                     case CPU -> line1.append("C|");

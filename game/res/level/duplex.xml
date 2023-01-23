@@ -2,7 +2,7 @@
 <map id="1" name ="Duplex Example" width="5" height="3">
     <description>Example Duplex system with two sensors, two cpus and one actuator.</description>
     <goalDescription>Reach a failure ratio of 3e-3</goalDescription>
-    <goal>3e-3</goal>
+    <goal>1e-5</goal>
     <tileset source="base_tiles.xml"/>
     <build>
         <entity id="201" amount="2" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>

@@ -22,4 +22,18 @@ public class SystemManager {
             s.handle();
         }
     }
+
+    public <T extends SystemHandle> T getSystem(Class<T> systemClass) {
+        for(SystemHandle c : systems) {
+            if(systemClass.isAssignableFrom(c.getClass())) {
+                try {
+                    return systemClass.cast(c);
+                } catch(ClassCastException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return null;
+    }
 }

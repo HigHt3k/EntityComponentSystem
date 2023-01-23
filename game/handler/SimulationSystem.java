@@ -23,23 +23,26 @@ public class SimulationSystem extends SystemHandle {
 
     @Override
     public void handle() {
-        updateGroupIds();
-        updateInputIds();
-        int[] groupIds = getDistinctGroupIds();
+        if(this.needsUpdate) {
+            updateGroupIds();
+            updateInputIds();
+            int[] groupIds = getDistinctGroupIds();
 
-        for(int i : groupIds) {
-            ArrayList<Entity> group = getEntitiesByGroupdId(i);
-            boolean valid = validateGroup(group);
-            if(valid) {
-                calculateGroupFailureRatio(group);
+            for(int i : groupIds) {
+                ArrayList<Entity> group = getEntitiesByGroupdId(i);
+                boolean valid = validateGroup(group);
+                if(valid) {
+                    calculateGroupFailureRatio(group);
+                }
             }
+
+            updateStates();
+            markov();
+            validateGoal();
+
+            updateGraphics();
+            this.needsUpdate = false;
         }
-
-        updateStates();
-        markov();
-        validateGoal();
-
-        updateGraphics();
     }
 
     private void validateGoal() {
