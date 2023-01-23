@@ -34,15 +34,23 @@ public class BuildHandler extends Handler {
     public void handle(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_D) {
             printAllEntitiesGridPosition();
+            return;
         }
         if(e.getKeyCode() == KeyEvent.VK_O) {
             printAllCablePorts();
+            return;
         }
         if(e.getKeyCode() == KeyEvent.VK_P) {
             printAllSimComponents();
+            return;
         }
         if(e.getKeyCode() == KeyEvent.VK_M) {
             MarkovProcessor.printMarkov();
+            return;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_Q) {
+            MarkovProcessor.printCurrentSystemState();
+            return;
         }
     }
 

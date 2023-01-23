@@ -370,4 +370,8 @@ public class GameScene extends Scene {
     public int getAccGoal() {
         return accGoal;
     }
+
+    public double getGoal() {
+        return goal;
+    }
 }

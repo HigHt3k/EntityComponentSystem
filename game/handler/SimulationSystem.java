@@ -9,6 +9,7 @@ import game.entities.CablePort;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
+import game.scenes.GameScene;
 
 import java.awt.*;
 import java.text.DecimalFormat;
@@ -33,9 +34,29 @@ public class SimulationSystem extends SystemHandle {
             }
         }
 
-        markov();
         updateStates();
+        markov();
+        validateGoal();
+
         updateGraphics();
+    }
+
+    private void validateGoal() {
+        int validSensors = 0;
+        for(Entity e : gatherRelevantEntities()) {
+            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
+                if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.CORRECT) {
+                    validSensors++;
+                }
+            }
+        }
+
+        if(validSensors >= ((GameScene) Game.scene().current()).getAccGoal()) {
+            // Get Markov State's failure probability
+            if(((GameScene) Game.scene().current()).getGoal() <= MarkovProcessor.getMarkovStateProbability()) {
+                // TODO: set level finished screen
+            }
+        }
     }
 
     private void updateInputIds() {
@@ -250,6 +271,9 @@ public class SimulationSystem extends SystemHandle {
 
         MarkovProcessor.entities = entities;
         MarkovProcessor.groupIds = groupIds;
+
+        MarkovProcessor.generateCurrentSystemState();
+        MarkovProcessor.startMarkov();
     }
 
     private void markov2() {
