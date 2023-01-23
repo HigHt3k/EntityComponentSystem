@@ -259,7 +259,8 @@ public class SimulationSystem extends SystemHandle {
 
             for(Entity e : group) {
                 if(e.getComponent(SimulationComponent.class) != null) {
-                    entities.add(e);
+                    if(!entities.contains(e))
+                        entities.add(e);
                 }
             }
         }

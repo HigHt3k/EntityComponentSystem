@@ -3,6 +3,7 @@ package game.handler.simulation.markov;
 import com.ecs.entity.Entity;
 import game.components.CablePortsComponent;
 import game.components.SimulationComponent;
+import game.handler.SimulationSystem;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 
@@ -71,29 +72,29 @@ public class MarkovProcessor {
             int countSame = 0;
             for(int i = 0; i < state.getMarkovStateObjects().size(); i++) {
                 if(start.getMarkovStateObjects().get(i).getEntity() == state.getMarkovStateObjects().get(i).getEntity()
-                && start.getMarkovStateObjects().get(i).getState() == state.getMarkovStateObjects().get(i).getState()) {
+                && start.getMarkovStateObjects().get(i).getState() == state.getMarkovStateObjects().get(i).getState()
+                && start.getMarkovStateObjects().get(i).getType() == state.getMarkovStateObjects().get(i).getType()) {
                     countSame++;
                 }
             }
             if(countSame == start.getMarkovStateObjects().size()) {
+                System.out.println("Returning because state is the same as another one");
+                state.setStateProbability(state.getStateProbability() + start.getStateProbability());
+                printMarkovSingle(start);
                 return;
             }
         }
 
-        allStates.add(start);
-
-        // check if all components are failed
-        int countFailed = 0;
+        int countFail = 0;
         for(int i = 0; i < start.getMarkovStateObjects().size(); i++) {
-            if(start.getMarkovStateObjects().get(i).getState() == SimulationState.FAIL ||
-                    start.getMarkovStateObjects().get(i).getState() == SimulationState.OUT_OF_CONTROL ||
+            if(start.getMarkovStateObjects().get(i).getState() == SimulationState.OUT_OF_CONTROL ||
                     start.getMarkovStateObjects().get(i).getState() == SimulationState.PASSIVE) {
-                countFailed++;
+                countFail++;
             }
         }
-        if(countFailed == start.getMarkovStateObjects().size()) {
-            return;
-        }
+
+
+        allStates.add(start);
 
         // fail each component once for this layer
         for(int i = 0; i < start.getMarkovStateObjects().size(); i++) {
@@ -102,9 +103,12 @@ public class MarkovProcessor {
             }
             if(start.getMarkovStateObjects().get(i).getState() == SimulationState.OUT_OF_CONTROL ||
                     start.getMarkovStateObjects().get(i).getState() == SimulationState.PASSIVE) {
+                System.out.println("Continue because P/OOC");
                 continue;
             }
             if(start.getMarkovStateObjects().get(i).getState() == SimulationState.FAIL) {
+                System.out.println("Returing because the state is already FAIL");
+                printMarkovSingle(start);
                 return;
             }
 
@@ -127,6 +131,7 @@ public class MarkovProcessor {
 
         // passivate each component in layer once & out of control once
         ArrayList<MarkovState> tempStates = new ArrayList<>(temporaryStates);
+        System.out.println("Temp States Size:" + tempStates.size());
 
         for(int i = 0; i < tempStates.size(); i++) {
             for(int j = 0; j < tempStates.get(i).getMarkovStateObjects().size(); j++) {
@@ -157,6 +162,9 @@ public class MarkovProcessor {
                     }
 
                     for(MarkovStateObject mso : markovStateObjects) {
+                        if(mso.getType() == SimulationType.SENSOR) {
+                            continue;
+                        }
                         if(Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
                                 >= mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
                             mso.setState(SimulationState.CORRECT);
@@ -195,6 +203,9 @@ public class MarkovProcessor {
                     }
 
                     for(MarkovStateObject mso : markovStateObjects) {
+                        if(mso.getType() == SimulationType.SENSOR) {
+                            continue;
+                        }
                         if(Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
                                 <= mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
                             mso.setState(SimulationState.CORRECT);
@@ -206,7 +217,6 @@ public class MarkovProcessor {
                     temporaryStates.add(new MarkovState(tempStates.get(i),
                             markovStateObjects,
                             tempStates.get(i).getStateProbability() * (1 - markovStateObjects.get(j).getFailureRecognitionProbability())));
-                    break;
                 }
             }
         }
@@ -258,6 +268,30 @@ public class MarkovProcessor {
         System.out.println(line2);
     }
 
+    public static void printMarkovSingle(MarkovState state) {
+        StringBuilder line1 = new StringBuilder();
+        line1.append("|");
+        StringBuilder line2 = new StringBuilder();
+        line2.append("|");
+        for(MarkovStateObject ms : state.getMarkovStateObjects()) {
+            switch(ms.getType()) {
+                case SENSOR -> line1.append("S|");
+                case CPU -> line1.append("C|");
+                case ACTUATOR -> line1.append("A|");
+                case CABLE -> line1.append("W|");
+            }
+            switch(ms.getState()) {
+                case CORRECT -> line2.append("C|");
+                case FAIL -> line2.append("F|");
+                case PASSIVE -> line2.append("P|");
+                case INOPERATIVE -> line2.append("I|");
+                case OUT_OF_CONTROL -> line2.append("O|");
+            }
+        }
+        System.out.println(line1);
+        System.out.println(line2);
+    }
+
     /**
      * Print the markov chain
      */
@@ -269,6 +303,9 @@ public class MarkovProcessor {
             StringBuilder line2 = new StringBuilder();
             line2.append("|");
             for(MarkovStateObject ms : states.getMarkovStateObjects()) {
+                if(ms.getType() == SimulationType.CABLE) {
+                    continue;
+                }
                 switch(ms.getType()) {
                     case SENSOR -> line1.append("S|");
                     case CPU -> line1.append("C|");

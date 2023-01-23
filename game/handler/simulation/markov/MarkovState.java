@@ -9,7 +9,7 @@ public class MarkovState {
 
     public MarkovState(MarkovState previous, ArrayList<MarkovStateObject> markovStateObjects, double stateProbability) {
         this.previous = previous;
-        this.markovStateObjects = markovStateObjects;
+        this.markovStateObjects = new ArrayList<>(markovStateObjects);
         this.stateProbability = stateProbability;
     }
 
