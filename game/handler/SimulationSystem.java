@@ -9,6 +9,7 @@ import game.entities.CablePort;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
+import game.handler.simulation.markov.MarkovState;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -273,7 +274,7 @@ public class SimulationSystem extends SystemHandle {
         MarkovProcessor.groupIds = groupIds;
 
         MarkovProcessor.generateCurrentSystemState();
-        MarkovProcessor.startMarkov();
+        MarkovProcessor.startMarkov(MarkovProcessor.currentSystemState);
     }
 
     private void markov2() {

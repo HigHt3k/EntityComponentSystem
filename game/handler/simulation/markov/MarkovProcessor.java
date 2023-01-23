@@ -5,7 +5,9 @@ import game.components.SimulationComponent;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * a generic markov chain processor class that can be called from anywhere
@@ -15,7 +17,7 @@ public class MarkovProcessor {
     public static ArrayList<Entity> entities = new ArrayList<>();
     public static int[] groupIds;
 
-    private static MarkovState currentSystemState;
+    public static MarkovState currentSystemState;
     private static final ArrayList<MarkovState> allStates = new ArrayList<>();
 
     /*
@@ -43,35 +45,118 @@ public class MarkovProcessor {
         ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
 
         for(Entity e : entities) {
-            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
-                continue;
-            }
             markovStateObjects.add(
                     new MarkovStateObject(
-                        e.getComponent(SimulationComponent.class).getSimulationType(),
-                        e.getComponent(SimulationComponent.class).getSimulationState(),
+                            e,
+                            e.getComponent(SimulationComponent.class).getSimulationType(),
+                            e.getComponent(SimulationComponent.class).getSimulationState(),
                             e.getComponent(SimulationComponent.class).getFailureRatio(),
                             e.getComponent(SimulationComponent.class).getFailureRecognitionRatio()
                     )
             );
         }
-        currentSystemState = new MarkovState(markovStateObjects, 1.0);
-        allStates.add(currentSystemState);
+        currentSystemState = new MarkovState(null, markovStateObjects, 1.0);
     }
 
     /**
-     * start the chain
+     * start the markov chain
      */
-    public static void startMarkov() {
+    public static void startMarkov(MarkovState start) {
         // any component can fail at the start, start with element 0, loop through until last element is reached
+        ArrayList<MarkovState> temporaryStates = new ArrayList<>();
 
-        // fail each component once for this layer
-        for(MarkovState ms : allStates) {
-
+        for(MarkovState state : allStates) {
+            int countSame = 0;
+            for(int i = 0; i < state.getMarkovStateObjects().size(); i++) {
+                if(start.getMarkovStateObjects().get(i).getEntity() == state.getMarkovStateObjects().get(i).getEntity()
+                && start.getMarkovStateObjects().get(i).getState() == state.getMarkovStateObjects().get(i).getState()) {
+                    countSame++;
+                }
+            }
+            if(countSame == start.getMarkovStateObjects().size()) {
+                return;
+            }
         }
 
-        // passivate each component in layer once & out of control once
+        allStates.add(start);
 
+        // check if all components are failed
+        int countFailed = 0;
+        for(int i = 0; i < start.getMarkovStateObjects().size(); i++) {
+            if(start.getMarkovStateObjects().get(i).getState() == SimulationState.FAIL ||
+                    start.getMarkovStateObjects().get(i).getState() == SimulationState.OUT_OF_CONTROL ||
+                    start.getMarkovStateObjects().get(i).getState() == SimulationState.PASSIVE) {
+                countFailed++;
+            }
+        }
+        if(countFailed == start.getMarkovStateObjects().size()) {
+            return;
+        }
+
+        // fail each component once for this layer
+        for(int i = 0; i < start.getMarkovStateObjects().size(); i++) {
+            if(start.getMarkovStateObjects().get(i).getType() == SimulationType.CABLE) {
+                continue;
+            }
+            if(start.getMarkovStateObjects().get(i).getState() == SimulationState.FAIL || start.getMarkovStateObjects().get(i).getState() == SimulationState.OUT_OF_CONTROL ||
+                    start.getMarkovStateObjects().get(i).getState() == SimulationState.PASSIVE) {
+                continue;
+            }
+
+            ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
+            for(MarkovStateObject mso : start.getMarkovStateObjects()) {
+                markovStateObjects.add(new MarkovStateObject(mso.getEntity(), mso.getType(), mso.getState(), mso.getFailureProbability(), mso.getFailureRecognitionProbability()));
+            }
+
+            markovStateObjects.get(i).setState(SimulationState.FAIL);
+            MarkovState markovState = new MarkovState(start, markovStateObjects, start.getStateProbability() * markovStateObjects.get(i).getFailureProbability());
+            temporaryStates.add(markovState);
+        }
+
+        // find equal nodes (e.g. S1 = S2)
+        //TODO: Implement
+
+        // passivate each component in layer once & out of control once
+        ArrayList<MarkovState> tempStates = new ArrayList<>(temporaryStates);
+
+        for(int i = 0; i < tempStates.size(); i++) {
+            for(int j = 0; j < tempStates.get(i).getMarkovStateObjects().size(); j++) {
+                if(tempStates.get(i).getMarkovStateObjects().get(j).getState() == SimulationState.FAIL) {
+                    ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
+
+                    for(MarkovStateObject mso : tempStates.get(i).getMarkovStateObjects()) {
+                        markovStateObjects.add(new MarkovStateObject(mso.getEntity(), mso.getType(), mso.getState(), mso.getFailureProbability(), mso.getFailureRecognitionProbability()));
+                    }
+                    markovStateObjects.get(j).setState(SimulationState.PASSIVE);
+
+                    temporaryStates.add(new MarkovState(tempStates.get(i),
+                            markovStateObjects,
+                            tempStates.get(i).getStateProbability() * markovStateObjects.get(j).getFailureRecognitionProbability()));
+
+                    markovStateObjects = new ArrayList<>();
+                    for(MarkovStateObject mso : tempStates.get(i).getMarkovStateObjects()) {
+                        markovStateObjects.add(new MarkovStateObject(mso.getEntity(), mso.getType(), mso.getState(), mso.getFailureProbability(), mso.getFailureRecognitionProbability()));
+                    }
+                    markovStateObjects.get(j).setState(SimulationState.OUT_OF_CONTROL);
+
+                    temporaryStates.add(new MarkovState(tempStates.get(i),
+                            markovStateObjects,
+                            tempStates.get(i).getStateProbability() * (1 - markovStateObjects.get(j).getFailureRecognitionProbability())));
+                    break;
+                }
+            }
+        }
+
+        for(MarkovState state : temporaryStates) {
+            if(!allStates.contains(state))
+                try {
+                    startMarkov(state);
+                } catch(StackOverflowError ex) {
+                    ex.printStackTrace();
+                    printMarkov();
+                    System.exit(1);
+                }
+        }
     }
 
     /**
@@ -95,6 +180,7 @@ public class MarkovProcessor {
                 case SENSOR -> line1.append("S|");
                 case CPU -> line1.append("C|");
                 case ACTUATOR -> line1.append("A|");
+                case CABLE -> line1.append("W|");
             }
             switch(ms.getState()) {
                 case CORRECT -> line2.append("C|");
@@ -123,6 +209,7 @@ public class MarkovProcessor {
                     case SENSOR -> line1.append("S|");
                     case CPU -> line1.append("C|");
                     case ACTUATOR -> line1.append("A|");
+                    case CABLE -> line1.append("W|");
                 }
                 switch(ms.getState()) {
                     case CORRECT -> line2.append("C|");
