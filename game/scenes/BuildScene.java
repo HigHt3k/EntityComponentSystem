@@ -14,12 +14,15 @@ import game.entities.GridEntity;
 import game.handler.BuildHandler;
 import game.handler.SimulationSystem;
 import game.intent.CableLayerSwitchIntent;
+import game.intent.GridSizeIntent;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class BuildScene extends Scene {
     private final int ITEM_MARGIN = 20;
@@ -37,12 +40,16 @@ public class BuildScene extends Scene {
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
 
+    private int xMax = 2;
+    private int yMax = 2;
+
     private int accGoal;
     private int sensGoal;
     private int cGoal;
 
     public BuildScene(String name, int id) {
         super(name, id);
+        setupBuildPanel();
     }
 
     public void setGridSize(int x, int y) {
@@ -57,6 +64,13 @@ public class BuildScene extends Scene {
         Game.system().resetSystems();
         setupDescriptionPanel();
         setupButtons();
+
+        for(int x = 0; x < xMax; x++) {
+            for(int y = 0; y < yMax; y++) {
+                addGridElement(x, y);
+            }
+        }
+
         addToBuildPanel(500, 1000, 1e-25f, 0, 0);
         addToBuildPanel(501, 1000, 1e-25f, 0, 0);
         addToBuildPanel(502, 1000, 1e-25f, 0, 0);
@@ -86,6 +100,49 @@ public class BuildScene extends Scene {
                 Game.res().loadTile(1)
         );
         addEntityToScene(gridEntity);
+    }
+
+    public void removeAlLGridElementsOutside() {
+        System.out.println(xMax + " - " + yMax);
+        for(Entity e : new ArrayList<>(getEntities())) {
+            if(e.getComponent(GridComponent.class) != null) {
+                System.out.println(e.getComponent(GridComponent.class).getGridLocation());
+                if(e.getComponent(GridComponent.class).getGridLocation().getX() >= xMax) {
+                    removeEntityFromScene(e);
+                    continue;
+                }
+                if(e.getComponent(GridComponent.class).getGridLocation().getY() >= yMax) {
+                    removeEntityFromScene(e);
+                    continue;
+                }
+            }
+        }
+    }
+
+    public void updateGridSize(int x, int y) {
+        if(x != -1)
+            xMax = x;
+
+        if(y != -1)
+            yMax = y;
+
+        for(int xx = 0; xx < xMax; xx++) {
+            for(int yy = 0; yy < yMax; yy++) {
+                boolean isSet = false;
+                for(Entity e : getEntities()) {
+                    if(e.getComponent(GridComponent.class) != null
+                            && e.getComponent(GridComponent.class).getGridLocation().getY() == yy
+                            && e.getComponent(GridComponent.class).getGridLocation().getX() == xx) {
+                        isSet = true;
+                    }
+                }
+                if(!isSet) {
+                    addGridElement(xx, yy);
+                }
+            }
+        }
+
+        removeAlLGridElementsOutside();
     }
 
     /**
@@ -208,6 +265,16 @@ public class BuildScene extends Scene {
      * setup method for the description panel (right side)
      */
     private void setupDescriptionPanel() {
+        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
+        GenericButton exitButton = new GenericButton(
+                "Exit",
+                IdGenerator.generateId(),
+                1600, 900,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "EXIT",
+                font
+        );
+
         Entity descriptionPanel = new Entity("Description Panel", IdGenerator.generateId());
 
         GraphicsComponent descriptionPanelGC = new GraphicsComponent();
@@ -220,34 +287,37 @@ public class BuildScene extends Scene {
         } catch (IOException e) {
             Game.logger().severe("Could not load image from file\n" + e.getMessage());
         }
-
-        descriptionPanelGC.setTextColor(TEXT_COLOR);
-        descriptionPanelGC.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
-
-        descriptionPanelGC.addText(description);
-        descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x,
-                descriptionPanelBounds.getLocation().y + 50));
-        descriptionPanelGC.addText("Target Failure Probability: \n<=" + goal);
-        descriptionPanelGC.addLocation(new Point(descriptionPanelBounds.getLocation().x, descriptionPanelBounds.getLocation().y + 450));
-
         descriptionPanel.addComponent(descriptionPanelGC);
         descriptionPanelGC.setEntity(descriptionPanel);
 
         addEntityToScene(descriptionPanel);
 
-        Entity failureProbabilityPanel = new Entity("failureProbabilityDisplay", IdGenerator.generateId());
 
-        Rectangle failurePanelBounds = new Rectangle(1400 + (402/8), 750, 402/2, 402/2);
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setTextColor(TEXT_COLOR);
-        graphics.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
-        graphics.setBounds(failurePanelBounds);
-        graphics.addText("Current calculated\nmaximum failure\nprobability:\n 0.0000");
-        graphics.addLocation(new Point(1500, 650));
-        graphics.setEntity(failureProbabilityPanel);
-        failureProbabilityPanel.addComponent(graphics);
+        for(int i = 1; i < 11; i++) {
+            String number = "";
+            if(i == 1) {
+                number = "1";
+            }
+            if(i == 10) {
+                number = "10";
+            }
+            GenericButton sliderX = new GenericButton(
+                    "Slider_X", IdGenerator.generateId(),
+                    1580 + i*20, 300,
+                    20, 10,
+                    number, font
+            );
+            sliderX.addIntent(new GridSizeIntent(i, -1));
+            addEntityToScene(sliderX);
 
-        addEntityToScene(failureProbabilityPanel);
-
+            GenericButton sliderY = new GenericButton(
+                    "Slider_Y", IdGenerator.generateId(),
+                    1580 + i*20, 400,
+                    20, 10,
+                    number, font
+            );
+            sliderY.addIntent(new GridSizeIntent(-1, i));
+            addEntityToScene(sliderY);
+        }
     }
 }

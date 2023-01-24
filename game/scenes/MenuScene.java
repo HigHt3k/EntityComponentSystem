@@ -60,6 +60,7 @@ public class MenuScene extends Scene {
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "BUILD", font
         );
+        buildButton.addIntent(new StartIntent(new BuildScene("build", -250)));
         addEntityToScene(buildButton);
 
         GenericButton optionsButton = new GenericButton(
