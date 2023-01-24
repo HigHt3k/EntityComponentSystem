@@ -1,6 +1,7 @@
 package com.resource;
 
 import com.Game;
+import com.graphics.scene.Scene;
 import game.handler.simulation.SimulationType;
 import game.scenes.GameScene;
 import org.w3c.dom.Document;
@@ -248,6 +249,10 @@ public class ResourceManager {
 
         Game.logger().info("No Font loaded, null returned.");
         return null;
+    }
+
+    public void saveLevel(Scene scene) {
+
     }
 
     /**
