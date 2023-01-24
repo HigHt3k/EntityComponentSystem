@@ -2,6 +2,7 @@ package game.scenes;
 
 import com.Game;
 import com.IdGenerator;
+import com.ecs.component.CollisionComponent;
 import com.ecs.entity.Entity;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.GenericButton;
@@ -33,11 +34,15 @@ public class GameScene extends Scene {
     private final Color BOX_COLOR = new Color(200, 90, 0, 240);
     private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
-    private int CELL_SIZE = 128;
+    private final int DESIGN_CELL_SIZE = 128;
+    private int CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
+
+    private int xMax;
+    private int yMax;
 
     private int accGoal;
     private int sensGoal;
@@ -45,8 +50,10 @@ public class GameScene extends Scene {
 
     public void setGridSize(int x, int y) {
         //CELL_SIZE = 750/y;
-        X_MARGIN = (1500 - x*CELL_SIZE)/2;
-        Y_MARGIN = (850 - y*CELL_SIZE)/2;
+        xMax = x;
+        yMax = y;
+        updateGridSize();
+        updateEntitySize();
     }
 
     /**
@@ -90,6 +97,22 @@ public class GameScene extends Scene {
         addToBuildPanel(503, 1000, 1e-25f, 0, 0);
         Game.input().addHandler(new BuildHandler());
         Game.system().addSystem(new SimulationSystem());
+    }
+
+    private void updateEntitySize() {
+        for(Entity e : getEntities()) {
+            if(e.getComponent(GraphicsComponent.class) == null) {
+                continue;
+            }
+            if(e.getComponent(GridComponent.class) == null) {
+                continue;
+            }
+            int x = (int) e.getComponent(GridComponent.class).getGridLocation().getX();
+            int y = (int) e.getComponent(GridComponent.class).getGridLocation().getY();
+            Rectangle bounds = new Rectangle(X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
+            e.getComponent(GraphicsComponent.class).setBounds(bounds);
+            e.getComponent(CollisionComponent.class).setCollisionBox(bounds);
+        }
     }
 
     /**
@@ -212,7 +235,7 @@ public class GameScene extends Scene {
      */
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
-                150 + numberOfBuildPanelElements * (CELL_SIZE + ITEM_MARGIN), 875, CELL_SIZE, CELL_SIZE,
+                150 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 875, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
                 Game.res().loadTile(imgId),
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
@@ -288,6 +311,19 @@ public class GameScene extends Scene {
         );
         layer3.addIntent(new CableLayerSwitchIntent(3));
         this.addEntityToScene(layer3);
+    }
+
+    public void updateGridSize() {
+        if(xMax > yMax && (xMax > 7 || yMax > 5)) {
+            CELL_SIZE = DESIGN_CELL_SIZE * 7 / xMax;
+        } else if(xMax > 7 || yMax > 5) {
+            CELL_SIZE = DESIGN_CELL_SIZE * 5 / yMax;
+        } else {
+            CELL_SIZE = DESIGN_CELL_SIZE;
+        }
+
+        X_MARGIN = (1500 - xMax*CELL_SIZE)/2;
+        Y_MARGIN = (850 - yMax*CELL_SIZE)/2;
     }
 
     /**

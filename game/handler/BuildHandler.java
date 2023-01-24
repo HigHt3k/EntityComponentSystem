@@ -5,12 +5,14 @@ import com.IdGenerator;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
+import com.graphics.scene.Scene;
 import com.input.handler.Handler;
 import com.input.handler.HandlerType;
 import game.components.*;
 import game.entities.*;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
+import game.scenes.BuildScene;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -21,10 +23,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class BuildHandler extends Handler {
-    public BuilderState currentBuildState = BuilderState.NOT_BUILDING;
-    public Entity currentBuilding = null;
-    public int currentCableLayer = 0;
-    public Entity cableBuildRepetitive = null;
+    private BuilderState currentBuildState = BuilderState.NOT_BUILDING;
+    private Entity currentBuilding = null;
+    private int currentCableLayer = 0;
+    private Entity cableBuildRepetitive = null;
+
+    private int cellSize;
 
     public BuildHandler() {
         super(HandlerType.EVENT);
@@ -109,7 +113,14 @@ public class BuildHandler extends Handler {
 
     @Override
     public void handle(MouseEvent e) {
+        if(Game.scene().current() instanceof GameScene gs) {
+            cellSize = gs.getCellSize();
+        } else if(Game.scene().current() instanceof BuildScene bs) {
+            cellSize = bs.getCellSize();
+        }
+
         ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
+
 
         for(Entity entity : entities) {
             // check the button clicked is left click
@@ -131,8 +142,8 @@ public class BuildHandler extends Handler {
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
                                             entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
                                             entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().width,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                                            cellSize,
+                                            cellSize,
                                             -1, -1,
                                             entity.getComponent(GraphicsComponent.class).getImage(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -147,8 +158,8 @@ public class BuildHandler extends Handler {
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
                                             entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
                                             entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().width,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                                            cellSize,
+                                            cellSize,
                                             -1, -1,
                                             entity.getComponent(GraphicsComponent.class).getImage(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -163,8 +174,8 @@ public class BuildHandler extends Handler {
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
                                             entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
                                             entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().width,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                                            cellSize,
+                                            cellSize,
                                             -1, -1,
                                             entity.getComponent(GraphicsComponent.class).getImage(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -204,8 +215,8 @@ public class BuildHandler extends Handler {
                                         entity.getName() + "_cable", IdGenerator.generateId(),
                                         entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
                                         entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
-                                        entity.getComponent(GraphicsComponent.class).get_BOUNDS().width,
-                                        entity.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                                        cellSize,
+                                        cellSize,
                                         -1, -1,
                                         entity.getComponent(GraphicsComponent.class).getImage(),
                                         entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -275,8 +286,8 @@ public class BuildHandler extends Handler {
                                     cableBuildRepetitive.getName() + "_cable", IdGenerator.generateId(),
                                     cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().x,
                                     cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().y,
-                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().width,
-                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                                    cellSize,
+                                    cellSize,
                                     -1, -1,
                                     cableBuildRepetitive.getComponent(GraphicsComponent.class).getImage(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getFailureRatio(),
@@ -1067,8 +1078,8 @@ public class BuildHandler extends Handler {
                         "cable_combiner", IdGenerator.generateId(),
                         entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
                         entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
-                        entity.getComponent(GraphicsComponent.class).get_BOUNDS().width,
-                        entity.getComponent(GraphicsComponent.class).get_BOUNDS().height,
+                        cellSize,
+                        cellSize,
                         (int) entity.getComponent(GridComponent.class).getGridLocation().getX(),
                         (int) entity.getComponent(GridComponent.class).getGridLocation().getY()
                 );
