@@ -1,8 +1,10 @@
 package com.resource;
 
 import com.Game;
+import com.IdGenerator;
 import com.graphics.scene.Scene;
 import game.handler.simulation.SimulationType;
+import game.scenes.BuildScene;
 import game.scenes.GameScene;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,6 +27,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.IDN;
 
 public class ResourceManager {
     private static final LanguageManager language = new LanguageManager();
@@ -252,7 +255,53 @@ public class ResourceManager {
     }
 
     public void saveLevel(Scene scene) {
+        if(scene instanceof BuildScene bs) {
+            try {
+                Document doc = db.newDocument();
 
+                Element root = doc.createElement("map");
+                root.setAttribute("id", String.valueOf(IdGenerator.generateId()));
+                root.setAttribute("name", bs.getName());
+                doc.appendChild(root);
+
+                Element description = doc.createElement("description");
+                description.setTextContent(bs.getDescription());
+                root.appendChild(description);
+
+                Element goal = doc.createElement("goal");
+                goal.setTextContent(String.valueOf(bs.getGoal()));
+                root.appendChild(goal);
+
+                Element tileset = doc.createElement("tileset");
+                tileset.setAttribute("source", "base_tiles.xml");
+                root.appendChild(tileset);
+
+                Element build = doc.createElement("build");
+                // get all buildable
+                root.appendChild(build);
+
+                Element layer = doc.createElement("layer");
+                layer.setAttribute("id", "0");
+                layer.setAttribute("name", "Tile layer 0");
+                // get all elements on screen
+                root.appendChild(layer);
+
+
+                TransformerFactory transformerFactory = TransformerFactory.newInstance();
+                Transformer transformer = transformerFactory.newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                DOMSource source = new DOMSource(doc);
+                File f = new File("game/res/level/" + Game.scene().current().getName() + ".xml");
+                f.createNewFile();
+                StreamResult result = new StreamResult(f);
+                transformer.transform(source, result);
+            } catch (TransformerException | IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Game.logger().severe("Level not saveable, not instance of Build Scene");
+        }
     }
 
     /**

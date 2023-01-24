@@ -16,6 +16,7 @@ import game.handler.BuildHandler;
 import game.handler.SimulationSystem;
 import game.intent.CableLayerSwitchIntent;
 import game.intent.GridSizeIntent;
+import game.intent.SaveIntent;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -37,10 +38,12 @@ public class BuildScene extends Scene {
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
     private final int DESIGN_CELL_SIZE = 128;
     private int CELL_SIZE = DESIGN_CELL_SIZE;
+    private int BUILD_CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
-    private Entity currentlyBuilding = null;
+
+    private int BUILD_PANEL_X_MARGIN = 25;
 
     private int xMax = 2;
     private int yMax = 2;
@@ -67,6 +70,14 @@ public class BuildScene extends Scene {
         Y_MARGIN = (850 - yMax*CELL_SIZE)/2;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public double getGoal() {
+        return goal;
+    }
+
     @Override
     public void init() {
         updateGridSize();
@@ -80,7 +91,9 @@ public class BuildScene extends Scene {
                 addGridElement(x, y);
             }
         }
-
+        addToBuildPanel(201, 1000, 1e-4f, 0, 0);
+        addToBuildPanel(203, 1000, 1e-4f, 1, 0);
+        addToBuildPanel(205, 1000, 1e-4f, 2, 0);
         addToBuildPanel(500, 1000, 1e-25f, 0, 0);
         addToBuildPanel(501, 1000, 1e-25f, 0, 0);
         addToBuildPanel(502, 1000, 1e-25f, 0, 0);
@@ -162,6 +175,7 @@ public class BuildScene extends Scene {
             if(e.getComponent(GraphicsComponent.class) == null) {
                 continue;
             }
+
             if(e.getComponent(GridComponent.class) == null) {
                 continue;
             }
@@ -185,7 +199,7 @@ public class BuildScene extends Scene {
      */
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
-                150 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 875, DESIGN_CELL_SIZE, CELL_SIZE,
+                BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN), 850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
                 Game.res().loadTile(imgId),
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
@@ -233,6 +247,7 @@ public class BuildScene extends Scene {
                 "SAVE",
                 font
         );
+        saveButton.addIntent(new SaveIntent());
         this.addEntityToScene(saveButton);
 
         // cable switch buttons
