@@ -14,12 +14,16 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MenuScene extends Scene {
+public class LevelScene extends Scene {
     private static final int ITEM_MARGIN = 20;
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
+    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
+    private static final Color BOX_COLOR = new Color(200, 90, 0, 240);
+    private static final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
+    private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
 
-    public MenuScene(String name, int id) {
+    public LevelScene(String name, int id) {
         super(name, id);
 
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
@@ -28,10 +32,10 @@ public class MenuScene extends Scene {
         Entity background = new Entity("Background", IdGenerator.generateId());
         GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
         backgroundGraphicsComponent.setBounds(new Rectangle(
-                        0,
-                        0,
-                        1920,
-                        1080
+                0,
+                0,
+                1920,
+                1080
                 )
         );
 
@@ -45,37 +49,28 @@ public class MenuScene extends Scene {
         backgroundGraphicsComponent.setEntity(background);
         addEntityToScene(background);
 
-        GenericButton playButton = new GenericButton(
-                "Play", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "PLAY", font
-        );
-        playButton.addIntent(new StartIntent(new LevelScene("Level", -254)));
-        addEntityToScene(playButton);
+        int item = 0;
+        for(Scene s : Game.scene().getScenes()) {
+            if(s instanceof GameScene) {
+                GenericButton menuItem = new GenericButton(
+                        s.getName() + "_button", IdGenerator.generateId(),
+                        1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * item,
+                        ITEM_WIDTH, ITEM_HEIGHT,
+                        s.getName(), font
+                );
+                menuItem.addIntent(new StartIntent());
+                addEntityToScene(menuItem);
 
-        GenericButton buildButton = new GenericButton(
-                "Build", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "BUILD", font
-        );
-        addEntityToScene(buildButton);
-
-        GenericButton optionsButton = new GenericButton(
-                "Options", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "OPTIONS", font
-        );
-        addEntityToScene(optionsButton);
+                item += 1;
+            }
+        }
 
         GenericButton exitButton = new GenericButton(
                 "Exit", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 3,
+                1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "EXIT", font
-        );
+                );
         exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);
     }
