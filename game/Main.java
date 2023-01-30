@@ -1,6 +1,7 @@
 package game;
 
 import com.Game;
+import com.resource.LanguageType;
 import game.scenes.MenuScene;
 
 import java.io.File;
@@ -14,6 +15,7 @@ public class Main {
         Game.info().setAuthor("Johann Töpfer");
         Game.info().setVersion("v0.0.1-SNAPSHOT");
         Game.info().setDescription("Educational game to show the concept of redundancy in aircraft system engineering.");
+        Game.config().setLanguage(LanguageType.EN_US);
         Game.config().setDebug(true);
         Game.init();
 

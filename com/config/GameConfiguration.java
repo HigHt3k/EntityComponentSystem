@@ -1,9 +1,12 @@
 package com.config;
 
 
+import com.resource.LanguageType;
+
 public class GameConfiguration {
     private static final RenderConfiguration renderConfiguration = new RenderConfiguration();
     private boolean debug = false;
+    private LanguageType language = LanguageType.EN_US;
     //TODO: what other configurations are needed? Language?
 
     public GameConfiguration() {
@@ -20,6 +23,14 @@ public class GameConfiguration {
 
     public boolean isDebug() {
         return debug;
+    }
+
+    public void setLanguage(LanguageType language) {
+        this.language = language;
+    }
+
+    public LanguageType getLanguage() {
+        return language;
     }
 
 }
