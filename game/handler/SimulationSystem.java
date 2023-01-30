@@ -10,6 +10,7 @@ import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
 import game.handler.simulation.markov.MarkovState;
+import game.handler.simulation.markov.MarkovStateObject;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -30,7 +31,9 @@ public class SimulationSystem extends SystemHandle {
 
         if(frameCount >= 244 * 2) {
             markov();
-            validateGoal();
+            if(validateGoal()) {
+                //TODO: Implement game won screen popup box
+            }
             frameCount = 0;
         }
         frameCount++;
@@ -38,20 +41,15 @@ public class SimulationSystem extends SystemHandle {
         updateGraphics();
     }
 
-    private void validateGoal() {
-        int validSensors = 0;
-        for(Entity e : gatherRelevantEntities()) {
-            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
-                if(e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.CORRECT) {
-                    validSensors++;
-                }
-            }
-        }
+    private boolean validateGoal() {
+        ArrayList<MarkovStateObject> states = new ArrayList<>();
 
-        if(validSensors >= ((GameScene) Game.scene().current()).getAccGoal()) {
-            // Get Markov State's failure probability for the minimum requirements
 
-        }
+
+        MarkovState ms = new MarkovState(null, states, -1.0);
+        double probability = MarkovProcessor.getProbabilityForState(ms);
+
+        return false;
     }
 
     private void updateInputIds() {
