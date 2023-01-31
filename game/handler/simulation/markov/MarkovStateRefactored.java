@@ -55,7 +55,7 @@ public class MarkovStateRefactored {
                     out.append("A|");
                 }
                 case CABLE -> {
-
+                    out.append("W|");
                 }
                 case SENSOR -> {
                     out.append("S|");

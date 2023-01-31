@@ -1,5 +1,6 @@
 package game.handler.simulation.markov;
 
+import com.Game;
 import com.ecs.entity.Entity;
 import game.components.CablePortsComponent;
 import game.components.SimulationComponent;
@@ -272,7 +273,7 @@ public class MarkovProcessor {
                     if (mso.getType() == SimulationType.SENSOR) {
                         continue;
                     }
-                    if (mso.getState() == SimulationState.PASSIVE || mso.getState() == SimulationState.OUT_OF_CONTROL) {
+                    if (mso.getState() == SimulationState.PASSIVE || mso.getState() == SimulationState.OUT_OF_CONTROL || mso.getState() == SimulationState.INOPERATIVE) {
                         continue;
                     }
 
@@ -292,7 +293,7 @@ public class MarkovProcessor {
                     if (mso.getType() == SimulationType.SENSOR) {
                         continue;
                     }
-                    if (mso.getState() == SimulationState.PASSIVE || mso.getState() == SimulationState.OUT_OF_CONTROL) {
+                    if (mso.getState() == SimulationState.PASSIVE || mso.getState() == SimulationState.OUT_OF_CONTROL || mso.getState() == SimulationState.INOPERATIVE) {
                         continue;
                     }
                     if (Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)

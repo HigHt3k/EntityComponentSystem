@@ -586,17 +586,6 @@ public class BuildHandler extends Handler {
         // set cable id to either -1 if no component connected or to the in components ID for easier management
         // in component process of group / connected components detection
 
-        if(in.getConnectedEntity() == null) {
-            e.getComponent(SimulationComponent.class).setOwnId(-1);
-        } else {
-            e.getComponent(SimulationComponent.class).setOwnId(in.getConnectedEntity().getComponent(SimulationComponent.class).getOwnId());
-            if(out.getConnectedEntity() != null) {
-                if (out.getConnectedEntity().getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
-                    out.getConnectedEntity().getComponent(SimulationComponent.class).setOwnId(e.getComponent(SimulationComponent.class).getOwnId());
-                }
-            }
-        }
-
     }
 
     private boolean putBackToStack(Entity e) {
@@ -894,11 +883,6 @@ public class BuildHandler extends Handler {
 
                 // set cable id to either -1 if no component connected or to the in components ID for easier management
                 // in component process of group / connected components detection
-                if(in.getConnectedEntity() == null) {
-                    e.getComponent(SimulationComponent.class).setOwnId(-1);
-                } else {
-                    e.getComponent(SimulationComponent.class).setOwnId(in.getConnectedEntity().getComponent(SimulationComponent.class).getOwnId());
-                }
 
                 e.getComponent(CablePortsComponent.class).updateImage();
 
