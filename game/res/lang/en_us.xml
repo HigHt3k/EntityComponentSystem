@@ -1,6 +1,7 @@
-<strings language="DE_DE">
-    <string id="0">SPIELEN</string>
-    <string id="1">BAUEN</string>
-    <string id="2">OPTIONEN</string>
-    <string id="3">VERLASSEN</string>
+<strings language="EN_US">
+    <string id="0">PLAY</string>
+    <string id="1">BUILD</string>
+    <string id="2">OPTIONS</string>
+    <string id="3">EXIT</string>
+    <string id="1000">Example Duplex system with two sensors, two cpus and one actuator.</string>
 </strings>

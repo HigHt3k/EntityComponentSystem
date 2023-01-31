@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map id="1" name ="Duplex Example" width="5" height="3">
-    <description>Example Duplex system with two sensors, two cpus and one actuator.</description>
+    <description>@1000</description>
     <goalDescription>Reach a failure ratio of 3e-3</goalDescription>
     <goal>1e-5</goal>
     <tileset source="base_tiles.xml"/>

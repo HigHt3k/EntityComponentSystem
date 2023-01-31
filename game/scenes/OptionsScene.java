@@ -14,12 +14,16 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class MenuScene extends Scene {
+public class OptionsScene extends Scene {
     private static final int ITEM_MARGIN = 20;
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
+    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
+    private static final Color BOX_COLOR = new Color(200, 90, 0, 240);
+    private static final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
+    private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
 
-    public MenuScene(String name, int id) {
+    public OptionsScene(String name, int id) {
         super(name, id);
 
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
@@ -45,36 +49,21 @@ public class MenuScene extends Scene {
         backgroundGraphicsComponent.setEntity(background);
         addEntityToScene(background);
 
-        GenericButton playButton = new GenericButton(
-                "Play", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
+        GenericButton mainMenuButton = new GenericButton(
+                "Menu_button",
+                IdGenerator.generateId(),
+                1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "PLAY", font
+                "MAIN MENU",
+                font
         );
-        playButton.addIntent(new StartIntent(new LevelScene("Level", -254)));
-        addEntityToScene(playButton);
 
-        GenericButton buildButton = new GenericButton(
-                "Build", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "BUILD", font
-        );
-        buildButton.addIntent(new StartIntent(new BuildScene("build", -250)));
-        addEntityToScene(buildButton);
-
-        GenericButton optionsButton = new GenericButton(
-                "Options", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "OPTIONS", font
-        );
-        optionsButton.addIntent(new StartIntent(new OptionsScene("options",-249)));
-        addEntityToScene(optionsButton);
+        mainMenuButton.addIntent(new StartIntent());
+        this.addEntityToScene(mainMenuButton);
 
         GenericButton exitButton = new GenericButton(
                 "Exit", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 3,
+                1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "EXIT", font
         );

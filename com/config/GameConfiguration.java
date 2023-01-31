@@ -1,6 +1,5 @@
 package com.config;
 
-
 import com.resource.LanguageType;
 
 public class GameConfiguration {
