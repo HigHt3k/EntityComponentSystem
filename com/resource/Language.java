@@ -16,10 +16,6 @@ public class Language {
         return languageType;
     }
 
-    public void setLanguage(HashMap<Integer, String> language) {
-        this.language = language;
-    }
-
     public void setLanguageType(LanguageType languageType) {
         this.languageType = languageType;
     }

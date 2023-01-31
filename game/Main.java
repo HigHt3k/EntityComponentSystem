@@ -22,6 +22,9 @@ public class Main {
         Game.logger().setLevel(Level.ALL);
         Game.frame().setIcon("game/res/avionics/crdc.png");
         Game.res().loadTileSet("game/res/base_tiles.xml");
+        Game.res().language().parseLanguageFile("game/res/lang/de_de.xml");
+        Game.res().language().parseLanguageFile("game/res/lang/de_simple.xml");
+        Game.res().language().parseLanguageFile("game/res/lang/en_us.xml");
 
         File folder = new File("game/res/level");
         File[] listOfFiles = folder.listFiles();

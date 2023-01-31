@@ -48,13 +48,22 @@ public class LanguageManager {
         }
         doc.getDocumentElement().normalize();
 
-        Node strings = doc.getElementsByTagName("strings").item(0);
+        Node stringsNode = doc.getElementsByTagName("strings").item(0);
 
-        Element stringsElement = (Element) strings;
+        Element stringsElement = (Element) stringsNode;
         LanguageType type = LanguageType.valueOf(stringsElement.getAttribute("language"));
         Language l = new Language(type);
 
+        NodeList strings = stringsNode.getChildNodes();
 
+        for(int i = 0; i < strings.getLength(); i++) {
+            Element string = (Element) strings.item(i);
+
+            int id = Integer.parseInt(string.getAttribute("id"));
+            String content = String.valueOf(string.getTextContent());
+
+            l.getLanguage().put(id, content);
+        }
     }
 
     /**
