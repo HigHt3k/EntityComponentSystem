@@ -118,6 +118,9 @@ public class SimulationComponent extends Component {
 
     public void resetGroupIds() {
         groupIds.clear();
+        if(this.getSimulationType() == SimulationType.SENSOR) {
+            groupIds.add(ownId);
+        }
     }
 
     public ArrayList<Integer> getGroupIds() {
