@@ -17,6 +17,15 @@ public abstract class Scene {
         entities = new ArrayList<>();
     }
 
+    public Entity getEntityById(int id) {
+        for(Entity e : getEntities()) {
+            if(e.getId() == id) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     public abstract void init();
 
     public void start() {

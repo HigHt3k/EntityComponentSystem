@@ -145,15 +145,6 @@ public class GameScene extends Scene {
         }
     }
 
-    public Entity getEntityById(int id) {
-        for(Entity e : getEntities()) {
-            if(e.getId() == id) {
-                return e;
-            }
-        }
-        return null;
-    }
-
     /**
      * add an Entity that snaps to the grid. This method can e.g. be called from the {@link com.resource.ResourceManager} to parse
      * the level.XML file to the actual {@link GameScene}.
