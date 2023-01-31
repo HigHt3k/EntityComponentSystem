@@ -11,6 +11,7 @@ import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
 import game.handler.simulation.markov.MarkovState;
 import game.handler.simulation.markov.MarkovStateObject;
+import game.handler.simulation.markov.MarkovStateRefactored;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -266,8 +267,8 @@ public class SimulationSystem extends SystemHandle {
         MarkovProcessor.entities = entities;
         MarkovProcessor.groupIds = groupIds;
 
-        MarkovProcessor.generateCurrentSystemState();
-        MarkovProcessor.startMarkov(MarkovProcessor.currentSystemState);
+        MarkovProcessor.generateCurrentSystemStateRefactored();
+        MarkovProcessor.markovStart(MarkovProcessor.currentSystemStateRefactored);
     }
 
     private void markov2() {

@@ -1,5 +1,7 @@
 package game.handler.simulation.markov;
 
+import game.handler.simulation.SimulationType;
+
 import java.util.ArrayList;
 
 public class MarkovState {
@@ -27,5 +29,33 @@ public class MarkovState {
 
     public MarkovState getPrevious() {
         return previous;
+    }
+
+    public String selfToText() {
+        StringBuilder out = new StringBuilder("|");
+        for(MarkovStateObject object : markovStateObjects) {
+            if(object.getType() == SimulationType.CABLE) {
+                continue;
+            }
+            switch(object.getState()) {
+
+                case CORRECT -> {
+                    out.append("C|");
+                }
+                case FAIL -> {
+                    out.append("F|");
+                }
+                case PASSIVE -> {
+                    out.append("P|");
+                }
+                case OUT_OF_CONTROL -> {
+                    out.append("O|");
+                }
+                case INOPERATIVE -> {
+                    out.append("I|");
+                }
+            }
+        }
+        return out.toString();
     }
 }

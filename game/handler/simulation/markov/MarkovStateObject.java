@@ -14,6 +14,7 @@ public class MarkovStateObject {
     private double failureProbability;
     private double failureRecognitionProbability;
     private ArrayList<SimulationState> inputStates;
+    private ArrayList<Integer> inputObjects;
 
     public MarkovStateObject(Entity entity, SimulationType type, SimulationState state, double failureProbability, double failureRecognitionProbability, ArrayList<SimulationState> inputStates) {
         this.entity = entity;
@@ -22,6 +23,19 @@ public class MarkovStateObject {
         this.failureProbability = failureProbability;
         this.failureRecognitionProbability = failureRecognitionProbability;
         this.inputStates = new ArrayList<>(inputStates);
+        this.inputObjects = new ArrayList<>();
+    }
+
+    public void setInputStates(ArrayList<SimulationState> inputStates) {
+        this.inputStates = inputStates;
+    }
+
+    public ArrayList<Integer> getInputObjects() {
+        return inputObjects;
+    }
+
+    public void setInputObjects(ArrayList<Integer> inputObjects) {
+        this.inputObjects = inputObjects;
     }
 
     public ArrayList<SimulationState> getInputStates() {
