@@ -91,10 +91,10 @@ public class GameScene extends Scene {
         Game.system().resetSystems();
         setupDescriptionPanel();
         setupButtons();
-        addToBuildPanel(500, 1000, 1e-25f, 0, 0);
-        addToBuildPanel(501, 1000, 1e-25f, 0, 0);
-        addToBuildPanel(502, 1000, 1e-25f, 0, 0);
-        addToBuildPanel(503, 1000, 1e-25f, 0, 0);
+        addToBuildPanel(500, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(501, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(502, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(503, 1000, 1e-25f, 1, 0);
         Game.input().addHandler(new BuildHandler());
         Game.system().addSystem(new SimulationSystem());
     }
