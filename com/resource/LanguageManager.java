@@ -57,13 +57,16 @@ public class LanguageManager {
         NodeList strings = stringsNode.getChildNodes();
 
         for(int i = 0; i < strings.getLength(); i++) {
-            Element string = (Element) strings.item(i);
+            if(strings.item(i).getNodeType() == Node.ELEMENT_NODE) {
+                Element string = (Element) strings.item(i);
 
-            int id = Integer.parseInt(string.getAttribute("id"));
-            String content = String.valueOf(string.getTextContent());
+                int id = Integer.parseInt(string.getAttribute("id"));
+                String content = String.valueOf(string.getTextContent());
 
-            l.getLanguage().put(id, content);
+                l.getLanguage().put(id, content);
+            }
         }
+        Game.logger().info("Language " + l.getLanguageType() + " successfully loaded.");
     }
 
     /**
