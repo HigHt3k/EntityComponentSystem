@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="1" name ="Duplex Example" width="5" height="3">
+<map id="1" name="Duplex Example" width="5" height="3">
     <description>@1000</description>
     <goalDescription>Reach a failure ratio of 3e-3</goalDescription>
     <goal>1e-5</goal>
+    <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <build>
         <entity id="201" amount="2" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>

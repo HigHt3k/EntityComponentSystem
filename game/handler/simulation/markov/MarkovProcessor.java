@@ -157,25 +157,26 @@ public class MarkovProcessor {
     }
 
     public static double getProbabilityForState(MarkovState state) {
+        double probability = 0.0;
         for(MarkovState possibleEqual : allStates) {
             if(state.getMarkovStateObjects().size() != possibleEqual.getMarkovStateObjects().size()) {
                 continue;
             }
 
-            boolean returnHere = true;
+            boolean isSame = true;
             for(int i = 0; i < state.getMarkovStateObjects().size(); i++) {
                 if(state.getMarkovStateObjects().get(i).getType() != possibleEqual.getMarkovStateObjects().get(i).getType()
                         && state.getMarkovStateObjects().get(i).getState() != possibleEqual.getMarkovStateObjects().get(i).getState()) {
-                    returnHere = false;
+                    isSame = false;
                     break;
                 }
             }
-            if(returnHere) {
-                return possibleEqual.getStateProbability();
+            if(isSame) {
+                probability += possibleEqual.getStateProbability();
             }
         }
 
-        return 0.0;
+        return probability;
     }
 
     public static void printChainStructure(MarkovStateRefactored start) {

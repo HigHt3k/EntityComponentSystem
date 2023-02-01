@@ -43,13 +43,13 @@ public class SimulationSystem extends SystemHandle {
     }
 
     private boolean validateGoal() {
-        ArrayList<MarkovStateObject> states = new ArrayList<>();
+        ArrayList<MarkovStateObject> stateObjects = new ArrayList<>();
 
 
 
-        MarkovState ms = new MarkovState(null, states, -1.0);
-        double probability = MarkovProcessor.getProbabilityForState(ms);
-
+        MarkovState state = new MarkovState(null, stateObjects, -1.0);
+        double probability = MarkovProcessor.getProbabilityForState(state);
+        System.out.println(probability);
         return false;
     }
 
