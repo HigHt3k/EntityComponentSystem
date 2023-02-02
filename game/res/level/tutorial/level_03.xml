@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="1" name="@1005" width="5" height="3">
+    <description>@1006</description>
+    <goal>1e-1</goal>
+    <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
+    <tileset source="base_tiles.xml"/>
+    <build>
+    </build>
+    <layer id="0" name="Tile Layer 1">
+        <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="2" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="2" y="1" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="2" outOfControlSignalsAccepted="0"/>
+        <entity x="4" y="1" id="205" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+    </layer>
+</map>

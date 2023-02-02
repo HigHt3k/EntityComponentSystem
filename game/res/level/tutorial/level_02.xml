@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="1" name="@1001" width="5" height="1">
-    <description>@1002</description>
+<map id="1" name="@1003" width="6" height="2">
+    <description>@1004</description>
     <goal>1e-1</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
@@ -9,6 +9,6 @@
     <layer id="0" name="Tile Layer 1">
         <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
         <entity x="2" y="0" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity x="4" y="0" id="205" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="5" y="1" id="205" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </layer>
 </map>
