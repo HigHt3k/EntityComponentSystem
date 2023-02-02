@@ -49,7 +49,7 @@ public class MenuScene extends Scene {
                 "Play", IdGenerator.generateId(),
                 1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "PLAY", font
+                "@0", font
         );
         playButton.addIntent(new StartIntent(new LevelScene("Level", -254)));
         addEntityToScene(playButton);
@@ -58,7 +58,7 @@ public class MenuScene extends Scene {
                 "Build", IdGenerator.generateId(),
                 1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "BUILD", font
+                "@1", font
         );
         buildButton.addIntent(new StartIntent(new BuildScene("build", -250)));
         addEntityToScene(buildButton);
@@ -67,7 +67,7 @@ public class MenuScene extends Scene {
                 "Options", IdGenerator.generateId(),
                 1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "OPTIONS", font
+                "@2", font
         );
         optionsButton.addIntent(new StartIntent(new OptionsScene("options",-249)));
         addEntityToScene(optionsButton);
@@ -76,7 +76,7 @@ public class MenuScene extends Scene {
                 "Exit", IdGenerator.generateId(),
                 1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 3,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "EXIT", font
+                "@3", font
         );
         exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);

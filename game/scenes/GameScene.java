@@ -250,7 +250,7 @@ public class GameScene extends Scene {
                 IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "EXIT",
+                "@3",
                 font
         );
         exitButton.addIntent(new ExitIntent());
@@ -261,7 +261,7 @@ public class GameScene extends Scene {
                 IdGenerator.generateId(),
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "MAIN MENU",
+                "@4",
                 font
         );
 

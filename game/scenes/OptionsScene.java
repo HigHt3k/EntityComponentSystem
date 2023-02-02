@@ -56,7 +56,7 @@ public class OptionsScene extends Scene {
                 IdGenerator.generateId(),
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "MAIN MENU",
+                "@4",
                 font
         );
 
@@ -67,7 +67,7 @@ public class OptionsScene extends Scene {
                 "Exit", IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "EXIT", font
+                "@3", font
         );
         exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);

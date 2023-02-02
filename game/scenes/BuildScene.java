@@ -55,6 +55,22 @@ public class BuildScene extends Scene {
     public BuildScene(String name, int id) {
         super(name, id);
         setupBuildPanel();
+
+        setupDescriptionPanel();
+        setupButtons();
+
+        for(int x = 0; x < xMax; x++) {
+            for(int y = 0; y < yMax; y++) {
+                addGridElement(x, y);
+            }
+        }
+        addToBuildPanel(201, 1000, 1e-4f, 0, 0);
+        addToBuildPanel(203, 1000, 1e-4f, 1, 0);
+        addToBuildPanel(205, 1000, 1e-4f, 2, 0);
+        addToBuildPanel(500, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(501, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(502, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(503, 1000, 1e-25f, 1, 0);
     }
 
     public void updateGridSize() {
@@ -83,21 +99,7 @@ public class BuildScene extends Scene {
         updateGridSize();
         Game.input().removeAllHandlers();
         Game.system().resetSystems();
-        setupDescriptionPanel();
-        setupButtons();
 
-        for(int x = 0; x < xMax; x++) {
-            for(int y = 0; y < yMax; y++) {
-                addGridElement(x, y);
-            }
-        }
-        addToBuildPanel(201, 1000, 1e-4f, 0, 0);
-        addToBuildPanel(203, 1000, 1e-4f, 1, 0);
-        addToBuildPanel(205, 1000, 1e-4f, 2, 0);
-        addToBuildPanel(500, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(501, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(502, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(503, 1000, 1e-25f, 1, 0);
         Game.input().addHandler(new BuildHandler());
     }
 
@@ -221,7 +223,7 @@ public class BuildScene extends Scene {
                 IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "EXIT",
+                "@3",
                 font
         );
         exitButton.addIntent(new ExitIntent());
@@ -232,7 +234,7 @@ public class BuildScene extends Scene {
                 IdGenerator.generateId(),
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "MAIN MENU",
+                "@4",
                 font
         );
 
@@ -244,7 +246,7 @@ public class BuildScene extends Scene {
                 "Save_button", IdGenerator.generateId(),
                 1600, 700,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "SAVE",
+                "@5",
                 font
         );
         saveButton.addIntent(new SaveIntent());

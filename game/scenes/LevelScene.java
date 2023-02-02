@@ -65,11 +65,23 @@ public class LevelScene extends Scene {
             }
         }
 
+        GenericButton mainMenuButton = new GenericButton(
+                "Menu_button",
+                IdGenerator.generateId(),
+                1600, 800,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "@4",
+                font
+        );
+
+        mainMenuButton.addIntent(new StartIntent());
+        this.addEntityToScene(mainMenuButton);
+
         GenericButton exitButton = new GenericButton(
                 "Exit", IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "EXIT", font
+                "@3", font
                 );
         exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);
