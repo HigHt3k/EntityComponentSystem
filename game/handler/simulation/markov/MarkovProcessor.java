@@ -1,14 +1,10 @@
 package game.handler.simulation.markov;
 
-import com.Game;
 import com.ecs.entity.Entity;
-import game.components.CablePortsComponent;
 import game.components.SimulationComponent;
-import game.handler.SimulationSystem;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -19,9 +15,7 @@ public class MarkovProcessor {
 
     public static ArrayList<Entity> entities = new ArrayList<>();
     public static int[] groupIds;
-
     public static MarkovState currentSystemState;
-    public static MarkovStateRefactored currentSystemStateRefactored;
     private static final ArrayList<MarkovState> allStates = new ArrayList<>();
 
     /*
@@ -35,7 +29,10 @@ public class MarkovProcessor {
     --> each component has a variable "correctSignalsNeeded" and a variable "outOfControlSignalsAccepted"
      */
 
-    public static void generateCurrentSystemStateRefactored() {
+    /**
+     * generate the root node for the markov chain by using the current system layout as input
+     */
+    public static void generateCurrentSystemState() {
         ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
 
         for(Entity e : entities) {
@@ -58,7 +55,7 @@ public class MarkovProcessor {
             markovStateObjects.add(newObject);
         }
 
-        currentSystemStateRefactored = new MarkovStateRefactored(null, markovStateObjects, 1.0);
+        currentSystemState = new MarkovState(null, markovStateObjects, 1.0);
     }
     /**
      * use the current system state to find the probability in the markov chain
@@ -70,6 +67,9 @@ public class MarkovProcessor {
         return probability;
     }
 
+    /**
+     * Debugging methid: Print the current systems root node as a markov block.
+     */
     public static void printCurrentSystemState() {
         System.out.println("------- CURRENT SYSTEM STATE AS MARKOV BLOCK ------------");
         StringBuilder line1 = new StringBuilder();
@@ -95,6 +95,10 @@ public class MarkovProcessor {
         System.out.println(line2);
     }
 
+    /**
+     * Debugging Method: Print a specific {@link MarkovState}
+     * @param state
+     */
     public static void printMarkovSingle(MarkovState state) {
         StringBuilder line1 = new StringBuilder();
         line1.append("|");
@@ -124,36 +128,7 @@ public class MarkovProcessor {
      */
     public static void printMarkov() {
         System.out.println("--------Markov Debugging --------");
-        /*
-        for(MarkovState states : allStates) {
-            StringBuilder line1 = new StringBuilder();
-            line1.append("|");
-            StringBuilder line2 = new StringBuilder();
-            line2.append("|");
-            for(MarkovStateObject ms : states.getMarkovStateObjects()) {
-                if(ms.getType() == SimulationType.CABLE) {
-                    continue;
-                }
-                switch(ms.getType()) {
-                    case SENSOR -> line1.append("S|");
-                    case CPU -> line1.append("C|");
-                    case ACTUATOR -> line1.append("A|");
-                    case CABLE -> line1.append("W|");
-                }
-                switch(ms.getState()) {
-                    case CORRECT -> line2.append("C|");
-                    case FAIL -> line2.append("F|");
-                    case PASSIVE -> line2.append("P|");
-                    case INOPERATIVE -> line2.append("I|");
-                    case OUT_OF_CONTROL -> line2.append("O|");
-                }
-            }
-            System.out.println(line1);
-            System.out.println(line2 + " - " + states.getStateProbability());
-            System.out.println("");
-        }
-        */
-        printChainStructure(currentSystemStateRefactored);
+        printChainStructure(currentSystemState);
     }
 
 
@@ -166,7 +141,7 @@ public class MarkovProcessor {
      * @param correctCPUCount: the amount of correct CPUs (min)
      * @return the probability for the condition given (combined of all states found)
      */
-    public static double[] getProbabilityForStatesWith(MarkovStateRefactored state, int correctActuatorCount, int correctSensorCount, int correctCPUCount, int OOCActuatorCount, int OOCSensorCount, int OOCCPUCount) {
+    public static double[] getProbabilityForStatesWith(MarkovState state, int correctActuatorCount, int correctSensorCount, int correctCPUCount, int OOCActuatorCount, int OOCSensorCount, int OOCCPUCount) {
         double probabilityPassive = 0.0;
         double probabilityOOC = 0.0;
 
@@ -217,7 +192,7 @@ public class MarkovProcessor {
             }
         }
 
-        for(MarkovStateRefactored stateNext : state.getNext()) {
+        for(MarkovState stateNext : state.getNext()) {
             try {
                 double probs[] = getProbabilityForStatesWith(stateNext, correctActuatorCount, correctSensorCount, correctCPUCount,
                         OOCActuatorCount, OOCSensorCount, OOCCPUCount);
@@ -227,7 +202,7 @@ public class MarkovProcessor {
                     probabilityOOC = probs[1];
             } catch(StackOverflowError ex) {
                 ex.printStackTrace();
-                printChainStructure(currentSystemStateRefactored);
+                printChainStructure(currentSystemState);
                 System.exit(1);
             }
         }
@@ -235,30 +210,11 @@ public class MarkovProcessor {
         return new double[] {probabilityPassive, probabilityOOC};
     }
 
-    public static double getProbabilityForState(MarkovState state) {
-        double probability = 0.0;
-        for(MarkovState possibleEqual : allStates) {
-            if(state.getMarkovStateObjects().size() != possibleEqual.getMarkovStateObjects().size()) {
-                continue;
-            }
-
-            boolean isSame = true;
-            for(int i = 0; i < state.getMarkovStateObjects().size(); i++) {
-                if(state.getMarkovStateObjects().get(i).getType() != possibleEqual.getMarkovStateObjects().get(i).getType()
-                        && state.getMarkovStateObjects().get(i).getState() != possibleEqual.getMarkovStateObjects().get(i).getState()) {
-                    isSame = false;
-                    break;
-                }
-            }
-            if(isSame) {
-                probability += possibleEqual.getStateProbability();
-            }
-        }
-
-        return probability;
-    }
-
-    public static void printChainStructure(MarkovStateRefactored start) {
+    /**
+     * Print the full markov chain, including the probability of each state.
+     * @param start
+     */
+    public static void printChainStructure(MarkovState start) {
         if(start.getPrevious() != null) {
             System.out.println(start.getPrevious().selfToText() + "->" + start.selfToText() + " : " + start.getStateProbability());
         } else {
@@ -266,12 +222,16 @@ public class MarkovProcessor {
             System.out.println("root: " + start.selfToText() + " : " + start.getStateProbability());
         }
 
-        for(MarkovStateRefactored state : start.getNext()) {
+        for(MarkovState state : start.getNext()) {
             printChainStructure(state);
         }
     }
 
-    public static void markovStart(MarkovStateRefactored start) {
+    /**
+     * Start the Markov Chain generation
+     * @param start: node to calculate from; at the beginning this is supposed to be the root node.
+     */
+    public static void markovStart(MarkovState start) {
         // if a component state is fail -> create states with OOC and PASSIVE as their children.
         if(start.isFailed()) {
             ArrayList<MarkovStateObject> objectsPassive = new ArrayList<>();
@@ -388,8 +348,8 @@ public class MarkovProcessor {
                 }
             }
 
-            start.addNext(new MarkovStateRefactored(start, objectsPassive, start.getStateProbability() * objectsPassive.get(failedIndex).getFailureRecognitionProbability()));
-            start.addNext(new MarkovStateRefactored(start, objectsOutOfControl, start.getStateProbability() * (1 - objectsOutOfControl.get(failedIndex).getFailureRecognitionProbability())));
+            start.addNext(new MarkovState(start, objectsPassive, start.getStateProbability() * objectsPassive.get(failedIndex).getFailureRecognitionProbability()));
+            start.addNext(new MarkovState(start, objectsOutOfControl, start.getStateProbability() * (1 - objectsOutOfControl.get(failedIndex).getFailureRecognitionProbability())));
         } else {
             ArrayList<MarkovStateObject> stateObjects = start.getMarkovStateObjects();
             for (int i = 0; i < stateObjects.size(); i++) {
@@ -420,7 +380,7 @@ public class MarkovProcessor {
                 }
                 markovStateObjects.get(i).setState(SimulationState.FAIL);
 
-                MarkovStateRefactored newState = new MarkovStateRefactored(start,
+                MarkovState newState = new MarkovState(start,
                         markovStateObjects, start.getStateProbability() * mso.getFailureProbability());
                 newState.setFailed(true);
                 start.addNext(newState);
@@ -428,15 +388,14 @@ public class MarkovProcessor {
             }
         }
 
-        for(MarkovStateRefactored markovStateRefactored : start.getNext()) {
+        for(MarkovState markovStateRefactored : start.getNext()) {
             try {
                 markovStart(markovStateRefactored);
             } catch(StackOverflowError ex) {
                 ex.printStackTrace();
-                printChainStructure(currentSystemStateRefactored);
+                printChainStructure(currentSystemState);
                 System.exit(1);
             }
         }
     }
-
 }

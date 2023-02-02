@@ -9,9 +9,6 @@ import game.entities.CablePort;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
-import game.handler.simulation.markov.MarkovState;
-import game.handler.simulation.markov.MarkovStateObject;
-import game.handler.simulation.markov.MarkovStateRefactored;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -48,7 +45,7 @@ public class SimulationSystem extends SystemHandle {
     private boolean validateGoal() {
         double probabilities[] = MarkovProcessor
                 .getProbabilityForStatesWith(
-                        MarkovProcessor.currentSystemStateRefactored,
+                        MarkovProcessor.currentSystemState,
                         1, 0, 0, 0, 20, 20
                 );
         System.out.println("passive: " + probabilities[0]);
@@ -276,8 +273,8 @@ public class SimulationSystem extends SystemHandle {
         MarkovProcessor.entities = entities;
         MarkovProcessor.groupIds = groupIds;
 
-        MarkovProcessor.generateCurrentSystemStateRefactored();
-        MarkovProcessor.markovStart(MarkovProcessor.currentSystemStateRefactored);
+        MarkovProcessor.generateCurrentSystemState();
+        MarkovProcessor.markovStart(MarkovProcessor.currentSystemState);
     }
 
     private void markov2() {
