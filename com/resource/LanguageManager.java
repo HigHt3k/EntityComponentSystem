@@ -81,6 +81,9 @@ public class LanguageManager {
             if(l.getLanguageType() != languageType) {
                 continue;
             }
+            if(l.getLanguage().get(id) == null) {
+                return "@value_not_found: " + id;
+            }
             return l.getLanguage().get(id);
         }
 
