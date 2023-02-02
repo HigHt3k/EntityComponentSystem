@@ -56,6 +56,13 @@ public class RenderingEngine {
     }
 
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
+        if(text.contains("@")) {
+            String temp = text;
+            int id = Integer.parseInt(temp.replace("@", ""));
+            System.out.println(id);
+            text = Game.res().language().getStringValue(id, Game.config().getLanguage());
+        }
+
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 Game.config().renderConfiguration().getAliasingText());
 

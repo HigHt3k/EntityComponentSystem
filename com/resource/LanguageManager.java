@@ -66,6 +66,7 @@ public class LanguageManager {
                 l.getLanguage().put(id, content);
             }
         }
+        languages.add(l);
         Game.logger().info("Language " + l.getLanguageType() + " successfully loaded.");
     }
 
@@ -83,6 +84,6 @@ public class LanguageManager {
             return l.getLanguage().get(id);
         }
 
-        return "@value_not_found";
+        return "@value_not_found: " + id;
     }
 }
