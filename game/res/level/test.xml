@@ -1,8 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<map height="5" id="100" name="test" width="5">
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="1" name ="Triplex Example - only fcc" width="5" height="3">
+  <description>Example Triplex system with 3 sensors, 3 cpus and one actuator. Sensors and Actuators are not to be considered here.</description>
+  <goalDescription>Reach a failure ratio of x</goalDescription>
+  <goal>1e-4</goal>
+  <goalDefinition workingActuators="0" workingSensors="0" workingComputers="1"/>
   <tileset source="base_tiles.xml"/>
-  <description/>
-  <layer id="0">
-    <entity id="202" interactable="false" x="3" y="3"/>
+  <build>
+    <entity id="201" amount="2" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+    <entity id="203" amount="4" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+    <entity id="205" amount="0" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+  </build>
+  <layer id="0" name="Tile Layer 1">
+    <entity x="0" y="0" id="201" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+    <entity x="2" y="0" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+    <entity x="0" y="1" id="201" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+    <entity x="2" y="1" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+    <entity x="0" y="2" id="201" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+    <entity x="2" y="2" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+    <entity x="4" y="1" id="205" interactable="false" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
   </layer>
 </map>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map id="1" name ="Tutorial 1 : Connecting Cables" width="5" height="1">
     <description>Welcome to the game. In this level you are going to learn how to connect components between each other by using cables.</description>
-    <goalDescription>Reach a failure ratio of 3e-3</goalDescription>
-    <goal>3e-3</goal>
+    <goalDescription>Reach a failure ratio of 1e-3</goalDescription>
+    <goal>1e-3</goal>
  <tileset source="base_tiles.xml"/>
     <build>
         <entity id="201" amount="2" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
