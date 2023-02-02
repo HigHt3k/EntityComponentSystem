@@ -10,7 +10,7 @@
     </build>
     <layer id="0" name="Tile Layer 1">
         <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
-        <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="2" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
         <entity x="2" y="1" id="201" interactable="true" safety="1e-4" correctSignalsNeeded="2" outOfControlSignalsAccepted="0"/>
         <entity x="4" y="1" id="205" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </layer>

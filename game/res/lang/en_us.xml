@@ -8,6 +8,9 @@
     <string id="10">ENGLISH</string>
     <string id="11">GERMAN</string>
     <string id="12">GERMAN SIMPLE</string>
+    <string id="20">This is a sensor component It measures specified parameters from a system.</string>
+    <string id="21">A computer processes the different sensor inputs it receives.</string>
+    <string id="22">Actuator components execute a command on the aircraft.</string>
     <string id="1000">Example Duplex system with two sensors, two cpus and one actuator.</string>
     <string id="1001">Tutorial 1: Connecting Cables</string>
     <string id="1002">Welcome to the game. In this tutorial series you are going to learn all the basics you need to start implementing your own systems.\nStart by using the red cable from the panel below to connect the components. Just click the cable, and then click again and the location where it should be placed.</string>

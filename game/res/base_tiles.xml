@@ -14,19 +14,13 @@
   <image width="32" height="32" source="game/res/avionics/default.png"/>
  </tile>
  <tile id="201" type="SENSOR">
-  <image width="32" height="32" source="game/res/avionics/sensor.png" description="This is a sensor component It reads specified parameters from a system." minNonPassive="1"/>
- </tile>
- <tile id="202" type="ACTUATOR">
-  <image width="32" height="32" source="game/res/avionics/cpiom_blade.png" description="Actuator components execute a command on the aircraft." minNonPassive="1"/>
+  <image width="32" height="32" source="game/res/avionics/sensor.png" description="@20" minNonPassive="1"/>
  </tile>
  <tile id="203" type="CPU">
-  <image width="32" height="32" source="game/res/avionics/crdc.png" description="A computer processes the different sensor inputs it receives." minNonPassive="1"/>
- </tile>
- <tile id="204" type="CPU">
-  <image width="32" height="32" source="game/res/avionics/rce.png" description="A computer processes the different sensor inputs it receives." minNonPassive="1"/>
+  <image width="32" height="32" source="game/res/avionics/crdc.png" description="@21" minNonPassive="1"/>
  </tile>
  <tile id="205" type="ACTUATOR">
-  <image width="32" height="32" source="game/res/avionics/actuator.png" description="Actuator components execute a command on the aircraft." minNonPassive="1"/>
+  <image width="32" height="32" source="game/res/avionics/actuator.png" description="@22" minNonPassive="1"/>
  </tile>
  <tile id="1000">
   <image width="32" height="32" source="game/res/tiles/air.png"/>
