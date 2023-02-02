@@ -5,8 +5,10 @@ import com.IdGenerator;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.entity.GenericButton;
+import com.ecs.intent.ChangeLanguageIntent;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
+import com.resource.LanguageType;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -69,6 +71,33 @@ public class OptionsScene extends Scene {
         );
         exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);
+
+        GenericButton toggleLanguageEnglish = new GenericButton(
+                "English", IdGenerator.generateId(),
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "@10", font
+        );
+        toggleLanguageEnglish.addIntent(new ChangeLanguageIntent(LanguageType.EN_US));
+        addEntityToScene(toggleLanguageEnglish);
+
+        GenericButton toggleLanguageGerman = new GenericButton(
+                "German", IdGenerator.generateId(),
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "@11", font
+        );
+        toggleLanguageGerman.addIntent(new ChangeLanguageIntent(LanguageType.DE_DE));
+        addEntityToScene(toggleLanguageGerman);
+
+        GenericButton toggleLanguageGermanEasy = new GenericButton(
+                "GermanSimple", IdGenerator.generateId(),
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "@12", font
+        );
+        toggleLanguageGermanEasy.addIntent(new ChangeLanguageIntent(LanguageType.DE_SIMPLE));
+        addEntityToScene(toggleLanguageGermanEasy);
     }
 
     @Override
