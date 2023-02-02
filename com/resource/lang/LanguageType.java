@@ -1,4 +1,4 @@
-package com.resource;
+package com.resource.lang;
 
 public enum LanguageType {
     DE_DE,

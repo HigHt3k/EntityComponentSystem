@@ -1,4 +1,4 @@
-package com.resource;
+package com.resource.lang;
 
 import com.Game;
 import org.w3c.dom.Document;

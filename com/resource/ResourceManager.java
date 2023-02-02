@@ -3,6 +3,8 @@ package com.resource;
 import com.Game;
 import com.IdGenerator;
 import com.graphics.scene.Scene;
+import com.resource.lang.LanguageManager;
+import com.resource.tiles.TileSet;
 import game.handler.simulation.SimulationType;
 import game.scenes.BuildScene;
 import game.scenes.GameScene;
@@ -27,7 +29,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.IDN;
 
 public class ResourceManager {
     private static final LanguageManager language = new LanguageManager();

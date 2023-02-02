@@ -1,7 +1,7 @@
 package game;
 
 import com.Game;
-import com.resource.LanguageType;
+import com.resource.lang.LanguageType;
 import game.scenes.MenuScene;
 
 import java.io.File;

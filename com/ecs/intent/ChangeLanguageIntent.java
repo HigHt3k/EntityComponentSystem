@@ -3,7 +3,7 @@ package com.ecs.intent;
 import com.Game;
 import com.ecs.component.CollisionComponent;
 import com.ecs.component.IntentComponent;
-import com.resource.LanguageType;
+import com.resource.lang.LanguageType;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

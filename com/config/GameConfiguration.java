@@ -1,6 +1,6 @@
 package com.config;
 
-import com.resource.LanguageType;
+import com.resource.lang.LanguageType;
 
 public class GameConfiguration {
     private static final RenderConfiguration renderConfiguration = new RenderConfiguration();

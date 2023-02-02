@@ -1,4 +1,4 @@
-package com.resource;
+package com.resource.tiles;
 
 import com.Game;
 import game.handler.simulation.SimulationType;

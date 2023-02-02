@@ -1,6 +1,5 @@
-package com.resource;
+package com.resource.lang;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Language {

@@ -8,7 +8,7 @@ import com.ecs.entity.GenericButton;
 import com.ecs.intent.ChangeLanguageIntent;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
-import com.resource.LanguageType;
+import com.resource.lang.LanguageType;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
