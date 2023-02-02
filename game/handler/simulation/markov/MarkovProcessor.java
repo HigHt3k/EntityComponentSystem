@@ -388,9 +388,9 @@ public class MarkovProcessor {
             }
         }
 
-        for(MarkovState markovStateRefactored : start.getNext()) {
+        for(MarkovState markovState : start.getNext()) {
             try {
-                markovStart(markovStateRefactored);
+                markovStart(markovState);
             } catch(StackOverflowError ex) {
                 ex.printStackTrace();
                 printChainStructure(currentSystemState);
