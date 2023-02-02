@@ -22,6 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class SimulationSystem extends SystemHandle {
     private ArrayList<Entity> tempGroup = new ArrayList<>();
+    private double eps = 0.00000001; //delta because double has rounding errors
     int frameCount = 0;
 
     @Override
@@ -33,7 +34,9 @@ public class SimulationSystem extends SystemHandle {
         if(frameCount >= 244 * 2) {
             markov();
             if(validateGoal()) {
-                //TODO: Implement game won screen popup box
+                System.out.println("Goal reached!");
+            } else {
+                System.out.println("Goal not reached!");
             }
             frameCount = 0;
         }
@@ -43,13 +46,19 @@ public class SimulationSystem extends SystemHandle {
     }
 
     private boolean validateGoal() {
-        ArrayList<MarkovStateObject> stateObjects = new ArrayList<>();
+        double probabilities[] = MarkovProcessor
+                .getProbabilityForStatesWith(
+                        MarkovProcessor.currentSystemStateRefactored,
+                        1, 0, 0, 0, 20, 20
+                );
+        System.out.println("passive: " + probabilities[0]);
+        System.out.println("ooc: " + probabilities[1]);
 
+        if(Game.scene().current() instanceof GameScene gs)
+        if(probabilities[0]-eps <= gs.getGoal() && probabilities[1]-eps <= gs.getGoal()) {
+            return true;
+        }
 
-
-        MarkovState state = new MarkovState(null, stateObjects, -1.0);
-        double probability = MarkovProcessor.getProbabilityForState(state);
-        System.out.println(probability);
         return false;
     }
 

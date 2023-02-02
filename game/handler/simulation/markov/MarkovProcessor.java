@@ -156,6 +156,85 @@ public class MarkovProcessor {
         printChainStructure(currentSystemStateRefactored);
     }
 
+
+    /**
+     * calculate the probability for all combined states that have enough actuators working
+     * TODO: implement maximum ooc variables
+     * @param state: the starting state
+     * @param correctActuatorCount: the amount of correct actuators (min)
+     * @param correctSensorCount: the amount of correct sensors (min)
+     * @param correctCPUCount: the amount of correct CPUs (min)
+     * @return the probability for the condition given (combined of all states found)
+     */
+    public static double[] getProbabilityForStatesWith(MarkovStateRefactored state, int correctActuatorCount, int correctSensorCount, int correctCPUCount, int OOCActuatorCount, int OOCSensorCount, int OOCCPUCount) {
+        double probabilityPassive = 0.0;
+        double probabilityOOC = 0.0;
+
+        int currentCorrectActuatorCount = 0;
+        int currentCorrectSensorCount = 0;
+        int currentCorrectCPUCount = 0;
+
+        int currentOOCActuatorCount = 0;
+        int currentOOCSensorCount = 0;
+        int currentOOCCPUCount = 0;
+
+        boolean hasFailed = false;
+        for(MarkovStateObject object : state.getMarkovStateObjects()) {
+            if(object.getState() == SimulationState.CORRECT) {
+                switch(object.getType()) {
+                    case CPU -> currentCorrectCPUCount++;
+                    case ACTUATOR -> currentCorrectActuatorCount++;
+                    case CABLE -> {
+                    }
+                    case SENSOR -> currentCorrectSensorCount++;
+                }
+            } else if(object.getState() == SimulationState.OUT_OF_CONTROL) {
+                switch(object.getType()) {
+                    case CPU -> currentOOCCPUCount++;
+                    case ACTUATOR -> currentOOCActuatorCount++;
+                    case CABLE -> {
+                    }
+                    case SENSOR -> currentOOCSensorCount++;
+                }
+            }
+            // skip fail, because relevant is passive/ooc
+            if(object.getState() == SimulationState.FAIL) {
+                hasFailed = true;
+            }
+        }
+        if(!hasFailed) {
+            if (currentOOCActuatorCount <= OOCActuatorCount && currentOOCCPUCount <= OOCCPUCount && currentOOCSensorCount <= OOCSensorCount
+                    && (currentCorrectActuatorCount == correctActuatorCount - 1
+                    || currentCorrectSensorCount == correctSensorCount - 1
+                    || currentCorrectCPUCount == correctCPUCount - 1)) {
+                System.out.println("Adding passive probability of state: " + state.selfToText() + " : " + state.getStateProbability());
+                probabilityPassive = state.getStateProbability();
+                state.getNext().clear();
+            } else if(currentOOCActuatorCount > OOCActuatorCount || currentOOCCPUCount > OOCCPUCount || currentOOCSensorCount > OOCSensorCount) {
+                System.out.println("Adding ooc probability of state: " + state.selfToText() + " : " + state.getStateProbability());
+                probabilityOOC = state.getStateProbability();
+                state.getNext().clear();
+            }
+        }
+
+        for(MarkovStateRefactored stateNext : state.getNext()) {
+            try {
+                double probs[] = getProbabilityForStatesWith(stateNext, correctActuatorCount, correctSensorCount, correctCPUCount,
+                        OOCActuatorCount, OOCSensorCount, OOCCPUCount);
+                if(probabilityPassive < probs[0])
+                    probabilityPassive = probs[0];
+                if (probabilityOOC < probs[1])
+                    probabilityOOC = probs[1];
+            } catch(StackOverflowError ex) {
+                ex.printStackTrace();
+                printChainStructure(currentSystemStateRefactored);
+                System.exit(1);
+            }
+        }
+
+        return new double[] {probabilityPassive, probabilityOOC};
+    }
+
     public static double getProbabilityForState(MarkovState state) {
         double probability = 0.0;
         for(MarkovState possibleEqual : allStates) {
