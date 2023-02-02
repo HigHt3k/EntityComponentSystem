@@ -26,40 +26,10 @@ public class RenderingEngine {
 
     private Graphics2D g;
 
-    //TODO: handle alignment of texts, handle vertical size (height), auto scale if text doesn't fit box, handle
-    // character amount per line in a smarter way -> this works, but not optimally
-    /**
-     * Render a String to a graphics instance.
-     * @param g: graphics context
-     * @param text: Text to render to screen
-     * @param color: Text-color
-     * @param x: position x
-     * @param y: position y
-     */
-    public static void renderText(Graphics2D g, String text, Color color, int x, int y, int width, int height) {
-        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
-                Game.config().renderConfiguration().getAliasingText());
-
-        int textWidth = g.getFontMetrics().stringWidth(text);
-        int widthCharacter = g.getFontMetrics().stringWidth("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") / 36;
-        int maxWidth = width - 2 * MARGIN;
-        // detect the longest word in string and set the character per line size to maximum minus longest word.
-        int charactersPerLine = maxWidth / widthCharacter - Objects.requireNonNull(Arrays.stream(text.split(" "))
-                .max(Comparator.comparingInt(String::length))
-                .orElse(null)).length();
-
-        String regex = "(\\w{1,}.{1," + charactersPerLine + "})(\\s+|\\.)";
-        if (textWidth > maxWidth) {
-            text = text.replaceAll(regex, "$1\n");
-        }
-        TextRenderer.render(g, text, color, new Point((x + MARGIN), y));
-    }
-
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
         if(text.contains("@")) {
             String temp = text;
             int id = Integer.parseInt(temp.replace("@", ""));
-            System.out.println(id);
             text = Game.res().language().getStringValue(id, Game.config().getLanguage());
         }
 
