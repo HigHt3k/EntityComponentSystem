@@ -26,7 +26,7 @@ public class Main {
         Game.res().language().parseLanguageFile("game/res/lang/de_simple.xml");
         Game.res().language().parseLanguageFile("game/res/lang/en_us.xml");
 
-        File folder = new File("game/res/level");
+        File folder = new File("game/res/level/test");
         File[] listOfFiles = folder.listFiles();
 
         try {
