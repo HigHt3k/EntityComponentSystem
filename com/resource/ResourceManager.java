@@ -4,6 +4,7 @@ import com.Game;
 import com.IdGenerator;
 import com.graphics.scene.Scene;
 import com.resource.lang.LanguageManager;
+import com.resource.score.HighScoreManager;
 import com.resource.tiles.TileSet;
 import game.handler.simulation.SimulationType;
 import game.scenes.BuildScene;
@@ -32,6 +33,7 @@ import java.io.IOException;
 
 public class ResourceManager {
     private static final LanguageManager language = new LanguageManager();
+    private static final HighScoreManager highScoreManager = new HighScoreManager();
     private static DocumentBuilder db;
 
     private static TileSet tileSet;
@@ -287,13 +289,12 @@ public class ResourceManager {
                 // get all elements on screen
                 root.appendChild(layer);
 
-
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
                 DOMSource source = new DOMSource(doc);
-                File f = new File("game/res/level/" + Game.scene().current().getName() + ".xml");
+                File f = new File("game/res/level/custom/" + Game.scene().current().getName() + ".xml");
                 f.createNewFile();
                 StreamResult result = new StreamResult(f);
                 transformer.transform(source, result);
