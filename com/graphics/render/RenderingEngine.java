@@ -8,10 +8,7 @@ import com.ecs.component.GraphicsComponent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.PatternSyntaxException;
 
 /**
@@ -116,9 +113,33 @@ public class RenderingEngine {
             if(gc == null) {
                 continue;
             }
+
+            Collections.sort(gc.getGraphicsObjects(), new Comparator<GraphicsObject>() {
+                @Override
+                public int compare(GraphicsObject o1, GraphicsObject o2) {
+                    if(o1.getLayer() == o2.getLayer())
+                        return 0;
+                    else if(o1.getLayer() < o2.getLayer()) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+
             for(GraphicsObject go : gc.getGraphicsObjects()) {
                 if(go.getType() == GraphicsObjectType.SHAPE) {
                     renderShape(g, go.getShape(), go.getBorderColor(), go.getColor());
+                }
+                else if(go.getType() == GraphicsObjectType.TEXT) {
+                    renderText(g, go.getText(), go.getColor(), go.getFont(),
+                            go.getShape().getBounds().x, go.getShape().getBounds().y,
+                            go.getShape().getBounds().width, go.getShape().getBounds().height);
+                }
+                else if(go.getType() == GraphicsObjectType.IMAGE) {
+                    renderImage(g, go.getImage(),
+                            go.getShape().getBounds().x, go.getShape().getBounds().y,
+                            go.getShape().getBounds().width, go.getShape().getBounds().height);
                 }
             }
         }

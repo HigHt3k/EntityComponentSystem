@@ -1,13 +1,17 @@
 package com.ecs.component;
 
 import com.Game;
+import com.ecs.component.object.ColliderObject;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
 
 public class CollisionComponent extends Component {
     Shape _COLLISIONBOX;
     Shape collisionBox;
+
+    ArrayList<ColliderObject> colliders = new ArrayList<>();
 
     @Override
     public void update() {
@@ -38,5 +42,13 @@ public class CollisionComponent extends Component {
     public void updateSize() {
         if(this._COLLISIONBOX != null)
             this.collisionBox = Game.scale().scaleShape(_COLLISIONBOX);
+    }
+
+    public void addCollider(ColliderObject collider) {
+        colliders.add(collider);
+    }
+
+    public ArrayList<ColliderObject> getColliders() {
+        return colliders;
     }
 }

@@ -16,6 +16,8 @@ public class GraphicsObject {
     Line2D line;
     final Color hoverColor = new Color(200, 200, 200, 60);
     GraphicsObjectType type;
+    // rendering engine will sort objects by layer
+    int layer = 0;
 
 
     /**
@@ -91,5 +93,13 @@ public class GraphicsObject {
 
     public GraphicsObjectType getType() {
         return type;
+    }
+
+    public int getLayer() {
+        return layer;
+    }
+
+    public void setLayer(int layer) {
+        this.layer = layer;
     }
 }

@@ -3,6 +3,7 @@ package game;
 import com.Game;
 import com.resource.lang.LanguageType;
 import game.scenes.MenuScene;
+import game.scenes.test.GraphicObjectsTestScene;
 
 import java.io.File;
 import java.util.Objects;
@@ -38,8 +39,11 @@ public class Main {
             // Exit game with a warning on screen
         }
 
-        Game.scene().addScene(new MenuScene("Menu", -255));
-        Game.scene().setCurrentScene(-255);
+        //Game.scene().addScene(new MenuScene("Menu", -255));
+        //Game.scene().setCurrentScene(-255);
+
+        Game.scene().addScene(new GraphicObjectsTestScene("TEST", -1000));
+        Game.scene().setCurrentScene(-1000);
 
         Game.start();
     }
