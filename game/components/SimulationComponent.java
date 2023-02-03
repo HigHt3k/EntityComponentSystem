@@ -17,6 +17,7 @@ public class SimulationComponent extends Component {
     private int ownId = IdGenerator.generateId();
     private ArrayList<Integer> inputIds = new ArrayList<>();
     private ArrayList<SimulationState> inputStates = new ArrayList<>();
+    private int tileId;
 
 
     // stuff for markov simulation chain
@@ -26,6 +27,14 @@ public class SimulationComponent extends Component {
     @Override
     public void update() {
 
+    }
+
+    public void setTileId(int tileId) {
+        this.tileId = tileId;
+    }
+
+    public int getTileId() {
+        return tileId;
     }
 
     public void setOwnId(int id) {

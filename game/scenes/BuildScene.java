@@ -52,6 +52,18 @@ public class BuildScene extends Scene {
     private int sensGoal;
     private int cGoal;
 
+    public int getAccGoal() {
+        return accGoal;
+    }
+
+    public int getcGoal() {
+        return cGoal;
+    }
+
+    public int getSensGoal() {
+        return sensGoal;
+    }
+
     public BuildScene(String name, int id) {
         super(name, id);
         setupBuildPanel();
@@ -204,7 +216,7 @@ public class BuildScene extends Scene {
                 BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN), 850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
                 Game.res().loadTile(imgId),
                 amount, failureRatio,
-                Game.res().getTileSet().getType(imgId),
+                Game.res().getTileSet().getType(imgId), imgId,
                 correctSignalsNeeded, outOfControlSignalsAccepted,
                 Game.res().loadDescription(imgId)
         );

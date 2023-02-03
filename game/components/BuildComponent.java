@@ -10,6 +10,7 @@ public class BuildComponent extends Component {
     private int portId;
     private int outOfControlSignalsAccepted;
     private int correctSignalsNeeded;
+    private int tileId;
 
     @Override
     public void update() {
@@ -70,5 +71,13 @@ public class BuildComponent extends Component {
 
     public float getFailureRatio() {
         return failureRatio;
+    }
+
+    public int getTileId() {
+        return tileId;
+    }
+
+    public void setTileId(int tileId) {
+        this.tileId = tileId;
     }
 }

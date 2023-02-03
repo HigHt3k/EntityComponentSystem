@@ -178,7 +178,7 @@ public class GameScene extends Scene {
                     "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
                     X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
                     x, y,
-                    Game.res().loadTile(imgId),
+                    Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     correctSignalsNeeded, outOfControlSignalsAccepted,
                     new int[] {0,1,2,3}, new int[] {0,1,2,3}, removable
@@ -189,7 +189,7 @@ public class GameScene extends Scene {
                     "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
                     X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
                     x, y,
-                    Game.res().loadTile(imgId),
+                    Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     correctSignalsNeeded, outOfControlSignalsAccepted,
                     new int[] {}, new int[] {0,1,2,3}, removable
@@ -200,7 +200,7 @@ public class GameScene extends Scene {
                     "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
                     X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
                     x, y,
-                    Game.res().loadTile(imgId),
+                    Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     correctSignalsNeeded, outOfControlSignalsAccepted,
                     new int[] {0,1,2,3}, new int[] {}, removable
@@ -211,7 +211,7 @@ public class GameScene extends Scene {
                     "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
                     X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
                     x, y,
-                    Game.res().loadTile(imgId),
+                    Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     0, 0,
                     new int[] {imgId - 500}, new int[] {imgId - 500}, removable
@@ -229,7 +229,7 @@ public class GameScene extends Scene {
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 150 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 875, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
-                Game.res().loadTile(imgId),
+                Game.res().loadTile(imgId), imgId,
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
                 correctSignalsNeeded, outOfControlSignalsAccepted,

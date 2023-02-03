@@ -26,11 +26,11 @@ import java.awt.image.BufferedImage;
  */
 public class BuildPanelEntity extends Entity {
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
-    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
+    private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
 
     public BuildPanelEntity(String name, int id,
                             int x, int y, int width, int height,
-                            BufferedImage img,
+                            BufferedImage img, int tileId,
                             int amount, float failureRatio,
                             SimulationType simulationType,
                             int correctSignalsNeeded, int outOfControlSignalsAccepted,
@@ -76,6 +76,7 @@ public class BuildPanelEntity extends Entity {
         builder.setSimulationType(simulationType);
         builder.setCorrectSignalsNeeded(correctSignalsNeeded);
         builder.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
+        builder.setTileId(tileId);
         this.addComponent(builder);
 
         // define IntentComponent

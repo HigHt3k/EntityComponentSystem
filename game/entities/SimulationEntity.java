@@ -32,7 +32,7 @@ public class SimulationEntity extends Entity {
     public SimulationEntity(String name, int id,
                             int x, int y, int width, int height,
                             int xGrid, int yGrid,
-                            BufferedImage img,
+                            BufferedImage img, int tileId,
                             float failureRatio, SimulationType type,
                             int correctSignalsNeeded, int outOfControlSignalsAccepted,
                             int[] cablePortIdsIn, int[] cablePortIdsOut,
@@ -65,6 +65,7 @@ public class SimulationEntity extends Entity {
         sim.setFailureRatio(failureRatio);
         sim.setCorrectSignalsNeeded(correctSignalsNeeded);
         sim.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
+        sim.setTileId(tileId);
         if(type == SimulationType.SENSOR) {
             sim.setSimulationState(SimulationState.CORRECT);
         }
