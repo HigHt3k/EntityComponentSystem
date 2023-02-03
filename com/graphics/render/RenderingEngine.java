@@ -21,10 +21,39 @@ import java.util.regex.PatternSyntaxException;
 public class RenderingEngine {
     private static final float scaleW = Game.config().renderConfiguration().getScaleWidth();
     private static final float scaleH = Game.config().renderConfiguration().getScaleHeight();
-    public static final int MARGIN = (int) (5 * scaleW); //px
+    public static final int MARGIN = (int) (15 * scaleW); //px
 
     private Graphics2D g;
 
+    /**
+     * Render a text
+     * @param g: the graphics context
+     * @param text: the text to render
+     * @param color: the text color
+     * @param font: font type
+     * @param x: x location of text box
+     * @param y: y location of text box
+     * @param width: width of text box
+     * @param height: height of text box
+     * @param horizontalAlignment: horizontal alignment within box
+     * @param verticalAlignment: vertical alignment within box
+     */
+    public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height,
+                                  TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment) {
+
+    }
+
+    /**
+     * Render a text
+     * @param g: the graphics context
+     * @param text: the text to render
+     * @param color: the text color
+     * @param font: font type
+     * @param x: x location of text box
+     * @param y: y location of text box
+     * @param width: width of text box
+     * @param height: height of text box
+     */
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
         if(text.contains("@")) {
             String temp = text;
@@ -32,9 +61,41 @@ public class RenderingEngine {
             text = Game.res().language().getStringValue(id, Game.config().getLanguage());
         }
 
+        text = text.trim().replaceAll(" +", " ");
+        text = text.replaceAll("\n ", "\n");
+
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 Game.config().renderConfiguration().getAliasingText());
-        TextRenderer.render(g, text, color, font, new Point(x + MARGIN,y));
+
+        g.setFont(font);
+
+        int maxWidth = width - 2 * MARGIN;
+
+        // reformat the string
+        StringBuilder tempLine = new StringBuilder();
+        String tempWord = "";
+        StringBuilder newText = new StringBuilder();
+        for(int i = 0; i < text.length(); i++) {
+            tempWord += text.charAt(i);
+            if(Character.isWhitespace(text.charAt(i)) || Character.isSpaceChar(text.charAt(i))) {
+                if(g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
+                    newText.append(tempLine).append("\n");
+                    tempLine = new StringBuilder();
+                } else {
+                    tempLine.append(tempWord);
+                    tempWord = "";
+                }
+            }
+        }
+
+        if(g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
+            newText.append(tempLine).append("\n").append(tempWord);
+        } else {
+            tempLine.append(tempWord);
+            newText.append(tempLine);
+        }
+
+        TextRenderer.render(g, newText.toString(), color, font, new Point(x + MARGIN,y));
     }
 
     /**
