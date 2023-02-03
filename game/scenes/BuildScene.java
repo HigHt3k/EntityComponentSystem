@@ -64,6 +64,14 @@ public class BuildScene extends Scene {
         return sensGoal;
     }
 
+    public int getxMax() {
+        return xMax;
+    }
+
+    public int getyMax() {
+        return yMax;
+    }
+
     public BuildScene(String name, int id) {
         super(name, id);
         setupBuildPanel();
@@ -214,9 +222,9 @@ public class BuildScene extends Scene {
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN), 850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
-                Game.res().loadTile(imgId),
+                Game.res().loadTile(imgId), imgId,
                 amount, failureRatio,
-                Game.res().getTileSet().getType(imgId), imgId,
+                Game.res().getTileSet().getType(imgId),
                 correctSignalsNeeded, outOfControlSignalsAccepted,
                 Game.res().loadDescription(imgId)
         );
