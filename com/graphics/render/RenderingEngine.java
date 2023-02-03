@@ -130,6 +130,9 @@ public class RenderingEngine {
             for(GraphicsObject go : gc.getGraphicsObjects()) {
                 if(go.getType() == GraphicsObjectType.SHAPE) {
                     renderShape(g, go.getShape(), go.getBorderColor(), go.getColor());
+                    if(go.isHovered()) {
+                        renderShape(g, go.getShape(), go.getHoverColor(), go.getHoverColor());
+                    }
                 }
                 else if(go.getType() == GraphicsObjectType.TEXT) {
                     renderText(g, go.getText(), go.getColor(), go.getFont(),

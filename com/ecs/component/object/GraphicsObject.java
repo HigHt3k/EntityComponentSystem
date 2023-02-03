@@ -14,11 +14,13 @@ public class GraphicsObject {
     Color color;
     Color borderColor;
     Line2D line;
-    final Color hoverColor = new Color(200, 200, 200, 60);
+    final Color HOVER_COLOR = new Color(40, 40, 40, 150);
     GraphicsObjectType type;
     // rendering engine will sort objects by layer
     int layer = 0;
 
+    // hovering
+    boolean hovered = false;
 
     /**
      * text object
@@ -72,7 +74,7 @@ public class GraphicsObject {
     }
 
     public Color getHoverColor() {
-        return hoverColor;
+        return HOVER_COLOR;
     }
 
     public Font getFont() {
@@ -101,5 +103,13 @@ public class GraphicsObject {
 
     public void setLayer(int layer) {
         this.layer = layer;
+    }
+
+    public boolean isHovered() {
+        return hovered;
+    }
+
+    public void setHovered(boolean hovered) {
+        this.hovered = hovered;
     }
 }
