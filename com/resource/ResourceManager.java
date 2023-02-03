@@ -334,7 +334,11 @@ public class ResourceManager {
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
                 DOMSource source = new DOMSource(doc);
                 File f = new File("game/res/level/custom/" + Game.scene().current().getName() + ".xml");
-                f.createNewFile();
+                boolean fileCreated = f.createNewFile();
+                if(!fileCreated) {
+                    Game.logger().severe("The file was not created - no level was saved!");
+                    return;
+                }
                 StreamResult result = new StreamResult(f);
                 transformer.transform(source, result);
             } catch (TransformerException | IOException e) {
