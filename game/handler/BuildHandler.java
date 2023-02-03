@@ -367,7 +367,6 @@ public class BuildHandler extends Handler {
                 }
                 // handle if building cable -> remove cable
                 else if(currentBuildState == BuilderState.BUILDING_CABLE) {
-                    System.out.println("Removing cable");
                     ArrayList<CablePort> ports = currentBuilding.getComponent(CablePortsComponent.class).getCablePorts();
                     // remove connections from port
                     for(CablePort port : ports) {
