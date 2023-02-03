@@ -21,7 +21,7 @@ import java.util.regex.PatternSyntaxException;
 public class RenderingEngine {
     private static final float scaleW = Game.config().renderConfiguration().getScaleWidth();
     private static final float scaleH = Game.config().renderConfiguration().getScaleHeight();
-    public static final int MARGIN = (int) (50 * scaleW); //px
+    public static final int MARGIN = (int) (5 * scaleW); //px
 
     private Graphics2D g;
 
@@ -34,23 +34,6 @@ public class RenderingEngine {
 
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 Game.config().renderConfiguration().getAliasingText());
-
-        int textWidth = g.getFontMetrics().stringWidth(text);
-        int widthCharacter = g.getFontMetrics().stringWidth("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789") / 36;
-        int maxWidth = width - 2 * MARGIN;
-        // detect the longest word in string and set the character per line size to maximum minus longest word.
-        int charactersPerLine = maxWidth / widthCharacter - Objects.requireNonNull(Arrays.stream(text.split(" "))
-                .max(Comparator.comparingInt(String::length))
-                .orElse(null)).length();
-
-        String regex = "(\\w{1,}.{1," + charactersPerLine + "})(\\s+|\\.)";
-        try {
-            if (textWidth > maxWidth) {
-                text = text.replaceAll(regex, "$1\n");
-            }
-        } catch(PatternSyntaxException ex) {
-            // HANDLE
-        }
         TextRenderer.render(g, text, color, font, new Point(x + MARGIN,y));
     }
 
