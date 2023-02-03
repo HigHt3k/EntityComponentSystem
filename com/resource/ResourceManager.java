@@ -2,10 +2,15 @@ package com.resource;
 
 import com.Game;
 import com.IdGenerator;
+import com.ecs.component.GraphicsComponent;
+import com.ecs.entity.Entity;
 import com.graphics.scene.Scene;
 import com.resource.lang.LanguageManager;
 import com.resource.score.HighScoreManager;
 import com.resource.tiles.TileSet;
+import game.components.BuildComponent;
+import game.components.GridComponent;
+import game.components.SimulationComponent;
 import game.handler.simulation.SimulationType;
 import game.scenes.BuildScene;
 import game.scenes.GameScene;
@@ -265,6 +270,8 @@ public class ResourceManager {
                 Element root = doc.createElement("map");
                 root.setAttribute("id", String.valueOf(IdGenerator.generateId()));
                 root.setAttribute("name", bs.getName());
+                root.setAttribute("width", String.valueOf(bs.getxMax()));
+                root.setAttribute("height", String.valueOf(bs.getyMax()));
                 doc.appendChild(root);
 
                 Element description = doc.createElement("description");
@@ -275,19 +282,51 @@ public class ResourceManager {
                 goal.setTextContent(String.valueOf(bs.getGoal()));
                 root.appendChild(goal);
 
+                Element goalDefinition = doc.createElement("goalDefinition");
+                goalDefinition.setAttribute("workingActuators", String.valueOf(bs.getAccGoal())); // change value
+                goalDefinition.setAttribute("workingSensors", String.valueOf(bs.getSensGoal())); // change value
+                goalDefinition.setAttribute("workingComputers", String.valueOf(bs.getcGoal())); // change value
+                root.appendChild(goalDefinition);
+
                 Element tileset = doc.createElement("tileset");
                 tileset.setAttribute("source", "base_tiles.xml");
                 root.appendChild(tileset);
 
                 Element build = doc.createElement("build");
                 // get all buildable
+                for(Entity e : bs.getEntities()) {
+                    if(e.getComponent(BuildComponent.class) != null) {
+                        Element entity = doc.createElement("entity");
+                        entity.setAttribute("id", String.valueOf(e.getComponent(BuildComponent.class).getTileId()));
+                        entity.setAttribute("amount", String.valueOf(e.getComponent(BuildComponent.class).getAmount()));
+                        entity.setAttribute("safety", String.valueOf(e.getComponent(BuildComponent.class).getFailureRatio()));
+                        entity.setAttribute("correctSignalsNeeded", String.valueOf(e.getComponent(BuildComponent.class).getCorrectSignalsNeeded()));
+                        entity.setAttribute("outOfControlSignalsAccepted", String.valueOf(e.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted()));
+                        build.appendChild(entity);
+                    }
+                }
                 root.appendChild(build);
 
                 Element layer = doc.createElement("layer");
                 layer.setAttribute("id", "0");
                 layer.setAttribute("name", "Tile layer 0");
                 // get all elements on screen
+                for(Entity e : bs.getEntities()) {
+                    if(e.getComponent(GridComponent.class) != null && e.getComponent(SimulationComponent.class) != null) {
+                        Element entity = doc.createElement("entity");
+                        entity.setAttribute("x", String.valueOf(e.getComponent(GridComponent.class).getGridLocation().getX()));
+                        entity.setAttribute("y", String.valueOf(e.getComponent(GridComponent.class).getGridLocation().getY()));
+                        entity.setAttribute("id", String.valueOf(e.getComponent(SimulationComponent.class).getTileId()));
+                        entity.setAttribute("interactable", String.valueOf(e.isRemovable()));
+                        entity.setAttribute("safety", String.valueOf(e.getComponent(SimulationComponent.class).getFailureRatio()));
+                        entity.setAttribute("correctSignalsNeeded", String.valueOf(e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded()));
+                        entity.setAttribute("outOfControlSignalsAccepted", String.valueOf(e.getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()));
+                        layer.appendChild(entity);
+                    }
+                }
                 root.appendChild(layer);
+
+
 
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
