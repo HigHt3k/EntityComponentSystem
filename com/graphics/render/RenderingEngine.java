@@ -1,6 +1,8 @@
 package com.graphics.render;
 
 import com.Game;
+import com.ecs.component.object.GraphicsObject;
+import com.ecs.component.object.GraphicsObjectType;
 import com.ecs.entity.Entity;
 import com.ecs.component.GraphicsComponent;
 
@@ -104,6 +106,22 @@ public class RenderingEngine {
         renderTexts(entities);
         renderHovered(entities);
         renderToolTips(entities);
+
+        renderGraphicObjects(entities);
+    }
+
+    public void renderGraphicObjects(ArrayList<Entity> entities) {
+        for(Entity e : entities) {
+            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+            if(gc == null) {
+                continue;
+            }
+            for(GraphicsObject go : gc.getGraphicsObjects()) {
+                if(go.getType() == GraphicsObjectType.SHAPE) {
+                    renderShape(g, go.getShape(), go.getBorderColor(), go.getColor());
+                }
+            }
+        }
     }
 
     /**

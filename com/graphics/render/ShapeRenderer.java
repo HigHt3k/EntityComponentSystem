@@ -12,7 +12,9 @@ public class ShapeRenderer {
             g.setColor(fillColor);
             g.fill(shape);
         }
-        g.setColor(borderColor);
-        g.draw(shape);
+        if(borderColor != null) {
+            g.setColor(borderColor);
+            g.draw(shape);
+        }
     }
 }

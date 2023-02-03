@@ -1,6 +1,7 @@
 package com.ecs.component;
 
 import com.Game;
+import com.ecs.component.object.GraphicsObject;
 import com.ecs.entity.Entity;
 import com.graphics.elements.ToolTip;
 
@@ -16,6 +17,13 @@ import java.util.ArrayList;
  * updating the size of any scalable context
  */
 public class GraphicsComponent extends Component {
+    // Refactoring the GraphicsComponent while still having possibility to use all the old stuff -> TODO: Remove later
+    // What data does a graphics component contain?
+    // - GraphicObject
+    // - ToolTip
+    ArrayList<GraphicsObject> graphicsObjects = new ArrayList<>();
+
+
     // original input sizes, needed when rescaling is done or entity is copied
     Rectangle _BOUNDS;
     Shape _SHAPE;
@@ -50,6 +58,14 @@ public class GraphicsComponent extends Component {
     @Override
     public void update() {
 
+    }
+
+    public void addGraphicsObject(GraphicsObject graphicsObject) {
+        graphicsObjects.add(graphicsObject);
+    }
+
+    public ArrayList<GraphicsObject> getGraphicsObjects() {
+        return graphicsObjects;
     }
 
     public void updateSize() {
