@@ -129,6 +129,7 @@ public class BuildHandler extends Handler {
                 if (currentBuildState == BuilderState.NOT_BUILDING) {
                     // check location of the click
                     if (entity.getComponent(CollisionComponent.class) != null
+                            && entity.getComponent(CollisionComponent.class).getCollisionBox() != null
                             && entity.getComponent(CollisionComponent.class).contains(e.getPoint())) {
                         // check if the click was on a BuildComponent first -> create new Simulation Entity
                         if (entity.getComponent(BuildComponent.class) != null) {
