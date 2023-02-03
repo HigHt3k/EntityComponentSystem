@@ -1,14 +1,19 @@
 package game.handler;
 
 import com.Game;
+import com.IdGenerator;
 import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.entity.Entity;
+import com.ecs.entity.GenericButton;
 import com.ecs.system.SystemHandle;
 import game.components.*;
 import game.entities.CablePort;
+import game.entities.ScoreBox;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
+import game.intent.SaveScoreIntent;
+import game.intent.StartIntent;
 import game.scenes.GameScene;
 
 import java.awt.*;
@@ -32,6 +37,21 @@ public class SimulationSystem extends SystemHandle {
             markov();
             if(validateGoal()) {
                 System.out.println("Goal reached!");
+                if(Game.scene().current() instanceof GameScene gs) {
+                    if(!gs.isLevelPassed()) {
+                        gs.setLevelPassed(true);
+                        int score = 0;
+                        gs.addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
+                                Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score));
+                        GenericButton saveScore = new GenericButton(
+                                "ScoreSaveButton", IdGenerator.generateId(),
+                                500,500,80,50,"BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
+                        );
+                        saveScore.addIntent(new SaveScoreIntent(score));
+                        saveScore.addIntent(new StartIntent(Game.scene().getScene(-255)));
+                        gs.addEntityToScene(saveScore);
+                    }
+                }
             } else {
                 System.out.println("Goal not reached!");
             }

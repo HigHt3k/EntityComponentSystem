@@ -41,12 +41,22 @@ public class GameScene extends Scene {
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
 
+    private boolean levelPassed = false;
+
     private int xMax;
     private int yMax;
 
     private int accGoal;
     private int sensGoal;
     private int cGoal;
+
+    public boolean isLevelPassed() {
+        return levelPassed;
+    }
+
+    public void setLevelPassed(boolean levelPassed) {
+        this.levelPassed = levelPassed;
+    }
 
     public void setGridSize(int x, int y) {
         //CELL_SIZE = 750/y;

@@ -84,7 +84,7 @@ public class MenuScene extends Scene {
 
     @Override
     public void init() {
-
+        Game.system().resetSystems();
     }
 
     @Override

@@ -77,4 +77,13 @@ public class SceneManager {
     public List<Scene> getScenes() {
         return scenes;
     }
+
+    public Scene getScene(int id) {
+        for(Scene s : scenes) {
+            if(s.getId() == id) {
+                return s;
+            }
+        }
+        return null;
+    }
 }

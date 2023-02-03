@@ -5,6 +5,7 @@ import com.IdGenerator;
 import com.ecs.entity.Entity;
 import com.graphics.scene.Scene;
 import com.resource.lang.LanguageManager;
+import com.resource.score.HighScore;
 import com.resource.score.HighScoreManager;
 import com.resource.tiles.TileSet;
 import game.components.BuildComponent;
@@ -414,5 +415,9 @@ public class ResourceManager {
      */
     public String loadDescription(int id) {
         return tileSet.getDescription(id);
+    }
+
+    public static void saveScore(String name, int score) {
+        HighScoreManager.addScore(new HighScore(name, score));
     }
 }
