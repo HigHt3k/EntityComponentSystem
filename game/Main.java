@@ -39,11 +39,11 @@ public class Main {
             // Exit game with a warning on screen
         }
 
-        //Game.scene().addScene(new MenuScene("Menu", -255));
-        //Game.scene().setCurrentScene(-255);
+        Game.scene().addScene(new MenuScene("Menu", -255));
+        Game.scene().setCurrentScene(-255);
 
-        Game.scene().addScene(new GraphicObjectsTestScene("TEST", -1000));
-        Game.scene().setCurrentScene(-1000);
+        //Game.scene().addScene(new GraphicObjectsTestScene("TEST", -1000));
+        //Game.scene().setCurrentScene(-1000);
 
         Game.start();
     }

@@ -1,5 +1,7 @@
 package com.ecs.component.object;
 
+import com.Game;
+
 import javax.sound.sampled.Line;
 import java.awt.*;
 import java.awt.geom.Line2D;
@@ -31,9 +33,9 @@ public class GraphicsObject {
      */
     public GraphicsObject(String text, Font font, Color color, Shape shape) {
         this.text = text;
-        this.font = font;
+        this.font = Game.scale().scaleFont(font);
         this.color = color;
-        this.shape = shape;
+        this.shape = Game.scale().scaleShape(shape);
         this.type = GraphicsObjectType.TEXT;
     }
 
@@ -44,7 +46,7 @@ public class GraphicsObject {
      */
     public GraphicsObject(BufferedImage image, Shape shape) {
         this.image = image;
-        this.shape = shape;
+        this.shape = Game.scale().scaleShape(shape);
         this.type = GraphicsObjectType.IMAGE;
     }
 
@@ -55,7 +57,7 @@ public class GraphicsObject {
      * @param borderColor: the border color of the shape
      */
     public GraphicsObject(Shape shape, Color color, Color borderColor) {
-        this.shape = shape;
+        this.shape = Game.scale().scaleShape(shape);
         this.color = color;
         this.borderColor = borderColor;
         this.type = GraphicsObjectType.SHAPE;
@@ -111,5 +113,9 @@ public class GraphicsObject {
 
     public void setHovered(boolean hovered) {
         this.hovered = hovered;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 }

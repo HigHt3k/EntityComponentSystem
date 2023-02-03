@@ -9,6 +9,12 @@ import org.w3c.dom.css.Rect;
 import java.awt.*;
 
 public class NumberSelectorEntity extends Entity {
+    private ColliderObject left;
+    private ColliderObject right;
+
+
+    private Entity change;
+
     /**
      * Create a new number selector
      * @param name
@@ -27,10 +33,8 @@ public class NumberSelectorEntity extends Entity {
         GraphicsComponent graphics = new GraphicsComponent();
 
         GraphicsObject minusButtonText = new GraphicsObject("-", font, textColor, leftShape);
-        GraphicsObject displayFieldText = new GraphicsObject("", font, textColor, middleShape);
         GraphicsObject plusButtonText = new GraphicsObject("+", font, textColor, rightShape);
         minusButtonText.setLayer(1);
-        displayFieldText.setLayer(1);
         plusButtonText.setLayer(1);
 
         GraphicsObject minusButtonBox = new GraphicsObject(leftShape, fillColor, borderColor);
@@ -38,7 +42,6 @@ public class NumberSelectorEntity extends Entity {
         GraphicsObject plusButtonBox = new GraphicsObject(rightShape, fillColor, borderColor);
 
         graphics.addGraphicsObject(minusButtonText);
-        graphics.addGraphicsObject(displayFieldText);
         graphics.addGraphicsObject(plusButtonText);
         graphics.addGraphicsObject(minusButtonBox);
         graphics.addGraphicsObject(displayFieldBox);
@@ -48,11 +51,27 @@ public class NumberSelectorEntity extends Entity {
         this.addComponent(graphics);
 
         CollisionComponent colliders = new CollisionComponent();
-        ColliderObject minusButtonCollider = new ColliderObject(leftShape);
-        ColliderObject plusButtonCollider = new ColliderObject(rightShape);
-        colliders.addCollider(minusButtonCollider);
-        colliders.addCollider(plusButtonCollider);
+        left = new ColliderObject(leftShape, minusButtonBox);
+        right = new ColliderObject(rightShape, plusButtonBox);
+        colliders.addCollider(left);
+        colliders.addCollider(right);
         colliders.setEntity(this);
         this.addComponent(colliders);
+    }
+
+    public ColliderObject getLeft() {
+        return left;
+    }
+
+    public ColliderObject getRight() {
+        return right;
+    }
+
+    public Entity getChange() {
+        return change;
+    }
+
+    public void setChange(Entity change) {
+        this.change = change;
     }
 }

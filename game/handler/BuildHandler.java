@@ -123,6 +123,13 @@ public class BuildHandler extends Handler {
 
 
         for(Entity entity : entities) {
+            if (entity instanceof BuildPanelEntity buildPanelEntity) {
+                if(buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
+                    buildPanelEntity.getComponent(GraphicsComponent.class).getTexts().set(0,
+                        String.valueOf(buildPanelEntity.getComponent(BuildComponent.class).getAmount()));
+                else
+                    buildPanelEntity.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+            }
             // check the button clicked is left click
             if (e.getButton() == MouseEvent.BUTTON1) {
                 // Handle events when builder is not building

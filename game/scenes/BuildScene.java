@@ -6,6 +6,7 @@ import com.ecs.component.CollisionComponent;
 import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.entity.GenericButton;
+import com.ecs.entity.NumberSelectorEntity;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
 import game.components.BuildComponent;
@@ -13,7 +14,9 @@ import game.components.GridComponent;
 import game.entities.BuildPanelEntity;
 import game.entities.GridEntity;
 import game.handler.BuildHandler;
+import game.handler.CollisionHandler;
 import game.handler.SimulationSystem;
+import game.handler.simulation.SimulationType;
 import game.intent.CableLayerSwitchIntent;
 import game.intent.GridSizeIntent;
 import game.intent.SaveIntent;
@@ -36,7 +39,7 @@ public class BuildScene extends Scene {
     private final Color BOX_COLOR = new Color(200, 90, 0, 240);
     private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
-    private final int DESIGN_CELL_SIZE = 128;
+    private final int DESIGN_CELL_SIZE = 100;
     private int CELL_SIZE = DESIGN_CELL_SIZE;
     private int BUILD_CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
@@ -84,9 +87,9 @@ public class BuildScene extends Scene {
                 addGridElement(x, y);
             }
         }
-        addToBuildPanel(201, 1000, 1e-4f, 0, 0);
-        addToBuildPanel(203, 1000, 1e-4f, 1, 0);
-        addToBuildPanel(205, 1000, 1e-4f, 2, 0);
+        addToBuildPanel(201, 0, 1e-4f, 0, 0);
+        addToBuildPanel(203, 0, 1e-4f, 1, 0);
+        addToBuildPanel(205, 0, 1e-4f, 2, 0);
         addToBuildPanel(500, 1000, 1e-25f, 1, 0);
         addToBuildPanel(501, 1000, 1e-25f, 1, 0);
         addToBuildPanel(502, 1000, 1e-25f, 1, 0);
@@ -121,6 +124,7 @@ public class BuildScene extends Scene {
         Game.system().resetSystems();
 
         Game.input().addHandler(new BuildHandler());
+        Game.input().addHandler(new CollisionHandler());
     }
 
     @Override
@@ -221,7 +225,8 @@ public class BuildScene extends Scene {
      */
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
-                BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN), 850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
+                BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
+                850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
                 Game.res().loadTile(imgId), imgId,
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
@@ -230,6 +235,21 @@ public class BuildScene extends Scene {
         );
         buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId-500);
         addEntityToScene(buildPanelEntity);
+
+        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 12f);
+
+        if(buildPanelEntity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
+            numberOfBuildPanelElements++;
+            return;
+        }
+        NumberSelectorEntity numberSelectorEntity = new NumberSelectorEntity("build_element_" + imgId + "_selector", IdGenerator.generateId(),
+                BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE/8,
+                850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE * 5/4,
+                BUILD_CELL_SIZE/4 * 3, BUILD_CELL_SIZE/4, font, TEXT_COLOR, BOX_COLOR, BOX_BORDER_COLOR
+                );
+        numberSelectorEntity.setChange(buildPanelEntity);
+        addEntityToScene(numberSelectorEntity);
+
         numberOfBuildPanelElements++;
     }
 
