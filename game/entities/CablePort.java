@@ -1,14 +1,7 @@
 package game.entities;
 
-import com.ecs.component.CollisionComponent;
-import com.ecs.component.GraphicsComponent;
-import com.ecs.component.IntentComponent;
 import com.ecs.entity.Entity;
-import com.ecs.intent.HoverIntent;
 import game.components.CablePortType;
-
-import java.awt.*;
-import java.awt.geom.Ellipse2D;
 
 public class CablePort {
     private int portId;

@@ -1,6 +1,7 @@
-package com.ecs.component.object;
+package com.ecs.component.collision;
 
 import com.Game;
+import com.ecs.component.graphics.GraphicsObject;
 
 import java.awt.*;
 

@@ -1,7 +1,7 @@
-package com.ecs.component;
+package com.ecs.component.collision;
 
 import com.Game;
-import com.ecs.component.object.ColliderObject;
+import com.ecs.component.Component;
 
 import java.awt.*;
 import java.awt.geom.Point2D;

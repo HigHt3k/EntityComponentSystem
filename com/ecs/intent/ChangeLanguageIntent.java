@@ -1,7 +1,7 @@
 package com.ecs.intent;
 
 import com.Game;
-import com.ecs.component.CollisionComponent;
+import com.ecs.component.collision.CollisionComponent;
 import com.ecs.component.IntentComponent;
 import com.resource.lang.LanguageType;
 

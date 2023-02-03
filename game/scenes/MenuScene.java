@@ -2,7 +2,7 @@ package game.scenes;
 
 import com.Game;
 import com.IdGenerator;
-import com.ecs.component.GraphicsComponent;
+import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.entity.GenericButton;
 import com.ecs.intent.ExitIntent;

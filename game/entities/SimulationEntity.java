@@ -1,8 +1,8 @@
 package game.entities;
 
 import com.ecs.entity.Entity;
-import com.ecs.component.CollisionComponent;
-import com.ecs.component.GraphicsComponent;
+import com.ecs.component.collision.CollisionComponent;
+import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;

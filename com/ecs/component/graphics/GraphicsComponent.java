@@ -1,7 +1,8 @@
-package com.ecs.component;
+package com.ecs.component.graphics;
 
 import com.Game;
-import com.ecs.component.object.GraphicsObject;
+import com.ecs.component.Component;
+import com.ecs.component.graphics.GraphicsObject;
 import com.ecs.entity.Entity;
 import com.graphics.elements.ToolTip;
 

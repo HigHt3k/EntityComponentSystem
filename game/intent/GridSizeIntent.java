@@ -1,11 +1,10 @@
 package game.intent;
 
 import com.Game;
-import com.ecs.component.CollisionComponent;
+import com.ecs.component.collision.CollisionComponent;
 import com.ecs.intent.Intent;
 import game.scenes.BuildScene;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 

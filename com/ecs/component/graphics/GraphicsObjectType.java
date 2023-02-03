@@ -1,4 +1,4 @@
-package com.ecs.component.object;
+package com.ecs.component.graphics;
 
 public enum GraphicsObjectType {
     TEXT,

@@ -1,8 +1,7 @@
-package com.ecs.component.object;
+package com.ecs.component.graphics;
 
 import com.Game;
 
-import javax.sound.sampled.Line;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.image.BufferedImage;

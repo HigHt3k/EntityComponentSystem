@@ -2,7 +2,6 @@ package com.resource;
 
 import com.Game;
 import com.IdGenerator;
-import com.ecs.component.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.graphics.scene.Scene;
 import com.resource.lang.LanguageManager;

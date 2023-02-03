@@ -1,11 +1,10 @@
 package game.handler;
 
 import com.Game;
-import com.ecs.component.CollisionComponent;
-import com.ecs.component.object.ColliderObject;
+import com.ecs.component.collision.CollisionComponent;
+import com.ecs.component.collision.ColliderObject;
 import com.ecs.entity.Entity;
 import com.ecs.entity.NumberSelectorEntity;
-import com.ecs.system.SystemHandle;
 import com.input.handler.Handler;
 import com.input.handler.HandlerType;
 import game.components.BuildComponent;

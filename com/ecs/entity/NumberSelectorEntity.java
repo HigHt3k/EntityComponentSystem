@@ -1,10 +1,9 @@
 package com.ecs.entity;
 
-import com.ecs.component.CollisionComponent;
-import com.ecs.component.GraphicsComponent;
-import com.ecs.component.object.ColliderObject;
-import com.ecs.component.object.GraphicsObject;
-import org.w3c.dom.css.Rect;
+import com.ecs.component.collision.CollisionComponent;
+import com.ecs.component.graphics.GraphicsComponent;
+import com.ecs.component.collision.ColliderObject;
+import com.ecs.component.graphics.GraphicsObject;
 
 import java.awt.*;
 

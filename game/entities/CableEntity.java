@@ -1,14 +1,11 @@
 package game.entities;
 
 import com.Game;
-import com.IdGenerator;
 import com.ecs.entity.Entity;
-import com.ecs.component.GraphicsComponent;
+import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.DebugIntent;
 import com.ecs.intent.HoverIntent;
-import com.graphics.scene.Scene;
-import game.components.CablePortType;
 import game.components.CablePortsComponent;
 
 import java.awt.*;

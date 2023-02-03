@@ -2,8 +2,8 @@ package game.scenes;
 
 import com.Game;
 import com.IdGenerator;
-import com.ecs.component.CollisionComponent;
-import com.ecs.component.GraphicsComponent;
+import com.ecs.component.collision.CollisionComponent;
+import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.entity.GenericButton;
 import com.ecs.entity.NumberSelectorEntity;
@@ -15,7 +15,6 @@ import game.entities.BuildPanelEntity;
 import game.entities.GridEntity;
 import game.handler.BuildHandler;
 import game.handler.CollisionHandler;
-import game.handler.SimulationSystem;
 import game.handler.simulation.SimulationType;
 import game.intent.CableLayerSwitchIntent;
 import game.intent.GridSizeIntent;
@@ -23,7 +22,6 @@ import game.intent.SaveIntent;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;

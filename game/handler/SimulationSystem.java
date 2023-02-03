@@ -1,7 +1,7 @@
 package game.handler;
 
 import com.Game;
-import com.ecs.component.GraphicsComponent;
+import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.system.SystemHandle;
 import game.components.*;

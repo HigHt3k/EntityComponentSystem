@@ -1,10 +1,10 @@
 package com.graphics.render;
 
 import com.Game;
-import com.ecs.component.object.GraphicsObject;
-import com.ecs.component.object.GraphicsObjectType;
+import com.ecs.component.graphics.GraphicsObject;
+import com.ecs.component.graphics.GraphicsObjectType;
 import com.ecs.entity.Entity;
-import com.ecs.component.GraphicsComponent;
+import com.ecs.component.graphics.GraphicsComponent;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
