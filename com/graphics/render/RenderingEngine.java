@@ -40,7 +40,7 @@ public class RenderingEngine {
      */
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height,
                                   TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment) {
-
+        // TODO: Handle text rendering with vertical / horizontal alignment options
     }
 
     /**
