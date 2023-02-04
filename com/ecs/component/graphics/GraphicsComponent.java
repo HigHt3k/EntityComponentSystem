@@ -30,7 +30,7 @@ public class GraphicsComponent extends Component {
     Shape _SHAPE;
     Font _FONT;
     ArrayList<Point2D> _LOCATIONS = new ArrayList<>();
-    int _THICKNESS = 0;
+    int _THICKNESS = 1;
     ArrayList<Shape> _SHAPES = new ArrayList<>();
 
     // temporary sizes

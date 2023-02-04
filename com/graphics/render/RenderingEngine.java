@@ -105,11 +105,11 @@ public class RenderingEngine {
      * @param borderColor: Color to draw border
      * @param fillColor: fill color, if null then not filled
      */
-    public static void renderShape(Graphics2D g, Shape shape, Color borderColor, Color fillColor) {
+    public static void renderShape(Graphics2D g, Shape shape, Color borderColor, Color fillColor, int thickness) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
 
-        ShapeRenderer.render(g, shape, borderColor, fillColor);
+        ShapeRenderer.render(g, shape, borderColor, fillColor, thickness);
     }
 
     /**
@@ -173,9 +173,9 @@ public class RenderingEngine {
 
             for(GraphicsObject go : gc.getGraphicsObjects()) {
                 if(go.getType() == GraphicsObjectType.SHAPE) {
-                    renderShape(g, go.getShape(), go.getBorderColor(), go.getColor());
+                    renderShape(g, go.getShape(), go.getBorderColor(), go.getColor(), 1);
                     if(go.isHovered()) {
-                        renderShape(g, go.getShape(), go.getHoverColor(), go.getHoverColor());
+                        renderShape(g, go.getShape(), go.getHoverColor(), go.getHoverColor(), 1);
                     }
                 }
                 else if(go.getType() == GraphicsObjectType.TEXT) {
@@ -226,7 +226,8 @@ public class RenderingEngine {
                             g,
                             gc.getShape(),
                             gc.getBorderColor(),
-                            gc.getFillColor()
+                            gc.getFillColor(),
+                            gc.getThickness()
                     );
                 }
 
@@ -236,7 +237,8 @@ public class RenderingEngine {
                                 g,
                                 s,
                                 gc.getBorderColor(),
-                                gc.getFillColor()
+                                gc.getFillColor(),
+                                gc.getThickness()
                         );
                     }
                 }
@@ -300,7 +302,8 @@ public class RenderingEngine {
                                         150
                                 ),
                                 gc.getToolTip().getBorderColor(),
-                                gc.getToolTip().getToolTipColor()
+                                gc.getToolTip().getToolTipColor(),
+                                gc.getThickness()
                         );
                         renderText(
                                 g,
@@ -328,7 +331,8 @@ public class RenderingEngine {
                                 g,
                                 gc.getBounds(),
                                 gc.getHoverColor(),
-                                gc.getHoverColor()
+                                gc.getHoverColor(),
+                                gc.getThickness()
                         );
                     }
                 }

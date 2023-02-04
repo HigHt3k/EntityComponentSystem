@@ -1,11 +1,13 @@
 package game.entities;
 
+import com.Game;
 import com.ecs.entity.Entity;
 import com.ecs.component.collision.CollisionComponent;
 import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;
+import com.graphics.elements.ToolTip;
 import game.components.*;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
@@ -27,7 +29,7 @@ import java.awt.image.BufferedImage;
  *         |_ addIntent();
  */
 public class SimulationEntity extends Entity {
-    private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
 
     public SimulationEntity(String name, int id,
                             int x, int y, int width, int height,
@@ -50,6 +52,7 @@ public class SimulationEntity extends Entity {
         graphics.setImage(img);
         graphics.setBorderColor(new Color(0, 0, 0, 0));
         graphics.setHoverColor(HOVER_COLOR);
+
         graphics.setEntity(this);
         this.addComponent(graphics);
 

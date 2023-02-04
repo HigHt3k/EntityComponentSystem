@@ -34,6 +34,15 @@ public class GameScene extends Scene {
     private final Color BOX_COLOR = new Color(200, 90, 0, 240);
     private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+
+    // Category colors
+    private final Color NSE = new Color(39, 167, 56, 255);
+    private final Color MINOR = new Color(188, 235, 0, 255);
+    private final Color MAJOR = new Color(255, 211, 3, 255);
+    private final Color HAZARDOUS = new Color(254, 174, 9, 255);
+    private final Color CATASTROPHIC = new Color(228, 6, 19, 255);
+
+
     private final int DESIGN_CELL_SIZE = 128;
     private int CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
@@ -393,6 +402,47 @@ public class GameScene extends Scene {
         failureProbabilityPanel.addComponent(graphics);
 
         addEntityToScene(failureProbabilityPanel);
+
+        Rectangle goalImageBounds = new Rectangle(1400 + 402/8, 800, 160, 40);
+        Entity goal = new Entity("Goal", IdGenerator.generateId());
+        GraphicsComponent goalGraphics = new GraphicsComponent();
+        goalGraphics.setBounds(goalImageBounds);
+        goalGraphics.setShape(goalImageBounds);
+        goalGraphics.setThickness(10);
+        if(getGoal() <= 1e-9) {
+            goalGraphics.setTextColor(CATASTROPHIC);
+            goalGraphics.setBorderColor(CATASTROPHIC);
+            goalGraphics.addText("VERY STRONG");
+            goalGraphics.addLocation(goalImageBounds.getLocation());
+        }
+        else if(getGoal() <= 1e-7){
+            goalGraphics.setTextColor(HAZARDOUS);
+            goalGraphics.setBorderColor(HAZARDOUS);
+            goalGraphics.addText("STRONG");
+            goalGraphics.addLocation(goalImageBounds.getLocation());
+        }
+        else if(getGoal() <= 1e-5){
+            goalGraphics.setTextColor(MAJOR);
+            goalGraphics.setBorderColor(MAJOR);
+            goalGraphics.addText("MEDIUM");
+            goalGraphics.addLocation(goalImageBounds.getLocation());
+        }
+        else if(getGoal() <= 1e-3) {
+            goalGraphics.setTextColor(MINOR);
+            goalGraphics.setBorderColor(MINOR);
+            goalGraphics.addText("LOW");
+            goalGraphics.addLocation(goalImageBounds.getLocation());
+        }
+        else {
+            goalGraphics.setTextColor(NSE);
+            goalGraphics.setBorderColor(NSE);
+            goalGraphics.addText("VERY LOW");
+            goalGraphics.addLocation(goalImageBounds.getLocation());
+        }
+        goalGraphics.setEntity(goal);
+        goal.addComponent(goalGraphics);
+
+        addEntityToScene(goal);
 
     }
 
