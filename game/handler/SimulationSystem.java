@@ -27,6 +27,29 @@ public class SimulationSystem extends SystemHandle {
     private double eps = 0.00000001; //delta because double has rounding errors
     int frameCount = 0;
 
+    public int calculateScore() {
+        //Base score for finishing the level
+        int score = 100;
+
+        double probabilities[] = MarkovProcessor
+                .getProbabilityForStatesWith(
+                        MarkovProcessor.currentSystemState,
+                        1, 0, 0, 0, 20, 20
+                );
+
+        if(Game.scene().current() instanceof GameScene gs) {
+            score -= Math.abs(Math.abs(Math.log10(probabilities[0])) - Math.abs(Math.log10(gs.getGoal()))) * 10;
+
+            for(Entity e : gs.getEntities()) {
+                if(e.getComponent(BuildComponent.class) != null && e.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
+                    score += 10 * e.getComponent(BuildComponent.class).getAmount();
+                }
+            }
+        }
+
+        return score;
+    }
+
     @Override
     public void handle() {
         updateGroupIds();
@@ -40,7 +63,9 @@ public class SimulationSystem extends SystemHandle {
                 if(Game.scene().current() instanceof GameScene gs) {
                     if(!gs.isLevelPassed()) {
                         gs.setLevelPassed(true);
-                        int score = 0;
+                        int score = calculateScore();
+                        System.out.println("Score: " + score);
+
                         gs.addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
                                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score));
                         GenericButton saveScore = new GenericButton(
