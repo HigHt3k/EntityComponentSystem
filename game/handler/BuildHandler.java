@@ -119,10 +119,13 @@ public class BuildHandler extends Handler {
             prev = gs.getPrevious();
             next = gs.getNext();
 
-            if(prev.getComponent(CollisionComponent.class).contains(e.getPoint())) {
-                gs.setDescriptionDisplayUsingOffset(-1);
-            } else if (next.getComponent(CollisionComponent.class).contains(e.getPoint())) {
-                gs.setDescriptionDisplayUsingOffset(+1);
+            if(e.getButton() == MouseEvent.BUTTON1) {
+                if (prev.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                    gs.setDescriptionDisplayUsingOffset(-1);
+                    System.out.println("set to prev");
+                } else if (next.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                    gs.setDescriptionDisplayUsingOffset(+1);
+                }
             }
         } else if(Game.scene().current() instanceof BuildScene bs) {
             cellSize = bs.getCellSize();

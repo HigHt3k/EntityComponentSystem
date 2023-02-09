@@ -8,12 +8,12 @@ import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.entity.GenericButton;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
+import com.resource.colorpalettes.Bit8;
+import com.resource.fonts.FontCollection;
 import game.components.BuildComponent;
 import game.components.GridComponent;
+import game.entities.*;
 import game.handler.simulation.SimulationType;
-import game.entities.BuildPanelEntity;
-import game.entities.GridEntity;
-import game.entities.SimulationEntity;
 import game.handler.BuildHandler;
 import game.handler.SimulationSystem;
 import game.intent.CableLayerSwitchIntent;
@@ -23,32 +23,36 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class GameScene extends Scene {
     private final int ITEM_MARGIN = 20;
-    private final int ITEM_WIDTH = 300;
+    private final int ITEM_WIDTH = 230;
     private final int ITEM_HEIGHT = 60;
     private int X_MARGIN = 200;
     private int Y_MARGIN = 300;
-    private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
-    private final Color BOX_COLOR = new Color(200, 90, 0, 240);
-    private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
-    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private final Color TEXT_COLOR = Bit8.DARK_GREY;
 
     // Category colors
-    private final Color NSE = new Color(39, 167, 56, 255);
-    private final Color MINOR = new Color(188, 235, 0, 255);
-    private final Color MAJOR = new Color(255, 211, 3, 255);
-    private final Color HAZARDOUS = new Color(254, 174, 9, 255);
-    private final Color CATASTROPHIC = new Color(228, 6, 19, 255);
+    private final Color NSE = Bit8.CORNFLOWER_BLUE;
+    private final Color MINOR = Bit8.DARK_PASTEL_GREEN;
+    private final Color MAJOR = Bit8.YELLOW;
+    private final Color HAZARDOUS = Bit8.ORANGE;
+    private final Color CATASTROPHIC = Bit8.RED;
 
 
     private final int DESIGN_CELL_SIZE = 128;
     private int CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
+    private ArrayList<String> descriptions;
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
+
+    private Entity previous;
+    private Entity next;
+    private Entity descText;
+    private int currentlyDisplayedDescriptionPart = 0;
 
     private boolean levelPassed = false;
 
@@ -140,6 +144,10 @@ public class GameScene extends Scene {
      */
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void setDescriptions(ArrayList<String> descriptions) {
+        this.descriptions = descriptions;
     }
 
     /**
@@ -267,7 +275,7 @@ public class GameScene extends Scene {
         GenericButton exitButton = new GenericButton(
                 "Exit",
                 IdGenerator.generateId(),
-                1600, 900,
+                1600, 850 + ITEM_HEIGHT + ITEM_MARGIN * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3",
                 font
@@ -278,7 +286,7 @@ public class GameScene extends Scene {
         GenericButton mainMenuButton = new GenericButton(
                 "Menu_button",
                 IdGenerator.generateId(),
-                1600, 800,
+                1600, 850 + ITEM_MARGIN,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
                 font
@@ -359,9 +367,103 @@ public class GameScene extends Scene {
     }
 
     /**
-     * setup method for the description panel (right side)
+     * set up method for the right side description and info panel
      */
     private void setupDescriptionPanel() {
+        Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
+        Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
+
+        Entity desc = new SimplePanel("desc", IdGenerator.generateId(),
+                1500, 0, 402, 350, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+        addEntityToScene(desc);
+
+        Entity goal = new SimplePanel("goal", IdGenerator.generateId(),
+                1500, 350, 402, 200, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+        addEntityToScene(goal);
+
+        Entity tips = new SimplePanel("tips", IdGenerator.generateId(),
+                1500, 550, 402, 300, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+        addEntityToScene(tips);
+
+        descText = new TextBody("descText", IdGenerator.generateId(),
+                1500, 50, 402, 300, fontMed, Bit8.DARK_GREY, description);
+        addEntityToScene(descText);
+
+        Entity descHead = new TextBody("descHead", IdGenerator.generateId(),
+                1500, 0, 402, 50, fontBig, Bit8.DARK_GREY, "@49");
+        addEntityToScene(descHead);
+
+        previous = new GenericButton("previous", IdGenerator.generateId(),
+                1520, 300, 40, 40, "<-", fontMed);
+        addEntityToScene(previous);
+
+        next = new GenericButton("next", IdGenerator.generateId(),
+                1860, 300, 40, 40, "<-", fontMed);
+        addEntityToScene(next);
+
+        Entity goalHead = new TextBody("goalHead", IdGenerator.generateId(),
+                1500, 350, 402, 50, fontBig, Bit8.DARK_GREY, "@50");
+        addEntityToScene(goalHead);
+
+        Entity safetyReqDesc = new TextBody("safetyReqDesc", IdGenerator.generateId(),
+                1500, 400, 250, 30, fontMed, Bit8.DARK_GREY, "@51");
+        addEntityToScene(safetyReqDesc);
+
+        Color safetyReqColor = getSafetyReqColor(getGoal());
+
+        Entity goalContent = new TextBody("goalContent", IdGenerator.generateId(),
+                1750, 400, 152, 30, fontMed, safetyReqColor, String.valueOf(getGoal()));
+        addEntityToScene(goalContent);
+    }
+
+    public Entity getNext() {
+        return next;
+    }
+
+    public Entity getPrevious() {
+        return previous;
+    }
+
+    /**
+     * i is either -1 or +1
+     * @param i
+     */
+    public void setDescriptionDisplayUsingOffset(int i) {
+        if(i != -1 && i != 1) {
+            return;
+        }
+
+        try {
+            description = descriptions.get(currentlyDisplayedDescriptionPart + i);
+            currentlyDisplayedDescriptionPart += i;
+            descText.getComponent(GraphicsComponent.class).getTexts().set(0, description);
+        } catch(IndexOutOfBoundsException ex) {
+            // This is okay here.
+        }
+    }
+
+    private Color getSafetyReqColor(double d) {
+        if(getGoal() <= 1e-9) {
+            return CATASTROPHIC;
+        }
+        else if(getGoal() <= 1e-7){
+            return HAZARDOUS;
+        }
+        else if(getGoal() <= 1e-5){
+            return MAJOR;
+        }
+        else if(getGoal() <= 1e-3) {
+            return MINOR;
+        }
+        else {
+            return NSE;
+        }
+    }
+
+    /**
+     * setup method for the description panel (right side)
+     */
+    private void setupDescriptionPanelOld() {
         Entity descriptionPanel = new Entity("Description Panel", IdGenerator.generateId());
 
         GraphicsComponent descriptionPanelGC = new GraphicsComponent();

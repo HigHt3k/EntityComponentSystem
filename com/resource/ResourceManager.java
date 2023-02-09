@@ -35,6 +35,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class ResourceManager {
     private static final LanguageManager language = new LanguageManager();
@@ -129,10 +130,19 @@ public class ResourceManager {
                 int mapId = Integer.parseInt(level.getAttribute("id"));
                 int width = Integer.parseInt(level.getAttribute("width"));
                 int height = Integer.parseInt(level.getAttribute("height"));
-                String description = level.getElementsByTagName("description").item(0).getTextContent();
+
+                ArrayList<String> descriptions = new ArrayList<>();
+
+                NodeList parts = doc.getElementsByTagName("part");
+                for(int i = 0; i < parts.getLength(); i++) {
+                    descriptions.add(parts.item(i).getTextContent());
+                }
 
                 GameScene scene = new GameScene(levelName, mapId);
-                scene.setDescription(description);
+                if(descriptions.size() > 0) {
+                    scene.setDescription(descriptions.get(0));
+                }
+                scene.setDescriptions(descriptions);
                 scene.setGridSize(width, height);
 
                 if(level.getElementsByTagName("goal").item(0) != null) {
