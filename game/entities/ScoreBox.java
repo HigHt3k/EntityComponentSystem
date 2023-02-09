@@ -6,12 +6,13 @@ import com.ecs.entity.Entity;
 import java.awt.*;
 
 public class ScoreBox extends Entity {
-    public ScoreBox(String name, int id, Font font, int score) {
+    public ScoreBox(String name, int id, Font font, int score,
+                    int x, int y, int width, int height) {
         super(name, id);
 
         GraphicsComponent graphics = new GraphicsComponent();
 
-        Rectangle r = new Rectangle(400, 400, 400, 200);
+        Rectangle r = new Rectangle(x, y, width, height);
 
         graphics.setShape(r);
         graphics.setBounds(r);
