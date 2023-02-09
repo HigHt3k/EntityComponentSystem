@@ -9,6 +9,7 @@ import com.input.handler.Handler;
 import com.input.handler.HandlerType;
 import game.components.*;
 import game.entities.*;
+import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
 import game.scenes.BuildScene;
@@ -205,6 +206,7 @@ public class BuildHandler extends Handler {
                                             new int[] {}, new int[] {0,1,2,3},
                                             true
                                     );
+                                    newEntity.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
                                 } else if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
                                     newEntity = new SimulationEntity(
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
