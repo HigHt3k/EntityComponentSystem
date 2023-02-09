@@ -8,6 +8,7 @@ import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;
 import com.graphics.elements.ToolTip;
+import com.resource.colorpalettes.Bit8;
 import game.components.*;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
@@ -29,7 +30,7 @@ import java.awt.image.BufferedImage;
  *         |_ addIntent();
  */
 public class SimulationEntity extends Entity {
-    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
 
     public SimulationEntity(String name, int id,
                             int x, int y, int width, int height,

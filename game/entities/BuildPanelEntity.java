@@ -7,6 +7,7 @@ import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.graphics.elements.ToolTip;
+import com.resource.colorpalettes.Bit8;
 import game.components.*;
 import game.handler.simulation.SimulationType;
 
@@ -25,8 +26,8 @@ import java.awt.image.BufferedImage;
  *         |_ addIntent();
  */
 public class BuildPanelEntity extends Entity {
-    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
-    private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
+    private final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
+    private final Color TEXT_COLOR = Bit8.DARK_GREY;
 
     public BuildPanelEntity(String name, int id,
                             int x, int y, int width, int height,
