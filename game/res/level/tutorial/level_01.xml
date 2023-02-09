@@ -6,7 +6,7 @@
         <part>@10022</part>
         <part>@10023</part>
     </description>
-    <goal>1e-1</goal>
+    <goal>1e-4</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <build>

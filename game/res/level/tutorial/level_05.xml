@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map id="1" name="@1009" width="5" height="3">
-    <description>@1010</description>
-    <goal>1e-1</goal>
+    <description>
+        <part>@1010</part>
+    </description>
+    <goal>1e-4</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <build>
