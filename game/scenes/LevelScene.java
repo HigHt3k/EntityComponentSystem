@@ -60,6 +60,8 @@ public class LevelScene extends Scene {
         addLevel(3, 300, 400, Bit8.CORNFLOWER_BLUE);
         addLevel(4, 300, 450, Bit8.CORNFLOWER_BLUE);
         addLevel(5, 300, 500, Bit8.CORNFLOWER_BLUE);
+        addLevel(6, 500, 350, Bit8.DARK_PASTEL_GREEN);
+        unlockLevel(6);
 
         /*int item = 0;
         for(Scene s : Game.scene().getScenes()) {
