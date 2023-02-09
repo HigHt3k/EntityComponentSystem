@@ -5,6 +5,7 @@ import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.HoverIntent;
 import com.ecs.intent.Intent;
+import com.resource.colorpalettes.Bit8;
 
 import java.awt.*;
 
@@ -17,10 +18,10 @@ import java.awt.*;
  *         |_ addIntent();
  */
 public class GenericButton extends Entity {
-    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
-    private static final Color BOX_COLOR = new Color(200, 90, 0, 240);
-    private static final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
-    private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private static final Color TEXT_COLOR = Bit8.DARK_GREY;
+    private static final Color BOX_COLOR = Bit8.CHROME;
+    private static final Color BOX_BORDER_COLOR = Bit8.GREY;
+    private static final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
 
     /**
      * Create a generic functional button. addIntent needs to be used to add a purpose other than hovering to this button.
