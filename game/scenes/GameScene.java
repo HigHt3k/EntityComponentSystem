@@ -53,6 +53,7 @@ public class GameScene extends Scene {
     private Entity next;
     private Entity descText;
     private Entity validate;
+    private Entity tipsText;
     private int currentlyDisplayedDescriptionPart = 0;
 
     private boolean levelPassed = false;
@@ -63,6 +64,10 @@ public class GameScene extends Scene {
     private int accGoal;
     private int sensGoal;
     private int cGoal;
+
+    public Entity getTipsText() {
+        return tipsText;
+    }
 
     public boolean isLevelPassed() {
         return levelPassed;
@@ -385,6 +390,10 @@ public class GameScene extends Scene {
         Entity tips = new SimplePanel("tips", IdGenerator.generateId(),
                 1500, 550, 402, 300, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
         addEntityToScene(tips);
+
+        tipsText = new TextBody("tipsText", IdGenerator.generateId(),
+                1500, 550, 402, 300, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(tipsText);
 
         descText = new TextBody("descText", IdGenerator.generateId(),
                 1500, 50, 402, 300, fontMed, Bit8.DARK_GREY, description);

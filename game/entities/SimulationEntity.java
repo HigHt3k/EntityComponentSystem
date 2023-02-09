@@ -104,6 +104,12 @@ public class SimulationEntity extends Entity {
         hover.setIntentComponent(intents);
         intents.addIntent(hover);
 
+        TooltipComponent toolTip = new TooltipComponent();
+        toolTip.setTooltipText(Game.res().loadDescription(tileId));
+        toolTip.setFailureRatio(String.valueOf(failureRatio));
+        toolTip.setEntity(this);
+        this.addComponent(toolTip);
+
     }
 
     public void addIntent(Intent intent) {

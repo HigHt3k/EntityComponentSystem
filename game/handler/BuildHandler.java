@@ -137,6 +137,19 @@ public class BuildHandler extends Handler {
         ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
 
         for(Entity entity : entities) {
+            if(entity.getComponent(TooltipComponent.class) != null) {
+                if(Game.scene().current() instanceof GameScene gs && entity.getComponent(CollisionComponent.class) != null) {
+                    if(entity.getComponent(CollisionComponent.class).getCollisionBox().contains(e.getPoint())) {
+                        gs.getTipsText().getComponent(GraphicsComponent.class).getTexts().set(0, entity.getComponent(TooltipComponent.class).getTooltipText());
+                        break;
+                    } else {
+                        gs.getTipsText().getComponent(GraphicsComponent.class).getTexts().set(0, "");
+                    }
+                }
+            }
+        }
+
+        for(Entity entity : entities) {
             // check for click on a next/prev button
             if (entity instanceof BuildPanelEntity buildPanelEntity) {
                 if(buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
