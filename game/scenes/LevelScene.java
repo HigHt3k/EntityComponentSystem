@@ -2,17 +2,22 @@ package game.scenes;
 
 import com.Game;
 import com.IdGenerator;
+import com.ecs.component.IntentComponent;
 import com.ecs.component.graphics.GraphicsComponent;
 import com.ecs.entity.Entity;
 import com.ecs.entity.GenericButton;
 import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
+import com.resource.colorpalettes.Bit8;
+import com.resource.fonts.FontCollection;
+import game.entities.LevelButton;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class LevelScene extends Scene {
     private static final int ITEM_MARGIN = 20;
@@ -49,7 +54,14 @@ public class LevelScene extends Scene {
         backgroundGraphicsComponent.setEntity(background);
         addEntityToScene(background);
 
-        int item = 0;
+        addLevel(1, 300, 300, Bit8.CORNFLOWER_BLUE);
+        unlockLevel(1);
+        addLevel(2, 300, 350, Bit8.CORNFLOWER_BLUE);
+        addLevel(3, 300, 400, Bit8.CORNFLOWER_BLUE);
+        addLevel(4, 300, 450, Bit8.CORNFLOWER_BLUE);
+        addLevel(5, 300, 500, Bit8.CORNFLOWER_BLUE);
+
+        /*int item = 0;
         for(Scene s : Game.scene().getScenes()) {
             if(s instanceof GameScene) {
                 GenericButton menuItem = new GenericButton(
@@ -64,6 +76,8 @@ public class LevelScene extends Scene {
                 item += 1;
             }
         }
+
+         */
 
         GenericButton mainMenuButton = new GenericButton(
                 "Menu_button",
@@ -87,15 +101,59 @@ public class LevelScene extends Scene {
         addEntityToScene(exitButton);
     }
 
+    public void unlockLevel(int id) {
+        for(Entity e : getEntities()) {
+            if(e.getComponent(IntentComponent.class) != null) {
+                if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class) != null) {
+                    if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() == Game.scene().getScene(id)) {
+                        ((GameScene) Game.scene().getScene(id)).setUnlocked(true);
+                        if(e instanceof LevelButton lb) {
+                            lb.unlock();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void addLevel(int id, int x, int y, Color c) {
+        LevelButton lvl = new LevelButton("lvl" + id, IdGenerator.generateId(),
+                x, y, 25, 25, "", FontCollection.bit8Font, c);
+        lvl.addIntent(new StartIntent(Game.scene().getScene(id)));
+        addEntityToScene(lvl);
+    }
+
     @Override
     public void init() {
-
+        checkUnlocks();
     }
 
     @Override
     public void update() {
         for(Entity e : getEntities()) {
             e.update();
+        }
+    }
+
+    private void checkUnlocks() {
+        for(Scene s : Game.scene().getScenes()) {
+            if(s instanceof GameScene gs) {
+                ArrayList<Integer> unlocksNeeded = gs.getUnlocksNeeded();
+                boolean allLevelsPassed = true;
+                for(Scene sCompare : Game.scene().getScenes()) {
+                    if(sCompare instanceof GameScene gsCompare) {
+                        if(!unlocksNeeded.contains(gsCompare.getId())) {
+                            continue;
+                        }
+                        if(!gsCompare.isLevelPassed()) {
+                            allLevelsPassed = false;
+                        }
+                    }
+                }
+                if(allLevelsPassed) {
+                    unlockLevel(gs.getId());
+                }
+            }
         }
     }
 }

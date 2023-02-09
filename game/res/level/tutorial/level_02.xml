@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="1" name="@1003" width="6" height="2">
+<map id="2" name="@1003" width="6" height="2" difficulty="TUTORIAL">
     <description>
         <part>@1004</part>
     </description>
     <goal>1e-4</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
+    <unlocks>
+        <unlock>1</unlock>
+    </unlocks>
     <build>
     </build>
     <layer id="0" name="Tile Layer 1">

@@ -32,6 +32,7 @@ public class GameScene extends Scene {
     private int X_MARGIN = 200;
     private int Y_MARGIN = 300;
     private final Color TEXT_COLOR = Bit8.DARK_GREY;
+    private boolean unlocked = false;
 
     // Category colors
     private final Color NSE = Bit8.CORNFLOWER_BLUE;
@@ -40,6 +41,9 @@ public class GameScene extends Scene {
     private final Color HAZARDOUS = Bit8.ORANGE;
     private final Color CATASTROPHIC = Bit8.RED;
 
+    private Difficulty difficulty;
+
+    private ArrayList<Integer> unlocksNeeded = new ArrayList<>();
 
     private final int DESIGN_CELL_SIZE = 128;
     private int CELL_SIZE = DESIGN_CELL_SIZE;
@@ -65,8 +69,28 @@ public class GameScene extends Scene {
     private int sensGoal;
     private int cGoal;
 
+    public boolean isUnlocked() {
+        return unlocked;
+    }
+
+    public void setUnlocked(boolean unlocked) {
+        this.unlocked = unlocked;
+    }
+
     public Entity getTipsText() {
         return tipsText;
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public ArrayList<Integer> getUnlocksNeeded() {
+        return unlocksNeeded;
+    }
+
+    public void addUnlockNeeded(int id) {
+        unlocksNeeded.add(id);
     }
 
     public boolean isLevelPassed() {
@@ -106,8 +130,9 @@ public class GameScene extends Scene {
      * @param name
      * @param id
      */
-    public GameScene(String name, int id) {
+    public GameScene(String name, int id, Difficulty difficulty) {
         super(name, id);
+        this.difficulty = difficulty;
         setupBuildPanel();
     }
 

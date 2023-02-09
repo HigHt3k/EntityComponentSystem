@@ -13,6 +13,7 @@ import game.components.GridComponent;
 import game.components.SimulationComponent;
 import game.handler.simulation.SimulationType;
 import game.scenes.BuildScene;
+import game.scenes.Difficulty;
 import game.scenes.GameScene;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -112,7 +113,6 @@ public class ResourceManager {
      * @param levelPath: the path to the xml file
      */
     public void loadLevel(String levelPath) {
-        System.out.println("loading level: " + levelPath);
         //Todo: exception handling
         //TODO: change xml files so that each component contains its attributes
         String levelName = "Default";
@@ -138,12 +138,19 @@ public class ResourceManager {
                     descriptions.add(parts.item(i).getTextContent());
                 }
 
-                GameScene scene = new GameScene(levelName, mapId);
+                Difficulty difficulty = Difficulty.valueOf(level.getAttribute("difficulty"));
+
+                GameScene scene = new GameScene(levelName, mapId, difficulty);
                 if(descriptions.size() > 0) {
                     scene.setDescription(descriptions.get(0));
                 }
                 scene.setDescriptions(descriptions);
                 scene.setGridSize(width, height);
+
+                NodeList unlocks = level.getElementsByTagName("unlock");
+                for(int i = 0; i < unlocks.getLength(); i++) {
+                    scene.addUnlockNeeded(Integer.parseInt(unlocks.item(i).getTextContent()));
+                }
 
                 if(level.getElementsByTagName("goal").item(0) != null) {
                     double goal = Double.parseDouble(level.getElementsByTagName("goal").item(0).getTextContent());

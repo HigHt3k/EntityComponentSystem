@@ -5,6 +5,7 @@ import com.ecs.component.collision.CollisionComponent;
 import com.ecs.component.IntentComponent;
 import com.ecs.intent.Intent;
 import com.graphics.scene.Scene;
+import game.scenes.GameScene;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -14,6 +15,10 @@ public class StartIntent extends Intent {
 
     public StartIntent() {
 
+    }
+
+    public Scene getScene() {
+        return scene;
     }
 
     public StartIntent(Scene scene) {
@@ -32,6 +37,11 @@ public class StartIntent extends Intent {
             if(ic.getEntity().getComponent(CollisionComponent.class).contains(e.getPoint()) && e.getButton() == MouseEvent.BUTTON1) {
                 Game.logger().info("Setting scene to: " + getIntentComponent().getEntity().getName());
                 if(scene != null) {
+                    if(scene instanceof GameScene gs) {
+                        if(!gs.isUnlocked()) {
+                            return;
+                        }
+                    }
                     Game.scene().addScene(scene);
                     Game.scene().setCurrentScene(scene);
                     Game.scene().current().init();
