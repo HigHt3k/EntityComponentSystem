@@ -52,6 +52,7 @@ public class GameScene extends Scene {
     private Entity previous;
     private Entity next;
     private Entity descText;
+    private Entity validate;
     private int currentlyDisplayedDescriptionPart = 0;
 
     private boolean levelPassed = false;
@@ -398,7 +399,7 @@ public class GameScene extends Scene {
         addEntityToScene(previous);
 
         next = new GenericButton("next", IdGenerator.generateId(),
-                1860, 300, 40, 40, "<-", fontMed);
+                1840, 300, 40, 40, "->", fontMed);
         addEntityToScene(next);
 
         Entity goalHead = new TextBody("goalHead", IdGenerator.generateId(),
@@ -406,14 +407,31 @@ public class GameScene extends Scene {
         addEntityToScene(goalHead);
 
         Entity safetyReqDesc = new TextBody("safetyReqDesc", IdGenerator.generateId(),
-                1500, 400, 250, 30, fontMed, Bit8.DARK_GREY, "@51");
+                1500, 430, 250, 15, fontMed, Bit8.DARK_GREY, "@51");
         addEntityToScene(safetyReqDesc);
 
         Color safetyReqColor = getSafetyReqColor(getGoal());
 
-        Entity goalContent = new TextBody("goalContent", IdGenerator.generateId(),
-                1750, 400, 152, 30, fontMed, safetyReqColor, String.valueOf(getGoal()));
-        addEntityToScene(goalContent);
+        Entity safetyReqContent = new TextBody("safetyReqContent", IdGenerator.generateId(),
+                1750, 430, 152, 15, fontMed, safetyReqColor, String.valueOf(getGoal()));
+        addEntityToScene(safetyReqContent);
+
+        Entity minActuatorsDesc = new TextBody("minActuatorsDesc", IdGenerator.generateId(),
+                1500, 400, 250, 15, fontMed, Bit8.DARK_GREY, "@52"
+                );
+        addEntityToScene(minActuatorsDesc);
+
+        Entity minActuatorsContent = new TextBody("minActuatorsContent", IdGenerator.generateId(),
+                1750, 400, 152, 15, fontMed, Bit8.DARK_GREY, String.valueOf(accGoal));
+        addEntityToScene(minActuatorsContent);
+
+        validate = new GenericButton("validate", IdGenerator.generateId(),
+                1500 + (1920-1500)/2 - 300/2, 480, 300, 50, "@30", fontBig);
+        addEntityToScene(validate);
+    }
+
+    public Entity getValidate() {
+        return validate;
     }
 
     public Entity getNext() {

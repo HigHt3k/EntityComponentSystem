@@ -118,6 +118,7 @@ public class BuildHandler extends Handler {
             cellSize = gs.getCellSize();
             prev = gs.getPrevious();
             next = gs.getNext();
+            Entity validate = gs.getValidate();
 
             if(e.getButton() == MouseEvent.BUTTON1) {
                 if (prev.getComponent(CollisionComponent.class).contains(e.getPoint())) {
@@ -125,6 +126,8 @@ public class BuildHandler extends Handler {
                     System.out.println("set to prev");
                 } else if (next.getComponent(CollisionComponent.class).contains(e.getPoint())) {
                     gs.setDescriptionDisplayUsingOffset(+1);
+                } else if(validate.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                    Game.system().getSystem(SimulationSystem.class).finish();
                 }
             }
         } else if(Game.scene().current() instanceof BuildScene bs) {

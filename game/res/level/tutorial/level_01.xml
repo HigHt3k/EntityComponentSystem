@@ -3,6 +3,8 @@
     <description>
         <part>@1002</part>
         <part>@10021</part>
+        <part>@10022</part>
+        <part>@10023</part>
     </description>
     <goal>1e-1</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
