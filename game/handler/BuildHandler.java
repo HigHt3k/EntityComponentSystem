@@ -112,16 +112,26 @@ public class BuildHandler extends Handler {
 
     @Override
     public void handle(MouseEvent e) {
+        Entity prev;
+        Entity next;
         if(Game.scene().current() instanceof GameScene gs) {
             cellSize = gs.getCellSize();
+            prev = gs.getPrevious();
+            next = gs.getNext();
+
+            if(prev.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                gs.setDescriptionDisplayUsingOffset(-1);
+            } else if (next.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                gs.setDescriptionDisplayUsingOffset(+1);
+            }
         } else if(Game.scene().current() instanceof BuildScene bs) {
             cellSize = bs.getCellSize();
         }
 
         ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
 
-
         for(Entity entity : entities) {
+            // check for click on a next/prev button
             if (entity instanceof BuildPanelEntity buildPanelEntity) {
                 if(buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
                     buildPanelEntity.getComponent(GraphicsComponent.class).getTexts().set(0,
