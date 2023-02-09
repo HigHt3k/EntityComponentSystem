@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * 8 bit styled color palette
  */
-public class Bit8 {
+public class Bit8 extends ColorPalette {
     public static final Color BLACK = new Color(0, 0,0);
     public static final Color GREY = new Color(48, 50, 50);
     public static final Color LIGHT_GREY = new Color(140, 150, 135);
