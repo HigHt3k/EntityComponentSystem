@@ -286,10 +286,12 @@ public class SimulationSystem extends SystemHandle {
         for(int i : groupIds) {
             ArrayList<Entity> group = getEntitiesByGroupdId(i);
 
-            for(Entity e : group) {
-                if(e.getComponent(SimulationComponent.class) != null) {
-                    if(!entities.contains(e))
-                        entities.add(e);
+            if(validateGroup(group)) {
+                for (Entity e : group) {
+                    if (e.getComponent(SimulationComponent.class) != null) {
+                        if (!entities.contains(e))
+                            entities.add(e);
+                    }
                 }
             }
         }
