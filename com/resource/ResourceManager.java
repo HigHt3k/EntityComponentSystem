@@ -197,11 +197,15 @@ public class ResourceManager {
                             if(!entity.getAttribute("safety").equals("")) {
                                 safety = Float.parseFloat(entity.getAttribute("safety"));
                             }
+                            float failureDetectionRatio = 0f;
+                            if(!entity.getAttribute("failureDetectionRatio").equals("")) {
+                                failureDetectionRatio = Float.parseFloat(entity.getAttribute("failureDetectionRatio"));
+                            }
 
                             int correctSignalsNeeded = Integer.parseInt(entity.getAttribute("correctSignalsNeeded"));
                             int outOfControlSignalsAccepted = Integer.parseInt(entity.getAttribute("outOfControlSignalsAccepted"));
 
-                            scene.addSimulationElement(x, y, entityId, safety,correctSignalsNeeded, outOfControlSignalsAccepted, interactable);
+                            scene.addSimulationElement(x, y, entityId, safety,correctSignalsNeeded, outOfControlSignalsAccepted, interactable, failureDetectionRatio);
                         }
                     }
                 }
@@ -220,7 +224,12 @@ public class ResourceManager {
                             int correctSignalsNeeded = Integer.parseInt(entity.getAttribute("correctSignalsNeeded"));
                             int outOfControlSignalsAccepted = Integer.parseInt(entity.getAttribute("outOfControlSignalsAccepted"));
 
-                            scene.addToBuildPanel(entityId, amount, failureRatio, correctSignalsNeeded, outOfControlSignalsAccepted);
+                            float failureDetectionRatio = 0.9f;
+                            if(!entity.getAttribute("failureDetectionRatio").equals("")) {
+                                failureDetectionRatio = Float.parseFloat(entity.getAttribute("failureDetectionRatio"));
+                            }
+
+                            scene.addToBuildPanel(entityId, amount, failureRatio, correctSignalsNeeded, outOfControlSignalsAccepted, failureDetectionRatio);
                         }
                     }
 

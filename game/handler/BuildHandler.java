@@ -188,7 +188,7 @@ public class BuildHandler extends Handler {
                                             entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
                                             entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
                                             new int[] {0,1,2,3}, new int[] {0,1,2,3},
-                                            true
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
                                 } else if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.SENSOR) {
                                     newEntity = new SimulationEntity(
@@ -204,7 +204,7 @@ public class BuildHandler extends Handler {
                                             entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
                                             entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
                                             new int[] {}, new int[] {0,1,2,3},
-                                            true
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
                                     newEntity.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
                                 } else if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
@@ -221,7 +221,7 @@ public class BuildHandler extends Handler {
                                             entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
                                             entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
                                             new int[] {0,1,2,3}, new int[] {},
-                                            true
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
                                 }
 
@@ -262,7 +262,7 @@ public class BuildHandler extends Handler {
                                         1, 0,
                                         new int[] {entity.getComponent(BuildComponent.class).getPortId()},
                                         new int[] {entity.getComponent(BuildComponent.class).getPortId()},
-                                        true
+                                        true, 0f
                                 );
                                 cableBuildRepetitive = entity;
                                 currentBuilding = newEntity;
@@ -333,7 +333,7 @@ public class BuildHandler extends Handler {
                                     1, 0,
                                     new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
                                     new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
-                                    true
+                                    true, 0f
                             );
 
                             currentBuilding = newEntity;

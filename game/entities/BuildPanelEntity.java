@@ -35,7 +35,7 @@ public class BuildPanelEntity extends Entity {
                             int amount, float failureRatio,
                             SimulationType simulationType,
                             int correctSignalsNeeded, int outOfControlSignalsAccepted,
-                            String description) {
+                            String description, float failureDetectionRatio) {
         super(name, id);
 
         // define the size
@@ -78,6 +78,7 @@ public class BuildPanelEntity extends Entity {
         builder.setCorrectSignalsNeeded(correctSignalsNeeded);
         builder.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
         builder.setTileId(tileId);
+        builder.setFailureDetectionRatio(failureDetectionRatio);
         this.addComponent(builder);
 
         // define IntentComponent

@@ -39,7 +39,7 @@ public class SimulationEntity extends Entity {
                             float failureRatio, SimulationType type,
                             int correctSignalsNeeded, int outOfControlSignalsAccepted,
                             int[] cablePortIdsIn, int[] cablePortIdsOut,
-                            boolean removable) {
+                            boolean removable, float failureDetectionRatio) {
         super(name, id);
         this.setRemovable(removable);
 
@@ -69,6 +69,7 @@ public class SimulationEntity extends Entity {
         sim.setFailureRatio(failureRatio);
         sim.setCorrectSignalsNeeded(correctSignalsNeeded);
         sim.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
+        sim.setFailureRecognitionRatio(failureDetectionRatio);
         sim.setTileId(tileId);
         if(type == SimulationType.SENSOR) {
             sim.setSimulationState(SimulationState.CORRECT);

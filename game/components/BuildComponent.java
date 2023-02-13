@@ -11,10 +11,19 @@ public class BuildComponent extends Component {
     private int outOfControlSignalsAccepted;
     private int correctSignalsNeeded;
     private int tileId;
+    private float failureDetectionRatio = 0.9f;
 
     @Override
     public void update() {
 
+    }
+
+    public float getFailureDetectionRatio() {
+        return failureDetectionRatio;
+    }
+
+    public void setFailureDetectionRatio(float failureDetectionRatio) {
+        this.failureDetectionRatio = failureDetectionRatio;
     }
 
     public int getOutOfControlSignalsAccepted() {

@@ -85,13 +85,13 @@ public class BuildScene extends Scene {
                 addGridElement(x, y);
             }
         }
-        addToBuildPanel(201, 0, 1e-4f, 0, 0);
-        addToBuildPanel(203, 0, 1e-4f, 1, 0);
-        addToBuildPanel(205, 0, 1e-4f, 2, 0);
-        addToBuildPanel(500, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(501, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(502, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(503, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(201, 0, 1e-4f, 0, 0, 0.9f);
+        addToBuildPanel(203, 0, 1e-4f, 1, 0, 0.9f);
+        addToBuildPanel(205, 0, 1e-4f, 2, 0, 0.9f);
+        addToBuildPanel(500, 1000, 1e-25f, 1, 0, 0f);
+        addToBuildPanel(501, 1000, 1e-25f, 1, 0, 0f);
+        addToBuildPanel(502, 1000, 1e-25f, 1, 0, 0f);
+        addToBuildPanel(503, 1000, 1e-25f, 1, 0, 0f);
     }
 
     public void updateGridSize() {
@@ -221,7 +221,7 @@ public class BuildScene extends Scene {
      * @param amount: how many times can this be built?
      * @param failureRatio: failure ratio of the entity
      */
-    public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted) {
+    public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted, float failureDetectionRatio) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
                 850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
@@ -229,7 +229,7 @@ public class BuildScene extends Scene {
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
                 correctSignalsNeeded, outOfControlSignalsAccepted,
-                Game.res().loadDescription(imgId)
+                Game.res().loadDescription(imgId), failureDetectionRatio
         );
         buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId-500);
         addEntityToScene(buildPanelEntity);

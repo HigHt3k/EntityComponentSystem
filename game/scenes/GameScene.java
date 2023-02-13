@@ -164,10 +164,10 @@ public class GameScene extends Scene {
         Game.system().resetSystems();
         setupDescriptionPanel();
         setupButtons();
-        addToBuildPanel(500, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(501, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(502, 1000, 1e-25f, 1, 0);
-        addToBuildPanel(503, 1000, 1e-25f, 1, 0);
+        addToBuildPanel(500, 1000, 1e-25f, 1, 0, 0f);
+        addToBuildPanel(501, 1000, 1e-25f, 1, 0, 0f);
+        addToBuildPanel(502, 1000, 1e-25f, 1, 0, 0f);
+        addToBuildPanel(503, 1000, 1e-25f, 1, 0, 0f);
         Game.input().addHandler(new BuildHandler());
         Game.system().addSystem(new SimulationSystem());
     }
@@ -249,7 +249,8 @@ public class GameScene extends Scene {
      * @param failureRatio: failure ratio of the entity
      * @param removable: can be removed or not
      */
-    public void addSimulationElement(int x, int y, int imgId, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted, boolean removable) {
+    public void addSimulationElement(int x, int y, int imgId, float failureRatio,
+                                     int correctSignalsNeeded, int outOfControlSignalsAccepted, boolean removable, float failureDetectionRatio) {
         if(Game.res().getTileSet().getType(imgId) == SimulationType.CPU) {
             SimulationEntity simulationEntity = new SimulationEntity(
                     "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
@@ -258,7 +259,7 @@ public class GameScene extends Scene {
                     Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     correctSignalsNeeded, outOfControlSignalsAccepted,
-                    new int[] {0,1,2,3}, new int[] {0,1,2,3}, removable
+                    new int[] {0,1,2,3}, new int[] {0,1,2,3}, removable, failureDetectionRatio
             );
             addEntityToScene(simulationEntity);
         } else if(Game.res().getTileSet().getType(imgId) == SimulationType.SENSOR) {
@@ -269,7 +270,7 @@ public class GameScene extends Scene {
                     Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     correctSignalsNeeded, outOfControlSignalsAccepted,
-                    new int[] {}, new int[] {0,1,2,3}, removable
+                    new int[] {}, new int[] {0,1,2,3}, removable, failureDetectionRatio
             );
             addEntityToScene(simulationEntity);
         } else if(Game.res().getTileSet().getType(imgId) == SimulationType.ACTUATOR) {
@@ -280,7 +281,7 @@ public class GameScene extends Scene {
                     Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     correctSignalsNeeded, outOfControlSignalsAccepted,
-                    new int[] {0,1,2,3}, new int[] {}, removable
+                    new int[] {0,1,2,3}, new int[] {}, removable, failureDetectionRatio
             );
             addEntityToScene(simulationEntity);
         } else if(Game.res().getTileSet().getType(imgId) == SimulationType.CABLE) {
@@ -291,7 +292,7 @@ public class GameScene extends Scene {
                     Game.res().loadTile(imgId),imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     0, 0,
-                    new int[] {imgId - 500}, new int[] {imgId - 500}, removable
+                    new int[] {imgId - 500}, new int[] {imgId - 500}, removable, failureDetectionRatio
             );
             addEntityToScene(simulationEntity);
         }
@@ -303,14 +304,15 @@ public class GameScene extends Scene {
      * @param amount: how many times can this be built?
      * @param failureRatio: failure ratio of the entity
      */
-    public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted) {
+    public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded
+            , int outOfControlSignalsAccepted, float failureDetectionRatio) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 150 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 875, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
                 Game.res().loadTile(imgId), imgId,
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
                 correctSignalsNeeded, outOfControlSignalsAccepted,
-                Game.res().loadDescription(imgId)
+                Game.res().loadDescription(imgId), failureDetectionRatio
         );
         buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId-500);
         addEntityToScene(buildPanelEntity);
