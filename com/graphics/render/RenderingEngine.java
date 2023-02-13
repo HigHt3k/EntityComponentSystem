@@ -61,6 +61,11 @@ public class RenderingEngine {
             text = Game.res().language().getStringValue(id, Game.config().getLanguage());
         }
 
+        if(text.contains("\n")) {
+            TextRenderer.render(g, text, color, font, new Point(x + MARGIN,y));
+            return;
+        }
+
         text = text.trim().replaceAll(" +", " ");
         text = text.replaceAll("\n ", "\n");
 
