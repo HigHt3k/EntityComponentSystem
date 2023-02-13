@@ -107,6 +107,8 @@ public class SimulationEntity extends Entity {
         TooltipComponent toolTip = new TooltipComponent();
         toolTip.setTooltipText(Game.res().loadDescription(tileId));
         toolTip.setFailureRatio(String.valueOf(failureRatio));
+        toolTip.setAcceptedOOCSignals(String.valueOf(outOfControlSignalsAccepted));
+        toolTip.setCorrectInputSignals(String.valueOf(correctSignalsNeeded));
         toolTip.setEntity(this);
         this.addComponent(toolTip);
 

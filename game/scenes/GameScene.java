@@ -12,6 +12,7 @@ import com.resource.colorpalettes.Bit8;
 import com.resource.fonts.FontCollection;
 import game.components.BuildComponent;
 import game.components.GridComponent;
+import game.components.TooltipComponent;
 import game.entities.*;
 import game.handler.simulation.SimulationType;
 import game.handler.BuildHandler;
@@ -58,6 +59,12 @@ public class GameScene extends Scene {
     private Entity descText;
     private Entity validate;
     private Entity tipsText;
+    private Entity failTipText;
+    private Entity correctSignalsTipText;
+    private Entity acceptedOOCTipText;
+    private Entity failTipDesc;
+    private Entity acceptedOOCTipDesc;
+    private Entity correctSignalsTipDesc;
     private int currentlyDisplayedDescriptionPart = 0;
 
     private boolean levelPassed = false;
@@ -79,6 +86,18 @@ public class GameScene extends Scene {
 
     public Entity getTipsText() {
         return tipsText;
+    }
+
+    public Entity getAcceptedOOCTipDesc() {
+        return acceptedOOCTipDesc;
+    }
+
+    public Entity getCorrectSignalsTipDesc() {
+        return correctSignalsTipDesc;
+    }
+
+    public Entity getFailTipDesc() {
+        return failTipDesc;
     }
 
     public Difficulty getDifficulty() {
@@ -417,8 +436,32 @@ public class GameScene extends Scene {
         addEntityToScene(tips);
 
         tipsText = new TextBody("tipsText", IdGenerator.generateId(),
-                1500, 550, 402, 300, fontMed, Bit8.DARK_GREY, "");
+                1500, 550, 402, 180, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(tipsText);
+
+        failTipDesc = new TextBody("failTipDesc", IdGenerator.generateId(),
+                1500, 730, 250, 15, fontMed,Bit8.DARK_GREY, "");
+        addEntityToScene(failTipDesc);
+
+        failTipText = new TextBody("failTipText", IdGenerator.generateId(),
+                1750, 730, 152, 15,fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(failTipText);
+
+        correctSignalsTipDesc = new TextBody("correctSignalsTipDesc", IdGenerator.generateId(),
+                1500, 760, 250, 15, fontMed,Bit8.DARK_GREY, "");
+        addEntityToScene(correctSignalsTipDesc);
+
+        correctSignalsTipText = new TextBody("correctSignalsTipText", IdGenerator.generateId(),
+                1750, 760, 152, 15, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(correctSignalsTipText);
+
+        acceptedOOCTipDesc = new TextBody("acceptedOOCTipDesc", IdGenerator.generateId(),
+                1500, 790, 250, 15, fontMed,Bit8.DARK_GREY, "");
+        addEntityToScene(acceptedOOCTipDesc);
+
+        acceptedOOCTipText = new TextBody("acceptedOOCTipText", IdGenerator.generateId(),
+                1750, 790, 152, 15,fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(acceptedOOCTipText);
 
         descText = new TextBody("descText", IdGenerator.generateId(),
                 1500, 50, 402, 300, fontMed, Bit8.DARK_GREY, description);
@@ -528,5 +571,37 @@ public class GameScene extends Scene {
 
     public double getGoal() {
         return goal;
+    }
+
+    public Entity getAcceptedOOCTipText() {
+        return acceptedOOCTipText;
+    }
+
+    public Entity getFailTipText() {
+        return failTipText;
+    }
+
+    public Entity getCorrectSignalsTipText() {
+        return correctSignalsTipText;
+    }
+
+    public void displayToolTip(Entity entity) {
+        getTipsText().getComponent(GraphicsComponent.class).getTexts().set(0, entity.getComponent(TooltipComponent.class).getTooltipText());
+        getFailTipText().getComponent(GraphicsComponent.class).getTexts().set(0, entity.getComponent(TooltipComponent.class).getFailureRatio());
+        getCorrectSignalsTipText().getComponent(GraphicsComponent.class).getTexts().set(0, entity.getComponent(TooltipComponent.class).getCorrectInputSignals());
+        getAcceptedOOCTipText().getComponent(GraphicsComponent.class).getTexts().set(0, entity.getComponent(TooltipComponent.class).getAcceptedOOCSignals());
+        getFailTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0, "@54");
+        getAcceptedOOCTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0,"@55");
+        getCorrectSignalsTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0,"@53");
+    }
+
+    public void displayEmptyToolTip(Entity entity) {
+        getTipsText().getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        getFailTipText().getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        getCorrectSignalsTipText().getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        getAcceptedOOCTipText().getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        getFailTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        getAcceptedOOCTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0,"");
+        getCorrectSignalsTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0,"");
     }
 }

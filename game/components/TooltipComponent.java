@@ -6,6 +6,9 @@ public class TooltipComponent extends Component {
     private String tooltipText;
     private String failureRatio;
 
+    private String correctInputSignals;
+    private String acceptedOOCSignals;
+
     @Override
     public void update() {
 
@@ -25,5 +28,21 @@ public class TooltipComponent extends Component {
 
     public void setTooltipText(String tooltipText) {
         this.tooltipText = tooltipText;
+    }
+
+    public void setAcceptedOOCSignals(String acceptedOOCSignals) {
+        this.acceptedOOCSignals = acceptedOOCSignals;
+    }
+
+    public String getAcceptedOOCSignals() {
+        return acceptedOOCSignals;
+    }
+
+    public String getCorrectInputSignals() {
+        return correctInputSignals;
+    }
+
+    public void setCorrectInputSignals(String correctInputSignals) {
+        this.correctInputSignals = correctInputSignals;
     }
 }

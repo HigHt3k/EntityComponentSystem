@@ -141,10 +141,10 @@ public class BuildHandler extends Handler {
             if(entity.getComponent(TooltipComponent.class) != null) {
                 if(Game.scene().current() instanceof GameScene gs && entity.getComponent(CollisionComponent.class) != null) {
                     if(entity.getComponent(CollisionComponent.class).getCollisionBox().contains(e.getPoint())) {
-                        gs.getTipsText().getComponent(GraphicsComponent.class).getTexts().set(0, entity.getComponent(TooltipComponent.class).getTooltipText());
+                        gs.displayToolTip(entity);
                         break;
                     } else {
-                        gs.getTipsText().getComponent(GraphicsComponent.class).getTexts().set(0, "");
+                        gs.displayEmptyToolTip(entity);
                     }
                 }
             }
