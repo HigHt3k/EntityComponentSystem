@@ -58,6 +58,9 @@ public class HighScoreManager {
             Element score_ = document.createElement("score");
             score_.setTextContent(String.valueOf(score.getScore()));
             highscore.appendChild(score_);
+            Element level_ = document.createElement("level");
+            level_.setTextContent(String.valueOf(score.getLevelId()));
+            highscore.appendChild(level_);
             root.appendChild(highscore);
 
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
