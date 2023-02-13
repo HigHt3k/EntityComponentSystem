@@ -580,7 +580,7 @@ public class GameScene extends Scene {
     public Entity getFailTipText() {
         return failTipText;
     }
-
+//
     public Entity getCorrectSignalsTipText() {
         return correctSignalsTipText;
     }
