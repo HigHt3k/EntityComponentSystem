@@ -183,11 +183,11 @@ public class MarkovProcessor {
                     || currentCorrectSensorCount == correctSensorCount - 1
                     || currentCorrectCPUCount == correctCPUCount - 1)) {
                 System.out.println("Adding passive probability of state: " + state.selfToText() + " : " + state.getStateProbability());
-                probabilityPassive = state.getStateProbability();
+                probabilityPassive += state.getStateProbability();
                 state.getNext().clear();
             } else if(currentOOCActuatorCount > OOCActuatorCount || currentOOCCPUCount > OOCCPUCount || currentOOCSensorCount > OOCSensorCount) {
                 System.out.println("Adding ooc probability of state: " + state.selfToText() + " : " + state.getStateProbability());
-                probabilityOOC = state.getStateProbability();
+                probabilityOOC += state.getStateProbability();
                 state.getNext().clear();
             }
         }
@@ -196,10 +196,8 @@ public class MarkovProcessor {
             try {
                 double probs[] = getProbabilityForStatesWith(stateNext, correctActuatorCount, correctSensorCount, correctCPUCount,
                         OOCActuatorCount, OOCSensorCount, OOCCPUCount);
-                if(probabilityPassive < probs[0])
-                    probabilityPassive = probs[0];
-                if (probabilityOOC < probs[1])
-                    probabilityOOC = probs[1];
+                probabilityPassive += probs[0];
+                probabilityOOC += probs[1];
             } catch(StackOverflowError ex) {
                 ex.printStackTrace();
                 printChainStructure(currentSystemState);
