@@ -55,17 +55,11 @@ public class SimulationSystem extends SystemHandle {
         updateGroupIds();
         updateInputIds();
         updateStates();
-
-        if(frameCount >= 244 * 2) {
-            markov();
-            frameCount = 0;
-        }
-        frameCount++;
-
         updateGraphics();
     }
 
     public void finish() {
+        markov();
         if(validateGoal()) {
             System.out.println("Goal reached!");
             if(Game.scene().current() instanceof GameScene gs) {
