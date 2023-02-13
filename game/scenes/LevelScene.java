@@ -104,8 +104,8 @@ public class LevelScene extends Scene {
         addLevel(3, 300, 500, Bit8.CORNFLOWER_BLUE);
         addLevel(4, 300, 600, Bit8.CORNFLOWER_BLUE);
         addLevel(5, 300, 700, Bit8.CORNFLOWER_BLUE);
-        addLevel(6, 500, 300, Bit8.DARK_PASTEL_GREEN);
-        addLevel(7,500, 400, Bit8.DARK_PASTEL_GREEN);
+        addLevel(6, 500, 200, Bit8.DARK_PASTEL_GREEN);
+        addLevel(7,500, 300, Bit8.DARK_PASTEL_GREEN);
         addLevel(8,500, 400, Bit8.DARK_PASTEL_GREEN);
         addLevel(9,500, 500, Bit8.DARK_PASTEL_GREEN);
         addLevel(10,500, 600, Bit8.DARK_PASTEL_GREEN);
