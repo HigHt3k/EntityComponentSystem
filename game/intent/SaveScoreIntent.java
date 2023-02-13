@@ -24,7 +24,7 @@ public class SaveScoreIntent extends Intent {
         IntentComponent ic = getIntentComponent();
         if(ic != null && ic.getEntity().getComponent(CollisionComponent.class) != null) {
             if(ic.getEntity().getComponent(CollisionComponent.class).contains(e.getPoint()) && e.getButton() == MouseEvent.BUTTON1) {
-                Game.res().saveScore("TEST-USER", score);
+                Game.res().saveScore("TEST-USER", score, Game.scene().current().getId());
             }
         }
     }

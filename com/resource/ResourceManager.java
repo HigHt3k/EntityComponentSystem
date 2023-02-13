@@ -39,14 +39,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class ResourceManager {
-    private static final LanguageManager language = new LanguageManager();
-    private static final HighScoreManager highScoreManager = new HighScoreManager();
+    private final LanguageManager language = new LanguageManager();
+    private final HighScoreManager highScoreManager = new HighScoreManager();
     private static DocumentBuilder db;
 
     private static TileSet tileSet;
 
     public LanguageManager language() {
         return language;
+    }
+
+    public HighScoreManager score() {
+        return highScoreManager;
     }
 
     public ResourceManager() {
@@ -434,7 +438,7 @@ public class ResourceManager {
         return tileSet.getDescription(id);
     }
 
-    public static void saveScore(String name, int score) {
-        HighScoreManager.addScore(new HighScore(name, score));
+    public void saveScore(String name, int score, int level) {
+        highScoreManager.addScore(new HighScore(name, score, level));
     }
 }

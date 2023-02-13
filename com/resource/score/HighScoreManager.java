@@ -2,8 +2,12 @@ package com.resource.score;
 
 import com.Game;
 import com.resource.lang.Language;
+import game.scenes.Difficulty;
+import game.scenes.GameScene;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.XMLConstants;
@@ -16,10 +20,11 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class HighScoreManager {
     private static DocumentBuilder db;
-
+    private ArrayList<HighScore> scores;
 
 
     public HighScoreManager() {
@@ -37,11 +42,11 @@ public class HighScoreManager {
         Game.logger().info("Successfully initialized highscore manager");
     }
 
-    public static void resetScores() {
+    public void resetScores() {
 
     }
 
-    public static void addScore(HighScore score) {
+    public void addScore(HighScore score) {
         try {
             Document document = db.parse("game/res/scores/highscores.xml");
             Element root = document.getDocumentElement();
@@ -74,11 +79,58 @@ public class HighScoreManager {
         }
     }
 
-    public static void loadScores() {
+    public void loadScores(String path) {
+        ArrayList<HighScore> scoreHashMap = new ArrayList<>();
+        try {
+            Document doc = db.parse(new File(path));
+            doc.getDocumentElement().normalize();
 
+            NodeList scores = doc.getElementsByTagName("scores");
+
+            if(scores.item(0).getNodeType() == Node.ELEMENT_NODE) {
+                NodeList scoreItems = scores.item(0).getChildNodes();
+                for(int i = 0; i < scoreItems.getLength(); i++) {
+                    NodeList scoreItem = scoreItems.item(i).getChildNodes();
+                    int score = 0;
+                    String name = "";
+                    int level = -1;
+                    for(int j = 0; j < scoreItem.getLength(); j++) {
+                        if(scoreItem.item(j).getNodeName() == "score") {
+                            score = Integer.parseInt(scoreItem.item(j).getTextContent());
+                        } else if(scoreItem.item(j).getNodeName() == "name") {
+                            name = scoreItem.item(j).getTextContent();
+                        } else if(scoreItem.item(j).getNodeName() == "level") {
+                            level = Integer.parseInt(scoreItem.item(j).getTextContent());
+                        }
+                    }
+                    scoreHashMap.add(new HighScore(name, score, level));
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        scores = scoreHashMap;
+        Game.logger().info("Successfully loaded scores from scores file. \n" + scores.size());
     }
 
     public static void saveScores() {
 
+    }
+
+    public ArrayList<HighScore> getLevelScores(int id) {
+        ArrayList<HighScore> highscores = new ArrayList<>();
+
+        for(HighScore score : scores) {
+            if(score.getLevelId() == id) {
+                highscores.add(score);
+            }
+        }
+
+        return highscores;
     }
 }

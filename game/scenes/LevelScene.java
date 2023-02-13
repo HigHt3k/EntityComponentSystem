@@ -10,7 +10,11 @@ import com.ecs.intent.ExitIntent;
 import com.graphics.scene.Scene;
 import com.resource.colorpalettes.Bit8;
 import com.resource.fonts.FontCollection;
+import com.resource.score.HighScore;
 import game.entities.LevelButton;
+import game.entities.SimplePanel;
+import game.entities.TextBody;
+import game.handler.LevelSceneHandler;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -20,18 +24,38 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class LevelScene extends Scene {
-    private static final int ITEM_MARGIN = 20;
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
-    private static final Color TEXT_COLOR = new Color(20, 20, 20, 255);
-    private static final Color BOX_COLOR = new Color(200, 90, 0, 240);
-    private static final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
-    private static final Color HOVER_COLOR = new Color(40, 40, 40, 150);
+    private Entity highscoreView;
+    private Entity playersView;
+
+    public void addHighscores(int levelId) {
+        StringBuilder players = new StringBuilder();
+        StringBuilder highscores = new StringBuilder();
+
+        for(HighScore hs : Game.res().score().getLevelScores(levelId)) {
+            players.append(hs.getName()).append("\n");
+            highscores.append(hs.getScore()).append("\n");
+        }
+
+        System.out.println(levelId + ":" + players);
+
+        playersView.getComponent(GraphicsComponent.class).getTexts().set(0, players.toString());
+        highscoreView.getComponent(GraphicsComponent.class).getTexts().set(0, highscores.toString());
+    }
+
+    public void removeHighscores() {
+        playersView.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        highscoreView.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+    }
 
     public LevelScene(String name, int id) {
         super(name, id);
+        Game.input().removeAllHandlers();
+        Game.input().addHandler(new LevelSceneHandler());
 
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
+        Game.res().score().loadScores("game/res/scores/highscores.xml");
 
         // Create the Menu GUI
         Entity background = new Entity("Background", IdGenerator.generateId());
@@ -53,6 +77,26 @@ public class LevelScene extends Scene {
         background.addComponent(backgroundGraphicsComponent);
         backgroundGraphicsComponent.setEntity(background);
         addEntityToScene(background);
+
+
+        Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
+        Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
+
+        Entity highscorePanel = new SimplePanel("highscore_panel", IdGenerator.generateId(),
+                1500, 350, 402, 500, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+        addEntityToScene(highscorePanel);
+
+        Entity highscoreHead= new TextBody("highscoreHead", IdGenerator.generateId(),
+                1500, 350, 402, 50, fontBig, Bit8.DARK_GREY, "Highscores");
+        addEntityToScene(highscoreHead);
+
+        playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
+                1500, 400, 250, 450, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(playersView);
+
+        highscoreView = new TextBody("highscoreView", IdGenerator.generateId(),
+                1750, 400, 152, 450, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(highscoreView);
 
         addLevel(1, 300, 300, Bit8.CORNFLOWER_BLUE);
         unlockLevel(1);
@@ -81,24 +125,6 @@ public class LevelScene extends Scene {
         addLevel(24, 1000, 700, Bit8.RED);
         addLevel(25, 1000, 800, Bit8.RED);
         unlockAll();
-
-        /*int item = 0;
-        for(Scene s : Game.scene().getScenes()) {
-            if(s instanceof GameScene) {
-                GenericButton menuItem = new GenericButton(
-                        s.getName() + "_button", IdGenerator.generateId(),
-                        1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * item,
-                        ITEM_WIDTH, ITEM_HEIGHT,
-                        s.getName(), font
-                );
-                menuItem.addIntent(new StartIntent());
-                addEntityToScene(menuItem);
-
-                item += 1;
-            }
-        }
-
-         */
 
         GenericButton mainMenuButton = new GenericButton(
                 "Menu_button",
