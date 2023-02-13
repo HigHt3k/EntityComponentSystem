@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="1" name="@1001" width="5" height="1" difficulty="TUTORIAL">
+<map id="1" name="@10000" width="5" height="1" difficulty="TUTORIAL">
     <description>
-        <part>@1002</part>
-        <part>@10021</part>
-        <part>@10022</part>
-        <part>@10023</part>
+        <part>@10001</part>
+        <part>@10002</part>
+        <part>@10003</part>
+        <part>@10004</part>
     </description>
     <goal>1e-4</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>

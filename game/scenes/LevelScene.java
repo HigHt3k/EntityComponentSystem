@@ -61,9 +61,26 @@ public class LevelScene extends Scene {
         addLevel(4, 300, 600, Bit8.CORNFLOWER_BLUE);
         addLevel(5, 300, 700, Bit8.CORNFLOWER_BLUE);
         addLevel(6, 500, 300, Bit8.DARK_PASTEL_GREEN);
+        addLevel(7,500, 400, Bit8.DARK_PASTEL_GREEN);
+        addLevel(8,500, 400, Bit8.DARK_PASTEL_GREEN);
+        addLevel(9,500, 500, Bit8.DARK_PASTEL_GREEN);
+        addLevel(10,500, 600, Bit8.DARK_PASTEL_GREEN);
+        addLevel(11,500, 700, Bit8.DARK_PASTEL_GREEN);
+        addLevel(12,500, 800, Bit8.DARK_PASTEL_GREEN);
+        addLevel(13,500, 900, Bit8.DARK_PASTEL_GREEN);
         addLevel(14,700,400, Bit8.ORANGE);
-        addLevel(20, 1000, 500, Bit8.RED);
-        unlockLevel(6);
+        addLevel(15,700,500, Bit8.ORANGE);
+        addLevel(16,700,600, Bit8.ORANGE);
+        addLevel(17,700,700, Bit8.ORANGE);
+        addLevel(18,700,800, Bit8.ORANGE);
+        addLevel(19,700,900, Bit8.ORANGE);
+        addLevel(20, 1000, 300, Bit8.RED);
+        addLevel(21, 1000, 400, Bit8.RED);
+        addLevel(22, 1000, 500, Bit8.RED);
+        addLevel(23, 1000, 600, Bit8.RED);
+        addLevel(24, 1000, 700, Bit8.RED);
+        addLevel(25, 1000, 800, Bit8.RED);
+        unlockAll();
 
         /*int item = 0;
         for(Scene s : Game.scene().getScenes()) {
@@ -111,6 +128,21 @@ public class LevelScene extends Scene {
                 if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class) != null) {
                     if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() == Game.scene().getScene(id)) {
                         ((GameScene) Game.scene().getScene(id)).setUnlocked(true);
+                        if(e instanceof LevelButton lb) {
+                            lb.unlock();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void unlockAll() {
+        for(Entity e : getEntities()) {
+            if(e.getComponent(IntentComponent.class) != null) {
+                if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class) != null) {
+                    if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() instanceof GameScene gs) {
+                        gs.setUnlocked(true);
                         if(e instanceof LevelButton lb) {
                             lb.unlock();
                         }
