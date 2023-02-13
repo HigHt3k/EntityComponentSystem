@@ -197,7 +197,7 @@ public class ResourceManager {
                             if(!entity.getAttribute("safety").equals("")) {
                                 safety = Float.parseFloat(entity.getAttribute("safety"));
                             }
-                            float failureDetectionRatio = 0f;
+                            float failureDetectionRatio = 0.9f;
                             if(!entity.getAttribute("failureDetectionRatio").equals("")) {
                                 failureDetectionRatio = Float.parseFloat(entity.getAttribute("failureDetectionRatio"));
                             }
