@@ -56,11 +56,13 @@ public class LevelScene extends Scene {
 
         addLevel(1, 300, 300, Bit8.CORNFLOWER_BLUE);
         unlockLevel(1);
-        addLevel(2, 300, 350, Bit8.CORNFLOWER_BLUE);
-        addLevel(3, 300, 400, Bit8.CORNFLOWER_BLUE);
-        addLevel(4, 300, 450, Bit8.CORNFLOWER_BLUE);
-        addLevel(5, 300, 500, Bit8.CORNFLOWER_BLUE);
-        addLevel(6, 500, 350, Bit8.DARK_PASTEL_GREEN);
+        addLevel(2, 300, 400, Bit8.CORNFLOWER_BLUE);
+        addLevel(3, 300, 500, Bit8.CORNFLOWER_BLUE);
+        addLevel(4, 300, 600, Bit8.CORNFLOWER_BLUE);
+        addLevel(5, 300, 700, Bit8.CORNFLOWER_BLUE);
+        addLevel(6, 500, 300, Bit8.DARK_PASTEL_GREEN);
+        addLevel(14,700,400, Bit8.ORANGE);
+        addLevel(20, 1000, 500, Bit8.RED);
         unlockLevel(6);
 
         /*int item = 0;
@@ -120,7 +122,7 @@ public class LevelScene extends Scene {
 
     private void addLevel(int id, int x, int y, Color c) {
         LevelButton lvl = new LevelButton("lvl" + id, IdGenerator.generateId(),
-                x, y, 25, 25, "", FontCollection.bit8Font, c);
+                x, y, 50, 50, "", FontCollection.bit8Font, c);
         lvl.addIntent(new StartIntent(Game.scene().getScene(id)));
         addEntityToScene(lvl);
     }

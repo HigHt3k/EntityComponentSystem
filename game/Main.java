@@ -52,6 +52,30 @@ public class Main {
             // Exit game with a warning on screen
         }
 
+        folder = new File("game/res/level/medium");
+        listOfFiles = folder.listFiles();
+
+        try {
+            for (File f : Objects.requireNonNull(listOfFiles)) {
+                Game.res().loadLevel(f.getPath());
+            }
+        } catch(NullPointerException ex) {
+            Game.logger().severe("No levels found, please add levels to the res/level folder \n" + ex);
+            // Exit game with a warning on screen
+        }
+
+        folder = new File("game/res/level/hard");
+        listOfFiles = folder.listFiles();
+
+        try {
+            for (File f : Objects.requireNonNull(listOfFiles)) {
+                Game.res().loadLevel(f.getPath());
+            }
+        } catch(NullPointerException ex) {
+            Game.logger().severe("No levels found, please add levels to the res/level folder \n" + ex);
+            // Exit game with a warning on screen
+        }
+
         //Game.scene().addScene(new TestTextScene("Test", -260));
         //Game.scene().setCurrentScene(-260);
 

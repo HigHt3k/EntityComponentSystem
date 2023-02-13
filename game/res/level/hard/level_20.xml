@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map id="20" name="@1001" width="5" height="3" difficulty="EASY">
+    <description>
+        <part>@1002</part>
+        <part>@10021</part>
+        <part>@10022</part>
+        <part>@10023</part>
+    </description>
+    <goal>1e-5</goal>
+    <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
+    <tileset source="base_tiles.xml"/>
+    <unlocks>
+        <unlock>3</unlock>
+    </unlocks>
+    <build>
+        <entity id="201" amount="1" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity id="203" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+    </build>
+    <layer id="0" name="Tile Layer 1">
+        <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="2" y="0" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="4" y="1" id="205" interactable="false" safety="1e-7" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+    </layer>
+</map>
