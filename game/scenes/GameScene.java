@@ -576,7 +576,7 @@ public class GameScene extends Scene {
     public Entity getAcceptedOOCTipText() {
         return acceptedOOCTipText;
     }
-//
+
     public Entity getFailTipText() {
         return failTipText;
     }
