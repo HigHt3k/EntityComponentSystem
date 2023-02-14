@@ -18,7 +18,11 @@
     bottom=2cm,
 %includeheadfoot
 ]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{automata,arrows,positioning,calc}
 
+\newcommand\TBox[2][]{%
+    \tikz\node[draw,ultra thin,#1] {#2};}
 
 
 \begin{document}
@@ -26,7 +30,6 @@
     \include{sections/titlepage}
     \include{sections/abstract}
     \include{sections/abstract_german}
-    \include{sections/thanks}
     \tableofcontents
     \include{sections/introduction}
     \include{sections/basics}

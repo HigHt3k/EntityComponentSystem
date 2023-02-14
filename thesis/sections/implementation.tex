@@ -9,3 +9,26 @@ handle entities easily and b) because it is possible to run the program on almos
 in a virtual machine.
 \subsection{Game Engine Development}\label{subsec:game-engine-development}
 \subsubsection{Entity Component System}
+\subsection{Example Markov Chains}\label{subsec:example-markov-chains}
+In the following chapter, some examples for Markov chains that reflect the level designs will be shown and the implementation of the
+MarkovProcessor will be explained by using these graphs.
+
+\begin{center}
+    \begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+    \tikzstyle{every node}=[scale=0.7]
+    \node (A) {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (C)[below of=A] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (B)[left of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (D)[right of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (E)[below left of=B] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (F)[right of=E] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (G)[right of=F] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (H)[right of=G] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (I)[right of=H] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \node (J)[right of=I] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+    \path
+    (A) edge (B)
+        (A) edge (C)
+    (A) edge (D)
+    \end{tikzpicture}
+\end{center}
