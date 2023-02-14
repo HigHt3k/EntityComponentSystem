@@ -59,6 +59,9 @@ public class MarkovState {
                 case SENSOR -> {
                     out.append("S|");
                 }
+                case VOTE -> {
+                    out.append("V|");
+                }
             }
         }
         return out.toString();

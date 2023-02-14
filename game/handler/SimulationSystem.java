@@ -128,13 +128,49 @@ public class SimulationSystem extends SystemHandle {
                 continue;
             }
 
-            if(Collections.frequency(e.getComponent(SimulationComponent.class).getInputStates(), SimulationState.CORRECT)
-                    >= e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
-                e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
+            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.VOTE) {
+                e.getComponent(SimulationComponent.class).setSimulationState(voteOutputState(e));
             } else {
-                e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.INOPERATIVE);
+                if (Collections.frequency(e.getComponent(SimulationComponent.class).getInputStates(), SimulationState.CORRECT)
+                        >= e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
+                    e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
+                } else {
+                    e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.INOPERATIVE);
+                }
             }
         }
+    }
+
+    public SimulationState voteOutputState(Entity e) {
+        ArrayList<SimulationState> inputStates = e.getComponent(SimulationComponent.class).getInputStates();
+        int inputs = inputStates.size();
+        switch (inputs) {
+            case 0:
+                return SimulationState.INOPERATIVE;
+            case 1:
+                return inputStates.get(0);
+            case 2:
+                if(inputStates.get(0) == inputStates.get(1)) {
+                    return inputStates.get(0);
+                } else {
+                    return SimulationState.PASSIVE;
+                }
+            case 3:
+                if(Collections.frequency(inputStates, SimulationState.CORRECT) >= 2) {
+                    return SimulationState.CORRECT;
+                } else {
+                    return SimulationState.PASSIVE;
+                }
+            case 4:
+                if(Collections.frequency(inputStates, SimulationState.CORRECT) >= 3) {
+                    return SimulationState.CORRECT;
+                } else if(Collections.frequency(inputStates, SimulationState.class) == 2 && Collections.frequency(inputStates, SimulationState.PASSIVE) >= 1) {
+                    return SimulationState.CORRECT;
+                } else {
+                    return SimulationState.PASSIVE;
+                }
+        }
+        return null;
     }
 
     private void medianVoter() {

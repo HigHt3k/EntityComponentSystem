@@ -223,6 +223,23 @@ public class BuildHandler extends Handler {
                                             new int[] {0,1,2,3}, new int[] {},
                                             true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
+                                } else if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.VOTE) {
+                                    newEntity = new SimulationEntity(
+                                            entity.getName() + "_simulation", IdGenerator.generateId(),
+                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
+                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                            cellSize,
+                                            cellSize,
+                                            -1, -1,
+                                            entity.getComponent(GraphicsComponent.class).getImage(), entity.getComponent(BuildComponent.class).getTileId(),
+                                            entity.getComponent(BuildComponent.class).getFailureRatio(),
+                                            entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
+                                            new int[]{0, 1, 2, 3}, new int[]{0,1,2,3},
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
+                                    );
+                                    System.out.println("added new vote entity");
                                 }
 
                                 currentBuilding = newEntity;

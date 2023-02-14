@@ -4,7 +4,8 @@ public enum SimulationType {
     CPU,
     ACTUATOR,
     CABLE,
-    SENSOR;
+    SENSOR,
+    VOTE;
 
     public static boolean contains(String test) {
 

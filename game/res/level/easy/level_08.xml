@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="8" name="@80000" width="5" height="3" difficulty="EASY">
+<map id="8" name="@80000" width="7" height="5" difficulty="EASY">
     <description>
         <part>@80001</part>
     </description>
@@ -10,12 +10,13 @@
         <unlock>3</unlock>
     </unlocks>
     <build>
-        <entity id="201" amount="1" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
-        <entity id="203" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="201" amount="3" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity id="203" amount="3" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="206" amount="2" safety="1e-5" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
     </build>
     <layer id="0" name="Tile Layer 1">
         <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
         <entity x="2" y="0" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity x="4" y="1" id="205" interactable="false" safety="1e-7" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="6" y="3" id="205" interactable="false" safety="1e-7" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </layer>
 </map>

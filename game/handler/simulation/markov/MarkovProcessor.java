@@ -315,14 +315,49 @@ public class MarkovProcessor {
                         continue;
                     }
 
-                    if (Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
-                            > mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
-                        mso.setState(SimulationState.OUT_OF_CONTROL);
-                    } else if (Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
-                            < mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
-                        mso.setState(SimulationState.PASSIVE);
+                    if(mso.getType() == SimulationType.VOTE) {
+                        int inputCount = mso.getInputStates().size();
+                        ArrayList<SimulationState> states = mso.getInputStates();
+                        switch (inputCount) {
+                            case 0:
+                                continue;
+                            case 1:
+                                mso.setState(states.get(0));
+                                break;
+                            case 2:
+                                if(states.get(0) == states.get(1)) {
+                                    mso.setState(states.get(0));
+                                } else {
+                                    mso.setState(SimulationState.PASSIVE);
+                                }
+                                break;
+                            case 3:
+                                if(Collections.frequency(states, SimulationState.CORRECT) >= 2) {
+                                    mso.setState(SimulationState.CORRECT);
+                                } else {
+                                    mso.setState(SimulationState.PASSIVE);
+                                }
+                                break;
+                            case 4:
+                                if(Collections.frequency(states, SimulationState.CORRECT) >= 3) {
+                                    mso.setState(SimulationState.CORRECT);
+                                } else if(Collections.frequency(states, SimulationState.CORRECT) == 2 &&
+                                        Collections.frequency(states, SimulationState.PASSIVE) >= 1) {
+                                    mso.setState(SimulationState.CORRECT);
+                                } else {
+                                    mso.setState(SimulationState.PASSIVE);
+                                }
+                        }
                     } else {
-                        mso.setState(SimulationState.CORRECT);
+                        if (Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
+                                > mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
+                            mso.setState(SimulationState.OUT_OF_CONTROL);
+                        } else if (Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
+                                < mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
+                            mso.setState(SimulationState.PASSIVE);
+                        } else {
+                            mso.setState(SimulationState.CORRECT);
+                        }
                     }
                 }
 

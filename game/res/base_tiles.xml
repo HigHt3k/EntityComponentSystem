@@ -22,6 +22,9 @@
  <tile id="205" type="ACTUATOR">
   <image width="32" height="32" source="game/res/avionics/actuator.png" description="@22" minNonPassive="1"/>
  </tile>
+ <tile id="206" type="VOTE">
+  <image width="32" height="32" source="game/res/avionics/voter.png" description="@23" minNonPassive="1"/>
+ </tile>
  <tile id="1000">
   <image width="32" height="32" source="game/res/tiles/air.png"/>
  </tile>

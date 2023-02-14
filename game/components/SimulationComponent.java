@@ -7,6 +7,7 @@ import game.handler.simulation.SimulationType;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SimulationComponent extends Component {
     private float failureRatio;
