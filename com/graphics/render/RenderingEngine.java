@@ -147,8 +147,8 @@ public class RenderingEngine {
         ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
 
         renderImages(entities);
-        renderShapes(entities);
         renderLines(entities);
+        renderShapes(entities);
         renderTexts(entities);
         renderHovered(entities);
         renderToolTips(entities);
