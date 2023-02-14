@@ -12,10 +12,10 @@ public class SimulationComponent extends Component {
     private float failureRecognitionRatio = 0.9f;
     private SimulationState simulationState = SimulationState.INOPERATIVE;
     private SimulationType simulationType;
-    private ArrayList<Integer> groupIds = new ArrayList<>();
+    private final ArrayList<Integer> groupIds = new ArrayList<>();
     private int ownId = IdGenerator.generateId();
-    private ArrayList<Integer> inputIds = new ArrayList<>();
-    private ArrayList<SimulationState> inputStates = new ArrayList<>();
+    private final ArrayList<Integer> inputIds = new ArrayList<>();
+    private final ArrayList<SimulationState> inputStates = new ArrayList<>();
     private int tileId;
 
 
@@ -34,10 +34,6 @@ public class SimulationComponent extends Component {
 
     public int getTileId() {
         return tileId;
-    }
-
-    public void setOwnId(int id) {
-        ownId = id;
     }
 
     public ArrayList<SimulationState> getInputStates() {
