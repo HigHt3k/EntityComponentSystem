@@ -59,27 +59,17 @@ public class SimulationSystem extends SystemHandle {
     public void finish() {
         markov();
         if(validateGoal()) {
-            System.out.println("Goal reached!");
             if(Game.scene().current() instanceof GameScene gs) {
                 if(!gs.isLevelPassed()) {
                     gs.setLevelPassed(true);
                     int score = calculateScore();
-                    System.out.println("Score: " + score);
-
-                    gs.addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
-                            Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score,
-                            1920/2 - 200, 1080/2 - 100, 400, 200));
-                    GenericButton saveScore = new GenericButton(
-                            "ScoreSaveButton", IdGenerator.generateId(),
-                            1920/2 - 150, 1080/2 + 50, 300, 40,"BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
-                    );
-                    saveScore.addIntent(new SaveScoreIntent(score));
-                    saveScore.addIntent(new StartIntent(Game.scene().getScene(-255)));
-                    gs.addEntityToScene(saveScore);
+                    gs.displayLevelFinished(score);
                 }
             }
         } else {
-            System.out.println("Goal not reached!");
+            if(Game.scene().current() instanceof GameScene gs) {
+                gs.displayLevelNotFinished();
+            }
         }
     }
 

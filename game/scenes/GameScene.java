@@ -19,6 +19,7 @@ import game.handler.simulation.SimulationType;
 import game.handler.BuildHandler;
 import game.handler.SimulationSystem;
 import game.intent.CableLayerSwitchIntent;
+import game.intent.SaveScoreIntent;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -606,5 +607,29 @@ public class GameScene extends Scene {
         getFailTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0, "");
         getAcceptedOOCTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0,"");
         getCorrectSignalsTipDesc().getComponent(GraphicsComponent.class).getTexts().set(0,"");
+    }
+
+    public void displayLevelFinished(int score) {
+        addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
+                Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score,
+                1920/2 - 200, 1080/2 - 100, 400, 200, "level passed!"));
+        GenericButton saveScore = new GenericButton(
+                "ScoreSaveButton", IdGenerator.generateId(),
+                1920/2 - 150, 1080/2 + 50, 300, 40,"BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
+        );
+        saveScore.addIntent(new SaveScoreIntent(score));
+        saveScore.addIntent(new StartIntent(Game.scene().getScene(-255)));
+        addEntityToScene(saveScore);
+    }
+
+    public void displayLevelNotFinished() {
+        addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
+                Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), 0,
+                1920/2 - 200, 1080/2 - 100, 400, 200, "Requirements not met!"));
+        GenericButton back = new GenericButton(
+                "back", IdGenerator.generateId(),
+                1920/2 - 150, 1080/2 + 50, 300, 40,"TRY AGAIN", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
+        );
+        addEntityToScene(back);
     }
 }

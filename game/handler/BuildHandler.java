@@ -129,6 +129,11 @@ public class BuildHandler extends Handler {
                     gs.setDescriptionDisplayUsingOffset(+1);
                 } else if(validate.getComponent(CollisionComponent.class).contains(e.getPoint())) {
                     Game.system().getSystem(SimulationSystem.class).finish();
+                } else if(Game.scene().current().getEntityByName("back") != null) {
+                    if(Game.scene().current().getEntityByName("back").getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("back"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scorebox"));
+                    }
                 }
             }
         } else if(Game.scene().current() instanceof BuildScene bs) {
