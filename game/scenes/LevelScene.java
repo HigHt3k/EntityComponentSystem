@@ -12,6 +12,7 @@ import com.resource.colorpalettes.Bit8;
 import com.resource.fonts.FontCollection;
 import com.resource.score.HighScore;
 import game.entities.LevelButton;
+import game.entities.LineEntity;
 import game.entities.SimplePanel;
 import game.entities.TextBody;
 import game.handler.LevelSceneHandler;
@@ -149,6 +150,7 @@ public class LevelScene extends Scene {
         addLevel(23, 1000, 600, Bit8.RED);
         addLevel(24, 1000, 700, Bit8.RED);
         addLevel(25, 1000, 800, Bit8.RED);
+        makeConnections();
         unlockAll();
 
         GenericButton mainMenuButton = new GenericButton(
@@ -242,5 +244,40 @@ public class LevelScene extends Scene {
                 }
             }
         }
+    }
+
+    private void makeConnections() {
+        ArrayList<Entity> entities = (ArrayList<Entity>) getEntities().clone();
+        for(Entity e : entities) {
+            if(e instanceof LevelButton lb) {
+                if(lb.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() instanceof GameScene gs) {
+                    for(int i : gs.getUnlocksNeeded()) {
+                        for(Entity e2 : entities) {
+                            if(e2 instanceof LevelButton lb2) {
+                                if(lb2.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() instanceof GameScene gs2) {
+                                    if(gs2.getId() == i) {
+                                        Point p1 = new Point(
+                                                lb.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().x + 25,
+                                                lb.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().y + 25
+                                        );
+                                        Point p2 = new Point(
+                                                lb2.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().x + 25,
+                                                lb2.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().y + 25
+                                        );
+                                        makeConnection(p1, p2);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void makeConnection(Point p1, Point p2) {
+        Entity line = new LineEntity("line_connector", IdGenerator.generateId(),
+                p1, p2, 4, Bit8.NAVY);
+        addEntityToScene(line);
     }
 }
