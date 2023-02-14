@@ -1,6 +1,6 @@
 package game.handler.simulation.markov;
 
-import com.ecs.entity.Entity;
+import engine.ecs.entity.Entity;
 import game.components.SimulationComponent;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;

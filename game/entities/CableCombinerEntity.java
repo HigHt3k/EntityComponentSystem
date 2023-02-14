@@ -1,12 +1,12 @@
 package game.entities;
 
-import com.Game;
-import com.ecs.component.collision.CollisionComponent;
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.component.IntentComponent;
-import com.ecs.entity.Entity;
-import com.ecs.intent.DebugIntent;
-import com.ecs.intent.HoverIntent;
+import engine.Game;
+import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.IntentComponent;
+import engine.ecs.entity.Entity;
+import engine.ecs.intent.DebugIntent;
+import engine.ecs.intent.HoverIntent;
 import game.components.CablePortsComponent;
 import game.components.GridComponent;
 

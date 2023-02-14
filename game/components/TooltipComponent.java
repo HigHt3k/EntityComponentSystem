@@ -1,6 +1,6 @@
 package game.components;
 
-import com.ecs.component.Component;
+import engine.ecs.component.Component;
 
 public class TooltipComponent extends Component {
     private String tooltipText;

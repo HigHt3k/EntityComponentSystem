@@ -1,13 +1,11 @@
 package game.components;
 
-import com.IdGenerator;
-import com.ecs.component.Component;
+import engine.IdGenerator;
+import engine.ecs.component.Component;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class SimulationComponent extends Component {
     private float failureRatio;

@@ -1,10 +1,10 @@
 package game.intent;
 
-import com.Game;
-import com.ecs.component.collision.CollisionComponent;
-import com.ecs.component.IntentComponent;
-import com.ecs.intent.Intent;
-import com.graphics.scene.Scene;
+import engine.Game;
+import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.component.IntentComponent;
+import engine.ecs.intent.Intent;
+import engine.graphics.scene.Scene;
 import game.scenes.GameScene;
 
 import java.awt.event.KeyEvent;

@@ -1,10 +1,8 @@
 package game.entities;
 
-import com.Game;
-import com.ecs.component.CursorComponent;
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.entity.Entity;
-import game.components.GridComponent;
+import engine.ecs.component.CursorComponent;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.entity.Entity;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

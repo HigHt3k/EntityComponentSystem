@@ -1,7 +1,7 @@
 package game.entities;
 
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.entity.Entity;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.entity.Entity;
 
 import java.awt.*;
 

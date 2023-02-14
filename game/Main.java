@@ -1,10 +1,8 @@
 package game;
 
-import com.Game;
-import com.resource.lang.LanguageType;
+import engine.Game;
+import engine.resource.lang.LanguageType;
 import game.scenes.MenuScene;
-import game.scenes.test.GraphicObjectsTestScene;
-import game.scenes.test.TestTextScene;
 
 import java.io.File;
 import java.util.Objects;

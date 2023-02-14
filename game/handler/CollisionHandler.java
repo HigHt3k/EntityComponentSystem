@@ -1,12 +1,12 @@
 package game.handler;
 
-import com.Game;
-import com.ecs.component.collision.CollisionComponent;
-import com.ecs.component.collision.ColliderObject;
-import com.ecs.entity.Entity;
-import com.ecs.entity.NumberSelectorEntity;
-import com.input.handler.Handler;
-import com.input.handler.HandlerType;
+import engine.Game;
+import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.component.collision.ColliderObject;
+import engine.ecs.entity.Entity;
+import engine.ecs.entity.NumberSelectorEntity;
+import engine.input.handler.Handler;
+import engine.input.handler.HandlerType;
 import game.components.BuildComponent;
 
 import java.awt.event.KeyEvent;

@@ -1,12 +1,12 @@
 package game.scenes;
 
-import com.Game;
-import com.IdGenerator;
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.entity.Entity;
-import com.ecs.entity.GenericButton;
-import com.ecs.intent.ExitIntent;
-import com.graphics.scene.Scene;
+import engine.Game;
+import engine.IdGenerator;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.entity.Entity;
+import engine.ecs.entity.GenericButton;
+import engine.ecs.intent.ExitIntent;
+import engine.graphics.scene.Scene;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;

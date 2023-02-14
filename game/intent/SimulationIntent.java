@@ -1,6 +1,6 @@
 package game.intent;
 
-import com.ecs.intent.Intent;
+import engine.ecs.intent.Intent;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

@@ -1,8 +1,8 @@
 package game.entities;
 
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.entity.GenericButton;
-import com.resource.colorpalettes.Bit8;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.entity.GenericButton;
+import engine.resource.colorpalettes.Bit8;
 
 import java.awt.*;
 

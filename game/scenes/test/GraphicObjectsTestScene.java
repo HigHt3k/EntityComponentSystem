@@ -1,9 +1,9 @@
 package game.scenes.test;
 
-import com.Game;
-import com.IdGenerator;
-import com.ecs.entity.NumberSelectorEntity;
-import com.graphics.scene.Scene;
+import engine.Game;
+import engine.IdGenerator;
+import engine.ecs.entity.NumberSelectorEntity;
+import engine.graphics.scene.Scene;
 import game.handler.CollisionHandler;
 
 import java.awt.*;

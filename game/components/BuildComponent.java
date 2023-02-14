@@ -1,6 +1,6 @@
 package game.components;
 
-import com.ecs.component.Component;
+import engine.ecs.component.Component;
 import game.handler.simulation.SimulationType;
 
 public class BuildComponent extends Component {

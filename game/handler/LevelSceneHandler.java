@@ -1,13 +1,12 @@
 package game.handler;
 
-import com.Game;
-import com.ecs.component.IntentComponent;
-import com.ecs.component.collision.CollisionComponent;
-import com.ecs.entity.Entity;
-import com.graphics.scene.Scene;
-import com.input.handler.Handler;
-import com.input.handler.HandlerType;
-import game.components.TooltipComponent;
+import engine.Game;
+import engine.ecs.component.IntentComponent;
+import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.entity.Entity;
+import engine.graphics.scene.Scene;
+import engine.input.handler.Handler;
+import engine.input.handler.HandlerType;
 import game.entities.LevelButton;
 import game.intent.StartIntent;
 import game.scenes.LevelScene;
@@ -15,7 +14,6 @@ import game.scenes.LevelScene;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class LevelSceneHandler extends Handler {
     public LevelSceneHandler() {

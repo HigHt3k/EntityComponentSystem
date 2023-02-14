@@ -1,11 +1,11 @@
 package game.handler;
 
-import com.Game;
-import com.IdGenerator;
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.entity.Entity;
-import com.ecs.entity.GenericButton;
-import com.ecs.system.SystemHandle;
+import engine.Game;
+import engine.IdGenerator;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.entity.Entity;
+import engine.ecs.entity.GenericButton;
+import engine.ecs.system.SystemHandle;
 import game.components.*;
 import game.entities.CablePort;
 import game.entities.ScoreBox;
@@ -17,9 +17,7 @@ import game.intent.StartIntent;
 import game.scenes.GameScene;
 
 import java.awt.*;
-import java.text.DecimalFormat;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 
 public class SimulationSystem extends SystemHandle {

@@ -1,14 +1,15 @@
 package game.scenes;
 
-import com.Game;
-import com.IdGenerator;
-import com.ecs.component.collision.CollisionComponent;
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.entity.Entity;
-import com.ecs.entity.GenericButton;
-import com.ecs.entity.NumberSelectorEntity;
-import com.ecs.intent.ExitIntent;
-import com.graphics.scene.Scene;
+import engine.Game;
+import engine.IdGenerator;
+import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.entity.Entity;
+import engine.ecs.entity.GenericButton;
+import engine.ecs.entity.NumberSelectorEntity;
+import engine.ecs.intent.ExitIntent;
+import engine.graphics.scene.Scene;
+import engine.resource.ResourceManager;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.entities.BuildPanelEntity;
@@ -133,7 +134,7 @@ public class BuildScene extends Scene {
     }
 
     /**
-     * add an Entity that snaps to the grid. This method can e.g. be called from the {@link com.resource.ResourceManager} to parse
+     * add an Entity that snaps to the grid. This method can e.g. be called from the {@link ResourceManager} to parse
      * the level.XML file to the actual {@link GameScene}.
      * A {@link GridComponent} is added to the Entity to store the grid position data, which can be called to validate entities against
      * each other without having to calculate their grid position based on the actual screen position.

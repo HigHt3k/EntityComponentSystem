@@ -1,6 +1,6 @@
 package game.scenes;
 
-import com.graphics.scene.Scene;
+import engine.graphics.scene.Scene;
 
 public class ScoreBoardScene extends Scene {
     public ScoreBoardScene(String name, int id) {

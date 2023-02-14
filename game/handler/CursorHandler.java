@@ -1,7 +1,7 @@
 package game.handler;
 
-import com.input.handler.Handler;
-import com.input.handler.HandlerType;
+import engine.input.handler.Handler;
+import engine.input.handler.HandlerType;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;

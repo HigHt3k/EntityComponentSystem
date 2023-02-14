@@ -1,9 +1,9 @@
 package game.components;
 
-import com.Game;
-import com.ecs.component.Component;
-import com.ecs.component.graphics.GraphicsComponent;
-import com.ecs.entity.Entity;
+import engine.Game;
+import engine.ecs.component.Component;
+import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.entity.Entity;
 import game.entities.CablePort;
 import game.entities.CablePortPosition;
 import game.handler.simulation.SimulationType;
