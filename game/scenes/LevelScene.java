@@ -28,6 +28,8 @@ public class LevelScene extends Scene {
     private static final int ITEM_HEIGHT = 60;
     private Entity highscoreView;
     private Entity playersView;
+    private Entity levelInfoDesc;
+    private Entity levelInfoHead;
 
     public void addHighscores(int levelId) {
         StringBuilder players = new StringBuilder();
@@ -47,6 +49,17 @@ public class LevelScene extends Scene {
     public void removeHighscores() {
         playersView.getComponent(GraphicsComponent.class).getTexts().set(0, "");
         highscoreView.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+    }
+
+    public void showLevelInfo(int levelId) {
+        GameScene s = (GameScene) Game.scene().getScene(levelId);
+        levelInfoHead.getComponent(GraphicsComponent.class).getTexts().set(0, s.getName());
+        levelInfoDesc.getComponent(GraphicsComponent.class).getTexts().set(0, String.valueOf(s.getDifficulty()));
+    }
+
+    public void removeLevelInfo() {
+        levelInfoDesc.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        levelInfoHead.getComponent(GraphicsComponent.class).getTexts().set(0, "");
     }
 
     public LevelScene(String name, int id) {
@@ -82,20 +95,32 @@ public class LevelScene extends Scene {
         Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
         Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
 
+        Entity levelInfoPanel = new SimplePanel("level_info", IdGenerator.generateId(),
+                1500, 0, 402, 300, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+        addEntityToScene(levelInfoPanel);
+
+        levelInfoHead = new TextBody("levelInfoHead", IdGenerator.generateId(),
+                1500, 0, 402, 50, fontBig, Bit8.DARK_GREY, "");
+        addEntityToScene(levelInfoHead);
+
+        levelInfoDesc = new TextBody("levelinfoDesc", IdGenerator.generateId(),
+                1500, 50,402, 250, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(levelInfoDesc);
+
         Entity highscorePanel = new SimplePanel("highscore_panel", IdGenerator.generateId(),
-                1500, 350, 402, 500, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+                1500, 300, 402, 500, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
         addEntityToScene(highscorePanel);
 
         Entity highscoreHead= new TextBody("highscoreHead", IdGenerator.generateId(),
-                1500, 350, 402, 50, fontBig, Bit8.DARK_GREY, "Highscores");
+                1500, 300, 402, 50, fontBig, Bit8.DARK_GREY, "Highscores");
         addEntityToScene(highscoreHead);
 
         playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
-                1500, 400, 250, 450, fontMed, Bit8.DARK_GREY, "");
+                1500, 350, 250, 450, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(playersView);
 
         highscoreView = new TextBody("highscoreView", IdGenerator.generateId(),
-                1750, 400, 152, 450, fontMed, Bit8.DARK_GREY, "");
+                1750, 350, 152, 450, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(highscoreView);
 
         addLevel(1, 300, 300, Bit8.CORNFLOWER_BLUE);

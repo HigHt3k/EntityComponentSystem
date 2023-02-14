@@ -38,6 +38,7 @@ public class LevelSceneHandler extends Handler {
                         Scene s = lb.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene();
                         if (s != null) {
                             ls.addHighscores(s.getId());
+                            ls.showLevelInfo(s.getId());
                             System.out.println("Adding higschore:");
                             return;
                         }
@@ -45,6 +46,7 @@ public class LevelSceneHandler extends Handler {
                 }
             }
             ls.removeHighscores();
+            ls.removeLevelInfo();
         }
     }
 }
