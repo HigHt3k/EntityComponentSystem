@@ -32,6 +32,8 @@ public class GraphicsComponent extends Component {
     ArrayList<Point2D> _LOCATIONS = new ArrayList<>();
     int _THICKNESS = 1;
     ArrayList<Shape> _SHAPES = new ArrayList<>();
+    Point _LINESTART;
+    Point _LINEEND;
 
     // temporary sizes
     Rectangle bounds;
@@ -269,8 +271,10 @@ public class GraphicsComponent extends Component {
     }
 
     public void setLine(Point p1, Point p2) {
-        this.lineStart = p1;
-        this.lineEnd = p2;
+        this._LINESTART = p1;
+        this._LINEEND = p2;
+        this.lineStart = Game.scale().scalePoint(p1);
+        this.lineEnd = Game.scale().scalePoint(p2);
     }
 
     public void addShape(Shape s) {
