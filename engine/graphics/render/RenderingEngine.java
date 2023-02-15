@@ -2,6 +2,7 @@ package engine.graphics.render;
 
 import engine.Game;
 import engine.ecs.Query;
+import engine.ecs.component.CursorComponent;
 import engine.ecs.component.graphics.GraphicsObject;
 import engine.ecs.component.graphics.GraphicsObjectType;
 import engine.ecs.entity.Entity;
