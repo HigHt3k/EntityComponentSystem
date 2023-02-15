@@ -15,6 +15,7 @@ import game.entities.LevelButton;
 import game.entities.LineEntity;
 import game.entities.SimplePanel;
 import game.entities.TextBody;
+import game.handler.CursorSelectorHandler;
 import game.handler.LevelSceneHandler;
 import game.intent.StartIntent;
 
@@ -215,6 +216,7 @@ public class LevelScene extends Scene {
     @Override
     public void init() {
         checkUnlocks();
+        Game.input().addHandler(new CursorSelectorHandler());
     }
 
     @Override

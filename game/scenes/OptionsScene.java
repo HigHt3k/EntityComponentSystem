@@ -9,6 +9,7 @@ import engine.ecs.intent.ChangeLanguageIntent;
 import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
 import engine.resource.lang.LanguageType;
+import game.handler.CursorSelectorHandler;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -27,6 +28,7 @@ public class OptionsScene extends Scene {
 
     public OptionsScene(String name, int id) {
         super(name, id);
+        Game.input().removeAllHandlers();
 
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
 
@@ -102,7 +104,7 @@ public class OptionsScene extends Scene {
 
     @Override
     public void init() {
-
+        Game.input().addHandler(new CursorSelectorHandler());
     }
 
     @Override

@@ -7,6 +7,7 @@ import java.awt.*;
 
 public class CursorComponent extends Component {
     private Point cursorPosition;
+    private Point _CURSORPOSITION;
     private Entity selected;
 
     @Override
@@ -27,6 +28,12 @@ public class CursorComponent extends Component {
     }
 
     public void setCursorPosition(Point cursorPosition) {
+        this._CURSORPOSITION = cursorPosition;
         this.cursorPosition = Game.scale().scalePoint(cursorPosition);
+    }
+
+    public void reposition(Point p) {
+        this.cursorPosition = p;
+        this._CURSORPOSITION = Game.scale().upscalePoint(p);
     }
 }

@@ -6,6 +6,7 @@ import engine.ecs.entity.Entity;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,7 +22,8 @@ public class CursorEntity extends Entity {
 
         GraphicsComponent graphics = new GraphicsComponent();
         graphics.setEntity(this);
-        graphics.setBounds(new Rectangle(0, 0, 0, 0));
+        graphics.setBounds(new Rectangle(1920/2, 1080/2, 50, 50));
+        graphics.setLayer(5);
         try {
             graphics.setImage(ImageIO.read(new File("game/res/cursor.png")));
         } catch (IOException e) {
@@ -30,7 +32,7 @@ public class CursorEntity extends Entity {
         this.addComponent(graphics);
 
         CursorComponent cursor = new CursorComponent();
-        cursor.setCursorPosition(new Point(-1, -1));
+        cursor.setCursorPosition(new Point(1920/2, 1080/2));
         cursor.setEntity(this);
         this.addComponent(cursor);
     }

@@ -16,6 +16,7 @@ import game.entities.BuildPanelEntity;
 import game.entities.GridEntity;
 import game.handler.BuildHandler;
 import game.handler.CollisionHandler;
+import game.handler.CursorSelectorHandler;
 import game.handler.simulation.SimulationType;
 import game.intent.CableLayerSwitchIntent;
 import game.intent.GridSizeIntent;
@@ -124,6 +125,7 @@ public class BuildScene extends Scene {
 
         Game.input().addHandler(new BuildHandler());
         Game.input().addHandler(new CollisionHandler());
+        Game.input().addHandler(new CursorSelectorHandler());
     }
 
     @Override

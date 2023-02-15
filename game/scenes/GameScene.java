@@ -15,6 +15,7 @@ import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.TooltipComponent;
 import game.entities.*;
+import game.handler.CursorSelectorHandler;
 import game.handler.simulation.SimulationType;
 import game.handler.BuildHandler;
 import game.handler.SimulationSystem;
@@ -172,6 +173,7 @@ public class GameScene extends Scene {
         addToBuildPanel(503, 1000, 1e-25f, 1, 0, 0f);
         Game.input().addHandler(new BuildHandler());
         Game.system().addSystem(new SimulationSystem());
+        Game.input().addHandler(new CursorSelectorHandler());
     }
 
     private void updateEntitySize() {

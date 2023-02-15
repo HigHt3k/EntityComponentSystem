@@ -7,6 +7,7 @@ import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
+import game.handler.CursorSelectorHandler;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -21,6 +22,7 @@ public class MenuScene extends Scene {
 
     public MenuScene(String name, int id) {
         super(name, id);
+        Game.input().removeAllHandlers();
 
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
 
@@ -85,6 +87,7 @@ public class MenuScene extends Scene {
     @Override
     public void init() {
         Game.system().resetSystems();
+        Game.input().addHandler(new CursorSelectorHandler());
     }
 
     @Override
