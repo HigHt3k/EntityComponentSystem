@@ -29,6 +29,10 @@ public class CursorSelectorHandler extends Handler {
         Game.scene().current().addEntityToScene(cursor);
     }
 
+    public CursorEntity getCursor() {
+        return cursor;
+    }
+
     @Override
     public void handle(KeyEvent e) {
         ArrayList<Entity> collisionEntities = Query.getEntitiesWithComponent(CollisionComponent.class);
