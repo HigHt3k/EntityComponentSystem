@@ -138,6 +138,14 @@ public class RenderingEngine {
         ImageRenderer.render(g, img, x, y, width, height);
     }
 
+    /**
+     * Render a line to the graphics context
+     * @param g: the graphics context
+     * @param p1: Point 1
+     * @param p2: Point 2
+     * @param color: Line Color
+     * @param thickness: Line thickness
+     */
     public static void renderLine(Graphics2D g, Point p1, Point p2, Color color, int thickness) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
