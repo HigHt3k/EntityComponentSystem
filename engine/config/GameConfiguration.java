@@ -6,10 +6,15 @@ public class GameConfiguration {
     private static final RenderConfiguration renderConfiguration = new RenderConfiguration();
     private boolean debug = false;
     private LanguageType language = LanguageType.EN_US;
+    private static final ControlsConfig controls = new ControlsConfig();
     //TODO: what other configurations are needed? Language?
 
     public GameConfiguration() {
 
+    }
+
+    public ControlsConfig getControls() {
+        return controls;
     }
 
     public RenderConfiguration renderConfiguration() {
