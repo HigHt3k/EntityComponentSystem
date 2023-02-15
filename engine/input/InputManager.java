@@ -34,8 +34,7 @@ public class InputManager {
                 continue;
             }
 
-
-            for(Handler h : handlers) {
+            for(Handler h : (ArrayList<Handler>) handlers.clone()) {
                 if(h.getHandlerType() == HandlerType.EVENT)
                     h.handle(e);
             }
