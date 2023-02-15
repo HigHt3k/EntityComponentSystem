@@ -27,16 +27,17 @@ public class RenderingEngine {
 
     /**
      * Render a text
-     * @param g: the graphics context
-     * @param text: the text to render
-     * @param color: the text color
-     * @param font: font type
-     * @param x: x location of text box
-     * @param y: y location of text box
-     * @param width: width of text box
-     * @param height: height of text box
+     *
+     * @param g:                   the graphics context
+     * @param text:                the text to render
+     * @param color:               the text color
+     * @param font:                font type
+     * @param x:                   x location of text box
+     * @param y:                   y location of text box
+     * @param width:               width of text box
+     * @param height:              height of text box
      * @param horizontalAlignment: horizontal alignment within box
-     * @param verticalAlignment: vertical alignment within box
+     * @param verticalAlignment:   vertical alignment within box
      */
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height,
                                   TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment) {
@@ -45,24 +46,25 @@ public class RenderingEngine {
 
     /**
      * Render a text
-     * @param g: the graphics context
-     * @param text: the text to render
-     * @param color: the text color
-     * @param font: font type
-     * @param x: x location of text box
-     * @param y: y location of text box
-     * @param width: width of text box
+     *
+     * @param g:      the graphics context
+     * @param text:   the text to render
+     * @param color:  the text color
+     * @param font:   font type
+     * @param x:      x location of text box
+     * @param y:      y location of text box
+     * @param width:  width of text box
      * @param height: height of text box
      */
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
-        if(text.contains("@")) {
+        if (text.contains("@")) {
             String temp = text;
             int id = Integer.parseInt(temp.replace("@", ""));
             text = Game.res().language().getStringValue(id, Game.config().getLanguage());
         }
 
-        if(text.contains("\n")) {
-            TextRenderer.render(g, text, color, font, new Point(x + MARGIN,y));
+        if (text.contains("\n")) {
+            TextRenderer.render(g, text, color, font, new Point(x + MARGIN, y));
             return;
         }
 
@@ -80,10 +82,10 @@ public class RenderingEngine {
         StringBuilder tempLine = new StringBuilder();
         String tempWord = "";
         StringBuilder newText = new StringBuilder();
-        for(int i = 0; i < text.length(); i++) {
+        for (int i = 0; i < text.length(); i++) {
             tempWord += text.charAt(i);
-            if(Character.isWhitespace(text.charAt(i)) || Character.isSpaceChar(text.charAt(i))) {
-                if(g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
+            if (Character.isWhitespace(text.charAt(i)) || Character.isSpaceChar(text.charAt(i))) {
+                if (g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
                     newText.append(tempLine).append("\n");
                     tempLine = new StringBuilder();
                 } else {
@@ -93,22 +95,23 @@ public class RenderingEngine {
             }
         }
 
-        if(g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
+        if (g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
             newText.append(tempLine).append("\n").append(tempWord);
         } else {
             tempLine.append(tempWord);
             newText.append(tempLine);
         }
 
-        TextRenderer.render(g, newText.toString(), color, font, new Point(x + MARGIN,y));
+        TextRenderer.render(g, newText.toString(), color, font, new Point(x + MARGIN, y));
     }
 
     /**
      * Render a shape (e.g. Rectangle, Ellipse2D, ...) to the graphics context. Can also be filled.
-     * @param g: graphics context
-     * @param shape Shape to render, e.g. Rectangle or Ellipse2D
+     *
+     * @param g:           graphics context
+     * @param shape        Shape to render, e.g. Rectangle or Ellipse2D
      * @param borderColor: Color to draw border
-     * @param fillColor: fill color, if null then not filled
+     * @param fillColor:   fill color, if null then not filled
      */
     public static void renderShape(Graphics2D g, Shape shape, Color borderColor, Color fillColor, int thickness) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -119,11 +122,12 @@ public class RenderingEngine {
 
     /**
      * Render a Buffered Image to the screen at a given position and size in the graphics context.
-     * @param g: Graphics2D context
-     * @param img: Image to render
-     * @param x: position x
-     * @param y: position y
-     * @param width: size in x direction (px)
+     *
+     * @param g:      Graphics2D context
+     * @param img:    Image to render
+     * @param x:      position x
+     * @param y:      position y
+     * @param width:  size in x direction (px)
      * @param height: size in y direction (px)
      */
     public static void renderImage(Graphics2D g, BufferedImage img, int x, int y, int width, int height) {
@@ -146,213 +150,202 @@ public class RenderingEngine {
     public void collectAndRenderEntities() {
         ArrayList<Entity> entities = Query.getEntitiesWithComponent(GraphicsComponent.class);
 
-        Collections.sort(entities, new Comparator<Entity>() {
-            @Override
-            public int compare(Entity o1, Entity o2) {
-                if(o1.getComponent(GraphicsComponent.class).getLayer() == o2.getComponent(GraphicsComponent.class).getLayer())
-                    return 0;
-                else if(o1.getComponent(GraphicsComponent.class).getLayer() < o2.getComponent(GraphicsComponent.class).getLayer()) {
-                    return -1;
-                } else {
-                    return 1;
-                }
+        Collections.sort(entities, (o1, o2) -> {
+            if (o1.getComponent(GraphicsComponent.class).getLayer() == o2.getComponent(GraphicsComponent.class).getLayer())
+                return 0;
+            else if (o1.getComponent(GraphicsComponent.class).getLayer() < o2.getComponent(GraphicsComponent.class).getLayer()) {
+                return -1;
+            } else {
+                return 1;
             }
         });
 
-        renderImages(entities);
-        renderLines(entities);
-        renderShapes(entities);
-        renderTexts(entities);
-        renderHovered(entities);
-        renderToolTips(entities);
-
-        renderGraphicObjects(entities);
+        for (Entity e : entities) {
+            renderImages(e);
+            renderLines(e);
+            renderShapes(e);
+            renderTexts(e);
+            renderHovered(e);
+            renderToolTips(e);
+            renderGraphicObjects(e);
+        }
     }
 
-    public void renderGraphicObjects(ArrayList<Entity> entities) {
-        for(Entity e : entities) {
-            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if(gc == null) {
-                continue;
+    public void renderGraphicObjects(Entity e) {
+
+        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+
+        Collections.sort(gc.getGraphicsObjects(), (o1, o2) -> {
+            if (o1.getLayer() == o2.getLayer())
+                return 0;
+            else if (o1.getLayer() < o2.getLayer()) {
+                return -1;
+            } else {
+                return 1;
             }
+        });
 
-            Collections.sort(gc.getGraphicsObjects(), new Comparator<GraphicsObject>() {
-                @Override
-                public int compare(GraphicsObject o1, GraphicsObject o2) {
-                    if(o1.getLayer() == o2.getLayer())
-                        return 0;
-                    else if(o1.getLayer() < o2.getLayer()) {
-                        return -1;
-                    } else {
-                        return 1;
-                    }
+        for (GraphicsObject go : gc.getGraphicsObjects()) {
+            if (go.getType() == GraphicsObjectType.SHAPE) {
+                renderShape(g, go.getShape(), go.getBorderColor(), go.getColor(), 1);
+                if (go.isHovered()) {
+                    renderShape(g, go.getShape(), go.getHoverColor(), go.getHoverColor(), 1);
                 }
-            });
-
-            for(GraphicsObject go : gc.getGraphicsObjects()) {
-                if(go.getType() == GraphicsObjectType.SHAPE) {
-                    renderShape(g, go.getShape(), go.getBorderColor(), go.getColor(), 1);
-                    if(go.isHovered()) {
-                        renderShape(g, go.getShape(), go.getHoverColor(), go.getHoverColor(), 1);
-                    }
-                }
-                else if(go.getType() == GraphicsObjectType.TEXT) {
-                    renderText(g, go.getText(), go.getColor(), go.getFont(),
-                            go.getShape().getBounds().x, go.getShape().getBounds().y,
-                            go.getShape().getBounds().width, go.getShape().getBounds().height);
-                }
-                else if(go.getType() == GraphicsObjectType.IMAGE) {
-                    renderImage(g, go.getImage(),
-                            go.getShape().getBounds().x, go.getShape().getBounds().y,
-                            go.getShape().getBounds().width, go.getShape().getBounds().height);
-                }
+            } else if (go.getType() == GraphicsObjectType.TEXT) {
+                renderText(g, go.getText(), go.getColor(), go.getFont(),
+                        go.getShape().getBounds().x, go.getShape().getBounds().y,
+                        go.getShape().getBounds().width, go.getShape().getBounds().height);
+            } else if (go.getType() == GraphicsObjectType.IMAGE) {
+                renderImage(g, go.getImage(),
+                        go.getShape().getBounds().x, go.getShape().getBounds().y,
+                        go.getShape().getBounds().width, go.getShape().getBounds().height);
             }
         }
+
     }
 
     /**
      * set the graphics context to render to
+     *
      * @param g: the graphics context
      */
     public void setGraphics(Graphics2D g) {
         this.g = g;
     }
 
-    private void renderLines(ArrayList<Entity> entities) {
-        for(Entity e : entities) {
-            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if (gc != null) {
-                if (gc.getLineStart() != null && gc.getLineEnd() != null) {
-                    renderLine(g,
-                            gc.getLineStart(),
-                            gc.getLineEnd(),
-                            gc.getLineColor(),
-                            gc.getThickness()
-                    );
-                }
+    private void renderLines(Entity e) {
+
+        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+        if (gc != null) {
+            if (gc.getLineStart() != null && gc.getLineEnd() != null) {
+                renderLine(g,
+                        gc.getLineStart(),
+                        gc.getLineEnd(),
+                        gc.getLineColor(),
+                        gc.getThickness()
+                );
             }
+
         }
     }
 
-    private void renderShapes(ArrayList<Entity> entities) {
-        for(Entity e : entities) {
-            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if (gc != null) {
-                // render based on the given content of the component
-                if (gc.getShape() != null) {
+    private void renderShapes(Entity e) {
+
+        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+        if (gc != null) {
+            // render based on the given content of the component
+            if (gc.getShape() != null) {
+                renderShape(
+                        g,
+                        gc.getShape(),
+                        gc.getBorderColor(),
+                        gc.getFillColor(),
+                        gc.getThickness()
+                );
+            }
+
+            if (gc.getShapes() != null) {
+                for (Shape s : gc.getShapes()) {
                     renderShape(
                             g,
-                            gc.getShape(),
+                            s,
                             gc.getBorderColor(),
                             gc.getFillColor(),
                             gc.getThickness()
                     );
                 }
 
-                if(gc.getShapes() != null) {
-                    for(Shape s : gc.getShapes()) {
-                        renderShape(
-                                g,
-                                s,
-                                gc.getBorderColor(),
-                                gc.getFillColor(),
-                                gc.getThickness()
-                        );
-                    }
-                }
             }
         }
     }
 
-    private void renderImages(ArrayList<Entity> entities) {
-        for(Entity e : entities) {
-            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if (gc != null) {
-                // render based on the given content of the component
-                if (gc.getImage() != null) {
-                    renderImage(
+    private void renderImages(Entity e) {
+
+        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+        if (gc != null) {
+            // render based on the given content of the component
+            if (gc.getImage() != null) {
+                renderImage(
+                        g,
+                        gc.getImage(),
+                        gc.getBounds().x,
+                        gc.getBounds().y,
+                        gc.getBounds().width,
+                        gc.getBounds().height
+                );
+            }
+        }
+
+    }
+
+    private void renderTexts(Entity e) {
+
+        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+        if (gc != null) {
+            if (!gc.getTexts().isEmpty() && !gc.getLocations().isEmpty()) {
+                for (int i = 0; i < gc.getTexts().size(); i++) {
+                    renderText(
                             g,
-                            gc.getImage(),
-                            gc.getBounds().x,
-                            gc.getBounds().y,
+                            gc.getTexts().get(i),
+                            gc.getTextColor(),
+                            gc.getFont(),
+                            (int) gc.getLocations().get(i).getX(),
+                            (int) gc.getLocations().get(i).getY(),
                             gc.getBounds().width,
                             gc.getBounds().height
                     );
                 }
+
             }
         }
     }
 
-    private void renderTexts(ArrayList<Entity> entities) {
-        for(Entity e : entities) {
-            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if (gc != null) {
-                if (!gc.getTexts().isEmpty() && !gc.getLocations().isEmpty()) {
-                    for (int i = 0; i < gc.getTexts().size(); i++) {
-                        renderText(
-                                g,
-                                gc.getTexts().get(i),
-                                gc.getTextColor(),
-                                gc.getFont(),
-                                (int) gc.getLocations().get(i).getX(),
-                                (int) gc.getLocations().get(i).getY(),
-                                gc.getBounds().width,
-                                gc.getBounds().height
-                        );
-                    }
+    private void renderToolTips(Entity e) {
+        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+        if (gc != null) {
+            if (gc.isHovered()) {
+                if (gc.getToolTip() != null) {
+                    renderShape(
+                            g,
+                            new Rectangle(
+                                    gc.getBounds().x + 80,
+                                    gc.getBounds().y + 50,
+                                    200,
+                                    150
+                            ),
+                            gc.getToolTip().getBorderColor(),
+                            gc.getToolTip().getToolTipColor(),
+                            gc.getThickness()
+                    );
+                    renderText(
+                            g,
+                            gc.getToolTip().getText(),
+                            gc.getToolTip().getTextColor(),
+                            gc.getToolTip().getFont(),
+                            gc.getBounds().x + 80,
+                            gc.getBounds().y + 50,
+                            200,
+                            150
+                    );
                 }
             }
         }
+
     }
 
-    private void renderToolTips(ArrayList<Entity> entities) {
-        for(Entity e : entities) {
-            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if(gc != null) {
-                if(gc.isHovered() ) {
-                    if (gc.getToolTip() != null) {
-                        renderShape(
-                                g,
-                                new Rectangle(
-                                        gc.getBounds().x + 80,
-                                        gc.getBounds().y + 50,
-                                        200,
-                                        150
-                                ),
-                                gc.getToolTip().getBorderColor(),
-                                gc.getToolTip().getToolTipColor(),
-                                gc.getThickness()
-                        );
-                        renderText(
-                                g,
-                                gc.getToolTip().getText(),
-                                gc.getToolTip().getTextColor(),
-                                gc.getToolTip().getFont(),
-                                gc.getBounds().x + 80,
-                                gc.getBounds().y + 50,
-                                200,
-                                150
-                        );
-                    }
-                }
-            }
-        }
-    }
+    private void renderHovered(Entity e) {
 
-    private void renderHovered(ArrayList<Entity> entities) {
-        for(Entity e : entities) {
-            GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-            if (gc != null) {
-                if (gc.isHovered()) {
-                    if (gc.getHoverColor() != null) {
-                        renderShape(
-                                g,
-                                gc.getBounds(),
-                                gc.getHoverColor(),
-                                gc.getHoverColor(),
-                                gc.getThickness()
-                        );
-                    }
+        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
+        if (gc != null) {
+            if (gc.isHovered()) {
+                if (gc.getHoverColor() != null) {
+                    renderShape(
+                            g,
+                            gc.getBounds(),
+                            gc.getHoverColor(),
+                            gc.getHoverColor(),
+                            gc.getThickness()
+                    );
                 }
             }
         }
