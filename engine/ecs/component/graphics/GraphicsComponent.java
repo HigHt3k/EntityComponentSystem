@@ -35,6 +35,8 @@ public class GraphicsComponent extends Component {
     Point _LINESTART;
     Point _LINEEND;
 
+    int layer = 0;
+
     // temporary sizes
     Rectangle bounds;
     Shape shape;
@@ -61,6 +63,14 @@ public class GraphicsComponent extends Component {
     @Override
     public void update() {
 
+    }
+
+    public void setLayer(int layer) {
+        this.layer = layer;
+    }
+
+    public int getLayer() {
+        return layer;
     }
 
     public void addGraphicsObject(GraphicsObject graphicsObject) {

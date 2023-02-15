@@ -1,6 +1,7 @@
 package engine.graphics.render;
 
 import engine.Game;
+import engine.ecs.Query;
 import engine.ecs.component.graphics.GraphicsObject;
 import engine.ecs.component.graphics.GraphicsObjectType;
 import engine.ecs.entity.Entity;
@@ -143,7 +144,20 @@ public class RenderingEngine {
      * Collects all entities and detects if they have a @{@link GraphicsComponent} which should be rendered
      */
     public void collectAndRenderEntities() {
-        ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
+        ArrayList<Entity> entities = Query.getEntitiesWithComponent(GraphicsComponent.class);
+
+        Collections.sort(entities, new Comparator<Entity>() {
+            @Override
+            public int compare(Entity o1, Entity o2) {
+                if(o1.getComponent(GraphicsComponent.class).getLayer() == o2.getComponent(GraphicsComponent.class).getLayer())
+                    return 0;
+                else if(o1.getComponent(GraphicsComponent.class).getLayer() < o2.getComponent(GraphicsComponent.class).getLayer()) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+        });
 
         renderImages(entities);
         renderLines(entities);
