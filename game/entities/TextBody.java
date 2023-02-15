@@ -17,6 +17,7 @@ public class TextBody extends Entity {
         graphics.addText(text);
         graphics.addLocation(new Point(x, y));
         graphics.setEntity(this);
+        graphics.setLayer(2);
         this.addComponent(graphics);
     }
 }

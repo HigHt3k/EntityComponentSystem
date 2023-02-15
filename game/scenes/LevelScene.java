@@ -67,7 +67,6 @@ public class LevelScene extends Scene {
     public LevelScene(String name, int id) {
         super(name, id);
         Game.input().removeAllHandlers();
-        Game.input().addHandler(new LevelSceneHandler());
 
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
         Game.res().score().loadScores("game/res/scores/highscores.xml");
@@ -215,8 +214,9 @@ public class LevelScene extends Scene {
 
     @Override
     public void init() {
-        checkUnlocks();
         Game.input().addHandler(new CursorSelectorHandler());
+        Game.input().addHandler(new LevelSceneHandler());
+        checkUnlocks();
     }
 
     @Override
