@@ -6,6 +6,7 @@ import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.entity.Entity;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.entity.GenericButton;
+import engine.ecs.entity.ImageEntity;
 import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
@@ -68,6 +69,7 @@ public class GameScene extends Scene {
     private Entity failTipDesc;
     private Entity acceptedOOCTipDesc;
     private Entity correctSignalsTipDesc;
+    private Entity aircraft;
     private int currentlyDisplayedDescriptionPart = 0;
 
     private boolean levelPassed = false;
@@ -614,24 +616,67 @@ public class GameScene extends Scene {
     public void displayLevelFinished(int score) {
         addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score,
-                1920/2 - 200, 1080/2 - 100, 400, 200, "level passed!"));
+                1920 / 2 - 200, 1080 / 2 - 100, 400, 200, "level passed!"));
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
-                1920/2 - 150, 1080/2 + 50, 300, 40,"BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
+                1920 / 2 - 150, 1080 / 2 + 50, 300, 40, "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
         );
         saveScore.addIntent(new SaveScoreIntent(score));
         saveScore.addIntent(new StartIntent(Game.scene().getScene(-255)));
         addEntityToScene(saveScore);
+
+        try {
+            aircraft = new ImageEntity("aircraft", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/aircraft.png")), 1920 / 2, 1080 / 2, 200, 50, 5);
+            addEntityToScene(aircraft);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void displayLevelNotFinished() {
         addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), 0,
-                1920/2 - 200, 1080/2 - 100, 400, 200, "Requirements not met!"));
+                1920 / 2 - 200, 1080 / 2 - 100, 400, 200, "Requirements not met!"));
         GenericButton back = new GenericButton(
                 "back", IdGenerator.generateId(),
-                1920/2 - 150, 1080/2 + 50, 300, 40,"TRY AGAIN", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
+                1920 / 2 - 150, 1080 / 2 + 50, 300, 40, "TRY AGAIN", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
         );
         addEntityToScene(back);
+
+        try {
+            aircraft = new ImageEntity("aircraft", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/aircraft-crash.png")), 1920 / 2, 1080 / 2, 500, 200, 5);
+            addEntityToScene(aircraft);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playAircraftAnimation() {
+        Rectangle prevBounds = aircraft.getComponent(GraphicsComponent.class).get_BOUNDS();
+        int newX;
+        if (prevBounds.x + 1 > 1920) {
+            newX = 0;
+        } else {
+            newX = prevBounds.x + 1;
+        }
+        Rectangle newBounds = new Rectangle(newX, prevBounds.y, prevBounds.width, prevBounds.height);
+        aircraft.getComponent(GraphicsComponent.class).setBounds(newBounds);
+    }
+
+    public void setAircraftAnimation() {
+        try {
+            aircraft = new ImageEntity("Aircraft", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/aircraft.png")), 0, 1080 / 2, 500, 200, 50);
+            addEntityToScene(aircraft);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeAircraftAnimation() {
+        removeEntityFromScene(aircraft);
+        aircraft = null;
     }
 }

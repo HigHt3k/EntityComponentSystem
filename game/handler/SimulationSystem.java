@@ -2,6 +2,7 @@ package game.handler;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.Query;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
@@ -56,11 +57,48 @@ public class SimulationSystem extends SystemHandle {
         updateGraphics();
     }
 
-    public void finish() {
+    public synchronized void finish() {
+        Thread animation = new Thread() {
+            @Override
+            public void run() {
+                while (!this.isInterrupted()) {
+                    try {
+                        sleep(1000 / 240);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    if (Game.scene().current() instanceof GameScene gs) {
+                        System.out.println("running the animation");
+                        gs.playAircraftAnimation();
+                    }
+                }
+            }
+
+            @Override
+            public synchronized void start() {
+                if (Game.scene().current() instanceof GameScene gs) {
+                    gs.setAircraftAnimation();
+                }
+                super.start();
+            }
+
+            @Override
+            public void interrupt() {
+                super.interrupt();
+                if (Game.scene().current() instanceof GameScene gs) {
+                    gs.removeAircraftAnimation();
+                }
+            }
+        };
+        animation.start();
+
         markov();
-        if(validateGoal()) {
-            if(Game.scene().current() instanceof GameScene gs) {
-                if(!gs.isLevelPassed()) {
+
+        animation.interrupt();
+
+        if (validateGoal()) {
+            if (Game.scene().current() instanceof GameScene gs) {
+                if (!gs.isLevelPassed()) {
                     gs.setLevelPassed(true);
                     int score = calculateScore();
                     gs.displayLevelFinished(score);
@@ -74,7 +112,7 @@ public class SimulationSystem extends SystemHandle {
     }
 
     private boolean validateGoal() {
-        double probabilities[] = MarkovProcessor
+        double[] probabilities = MarkovProcessor
                 .getProbabilityForStatesWith(
                         MarkovProcessor.currentSystemState,
                         1, 0, 0, 0, 20, 20
@@ -247,15 +285,7 @@ public class SimulationSystem extends SystemHandle {
      * @return: All relevant entities for the calculation
      */
     private ArrayList<Entity> gatherRelevantEntities() {
-        ArrayList<Entity> relevantEntities = new ArrayList<>();
-
-        for(Entity e : Game.scene().current().getEntities()) {
-            if(e.getComponent(SimulationComponent.class) != null) {
-                relevantEntities.add(e);
-            }
-        }
-
-        return relevantEntities;
+        return Query.getEntitiesWithComponent(SimulationComponent.class);
     }
 
     /**

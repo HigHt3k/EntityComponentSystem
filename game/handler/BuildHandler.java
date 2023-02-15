@@ -133,6 +133,7 @@ public class BuildHandler extends Handler {
                     if(Game.scene().current().getEntityByName("back").getComponent(CollisionComponent.class).contains(e.getPoint())) {
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("back"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scorebox"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("aircraft"));
                     }
                 }
             }
