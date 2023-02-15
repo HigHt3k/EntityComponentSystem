@@ -17,4 +17,14 @@ public class Query {
         }
         return entities;
     }
+
+    public static <T extends Entity> ArrayList<Entity> getEntitiesOfClassType(Class<T> entityClass) {
+        ArrayList<Entity> entities = new ArrayList<>();
+        for(Entity e : Game.scene().current().getEntities()) {
+            if(e.getClass() == entityClass) {
+                entities.add(e);
+            }
+        }
+        return entities;
+    }
 }
