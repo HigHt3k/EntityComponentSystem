@@ -39,14 +39,6 @@ public class InputManager {
                     h.handle(e);
             }
 
-            // send key event to all components with intents and check wether the intent is applicable
-            for(Entity entity : entities) {
-                IntentComponent ic = entity.getComponent(IntentComponent.class);
-                if(ic != null) {
-                    ic.handle(e);
-                }
-            }
-
             keyEvents.remove(e);
         }
 
@@ -60,14 +52,6 @@ public class InputManager {
             for(Handler h : handlers) {
                 if(h.getHandlerType() == HandlerType.EVENT)
                     h.handle(e);
-            }
-
-            // send mouse event to all components with intents and check wether the intent is applicable
-            for(Entity entity : entities) {
-                IntentComponent ic = entity.getComponent(IntentComponent.class);
-                if(ic != null) {
-                    ic.handle(e);
-                }
             }
 
             mouseEvents.remove(e);

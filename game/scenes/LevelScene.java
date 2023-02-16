@@ -3,6 +3,8 @@ package game.scenes;
 import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.IntentComponent;
+import engine.ecs.component.action.ExitAction;
+import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
@@ -27,6 +29,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 public class LevelScene extends Scene {
     private static final int ITEM_WIDTH = 350;
@@ -150,56 +153,46 @@ public class LevelScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font
+                font, new StartAction(Game.scene().getScene(-255))
         );
-
-        mainMenuButton.addIntent(new StartIntent());
         this.addEntityToScene(mainMenuButton);
 
         GenericButton exitButton = new GenericButton(
                 "Exit", IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@3", font
-                );
-        exitButton.addIntent(new ExitIntent());
+                "@3", font, new ExitAction()
+        );
         addEntityToScene(exitButton);
     }
 
     public void unlockLevel(int id) {
         for(Entity e : getEntities()) {
-            if(e.getComponent(IntentComponent.class) != null) {
-                if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class) != null) {
-                    if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() == Game.scene().getScene(id)) {
-                        ((GameScene) Game.scene().getScene(id)).setUnlocked(true);
-                        if(e instanceof LevelButton lb) {
-                            lb.unlock();
-                        }
-                    }
+            if (e instanceof LevelButton lb) {
+                if (lb.getName() == "lvl" + id) {
+                    lb.unlock();
                 }
             }
         }
     }
 
     private void unlockAll() {
-        for(Entity e : getEntities()) {
-            if(e.getComponent(IntentComponent.class) != null) {
-                if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class) != null) {
-                    if(e.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() instanceof GameScene gs) {
-                        gs.setUnlocked(true);
-                        if(e instanceof LevelButton lb) {
-                            lb.unlock();
-                        }
-                    }
-                }
+        for (Entity e : getEntities()) {
+            if (e instanceof LevelButton lb) {
+                lb.unlock();
+            }
+        }
+        for (Scene s : Game.scene().getScenes()) {
+            if (s instanceof GameScene gs) {
+                gs.setUnlocked(true);
             }
         }
     }
 
     private void addLevel(int id, int x, int y, Color c) {
         LevelButton lvl = new LevelButton("lvl" + id, IdGenerator.generateId(),
-                x, y, 50, 50, "", FontCollection.bit8Font, c);
-        lvl.addIntent(new StartIntent(Game.scene().getScene(id)));
+                x, y, 50, 50, "", FontCollection.bit8Font, c,
+                new StartAction(Game.scene().getScene(id)));
         addEntityToScene(lvl);
     }
 
@@ -243,15 +236,19 @@ public class LevelScene extends Scene {
         ArrayList<Entity> entities = (ArrayList<Entity>) getEntities().clone();
         for(Entity e : entities) {
             if(e instanceof LevelButton lb) {
-                if(lb.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() instanceof GameScene gs) {
-                    for(int i : gs.getUnlocksNeeded()) {
-                        for(Entity e2 : entities) {
-                            if(e2 instanceof LevelButton lb2) {
-                                if(lb2.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() instanceof GameScene gs2) {
-                                    if(gs2.getId() == i) {
-                                        Point p1 = new Point(lb.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation());
-                                        Point p2 = new Point(lb2.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation());
-                                        makeConnection(p1, p2);
+                Scene s = Game.scene().getScene(Integer.parseInt(lb.getName().replace("lvl", "")));
+                if (s != null) {
+                    if (s instanceof GameScene gs) {
+                        for (int i : gs.getUnlocksNeeded()) {
+                            for (Entity e2 : entities) {
+                                if (e2 instanceof LevelButton lb2) {
+                                    Scene s2 = Game.scene().getScene(Integer.parseInt(lb2.getName().replace("lvl", "")));
+                                    if (s2 instanceof GameScene gs2) {
+                                        if (gs2.getId() == i) {
+                                            Point p1 = new Point(lb.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation());
+                                            Point p2 = new Point(lb2.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation());
+                                            makeConnection(p1, p2);
+                                        }
                                     }
                                 }
                             }

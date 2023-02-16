@@ -1,5 +1,6 @@
 package game.entities;
 
+import engine.ecs.component.action.Action;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.entity.GenericButton;
@@ -22,8 +23,8 @@ public class LevelButton extends GenericButton {
      * @param text   : text to display (Centered) at the button
      * @param font   : Font to use for this button
      */
-    public LevelButton(String name, int id, int x, int y, int width, int height, String text, Font font, Color c) {
-        super(name, id, x, y, width, height, text, font);
+    public LevelButton(String name, int id, int x, int y, int width, int height, String text, Font font, Color c, Action action) {
+        super(name, id, x, y, width, height, text, font, action);
         this.button.borderColor = lockedColor;
         this.button.fillColor = lockedColor;
         this.difficultyColor = c;

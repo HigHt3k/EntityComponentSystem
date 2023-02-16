@@ -2,15 +2,15 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
-import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.action.ExitAction;
+import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
-import engine.ecs.entity.SceneStartButton;
 import engine.ecs.intent.ExitIntent;
 import engine.ecs.system.CollisionDetectionSystem;
-import engine.ecs.system.HoverSystem;
+import engine.ecs.system.ActionSystem;
 import engine.graphics.scene.Scene;
 import game.handler.CursorSelectorHandler;
 import game.intent.StartIntent;
@@ -40,39 +40,36 @@ public class MenuScene extends Scene {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
 
-        SceneStartButton playButton = new SceneStartButton(
+        GenericButton playButton = new GenericButton(
                 "Play", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@0", font, new LevelScene("level", -254)
+                "@0", font, new StartAction(new LevelScene("level", -254))
         );
         addEntityToScene(playButton);
 
         GenericButton buildButton = new GenericButton(
                 "Build", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@1", font
+                "@1", font, new StartAction(new BuildScene("build", -250))
         );
-        buildButton.addIntent(new StartIntent(new BuildScene("build", -250)));
         addEntityToScene(buildButton);
 
         GenericButton optionsButton = new GenericButton(
                 "Options", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@2", font
+                "@2", font, new StartAction(new OptionsScene("options", -249))
         );
-        optionsButton.addIntent(new StartIntent(new OptionsScene("options",-249)));
         addEntityToScene(optionsButton);
 
         GenericButton exitButton = new GenericButton(
                 "Exit", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 3,
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 3,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@3", font
+                "@3", font, new ExitAction()
         );
-        exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);
     }
 
@@ -81,7 +78,7 @@ public class MenuScene extends Scene {
         Game.system().resetSystems();
         Game.input().addHandler(new CursorSelectorHandler());
         Game.input().addHandler(new CollisionDetectionSystem());
-        Game.system().addSystem(new HoverSystem());
+        Game.system().addSystem(new ActionSystem());
     }
 
     @Override

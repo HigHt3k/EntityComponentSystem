@@ -2,6 +2,8 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.action.ExitAction;
+import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
@@ -49,7 +51,7 @@ public class OptionsScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font
+                font, new StartAction(Game.scene().getScene(-255))
         );
 
         mainMenuButton.addIntent(new StartIntent());
@@ -59,7 +61,7 @@ public class OptionsScene extends Scene {
                 "Exit", IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@3", font
+                "@3", font, new ExitAction()
         );
         exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);
@@ -68,7 +70,7 @@ public class OptionsScene extends Scene {
                 "English", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@10", font
+                "@10", font, new StartAction(null)
         );
         toggleLanguageEnglish.addIntent(new ChangeLanguageIntent(LanguageType.EN_US));
         addEntityToScene(toggleLanguageEnglish);
@@ -77,7 +79,7 @@ public class OptionsScene extends Scene {
                 "German", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@11", font
+                "@11", font, new StartAction(null)
         );
         toggleLanguageGerman.addIntent(new ChangeLanguageIntent(LanguageType.DE_DE));
         addEntityToScene(toggleLanguageGerman);
@@ -86,7 +88,7 @@ public class OptionsScene extends Scene {
                 "GermanSimple", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@12", font
+                "@12", font, new StartAction(null)
         );
         toggleLanguageGermanEasy.addIntent(new ChangeLanguageIntent(LanguageType.DE_SIMPLE));
         addEntityToScene(toggleLanguageGermanEasy);

@@ -5,19 +5,15 @@ import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
-import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.entity.Entity;
-import engine.input.handler.Handler;
-import engine.input.handler.HandlerType;
 
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-public class HoverSystem extends SystemHandle {
+public class ActionSystem extends SystemHandle {
     private final ArrayList<Entity> entities;
 
-    public HoverSystem() {
+    public ActionSystem() {
         entities = new ArrayList<>();
     }
 

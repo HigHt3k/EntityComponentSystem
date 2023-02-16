@@ -2,6 +2,8 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.action.ExitAction;
+import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
@@ -337,7 +339,7 @@ public class GameScene extends Scene {
                 1600, 850 + ITEM_HEIGHT + ITEM_MARGIN * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3",
-                font
+                font, new ExitAction()
         );
         exitButton.addIntent(new ExitIntent());
         this.addEntityToScene(exitButton);
@@ -348,7 +350,7 @@ public class GameScene extends Scene {
                 1600, 850 + ITEM_MARGIN,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font
+                font, new StartAction(Game.scene().getScene(-255))
         );
 
         mainMenuButton.addIntent(new StartIntent());
@@ -359,7 +361,7 @@ public class GameScene extends Scene {
                 "Layer1_button", IdGenerator.generateId(),
                 50, 50, 50, 50,
                 "0",
-                font
+                font, new StartAction(null)
         );
         layer0.addIntent(new CableLayerSwitchIntent(0));
         this.addEntityToScene(layer0);
@@ -368,7 +370,7 @@ public class GameScene extends Scene {
                 "Layer1_button", IdGenerator.generateId(),
                 120, 50, 50, 50,
                 "1",
-                font
+                font, new StartAction(null)
         );
         layer1.addIntent(new CableLayerSwitchIntent(1));
         this.addEntityToScene(layer1);
@@ -377,7 +379,7 @@ public class GameScene extends Scene {
                 "Layer1_button", IdGenerator.generateId(),
                 190, 50, 50, 50,
                 "2",
-                font
+                font, new StartAction(null)
         );
         layer2.addIntent(new CableLayerSwitchIntent(2));
         this.addEntityToScene(layer2);
@@ -386,7 +388,7 @@ public class GameScene extends Scene {
                 "Layer1_button", IdGenerator.generateId(),
                 260, 50, 50, 50,
                 "3",
-                font
+                font, new StartAction(null)
         );
         layer3.addIntent(new CableLayerSwitchIntent(3));
         this.addEntityToScene(layer3);
@@ -474,11 +476,11 @@ public class GameScene extends Scene {
         addEntityToScene(descHead);
 
         previous = new GenericButton("previous", IdGenerator.generateId(),
-                1520, 300, 40, 40, "<-", fontMed);
+                1520, 300, 40, 40, "<-", fontMed, new StartAction(null));
         addEntityToScene(previous);
 
         next = new GenericButton("next", IdGenerator.generateId(),
-                1840, 300, 40, 40, "->", fontMed);
+                1840, 300, 40, 40, "->", fontMed, new StartAction(null));
         addEntityToScene(next);
 
         Entity goalHead = new TextBody("goalHead", IdGenerator.generateId(),
@@ -505,7 +507,7 @@ public class GameScene extends Scene {
         addEntityToScene(minActuatorsContent);
 
         validate = new GenericButton("validate", IdGenerator.generateId(),
-                1500 + (1920-1500)/2 - 300/2, 480, 300, 50, "@30", fontBig);
+                1500 + (1920 - 1500) / 2 - 300 / 2, 480, 300, 50, "@30", fontBig, new StartAction(null));
         addEntityToScene(validate);
     }
 
@@ -613,7 +615,8 @@ public class GameScene extends Scene {
                 1920 / 2 - 200, 1080 / 2 - 100, 400, 200, "level passed!"));
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 50, 300, 40, "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
+                1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
+                "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(null)
         );
         saveScore.addIntent(new SaveScoreIntent(score));
         saveScore.addIntent(new StartIntent(Game.scene().getScene(-255)));
@@ -634,7 +637,8 @@ public class GameScene extends Scene {
                 1920 / 2 - 200, 1080 / 2 - 100, 400, 200, "Requirements not met!"));
         GenericButton back = new GenericButton(
                 "back", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 50, 300, 40, "TRY AGAIN", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f)
+                1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
+                "TRY AGAIN", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(null)
         );
         addEntityToScene(back);
 

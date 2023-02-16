@@ -2,6 +2,8 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.action.ExitAction;
+import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.objects.Layer;
@@ -270,9 +272,8 @@ public class BuildScene extends Scene {
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3",
-                font
+                font, new ExitAction()
         );
-        exitButton.addIntent(new ExitIntent());
         this.addEntityToScene(exitButton);
 
         GenericButton mainMenuButton = new GenericButton(
@@ -281,10 +282,9 @@ public class BuildScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font
+                font, new StartAction(Game.scene().getScene(-255))
         );
 
-        mainMenuButton.addIntent(new StartIntent());
         this.addEntityToScene(mainMenuButton);
 
         // Save button
@@ -293,9 +293,8 @@ public class BuildScene extends Scene {
                 1600, 700,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@5",
-                font
+                font, new StartAction(null)
         );
-        saveButton.addIntent(new SaveIntent());
         this.addEntityToScene(saveButton);
 
         // cable switch buttons
@@ -303,36 +302,32 @@ public class BuildScene extends Scene {
                 "Layer1_button", IdGenerator.generateId(),
                 50, 50, 50, 50,
                 "0",
-                font
+                font, new StartAction(null)
         );
-        layer0.addIntent(new CableLayerSwitchIntent(0));
         this.addEntityToScene(layer0);
 
         GenericButton layer1 = new GenericButton(
                 "Layer1_button", IdGenerator.generateId(),
                 120, 50, 50, 50,
                 "1",
-                font
+                font, new StartAction(null)
         );
-        layer1.addIntent(new CableLayerSwitchIntent(1));
         this.addEntityToScene(layer1);
 
         GenericButton layer2 = new GenericButton(
                 "Layer1_button", IdGenerator.generateId(),
                 190, 50, 50, 50,
                 "2",
-                font
+                font, new StartAction(null)
         );
-        layer2.addIntent(new CableLayerSwitchIntent(2));
         this.addEntityToScene(layer2);
 
         GenericButton layer3 = new GenericButton(
                 "Layer1_button", IdGenerator.generateId(),
                 260, 50, 50, 50,
                 "3",
-                font
+                font, new StartAction(null)
         );
-        layer3.addIntent(new CableLayerSwitchIntent(3));
         this.addEntityToScene(layer3);
     }
 
@@ -360,7 +355,7 @@ public class BuildScene extends Scene {
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "EXIT",
-                font
+                font, new ExitAction()
         );
 
         try {
@@ -374,17 +369,19 @@ public class BuildScene extends Scene {
 
         for(int i = 1; i < 11; i++) {
             String number = "";
-            if(i == 1) {
+            if (i == 1) {
                 number = "1";
             }
-            if(i == 10) {
+            if (i == 10) {
                 number = "10";
             }
-            GenericButton sliderX = new GenericButton(
+            //TODO: reimplement build size
+
+            /* GenericButton sliderX = new GenericButton(
                     "Slider_X", IdGenerator.generateId(),
                     1580 + i*20, 300,
                     20, 10,
-                    number, font
+                    number, font,
             );
             sliderX.addIntent(new GridSizeIntent(i, -1));
             addEntityToScene(sliderX);
@@ -397,6 +394,8 @@ public class BuildScene extends Scene {
             );
             sliderY.addIntent(new GridSizeIntent(-1, i));
             addEntityToScene(sliderY);
+
+             */
         }
     }
 }

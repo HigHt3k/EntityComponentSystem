@@ -1,5 +1,6 @@
 package engine.ecs.entity;
 
+import engine.ecs.component.action.Action;
 import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.ColliderComponent;
@@ -41,7 +42,7 @@ public class GenericButton extends Entity {
      * @param text: text to display (Centered) at the button
      * @param font: Font to use for this button
      */
-    public GenericButton(String name, int id, int x, int y, int width, int height, String text, Font font) {
+    public GenericButton(String name, int id, int x, int y, int width, int height, String text, Font font, Action action) {
         super(name, id);
 
         // Define the size
@@ -64,6 +65,11 @@ public class GenericButton extends Entity {
         colliderComponent.addCollisionObject(new CollisionObject(bounds, this.hover));
         colliderComponent.setEntity(this);
         this.addComponent(colliderComponent);
+
+        ActionComponent actionComponent = new ActionComponent();
+        actionComponent.addAction(MouseEvent.BUTTON1, action);
+        actionComponent.setEntity(this);
+        this.addComponent(actionComponent);
 
         // Intent Handler
         IntentComponent intents = new IntentComponent();
