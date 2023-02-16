@@ -1,4 +1,10 @@
 package engine.ecs.component.graphics;
 
-public class HoverComponent {
+import engine.ecs.component.Component;
+
+public class HoverComponent extends Component {
+    @Override
+    public void update() {
+
+    }
 }

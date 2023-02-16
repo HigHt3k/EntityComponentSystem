@@ -8,6 +8,8 @@ import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.ecs.intent.ExitIntent;
+import engine.ecs.system.CollisionDetectionSystem;
+import engine.ecs.system.HoverSystem;
 import engine.graphics.scene.Scene;
 import game.handler.CursorSelectorHandler;
 import game.intent.StartIntent;
@@ -78,6 +80,8 @@ public class MenuScene extends Scene {
     public void init() {
         Game.system().resetSystems();
         Game.input().addHandler(new CursorSelectorHandler());
+        Game.input().addHandler(new CollisionDetectionSystem());
+        Game.system().addSystem(new HoverSystem());
     }
 
     @Override
