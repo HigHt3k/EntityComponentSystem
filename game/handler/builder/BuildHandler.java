@@ -54,12 +54,28 @@ public class BuildHandler extends Handler {
             printAllSimComponents();
             return;
         }
-        if(e.getKeyCode() == KeyEvent.VK_M) {
+        if (e.getKeyCode() == KeyEvent.VK_M) {
             MarkovProcessor.printMarkov();
             return;
         }
-        if(e.getKeyCode() == KeyEvent.VK_Q) {
+        if (e.getKeyCode() == KeyEvent.VK_Q) {
             MarkovProcessor.printCurrentSystemState();
+            return;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_1) {
+            currentCableLayer = 0;
+            return;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_2) {
+            currentCableLayer = 1;
+            return;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_3) {
+            currentCableLayer = 2;
+            return;
+        }
+        if (e.getKeyCode() == KeyEvent.VK_4) {
+            currentCableLayer = 3;
             return;
         }
     }
@@ -701,15 +717,13 @@ public class BuildHandler extends Handler {
     }
 
     private boolean placeComponent(Entity e) {
-        Point gridPos = findEntityGridPosition(Game
-                .scale()
-                .scalePoint(e
-                        .getComponent(RenderComponent.class)
-                        .getRenderObjects()
-                        .get(0)
-                        .getBounds()
-                        .getBounds()
-                        .getLocation()));
+        Point gridPos = findEntityGridPosition(e
+                .getComponent(RenderComponent.class)
+                .getRenderObjects()
+                .get(0)
+                .getBounds()
+                .getBounds()
+                .getLocation());
 
         if (gridPos == null) {
             return false;
