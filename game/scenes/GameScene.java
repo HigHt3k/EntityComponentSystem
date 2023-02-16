@@ -351,39 +351,6 @@ public class GameScene extends Scene {
                 font, new StartAction(Game.scene().getScene(-255))
         );
         this.addEntityToScene(mainMenuButton);
-
-        // cable switch buttons
-        GenericButton layer0 = new GenericButton(
-                "Layer1_button", IdGenerator.generateId(),
-                50, 50, 50, 50,
-                "0",
-                font, new StartAction(null)
-        );
-        this.addEntityToScene(layer0);
-
-        GenericButton layer1 = new GenericButton(
-                "Layer1_button", IdGenerator.generateId(),
-                120, 50, 50, 50,
-                "1",
-                font, new StartAction(null)
-        );
-        this.addEntityToScene(layer1);
-
-        GenericButton layer2 = new GenericButton(
-                "Layer1_button", IdGenerator.generateId(),
-                190, 50, 50, 50,
-                "2",
-                font, new StartAction(null)
-        );
-        this.addEntityToScene(layer2);
-
-        GenericButton layer3 = new GenericButton(
-                "Layer1_button", IdGenerator.generateId(),
-                260, 50, 50, 50,
-                "3",
-                font, new StartAction(null)
-        );
-        this.addEntityToScene(layer3);
     }
 
     public void updateGridSize() {
