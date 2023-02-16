@@ -80,7 +80,7 @@ public class BuildHandler extends Handler {
                     }
                     if(e.getComponent(GridComponent.class) != null)
                         System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
-                    System.out.println("");
+                    System.out.println();
                 }
             }
         }
@@ -110,7 +110,7 @@ public class BuildHandler extends Handler {
                         else
                             System.out.println(cpe.getPortId() + "-" + cpe.getType() + "-" + cpe.getPosition() + ": " + cpe.getConnectedEntity());
                     }
-                    System.out.println("");
+                    System.out.println();
                 }
             }
         }

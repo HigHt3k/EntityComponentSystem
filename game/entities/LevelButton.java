@@ -7,8 +7,8 @@ import engine.resource.colorpalettes.Bit8;
 import java.awt.*;
 
 public class LevelButton extends GenericButton {
-    private Color difficultyColor;
-    private Color lockedColor = Bit8.LIGHT_GREY;
+    private final Color difficultyColor;
+    private final Color lockedColor = Bit8.LIGHT_GREY;
     /**
      * Create a generic functional button. addIntent needs to be used to add a purpose other than hovering to this button.
      *

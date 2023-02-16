@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class ActionComponent extends Component {
-    private HashMap<Integer, Action> actions;
+    private final HashMap<Integer, Action> actions;
 
     public ActionComponent() {
         actions = new HashMap<>();

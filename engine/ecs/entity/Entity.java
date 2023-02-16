@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 public class Entity implements Cloneable {
 
-    private ArrayList<Component> components;
+    private final ArrayList<Component> components;
     private String name;
-    private int id;
+    private final int id;
     private boolean removable = true;
 
     public Entity(String name, int id) {

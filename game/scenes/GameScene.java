@@ -45,9 +45,9 @@ public class GameScene extends Scene {
     private final Color HAZARDOUS = Bit8.ORANGE;
     private final Color CATASTROPHIC = Bit8.RED;
 
-    private Difficulty difficulty;
+    private final Difficulty difficulty;
 
-    private ArrayList<Integer> unlocksNeeded = new ArrayList<>();
+    private final ArrayList<Integer> unlocksNeeded = new ArrayList<>();
 
     private final int DESIGN_CELL_SIZE = 128;
     private int CELL_SIZE = DESIGN_CELL_SIZE;

@@ -3,10 +3,10 @@ package engine.ecs.component.graphics.objects;
 import java.awt.*;
 
 public class LineObject extends RenderObject {
-    private Point p1;
-    private Point p2;
-    private Color color;
-    private int thickness;
+    private final Point p1;
+    private final Point p2;
+    private final Color color;
+    private final int thickness;
 
     public LineObject(Point location, Shape bounds, Layer layer, Point p1, Point p2, Color color, int thickness) {
         super(location, bounds, layer);

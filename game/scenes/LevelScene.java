@@ -28,10 +28,10 @@ import java.util.ArrayList;
 public class LevelScene extends Scene {
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
-    private Entity highscoreView;
-    private Entity playersView;
-    private Entity levelInfoDesc;
-    private Entity levelInfoHead;
+    private final Entity highscoreView;
+    private final Entity playersView;
+    private final Entity levelInfoDesc;
+    private final Entity levelInfoHead;
 
     public void addHighscores(int levelId) {
         StringBuilder players = new StringBuilder();

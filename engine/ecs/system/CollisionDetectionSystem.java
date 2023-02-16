@@ -36,11 +36,7 @@ public class CollisionDetectionSystem extends Handler {
             for (CollisionObject collisionObject : entity.getComponent(ColliderComponent.class).getCollisionObjects()) {
                 if (Game.scale().scaleShape(collisionObject.getCollisionBoundaries()).contains(e.getPoint())) {
                     collisionObject.setHovered(true);
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        collisionObject.setClicked(true);
-                    } else {
-                        collisionObject.setClicked(false);
-                    }
+                    collisionObject.setClicked(e.getButton() == MouseEvent.BUTTON1);
                 } else {
                     collisionObject.setHovered(false);
                     collisionObject.setClicked(false);

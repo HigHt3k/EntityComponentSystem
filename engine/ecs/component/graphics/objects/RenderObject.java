@@ -6,7 +6,7 @@ import java.awt.*;
 public class RenderObject {
     private Point location;
     private Shape bounds;
-    private Layer layer;
+    private final Layer layer;
     private boolean hidden = false;
 
     public RenderObject(Point location, Shape bounds, Layer layer) {

@@ -194,7 +194,7 @@ public class MarkovProcessor {
 
         for(MarkovState stateNext : state.getNext()) {
             try {
-                double probs[] = getProbabilityForStatesWith(stateNext, correctActuatorCount, correctSensorCount, correctCPUCount,
+                double[] probs = getProbabilityForStatesWith(stateNext, correctActuatorCount, correctSensorCount, correctCPUCount,
                         OOCActuatorCount, OOCSensorCount, OOCCPUCount);
                 probabilityPassive += probs[0];
                 probabilityOOC += probs[1];

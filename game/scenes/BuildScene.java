@@ -38,12 +38,12 @@ public class BuildScene extends Scene {
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
     private final int DESIGN_CELL_SIZE = 100;
     private int CELL_SIZE = DESIGN_CELL_SIZE;
-    private int BUILD_CELL_SIZE = DESIGN_CELL_SIZE;
+    private final int BUILD_CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
-    private double goal = 10e-4;
+    private final double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
 
-    private int BUILD_PANEL_X_MARGIN = 25;
+    private final int BUILD_PANEL_X_MARGIN = 25;
 
     private int xMax = 2;
     private int yMax = 2;

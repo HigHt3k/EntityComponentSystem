@@ -12,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class CursorSelectorHandler extends Handler {
-    private CursorEntity cursor;
+    private final CursorEntity cursor;
 
     public CursorSelectorHandler() {
         super(HandlerType.EVENT);

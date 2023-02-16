@@ -12,7 +12,7 @@ import game.handler.simulation.SimulationType;
 import java.util.ArrayList;
 
 public class CablePortsComponent extends Component {
-    private ArrayList<CablePort> cablePorts = new ArrayList<>();
+    private final ArrayList<CablePort> cablePorts = new ArrayList<>();
     private int[] inIds;
     private int[] outIds;
 

@@ -9,7 +9,7 @@ import java.util.List;
  * Manages all scenes available to the game. SceneManager is used to set the currently active scene, which can be main menu, options, level, level overview, ...
  */
 public class SceneManager {
-    private List<Scene> scenes;
+    private final List<Scene> scenes;
 
     private Scene currentScene;
 

@@ -7,11 +7,11 @@ import game.handler.simulation.SimulationType;
 import java.util.ArrayList;
 
 public class MarkovStateObject {
-    private Entity entity;
-    private SimulationType type;
+    private final Entity entity;
+    private final SimulationType type;
     private SimulationState state;
-    private double failureProbability;
-    private double failureRecognitionProbability;
+    private final double failureProbability;
+    private final double failureRecognitionProbability;
     private ArrayList<SimulationState> inputStates;
     private ArrayList<Integer> inputObjects;
 

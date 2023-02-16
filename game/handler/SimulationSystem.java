@@ -19,14 +19,14 @@ import java.util.*;
 
 public class SimulationSystem extends SystemHandle {
     private ArrayList<Entity> tempGroup = new ArrayList<>();
-    private double eps = 0.00000001; //delta because double has rounding errors
+    private final double eps = 0.00000001; //delta because double has rounding errors
     int frameCount = 0;
 
     public int calculateScore() {
         //Base score for finishing the level
         int score = 100;
 
-        double probabilities[] = MarkovProcessor
+        double[] probabilities = MarkovProcessor
                 .getProbabilityForStatesWith(
                         MarkovProcessor.currentSystemState,
                         1, 0, 0, 0, 20, 20
@@ -117,9 +117,7 @@ public class SimulationSystem extends SystemHandle {
         System.out.println("ooc: " + probabilities[1]);
 
         if(Game.scene().current() instanceof GameScene gs)
-        if(probabilities[0]-eps <= gs.getGoal() && probabilities[1]-eps <= gs.getGoal()) {
-            return true;
-        }
+            return probabilities[0] - eps <= gs.getGoal() && probabilities[1] - eps <= gs.getGoal();
 
         return false;
     }

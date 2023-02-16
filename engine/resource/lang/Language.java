@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 public class Language {
     private LanguageType languageType;
-    private HashMap<Integer, String> language;
+    private final HashMap<Integer, String> language;
 
     public Language(LanguageType languageType) {
         this.languageType = languageType;

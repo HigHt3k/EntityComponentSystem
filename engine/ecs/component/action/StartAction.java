@@ -4,7 +4,7 @@ import engine.Game;
 import engine.graphics.scene.Scene;
 
 public class StartAction extends Action {
-    private Scene scene;
+    private final Scene scene;
 
     public StartAction(Scene scene) {
         this.scene = scene;

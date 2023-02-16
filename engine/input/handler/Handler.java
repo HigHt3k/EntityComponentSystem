@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public abstract class Handler {
-    private HandlerType handlerType;
+    private final HandlerType handlerType;
 
     public Handler(HandlerType handlerType) {
         this.handlerType = handlerType;

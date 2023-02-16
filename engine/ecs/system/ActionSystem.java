@@ -26,11 +26,7 @@ public class ActionSystem extends SystemHandle {
                     if (c.getConnectedHoverObject() == null) {
                         continue;
                     } else {
-                        if (c.isHovered()) {
-                            c.getConnectedHoverObject().setHidden(false);
-                        } else {
-                            c.getConnectedHoverObject().setHidden(true);
-                        }
+                        c.getConnectedHoverObject().setHidden(!c.isHovered());
 
                         if (c.isClicked()) {
                             if (e.getComponent(ActionComponent.class) != null) {

@@ -8,7 +8,7 @@ public class CollisionObject {
     private Shape collisionBoundaries;
     private boolean isClicked = false;
     private boolean isHovered = false;
-    private HoverObject connectedHoverObject;
+    private final HoverObject connectedHoverObject;
 
     public CollisionObject(Shape collisionBoundaries, HoverObject connectedHoverObject) {
         this.collisionBoundaries = collisionBoundaries;

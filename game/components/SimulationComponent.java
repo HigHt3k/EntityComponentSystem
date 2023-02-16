@@ -13,7 +13,7 @@ public class SimulationComponent extends Component {
     private SimulationState simulationState = SimulationState.INOPERATIVE;
     private SimulationType simulationType;
     private final ArrayList<Integer> groupIds = new ArrayList<>();
-    private int ownId = IdGenerator.generateId();
+    private final int ownId = IdGenerator.generateId();
     private final ArrayList<Integer> inputIds = new ArrayList<>();
     private final ArrayList<SimulationState> inputStates = new ArrayList<>();
     private int tileId;

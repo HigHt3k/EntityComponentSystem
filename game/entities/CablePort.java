@@ -4,8 +4,8 @@ import engine.ecs.entity.Entity;
 import game.components.CablePortType;
 
 public class CablePort {
-    private int portId;
-    private CablePortType type;
+    private final int portId;
+    private final CablePortType type;
     private Entity connectedEntity;
     private CablePortPosition position;
 
