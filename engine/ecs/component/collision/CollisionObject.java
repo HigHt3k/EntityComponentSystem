@@ -38,4 +38,8 @@ public class CollisionObject {
     public HoverObject getConnectedHoverObject() {
         return connectedHoverObject;
     }
+
+    public void setCollisionBoundaries(Shape collisionBoundaries) {
+        this.collisionBoundaries = collisionBoundaries;
+    }
 }

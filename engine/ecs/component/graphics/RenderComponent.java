@@ -52,8 +52,8 @@ public class RenderComponent extends Component {
     public void reposition(Point p) {
         for (RenderObject r : renderObjects) {
             r.setLocation(new Point(p));
-            r.getBounds().getBounds().x = p.x;
-            r.getBounds().getBounds().y = p.y;
+            Rectangle bounds = new Rectangle(p.x, p.y, r.getBounds().getBounds().width, r.getBounds().getBounds().height);
+            r.setBounds(bounds);
         }
     }
 }

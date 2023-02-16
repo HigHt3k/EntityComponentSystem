@@ -51,7 +51,7 @@ public class SimulationEntity extends Entity {
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER2, img));
         HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
         renderComponent.addRenderObject(hover);
-        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), bounds, Layer.GAMELAYER3, Bit8.GREEN, null, 1));
+        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), bounds, Layer.GAMELAYER3, null, null, 1));
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
 

@@ -3,6 +3,8 @@ package game.components;
 import engine.Game;
 import engine.ecs.component.Component;
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.entity.Entity;
 import game.entities.CablePort;
 import game.entities.CablePortPosition;
@@ -28,7 +30,7 @@ public class CablePortsComponent extends Component {
             CablePortPosition out = getCablePort(outIds[0], CablePortType.OUT).getPosition();
             int imgToLoad = baseId*100 + CablePortPosition.valueOf(in) * 10 + CablePortPosition.valueOf(out);
 
-            this.getEntity().getComponent(GraphicsComponent.class).setImage(Game.res().getTileSet().getTile(imgToLoad));
+            ((ImageObject) this.getEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)).setImage(Game.res().getTileSet().getTile(imgToLoad));
         }
     }
 

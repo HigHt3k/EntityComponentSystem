@@ -33,7 +33,6 @@ public class ActionSystem extends SystemHandle {
                         }
 
                         if (c.isClicked()) {
-                            System.out.println("is clicked");
                             if (e.getComponent(ActionComponent.class) != null) {
                                 e.getComponent(ActionComponent.class).getActions().get(MouseEvent.BUTTON1).handle();
                             }

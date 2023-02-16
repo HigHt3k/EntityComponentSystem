@@ -362,6 +362,7 @@ public class BuildHandler extends Handler {
                 // check if state is building cable refactored
                 else if(currentBuildState == BuilderState.BUILDING_CABLE_REFACTORED) {
                     // try to place component
+                    System.out.println(placeCableRefactored(currentBuilding));
                     if(placeCableRefactored(currentBuilding)) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
@@ -755,13 +756,12 @@ public class BuildHandler extends Handler {
                                 (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                         ));
                         // Set Grapics and Collision box
-                        e.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(
-                                new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation()))
+                        e.getComponent(RenderComponent.class).reposition(
+                                new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                         );
-                        //TODO: Add collision box
-                        /*e.getComponent(CollisionComponent.class)
-                                .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
-*/
+                        e.getComponent(ColliderComponent.class).getCollisionObjects().get(0).setCollisionBoundaries(new Rectangle(
+                                (Rectangle) e.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds()
+                        ));
 
 
                         Game.logger().info("Successfully added a new entity to the grid.\n" +
@@ -824,15 +824,13 @@ public class BuildHandler extends Handler {
                             (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                     ));
                     // Set Grapics and Collision box
-                    e.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(
-                            new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation()))
+                    e.getComponent(RenderComponent.class).reposition(
+                            new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                     );
-                    //TODO: Collision box
-                    /*
-                    e.getComponent(CollisionComponent.class)
-                            .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
+                    e.getComponent(ColliderComponent.class).getCollisionObjects().get(0).setCollisionBoundaries(new Rectangle(
+                            (Rectangle) e.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds()
+                    ));
 
-                     */
                     Game.logger().info("Successfully added a new entity to the grid.\n" +
                             "Name: " + e.getName() +
                             "\nPosition: " + e.getComponent(GridComponent.class).getGridLocation() +
@@ -886,19 +884,18 @@ public class BuildHandler extends Handler {
     }
 
     private boolean placeCableRefactored(Entity e) {
-        Point gridPos = findEntityGridPosition(Game
-                .scale()
-                .scalePoint(e
-                        .getComponent(RenderComponent.class)
-                        .getRenderObjects()
-                        .get(0)
-                        .getBounds()
-                        .getBounds()
-                        .getLocation()));
+        Point gridPos = findEntityGridPosition(e
+                .getComponent(RenderComponent.class)
+                .getRenderObjects()
+                .get(0)
+                .getBounds()
+                .getBounds()
+                .getLocation());
 
         if (gridPos == null) {
             return false;
         }
+        System.out.println(e.getComponent(SimulationComponent.class).getSimulationType());
 
         ArrayList<Entity> entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
 
@@ -908,18 +905,19 @@ public class BuildHandler extends Handler {
 
         // check for other components at the cell
         for(Entity check : entitiesAtSameCell) {
-            if(check.getComponent(SimulationComponent.class) != null && check.getComponent(SimulationComponent.class).getSimulationType() != SimulationType.CABLE) {
+            if (e == check) {
+                continue;
+            }
+            if (check.getComponent(SimulationComponent.class) != null && check.getComponent(SimulationComponent.class).getSimulationType() != SimulationType.CABLE) {
                 return false;
             }
             // check if a cable of the same type is here already
-            if(check.getComponent(SimulationComponent.class) != null
+            if (check.getComponent(SimulationComponent.class) != null
                     && check.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE
                     && check.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN) != null) {
                 return false;
             }
         }
-
-
 
         for (Entity replace : entitiesAtSameCell) {
             if (replace.getComponent(GridComponent.class) != null) {
@@ -930,14 +928,12 @@ public class BuildHandler extends Handler {
                         (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                 ));
                 // Set Grapics and Collision box
-                e.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(
-                        new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation()))
+                e.getComponent(RenderComponent.class).reposition(
+                        new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                 );
-                //TODO: Collision box
-                /*e.getComponent(CollisionComponent.class)
-                        .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
-
-                 */
+                e.getComponent(ColliderComponent.class).getCollisionObjects().get(0).setCollisionBoundaries(new Rectangle(
+                        (Rectangle) e.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds()
+                ));
 
                 Game.logger().info("Successfully added a new entity to the grid.\n" +
                         "Name: " + e.getName() +
@@ -986,6 +982,7 @@ public class BuildHandler extends Handler {
                 return true;
             }
         }
+        System.out.println("Returing cos end of method");
         return false;
     }
 
@@ -996,6 +993,9 @@ public class BuildHandler extends Handler {
      */
     private Point findEntityGridPosition(Point p) {
         for(Entity e : Game.scene().current().getEntities()) {
+            if (e == currentBuilding) {
+                continue;
+            }
             if (e.getComponent(ColliderComponent.class) != null
                     && e.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
                     .contains(p)
