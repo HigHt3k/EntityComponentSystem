@@ -4,12 +4,10 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
-import game.entities.CursorEntity;
+import game.entities.simulation.CursorEntity;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class CursorSelectorHandler extends Handler {
     private final CursorEntity cursor;

@@ -4,7 +4,7 @@ import engine.Game;
 import engine.ecs.entity.Entity;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
-import game.entities.LevelButton;
+import game.entities.ui.LevelButton;
 import game.scenes.LevelScene;
 
 import java.awt.event.KeyEvent;

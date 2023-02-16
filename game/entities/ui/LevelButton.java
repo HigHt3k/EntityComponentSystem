@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.ui;
 
 import engine.ecs.component.action.Action;
 import engine.ecs.entity.GenericButton;

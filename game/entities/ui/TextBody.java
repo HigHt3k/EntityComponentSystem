@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.ui;
 
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;

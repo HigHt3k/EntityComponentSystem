@@ -14,10 +14,10 @@ import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import engine.resource.score.HighScore;
-import game.entities.LevelButton;
-import game.entities.LineEntity;
-import game.entities.SimplePanel;
-import game.entities.TextBody;
+import game.entities.ui.LevelButton;
+import game.entities.ui.LineEntity;
+import game.entities.ui.SimplePanel;
+import game.entities.ui.TextBody;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

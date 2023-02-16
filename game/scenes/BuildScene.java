@@ -16,8 +16,8 @@ import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
 import game.components.BuildComponent;
 import game.components.GridComponent;
-import game.entities.BuildPanelEntity;
-import game.entities.GridEntity;
+import game.entities.simulation.BuildPanelEntity;
+import game.entities.simulation.GridEntity;
 import game.handler.simulation.SimulationType;
 
 import javax.imageio.ImageIO;

@@ -20,7 +20,12 @@ import engine.resource.fonts.FontCollection;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.TooltipComponent;
-import game.entities.*;
+import game.entities.simulation.BuildPanelEntity;
+import game.entities.simulation.GridEntity;
+import game.entities.simulation.SimulationEntity;
+import game.entities.ui.ScoreBox;
+import game.entities.ui.SimplePanel;
+import game.entities.ui.TextBody;
 import game.handler.simulation.SimulationType;
 
 import javax.imageio.ImageIO;

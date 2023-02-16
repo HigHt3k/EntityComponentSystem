@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.simulation;
 
 import engine.Game;
 import engine.ecs.component.collision.ColliderComponent;
