@@ -1,7 +1,6 @@
 package game.entities;
 
 import engine.ecs.component.collision.ColliderComponent;
-import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
@@ -46,12 +45,6 @@ public class GridEntity extends Entity {
         grid.setGridLocation(new Point(xGrid, yGrid));
         grid.setEntity(this);
         this.addComponent(grid);
-
-        // define CollisionComponent
-        CollisionComponent collider = new CollisionComponent();
-        collider.setCollisionBox(bounds);
-        collider.setEntity(this);
-        this.addComponent(collider);
 
         ColliderComponent colliderComponent = new ColliderComponent();
         colliderComponent.addCollisionObject(new CollisionObject(bounds, hover));

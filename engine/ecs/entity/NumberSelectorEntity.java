@@ -1,16 +1,9 @@
 package engine.ecs.entity;
 
-import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
-import engine.ecs.component.collision.ColliderObject;
-import engine.ecs.component.graphics.GraphicsObject;
-
 import java.awt.*;
 
 // TODO: Refactor
 public class NumberSelectorEntity extends Entity {
-    private ColliderObject left;
-    private ColliderObject right;
 
 
     private Entity change;
@@ -32,14 +25,6 @@ public class NumberSelectorEntity extends Entity {
 
         //TODO: add graphics and colliders
 
-    }
-
-    public ColliderObject getLeft() {
-        return left;
-    }
-
-    public ColliderObject getRight() {
-        return right;
     }
 
     public Entity getChange() {

@@ -2,11 +2,6 @@ package game.handler;
 
 import engine.Game;
 import engine.IdGenerator;
-import engine.ecs.Query;
-import engine.ecs.component.CursorComponent;
-import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
-import engine.ecs.entity.Entity;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.entities.CursorEntity;
@@ -32,7 +27,7 @@ public class CursorSelectorHandler extends Handler {
 
     @Override
     public void handle(KeyEvent e) {
-        ArrayList<Entity> collisionEntities = Query.getEntitiesWithComponent(CollisionComponent.class);
+        /*ArrayList<Entity> collisionEntities = Query.getEntitiesWithComponent(CollisionComponent.class);
         int x = cursor.getComponent(GraphicsComponent.class).getBounds().x;
         int y = cursor.getComponent(GraphicsComponent.class).getBounds().y;
 
@@ -63,6 +58,8 @@ public class CursorSelectorHandler extends Handler {
                 entity.getComponent(GraphicsComponent.class).hovered();
             }
         }
+
+         */
     }
 
     @Override

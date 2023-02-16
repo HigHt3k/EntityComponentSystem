@@ -1,7 +1,6 @@
 package game.handler;
 
 import engine.Game;
-import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.entity.Entity;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
@@ -29,8 +28,8 @@ public class LevelSceneHandler extends Handler {
         if (Game.scene().current() instanceof LevelScene ls) {
             for (Entity entity : entities) {
                 if (entity instanceof LevelButton lb) {
-                    if (entity.getComponent(CollisionComponent.class).contains(e.getPoint())) {
-                        // TODO: reimplement highscore view
+
+                    // TODO: reimplement highscore view
                         /* Scene s = lb.getComponent(ActionComponent.class).getActions().get(MouseEvent.BUTTON1).
                         if (s != null) {
                             ls.addHighscores(s.getId());
@@ -40,7 +39,7 @@ public class LevelSceneHandler extends Handler {
                         }
 
                          */
-                    }
+
                 }
             }
             ls.removeHighscores();

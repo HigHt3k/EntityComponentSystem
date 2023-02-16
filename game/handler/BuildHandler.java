@@ -3,7 +3,6 @@ package game.handler;
 import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.collision.ColliderComponent;
-import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.TextObject;

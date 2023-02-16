@@ -4,9 +4,11 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
-import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.collision.ColliderComponent;
+import engine.ecs.component.collision.CollisionObject;
+import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.RenderObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
@@ -188,18 +190,23 @@ public class BuildScene extends Scene {
 
     private void updateEntitySize() {
         for(Entity e : getEntities()) {
-            if(e.getComponent(GraphicsComponent.class) == null) {
+            if (e.getComponent(RenderComponent.class) == null) {
                 continue;
             }
 
-            if(e.getComponent(GridComponent.class) == null) {
+            if (e.getComponent(GridComponent.class) == null) {
                 continue;
             }
             int x = (int) e.getComponent(GridComponent.class).getGridLocation().getX();
             int y = (int) e.getComponent(GridComponent.class).getGridLocation().getY();
             Rectangle bounds = new Rectangle(X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-            e.getComponent(GraphicsComponent.class).setBounds(bounds);
-            e.getComponent(CollisionComponent.class).setCollisionBox(bounds);
+            for (RenderObject r : e.getComponent(RenderComponent.class).getRenderObjects()) {
+                r.setLocation(bounds.getLocation());
+                r.setBounds(bounds);
+            }
+            for (CollisionObject c : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
+                c.setCollisionBoundaries(bounds);
+            }
         }
     }
 
