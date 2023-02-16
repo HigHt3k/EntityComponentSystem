@@ -81,10 +81,9 @@ public class Main {
 
         //Game.scene().addScene(new TestTextScene("Test", -260));
         //Game.scene().setCurrentScene(-260);
-
         Game.scene().addScene(new MenuScene("Menu", -255));
         Game.scene().setCurrentScene(-255);
-        Game.scene().current().init();
+        Game.scene().initScenes();
         Game.system().addSystem(new SimulationSystem());
         Game.system().addSystem(new ActionSystem());
         Game.input().addHandler(new CollisionDetectionSystem());

@@ -157,7 +157,6 @@ public class GameScene extends Scene {
         this.difficulty = difficulty;
         setupBuildPanel();
         //TODO: move init()?
-        init();
     }
 
     /**

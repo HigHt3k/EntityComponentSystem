@@ -78,11 +78,17 @@ public class SceneManager {
     }
 
     public Scene getScene(int id) {
-        for(Scene s : scenes) {
-            if(s.getId() == id) {
+        for (Scene s : scenes) {
+            if (s.getId() == id) {
                 return s;
             }
         }
         return null;
+    }
+
+    public void initScenes() {
+        for (Scene s : scenes) {
+            s.init();
+        }
     }
 }
