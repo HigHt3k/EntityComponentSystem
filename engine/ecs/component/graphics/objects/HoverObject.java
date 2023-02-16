@@ -8,6 +8,7 @@ public class HoverObject extends RenderObject {
     public HoverObject(Point location, Shape bounds, Color hoverColor) {
         super(location, bounds, Layer.HOVER);
         this.hoverColor = hoverColor;
+        setHidden(true);
     }
 
     public Color getHoverColor() {

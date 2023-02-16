@@ -379,6 +379,9 @@ public class RenderingEngine {
 
     private void renderLayer(Layer layer) {
         for (RenderObject r : collectRenderObjects(layer)) {
+            if (r.isHidden()) {
+                continue;
+            }
             render(r);
         }
     }
