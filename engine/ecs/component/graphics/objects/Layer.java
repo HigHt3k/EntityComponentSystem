@@ -7,7 +7,8 @@ public enum Layer {
     GAMELAYER3(3),
     UI(4),
     HOVER(5),
-    TOOLTIP(6);
+    TOOLTIP(6),
+    CURSOR(7);
 
     private final int value;
 

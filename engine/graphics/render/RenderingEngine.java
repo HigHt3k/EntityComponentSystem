@@ -195,6 +195,7 @@ public class RenderingEngine {
         renderLayer(Layer.UI);
         renderLayer(Layer.HOVER);
         renderLayer(Layer.TOOLTIP);
+        renderLayer(Layer.CURSOR);
     }
 
     public void renderGraphicObjects(Entity e) {
