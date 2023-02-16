@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.cable;
 
 public enum CablePortPosition {
     LEFT(0),

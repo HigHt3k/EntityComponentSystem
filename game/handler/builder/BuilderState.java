@@ -1,4 +1,4 @@
-package game.handler;
+package game.handler.builder;
 
 public enum BuilderState {
     BUILDING_CABLE,

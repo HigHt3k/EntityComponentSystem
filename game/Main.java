@@ -4,7 +4,7 @@ import engine.Game;
 import engine.ecs.system.ActionSystem;
 import engine.ecs.system.CollisionDetectionSystem;
 import engine.resource.lang.LanguageType;
-import game.handler.BuildHandler;
+import game.handler.builder.BuildHandler;
 import game.handler.CursorSelectorHandler;
 import game.handler.SimulationSystem;
 import game.scenes.MenuScene;

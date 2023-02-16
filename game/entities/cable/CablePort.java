@@ -1,4 +1,4 @@
-package game.entities;
+package game.entities.cable;
 
 import engine.ecs.entity.Entity;
 import game.components.CablePortType;

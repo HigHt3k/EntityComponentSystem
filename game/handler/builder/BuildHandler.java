@@ -1,4 +1,4 @@
-package game.handler;
+package game.handler.builder;
 
 import engine.Game;
 import engine.IdGenerator;
@@ -11,9 +11,10 @@ import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.components.*;
 import game.entities.BuildPanelEntity;
-import game.entities.CablePort;
-import game.entities.CablePortPosition;
+import game.entities.cable.CablePort;
+import game.entities.cable.CablePortPosition;
 import game.entities.SimulationEntity;
+import game.handler.SimulationSystem;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;

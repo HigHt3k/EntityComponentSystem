@@ -11,6 +11,8 @@ import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
 import engine.resource.colorpalettes.Bit8;
 import game.components.*;
+import game.entities.cable.CablePort;
+import game.entities.cable.CablePortPosition;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 

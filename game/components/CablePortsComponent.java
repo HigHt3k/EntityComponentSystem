@@ -5,8 +5,8 @@ import engine.ecs.component.Component;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.entity.Entity;
-import game.entities.CablePort;
-import game.entities.CablePortPosition;
+import game.entities.cable.CablePort;
+import game.entities.cable.CablePortPosition;
 import game.handler.simulation.SimulationType;
 
 import java.util.ArrayList;
