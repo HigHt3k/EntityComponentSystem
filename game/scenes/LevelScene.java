@@ -5,8 +5,10 @@ import engine.IdGenerator;
 import engine.ecs.component.IntentComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
+import engine.ecs.entity.ImageEntity;
 import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
@@ -73,26 +75,14 @@ public class LevelScene extends Scene {
         Game.res().score().loadScores("game/res/scores/highscores.xml");
 
         // Create the Menu GUI
-        Entity background = new Entity("Background", IdGenerator.generateId());
-        GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
-        backgroundGraphicsComponent.setBounds(new Rectangle(
-                0,
-                0,
-                1920,
-                1080
-                )
-        );
 
         try {
-            backgroundGraphicsComponent.setImage(ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")));
+            ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+            addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
-
-        background.addComponent(backgroundGraphicsComponent);
-        backgroundGraphicsComponent.setEntity(background);
-        addEntityToScene(background);
-
 
         Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
         Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);

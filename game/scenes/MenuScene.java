@@ -3,8 +3,10 @@ package game.scenes;
 import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
+import engine.ecs.entity.ImageEntity;
 import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
 import game.handler.CursorSelectorHandler;
@@ -27,25 +29,13 @@ public class MenuScene extends Scene {
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
 
         // Create the Menu GUI
-        Entity background = new Entity("Background", IdGenerator.generateId());
-        GraphicsComponent backgroundGraphicsComponent = new GraphicsComponent();
-        backgroundGraphicsComponent.setBounds(new Rectangle(
-                        0,
-                        0,
-                        1920,
-                        1080
-                )
-        );
-
         try {
-            backgroundGraphicsComponent.setImage(ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")));
+            ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+            addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
-
-        background.addComponent(backgroundGraphicsComponent);
-        backgroundGraphicsComponent.setEntity(background);
-        addEntityToScene(background);
 
         GenericButton playButton = new GenericButton(
                 "Play", IdGenerator.generateId(),

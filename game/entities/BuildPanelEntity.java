@@ -1,6 +1,10 @@
 package game.entities;
 
 import engine.Game;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.HoverObject;
+import engine.ecs.component.graphics.objects.ImageObject;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
@@ -41,27 +45,11 @@ public class BuildPanelEntity extends Entity {
         // define the size
         Rectangle bounds = new Rectangle(x, y, width, height);
 
-        // define GraphicsComponent
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setBounds(bounds);
-        graphics.setImage(img);
-        graphics.setHoverColor(HOVER_COLOR);
-        graphics.setTextColor(TEXT_COLOR);
-        graphics.setEntity(this);
-        this.addComponent(graphics);
-
-        // ToolTip
-        ToolTip tt = new ToolTip();
-        tt.setFont(graphics.getFont());
-        tt.setText(description);
-        graphics.setToolTip(tt);
-        graphics.setFont(Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f));
-        if(amount > 100) {
-            graphics.addText("");
-        } else {
-            graphics.addText(String.valueOf(amount));
-        }
-        graphics.addLocation(new Point(x, y + height));
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER2, img));
+        renderComponent.addRenderObject(new HoverObject(new Point(x, y), bounds, HOVER_COLOR));
+        this.addComponent(renderComponent);
+        renderComponent.setEntity(this);
 
         // define CollisionComponent
         CollisionComponent collider = new CollisionComponent();

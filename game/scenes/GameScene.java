@@ -409,20 +409,13 @@ public class GameScene extends Scene {
      * Setup method for the build panel
      */
     private void setupBuildPanel() {
-        Entity buildPanel = new Entity("Build Panel", IdGenerator.generateId());
-
-        GraphicsComponent buildPanelGC = new GraphicsComponent();
-        Rectangle buildPanelBounds = new Rectangle(0, 850, 1500, (1080-850));
-        buildPanelGC.setBounds(buildPanelBounds);
         try {
-            buildPanelGC.setImage(ImageIO.read(new File("game/res/menus/blueprint_scaled.png")));
+            ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/blueprint_scaled.png")), 0, 850, 1500, 1080 - 850, Layer.UI);
+            addEntityToScene(buildPanel);
         } catch (IOException e) {
-            Game.logger().severe("Could not load image from file\n" + e.getMessage());
+            e.printStackTrace();
         }
-        buildPanel.addComponent(buildPanelGC);
-        buildPanelGC.setEntity(buildPanel);
-
-        addEntityToScene(buildPanel);
     }
 
     /**

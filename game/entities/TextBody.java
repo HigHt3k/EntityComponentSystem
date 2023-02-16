@@ -1,6 +1,9 @@
 package game.entities;
 
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
 
 import java.awt.*;
@@ -10,14 +13,10 @@ public class TextBody extends Entity {
                     Font font, Color textColor, String text) {
         super(name, id);
 
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setBounds(new Rectangle(x, y, width, height));
-        graphics.setFont(font);
-        graphics.setTextColor(textColor);
-        graphics.addText(text);
-        graphics.addLocation(new Point(x, y));
-        graphics.setEntity(this);
-        graphics.setLayer(2);
-        this.addComponent(graphics);
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new TextObject(new Point(x, y), new Rectangle(x, y, width, height),
+                Layer.UI, text, font, textColor));
+        renderComponent.setEntity(this);
+        this.addComponent(renderComponent);
     }
 }

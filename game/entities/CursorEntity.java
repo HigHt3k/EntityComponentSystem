@@ -2,6 +2,10 @@ package game.entities;
 
 import engine.ecs.component.CursorComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.ImageObject;
+import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.RenderObject;
 import engine.ecs.entity.Entity;
 
 import javax.imageio.ImageIO;
@@ -20,19 +24,18 @@ public class CursorEntity extends Entity {
     public CursorEntity(String name, int id) {
         super(name, id);
 
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setEntity(this);
-        graphics.setBounds(new Rectangle(1920/2, 1080/2, 50, 50));
-        graphics.setLayer(5);
+        RenderComponent renderComponent = new RenderComponent();
         try {
-            graphics.setImage(ImageIO.read(new File("game/res/cursor.png")));
+            renderComponent.addRenderObject(new ImageObject(new Point(1920 / 2, 1080 / 2), new Rectangle(1920 / 2, 1080 / 2, 50, 50),
+                    Layer.CURSOR, ImageIO.read(new File("game/res/cursor.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.addComponent(graphics);
+        renderComponent.setEntity(this);
+        this.addComponent(renderComponent);
 
         CursorComponent cursor = new CursorComponent();
-        cursor.setCursorPosition(new Point(1920/2, 1080/2));
+        cursor.setCursorPosition(new Point(1920 / 2, 1080 / 2));
         cursor.setEntity(this);
         this.addComponent(cursor);
     }

@@ -1,6 +1,9 @@
 package game.entities;
 
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
 
 import java.awt.*;
@@ -14,14 +17,9 @@ public class SimplePanel extends Entity {
 
         Rectangle r = new Rectangle(x, y, width, height); // Position
 
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setBounds(r);
-        graphics.setShape(r);
-        graphics.setFillColor(background);
-        graphics.setBorderColor(border);
-        graphics.setTextColor(textColor);
-        graphics.setThickness(5);
-        graphics.setEntity(this);
-        this.addComponent(graphics);
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), r, Layer.UI, background, border, 5));
+        renderComponent.setEntity(this);
+        this.addComponent(renderComponent);
     }
 }

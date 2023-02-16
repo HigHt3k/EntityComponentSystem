@@ -7,6 +7,7 @@ import engine.ecs.component.graphics.GraphicsObject;
 
 import java.awt.*;
 
+// TODO: Refactor
 public class NumberSelectorEntity extends Entity {
     private ColliderObject left;
     private ColliderObject right;

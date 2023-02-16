@@ -4,8 +4,10 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
+import engine.ecs.entity.ImageEntity;
 import engine.ecs.entity.NumberSelectorEntity;
 import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
@@ -234,22 +236,25 @@ public class BuildScene extends Scene {
                 correctSignalsNeeded, outOfControlSignalsAccepted,
                 Game.res().loadDescription(imgId), failureDetectionRatio
         );
-        buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId-500);
+        buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId - 500);
         addEntityToScene(buildPanelEntity);
 
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 12f);
 
-        if(buildPanelEntity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
+        if (buildPanelEntity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
             numberOfBuildPanelElements++;
             return;
         }
-        NumberSelectorEntity numberSelectorEntity = new NumberSelectorEntity("build_element_" + imgId + "_selector", IdGenerator.generateId(),
+        //TODO: Reimplement
+        /*NumberSelectorEntity numberSelectorEntity = new NumberSelectorEntity("build_element_" + imgId + "_selector", IdGenerator.generateId(),
                 BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE/8,
                 850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE * 5/4,
                 BUILD_CELL_SIZE/4 * 3, BUILD_CELL_SIZE/4, font, TEXT_COLOR, BOX_COLOR, BOX_BORDER_COLOR
                 );
         numberSelectorEntity.setChange(buildPanelEntity);
         addEntityToScene(numberSelectorEntity);
+
+         */
 
         numberOfBuildPanelElements++;
     }
@@ -335,20 +340,13 @@ public class BuildScene extends Scene {
      * Setup method for the build panel
      */
     private void setupBuildPanel() {
-        Entity buildPanel = new Entity("Build Panel", IdGenerator.generateId());
-
-        GraphicsComponent buildPanelGC = new GraphicsComponent();
-        Rectangle buildPanelBounds = new Rectangle(0, 850, 1500, (1080-850));
-        buildPanelGC.setBounds(buildPanelBounds);
         try {
-            buildPanelGC.setImage(ImageIO.read(new File("game/res/menus/blueprint_scaled.png")));
+            ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/blueprint_scaled.png")), 0, 850, 1500, 1080 - 850, Layer.UI);
+            addEntityToScene(buildPanel);
         } catch (IOException e) {
-            Game.logger().severe("Could not load image from file\n" + e.getMessage());
+            e.printStackTrace();
         }
-        buildPanel.addComponent(buildPanelGC);
-        buildPanelGC.setEntity(buildPanel);
-
-        addEntityToScene(buildPanel);
     }
 
     /**
@@ -365,22 +363,13 @@ public class BuildScene extends Scene {
                 font
         );
 
-        Entity descriptionPanel = new Entity("Description Panel", IdGenerator.generateId());
-
-        GraphicsComponent descriptionPanelGC = new GraphicsComponent();
-        //TODO: investigate why the numbers are not 420 and 1080 to correctly show this panel on Surface Pro 7
-        Rectangle descriptionPanelBounds = new Rectangle(1500, 0, 402, 1037);
-        descriptionPanelGC.setBounds(descriptionPanelBounds);
-
         try {
-            descriptionPanelGC.setImage(ImageIO.read(new File("game/res/menus/box_new.png")));
+            ImageEntity descriptionPanel = new ImageEntity("Description Panel", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/box_new.png")), 1500, 0, 420, 850, Layer.UI);
+            addEntityToScene(descriptionPanel);
         } catch (IOException e) {
-            Game.logger().severe("Could not load image from file\n" + e.getMessage());
+            e.printStackTrace();
         }
-        descriptionPanel.addComponent(descriptionPanelGC);
-        descriptionPanelGC.setEntity(descriptionPanel);
-
-        addEntityToScene(descriptionPanel);
 
 
         for(int i = 1; i < 11; i++) {

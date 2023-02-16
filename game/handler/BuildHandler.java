@@ -690,8 +690,6 @@ public class BuildHandler extends Handler {
 
                 Game.scene().current().getEntities().remove(e);
             }
-        } else if(e instanceof CableEntity) {
-            Game.scene().current().getEntities().remove(e);
         }
 
         //TODO: implement not found in build panel

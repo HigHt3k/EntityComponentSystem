@@ -1,5 +1,9 @@
 package game.entities;
 
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.HoverObject;
+import engine.ecs.component.graphics.objects.ImageObject;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
@@ -31,12 +35,11 @@ public class GridEntity extends Entity {
         Rectangle bounds = new Rectangle(x, y, width, height);
 
         // define GraphicsComponent
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setBounds(bounds);
-        graphics.setImage(img);
-        graphics.setHoverColor(HOVER_COLOR);
-        graphics.setEntity(this);
-        this.addComponent(graphics);
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER1, img));
+        renderComponent.addRenderObject(new HoverObject(new Point(x, y), bounds, HOVER_COLOR));
+        renderComponent.setEntity(this);
+        this.addComponent(renderComponent);
 
         // define GridComponent
         GridComponent grid = new GridComponent();

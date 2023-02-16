@@ -1,6 +1,9 @@
 package game.entities;
 
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.LineObject;
 import engine.ecs.entity.Entity;
 
 import java.awt.*;
@@ -9,11 +12,9 @@ public class LineEntity extends Entity {
     public LineEntity(String name, int id, Point p1, Point p2, int thickness, Color color) {
         super(name, id);
 
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setLine(p1, p2);
-        graphics.setLineColor(color);
-        graphics.setThickness(thickness);
-        graphics.setEntity(this);
-        this.addComponent(graphics);
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new LineObject(p1, null, Layer.GAMELAYER1, p1, p2, color, thickness));
+        renderComponent.setEntity(this);
+        this.addComponent(renderComponent);
     }
 }
