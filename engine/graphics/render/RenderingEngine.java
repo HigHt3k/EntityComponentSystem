@@ -173,6 +173,7 @@ public class RenderingEngine {
         renderLayer(Layer.UI_FRONT);
         renderLayer(Layer.HOVER);
         renderLayer(Layer.TOOLTIP);
+        renderLayer(Layer.UI_HOVER);
         renderLayer(Layer.CURSOR);
     }
 

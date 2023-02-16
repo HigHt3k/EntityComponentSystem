@@ -17,6 +17,7 @@ import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
+import game.action.ValidateAction;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.TooltipComponent;
@@ -471,7 +472,7 @@ public class GameScene extends Scene {
         addEntityToScene(minActuatorsContent);
 
         validate = new GenericButton("validate", IdGenerator.generateId(),
-                1500 + (1920 - 1500) / 2 - 300 / 2, 480, 300, 50, "@30", fontBig, new StartAction(null));
+                1500 + (1920 - 1500) / 2 - 300 / 2, 480, 300, 50, "@30", fontBig, new ValidateAction());
         addEntityToScene(validate);
     }
 

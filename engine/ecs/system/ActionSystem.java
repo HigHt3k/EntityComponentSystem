@@ -34,6 +34,13 @@ public class ActionSystem extends SystemHandle {
                                 c.setClicked(false);
                             }
                         }
+                        if (c.isHovered()) {
+                            if (e.getComponent(ActionComponent.class) != null) {
+                                if (e.getComponent(ActionComponent.class).getActions().get(MouseEvent.NOBUTTON) != null) {
+                                    e.getComponent(ActionComponent.class).getActions().get(MouseEvent.NOBUTTON).handle();
+                                }
+                            }
+                        }
                     }
                 }
             }

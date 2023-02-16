@@ -2,6 +2,7 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.RenderComponent;
@@ -14,6 +15,7 @@ import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import engine.resource.score.HighScore;
+import game.action.ShowLevelInfoAction;
 import game.entities.ui.LevelButton;
 import game.entities.ui.LineEntity;
 import game.entities.ui.SimplePanel;
@@ -21,6 +23,7 @@ import game.entities.ui.TextBody;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -187,6 +190,7 @@ public class LevelScene extends Scene {
         LevelButton lvl = new LevelButton("lvl" + id, IdGenerator.generateId(),
                 x, y, 50, 50, "", FontCollection.bit8Font, c,
                 new StartAction(Game.scene().getScene(id)));
+        lvl.getComponent(ActionComponent.class).addAction(MouseEvent.NOBUTTON, new ShowLevelInfoAction(id));
         addEntityToScene(lvl);
     }
 

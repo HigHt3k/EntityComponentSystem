@@ -9,7 +9,8 @@ public enum Layer {
     UI_FRONT(5),
     HOVER(6),
     TOOLTIP(7),
-    CURSOR(8);
+    UI_HOVER(8),
+    CURSOR(9);
 
     private final int value;
 
