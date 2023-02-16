@@ -1,5 +1,7 @@
 package engine.ecs.entity;
 
+import engine.ecs.component.action.ActionComponent;
+import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.IntentComponent;
@@ -9,6 +11,7 @@ import engine.ecs.intent.Intent;
 import engine.resource.colorpalettes.Bit8;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 /**
  * GenericButton:

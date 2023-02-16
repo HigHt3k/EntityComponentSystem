@@ -7,6 +7,7 @@ import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
+import engine.ecs.entity.SceneStartButton;
 import engine.ecs.intent.ExitIntent;
 import engine.ecs.system.CollisionDetectionSystem;
 import engine.ecs.system.HoverSystem;
@@ -39,13 +40,12 @@ public class MenuScene extends Scene {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
 
-        GenericButton playButton = new GenericButton(
+        SceneStartButton playButton = new SceneStartButton(
                 "Play", IdGenerator.generateId(),
-                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@0", font
+                "@0", font, new LevelScene("level", -254)
         );
-        playButton.addIntent(new StartIntent(new LevelScene("Level", -254)));
         addEntityToScene(playButton);
 
         GenericButton buildButton = new GenericButton(
