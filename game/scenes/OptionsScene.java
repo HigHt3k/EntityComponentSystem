@@ -2,6 +2,7 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.action.ChangeLanguageAction;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.objects.Layer;
@@ -9,6 +10,7 @@ import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
+import engine.resource.lang.LanguageType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -44,7 +46,7 @@ public class OptionsScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font, new StartAction(Game.scene().getScene(-255))
+                font, new StartAction(-255)
         );
 
         this.addEntityToScene(mainMenuButton);
@@ -61,7 +63,7 @@ public class OptionsScene extends Scene {
                 "English", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@10", font, new StartAction(null)
+                "@10", font, new ChangeLanguageAction(LanguageType.EN_US)
         );
         addEntityToScene(toggleLanguageEnglish);
 
@@ -69,7 +71,7 @@ public class OptionsScene extends Scene {
                 "German", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@11", font, new StartAction(null)
+                "@11", font, new ChangeLanguageAction(LanguageType.DE_DE)
         );
         addEntityToScene(toggleLanguageGerman);
 
@@ -77,7 +79,7 @@ public class OptionsScene extends Scene {
                 "GermanSimple", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@12", font, new StartAction(null)
+                "@12", font, new ChangeLanguageAction(LanguageType.DE_SIMPLE)
         );
         addEntityToScene(toggleLanguageGermanEasy);
     }
