@@ -168,17 +168,12 @@ public class GameScene extends Scene {
      */
     public void init() {
         // Create the GUI including buttons going back to menu, exit etc.
-        Game.input().removeAllHandlers();
-        Game.system().resetSystems();
         setupDescriptionPanel();
         setupButtons();
         addToBuildPanel(500, 1000, 1e-25f, 1, 0, 0f);
         addToBuildPanel(501, 1000, 1e-25f, 1, 0, 0f);
         addToBuildPanel(502, 1000, 1e-25f, 1, 0, 0f);
         addToBuildPanel(503, 1000, 1e-25f, 1, 0, 0f);
-        Game.input().addHandler(new BuildHandler());
-        Game.system().addSystem(new SimulationSystem());
-        Game.input().addHandler(new CursorSelectorHandler());
     }
 
     private void updateEntitySize() {

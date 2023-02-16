@@ -1,7 +1,12 @@
 package game;
 
 import engine.Game;
+import engine.ecs.system.ActionSystem;
+import engine.ecs.system.CollisionDetectionSystem;
 import engine.resource.lang.LanguageType;
+import game.handler.BuildHandler;
+import game.handler.CursorSelectorHandler;
+import game.handler.SimulationSystem;
 import game.scenes.MenuScene;
 
 import java.io.File;
@@ -80,6 +85,11 @@ public class Main {
         Game.scene().addScene(new MenuScene("Menu", -255));
         Game.scene().setCurrentScene(-255);
         Game.scene().current().init();
+        Game.system().addSystem(new SimulationSystem());
+        Game.system().addSystem(new ActionSystem());
+        Game.input().addHandler(new CollisionDetectionSystem());
+        Game.input().addHandler(new CursorSelectorHandler());
+        Game.input().addHandler(new BuildHandler());
 
         //Game.scene().addScene(new GraphicObjectsTestScene("TEST", -1000));
         //Game.scene().setCurrentScene(-1000);

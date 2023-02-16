@@ -124,12 +124,6 @@ public class BuildScene extends Scene {
     @Override
     public void init() {
         updateGridSize();
-        Game.input().removeAllHandlers();
-        Game.system().resetSystems();
-
-        Game.input().addHandler(new BuildHandler());
-        Game.input().addHandler(new CollisionHandler());
-        Game.input().addHandler(new CursorSelectorHandler());
     }
 
     @Override
