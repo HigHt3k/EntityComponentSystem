@@ -30,33 +30,8 @@ public class NumberSelectorEntity extends Entity {
         Rectangle middleShape = new Rectangle(x + width/3, y, width/3, height);
         Rectangle rightShape = new Rectangle(x + width/3*2, y, width/3, height);
 
-        GraphicsComponent graphics = new GraphicsComponent();
+        //TODO: add graphics and colliders
 
-        GraphicsObject minusButtonText = new GraphicsObject("-", font, textColor, leftShape);
-        GraphicsObject plusButtonText = new GraphicsObject("+", font, textColor, rightShape);
-        minusButtonText.setLayer(1);
-        plusButtonText.setLayer(1);
-
-        GraphicsObject minusButtonBox = new GraphicsObject(leftShape, fillColor, borderColor);
-        GraphicsObject displayFieldBox = new GraphicsObject(middleShape, null, borderColor);
-        GraphicsObject plusButtonBox = new GraphicsObject(rightShape, fillColor, borderColor);
-
-        graphics.addGraphicsObject(minusButtonText);
-        graphics.addGraphicsObject(plusButtonText);
-        graphics.addGraphicsObject(minusButtonBox);
-        graphics.addGraphicsObject(displayFieldBox);
-        graphics.addGraphicsObject(plusButtonBox);
-
-        graphics.setEntity(this);
-        this.addComponent(graphics);
-
-        CollisionComponent colliders = new CollisionComponent();
-        left = new ColliderObject(leftShape, minusButtonBox);
-        right = new ColliderObject(rightShape, plusButtonBox);
-        colliders.addCollider(left);
-        colliders.addCollider(right);
-        colliders.setEntity(this);
-        this.addComponent(colliders);
     }
 
     public ColliderObject getLeft() {
