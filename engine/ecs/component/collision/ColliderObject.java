@@ -5,6 +5,7 @@ import engine.ecs.component.graphics.GraphicsObject;
 
 import java.awt.*;
 
+@Deprecated
 public class ColliderObject {
     Shape collisionBox;
     GraphicsObject correspondingGraphics;

@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class IntentComponent extends Component {
     private List<Intent> intents = new ArrayList<Intent>();
 

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+@Deprecated
 public class CollisionComponent extends Component {
     Shape _COLLISIONBOX;
     Shape collisionBox;

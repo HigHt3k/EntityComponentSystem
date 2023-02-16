@@ -5,9 +5,12 @@ import engine.ecs.Query;
 import engine.ecs.component.CursorComponent;
 import engine.ecs.component.graphics.GraphicsObject;
 import engine.ecs.component.graphics.GraphicsObjectType;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.*;
 import engine.ecs.entity.Entity;
 import engine.ecs.component.graphics.GraphicsComponent;
 
+import javax.sound.sampled.Line;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -24,7 +27,13 @@ public class RenderingEngine {
     private static final float scaleH = Game.config().renderConfiguration().getScaleHeight();
     public static final int MARGIN = (int) (15 * scaleW); //px
 
+    private ArrayList<Entity> renderEntities;
+
     private Graphics2D g;
+
+    public RenderingEngine() {
+        this.renderEntities = new ArrayList<>();
+    }
 
     /**
      * Render a text
@@ -178,6 +187,14 @@ public class RenderingEngine {
             renderToolTips(e);
             renderGraphicObjects(e);
         }
+
+        renderLayer(Layer.BACKGROUND);
+        renderLayer(Layer.GAMELAYER1);
+        renderLayer(Layer.GAMELAYER2);
+        renderLayer(Layer.GAMELAYER3);
+        renderLayer(Layer.UI);
+        renderLayer(Layer.HOVER);
+        renderLayer(Layer.TOOLTIP);
     }
 
     public void renderGraphicObjects(Entity e) {
@@ -357,6 +374,50 @@ public class RenderingEngine {
                     );
                 }
             }
+        }
+    }
+
+    private void renderLayer(Layer layer) {
+        for (RenderObject r : collectRenderObjects(layer)) {
+            render(r);
+        }
+    }
+
+    public void recollectEntities() {
+        renderEntities = Query.getEntitiesWithComponent(RenderComponent.class);
+    }
+
+    private ArrayList<RenderObject> collectRenderObjects(Layer layer) {
+        ArrayList<RenderObject> renderObjects = new ArrayList<>();
+        for (Entity e : renderEntities) {
+            renderObjects.addAll(e.getComponent(RenderComponent.class).getObjectsAtLayer(layer));
+        }
+        return renderObjects;
+    }
+
+    private void render(RenderObject r) {
+        if (r instanceof TextObject t) {
+            renderText(g, t.getText(), t.getColor(),
+                    Game.scale().scaleFont(t.getFont()),
+                    Game.scale().scaleX(t.getLocation().x),
+                    Game.scale().scaleY(t.getLocation().y),
+                    Game.scale().scaleX(t.getBounds().getBounds().width),
+                    Game.scale().scaleY(t.getBounds().getBounds().height));
+        } else if (r instanceof ImageObject i) {
+            renderImage(g, i.getImage(),
+                    Game.scale().scaleX(i.getLocation().x),
+                    Game.scale().scaleY(i.getLocation().y),
+                    Game.scale().scaleX(i.getBounds().getBounds().width),
+                    Game.scale().scaleY(i.getBounds().getBounds().height));
+        } else if (r instanceof HoverObject h) {
+            renderShape(g, Game.scale().scaleShape(h.getBounds()), h.getHoverColor(), h.getHoverColor(), 1);
+        } else if (r instanceof LineObject l) {
+            renderLine(g,
+                    Game.scale().scalePoint(l.getP1()),
+                    Game.scale().scalePoint(l.getP2()),
+                    l.getColor(), l.getThickness());
+        } else if (r instanceof ShapeObject s) {
+            renderShape(g, Game.scale().scaleShape(s.getBounds()), s.getBorderColor(), s.getFillColor(), s.getThickness());
         }
     }
 }

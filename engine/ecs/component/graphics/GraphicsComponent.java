@@ -17,6 +17,7 @@ import java.util.ArrayList;
  * Scaling is handled by the {@link ScalingEngine} that is applied to the graphics component upon
  * updating the size of any scalable context
  */
+@Deprecated
 public class GraphicsComponent extends Component {
     // Refactoring the GraphicsComponent while still having possibility to use all the old stuff -> TODO: Remove later
     // What data does a graphics component contain?
