@@ -219,7 +219,6 @@ public class RenderingEngine {
                     Game.scale().scaleX(i.getBounds().getBounds().width),
                     Game.scale().scaleY(i.getBounds().getBounds().height));
         } else if (r instanceof ShapeObject s) {
-            System.out.println(s.getBounds());
             renderShape(g, Game.scale().scaleShape(s.getBounds()), s.getBorderColor(), s.getFillColor(), s.getThickness());
         } else if (r instanceof LineObject l) {
             renderLine(g,

@@ -14,6 +14,5 @@ public class StartAction extends Action {
     public void handle() {
         System.out.println("set scene to: " + scene.getName());
         Game.scene().setCurrentScene(scene);
-        Game.graphics().recollectEntities();
     }
 }

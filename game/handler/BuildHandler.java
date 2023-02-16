@@ -2,8 +2,8 @@ package game.handler;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.TextObject;
@@ -11,7 +11,10 @@ import engine.ecs.entity.Entity;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.components.*;
-import game.entities.*;
+import game.entities.BuildPanelEntity;
+import game.entities.CablePort;
+import game.entities.CablePortPosition;
+import game.entities.SimulationEntity;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
@@ -125,15 +128,19 @@ public class BuildHandler extends Handler {
             Entity validate = gs.getValidate();
 
             if(e.getButton() == MouseEvent.BUTTON1) {
-                if (prev.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                if (prev.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                        .contains(Game.scale().upscalePoint(e.getPoint()))) {
                     gs.setDescriptionDisplayUsingOffset(-1);
                     System.out.println("set to prev");
-                } else if (next.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                } else if (next.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                        .contains(Game.scale().upscalePoint(e.getPoint()))) {
                     gs.setDescriptionDisplayUsingOffset(+1);
-                } else if(validate.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                } else if (validate.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                        .contains(Game.scale().upscalePoint(e.getPoint()))) {
                     Game.system().getSystem(SimulationSystem.class).finish();
-                } else if(Game.scene().current().getEntityByName("back") != null) {
-                    if(Game.scene().current().getEntityByName("back").getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                } else if (Game.scene().current().getEntityByName("back") != null) {
+                    if (Game.scene().current().getEntityByName("back").getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                            .contains(Game.scale().upscalePoint(e.getPoint()))) {
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("back"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scorebox"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("aircraft"));
@@ -148,12 +155,13 @@ public class BuildHandler extends Handler {
 
         for(Entity entity : entities) {
             if(entity.getComponent(TooltipComponent.class) != null) {
-                if(Game.scene().current() instanceof GameScene gs && entity.getComponent(CollisionComponent.class) != null) {
-                    if(entity.getComponent(CollisionComponent.class).getCollisionBox().contains(e.getPoint())) {
+                if (Game.scene().current() instanceof GameScene gs && entity.getComponent(ColliderComponent.class) != null) {
+                    if (entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                            .contains(Game.scale().upscalePoint(e.getPoint()))) {
                         gs.displayToolTip(entity);
                         break;
                     } else {
-                        gs.displayEmptyToolTip(entity);
+                        gs.displayEmptyToolTip();
                     }
                 }
             }
@@ -176,9 +184,10 @@ public class BuildHandler extends Handler {
                 // Handle events when builder is not building
                 if (currentBuildState == BuilderState.NOT_BUILDING) {
                     // check location of the click
-                    if (entity.getComponent(CollisionComponent.class) != null
-                            && entity.getComponent(CollisionComponent.class).getCollisionBox() != null
-                            && entity.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                    if (entity.getComponent(ColliderComponent.class) != null
+                            && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries() != null
+                            && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                            .contains(Game.scale().upscalePoint(e.getPoint()))) {
                         // check if the click was on a BuildComponent first -> create new Simulation Entity
                         if (entity.getComponent(BuildComponent.class) != null) {
                             // check amount left, >0? -> new Entity
@@ -186,7 +195,7 @@ public class BuildHandler extends Handler {
                                     && entity.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
                                 SimulationEntity newEntity = null;
 
-                                if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CPU) {
+                                if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CPU) {
                                     newEntity = new SimulationEntity(
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
                                             entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
@@ -405,8 +414,9 @@ public class BuildHandler extends Handler {
             // check mid click to rotate
 
             else if(e.getButton() == MouseEvent.BUTTON2) {
-                if (entity.getComponent(CollisionComponent.class) != null
-                        && entity.getComponent(CollisionComponent.class).contains(e.getPoint())) {
+                if (entity.getComponent(ColliderComponent.class) != null
+                        && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                        .contains(Game.scale().upscalePoint(e.getPoint()))) {
                     if (entity.getComponent(SimulationComponent.class) != null) {
                         if (entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
                             int inId = entity.getComponent(CablePortsComponent.class).getInIds()[0];
@@ -458,7 +468,7 @@ public class BuildHandler extends Handler {
                 // handle if not building state -> remove component
                 else if(currentBuildState == BuilderState.NOT_BUILDING) {
                     // remove component at positon
-                    Point gridLocation = findEntityGridPosition(e.getPoint());
+                    Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
                     if(gridLocation == null) {
                         return;
                     } else {
@@ -986,8 +996,9 @@ public class BuildHandler extends Handler {
      */
     private Point findEntityGridPosition(Point p) {
         for(Entity e : Game.scene().current().getEntities()) {
-            if(e.getComponent(CollisionComponent.class) != null
-                    && e.getComponent(CollisionComponent.class).contains(p)
+            if (e.getComponent(ColliderComponent.class) != null
+                    && e.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                    .contains(p)
                     && e.getComponent(GridComponent.class) != null) {
                 return (Point) e.getComponent(GridComponent.class).getGridLocation();
             }
