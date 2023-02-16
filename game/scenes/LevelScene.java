@@ -261,7 +261,7 @@ public class LevelScene extends Scene {
 
     private void makeConnection(Point p1, Point p2) {
         Entity line = new LineEntity("line_connector", IdGenerator.generateId(),
-                p1, p2, 4, Bit8.NAVY);
+                new Point(p1.x + 25, p1.y + 25), new Point(p2.x + 25, p2.y + 25), 4, Bit8.NAVY);
         addEntityToScene(line);
     }
 }
