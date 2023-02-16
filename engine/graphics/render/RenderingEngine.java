@@ -67,6 +67,9 @@ public class RenderingEngine {
      * @param height: height of text box
      */
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
+        if (text == null) {
+            return;
+        }
         if (text.contains("@")) {
             String temp = text;
             int id = Integer.parseInt(temp.replace("@", ""));
@@ -166,69 +169,16 @@ public class RenderingEngine {
      * Collects all entities and detects if they have a @{@link GraphicsComponent} which should be rendered
      */
     public void collectAndRenderEntities() {
-        ArrayList<Entity> entities = Query.getEntitiesWithComponent(GraphicsComponent.class);
-
-        Collections.sort(entities, (o1, o2) -> {
-            if (o1.getComponent(GraphicsComponent.class).getLayer() == o2.getComponent(GraphicsComponent.class).getLayer())
-                return 0;
-            else if (o1.getComponent(GraphicsComponent.class).getLayer() < o2.getComponent(GraphicsComponent.class).getLayer()) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });
-
-        for (Entity e : entities) {
-            renderImages(e);
-            renderLines(e);
-            renderShapes(e);
-            renderTexts(e);
-            renderHovered(e);
-            renderToolTips(e);
-            renderGraphicObjects(e);
-        }
-
+        recollectEntities();
         renderLayer(Layer.BACKGROUND);
         renderLayer(Layer.GAMELAYER1);
         renderLayer(Layer.GAMELAYER2);
         renderLayer(Layer.GAMELAYER3);
         renderLayer(Layer.UI);
+        renderLayer(Layer.UI_FRONT);
         renderLayer(Layer.HOVER);
         renderLayer(Layer.TOOLTIP);
         renderLayer(Layer.CURSOR);
-    }
-
-    public void renderGraphicObjects(Entity e) {
-
-        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-
-        Collections.sort(gc.getGraphicsObjects(), (o1, o2) -> {
-            if (o1.getLayer() == o2.getLayer())
-                return 0;
-            else if (o1.getLayer() < o2.getLayer()) {
-                return -1;
-            } else {
-                return 1;
-            }
-        });
-
-        for (GraphicsObject go : gc.getGraphicsObjects()) {
-            if (go.getType() == GraphicsObjectType.SHAPE) {
-                renderShape(g, go.getShape(), go.getBorderColor(), go.getColor(), 1);
-                if (go.isHovered()) {
-                    renderShape(g, go.getShape(), go.getHoverColor(), go.getHoverColor(), 1);
-                }
-            } else if (go.getType() == GraphicsObjectType.TEXT) {
-                renderText(g, go.getText(), go.getColor(), go.getFont(),
-                        go.getShape().getBounds().x, go.getShape().getBounds().y,
-                        go.getShape().getBounds().width, go.getShape().getBounds().height);
-            } else if (go.getType() == GraphicsObjectType.IMAGE) {
-                renderImage(g, go.getImage(),
-                        go.getShape().getBounds().x, go.getShape().getBounds().y,
-                        go.getShape().getBounds().width, go.getShape().getBounds().height);
-            }
-        }
-
     }
 
     /**
@@ -238,144 +188,6 @@ public class RenderingEngine {
      */
     public void setGraphics(Graphics2D g) {
         this.g = g;
-    }
-
-    private void renderLines(Entity e) {
-
-        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-        if (gc != null) {
-            if (gc.getLineStart() != null && gc.getLineEnd() != null) {
-                renderLine(g,
-                        gc.getLineStart(),
-                        gc.getLineEnd(),
-                        gc.getLineColor(),
-                        gc.getThickness()
-                );
-            }
-
-        }
-    }
-
-    private void renderShapes(Entity e) {
-
-        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-        if (gc != null) {
-            // render based on the given content of the component
-            if (gc.getShape() != null) {
-                renderShape(
-                        g,
-                        gc.getShape(),
-                        gc.getBorderColor(),
-                        gc.getFillColor(),
-                        gc.getThickness()
-                );
-            }
-
-            if (gc.getShapes() != null) {
-                for (Shape s : gc.getShapes()) {
-                    renderShape(
-                            g,
-                            s,
-                            gc.getBorderColor(),
-                            gc.getFillColor(),
-                            gc.getThickness()
-                    );
-                }
-
-            }
-        }
-    }
-
-    private void renderImages(Entity e) {
-
-        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-        if (gc != null) {
-            // render based on the given content of the component
-            if (gc.getImage() != null) {
-                renderImage(
-                        g,
-                        gc.getImage(),
-                        gc.getBounds().x,
-                        gc.getBounds().y,
-                        gc.getBounds().width,
-                        gc.getBounds().height
-                );
-            }
-        }
-
-    }
-
-    private void renderTexts(Entity e) {
-
-        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-        if (gc != null) {
-            if (!gc.getTexts().isEmpty() && !gc.getLocations().isEmpty()) {
-                for (int i = 0; i < gc.getTexts().size(); i++) {
-                    renderText(
-                            g,
-                            gc.getTexts().get(i),
-                            gc.getTextColor(),
-                            gc.getFont(),
-                            (int) gc.getLocations().get(i).getX(),
-                            (int) gc.getLocations().get(i).getY(),
-                            gc.getBounds().width,
-                            gc.getBounds().height
-                    );
-                }
-
-            }
-        }
-    }
-
-    private void renderToolTips(Entity e) {
-        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-        if (gc != null) {
-            if (gc.isHovered()) {
-                if (gc.getToolTip() != null) {
-                    renderShape(
-                            g,
-                            new Rectangle(
-                                    gc.getBounds().x + 80,
-                                    gc.getBounds().y + 50,
-                                    200,
-                                    150
-                            ),
-                            gc.getToolTip().getBorderColor(),
-                            gc.getToolTip().getToolTipColor(),
-                            gc.getThickness()
-                    );
-                    renderText(
-                            g,
-                            gc.getToolTip().getText(),
-                            gc.getToolTip().getTextColor(),
-                            gc.getToolTip().getFont(),
-                            gc.getBounds().x + 80,
-                            gc.getBounds().y + 50,
-                            200,
-                            150
-                    );
-                }
-            }
-        }
-
-    }
-
-    private void renderHovered(Entity e) {
-
-        GraphicsComponent gc = e.getComponent(GraphicsComponent.class);
-        if (gc != null) {
-            if (gc.isHovered()) {
-                if (gc.getHoverColor() != null) {
-                    renderShape(
-                            g,
-                            gc.getBounds(),
-                            gc.getHoverColor(),
-                            gc.getHoverColor(),
-                            gc.getThickness()
-                    );
-                }
-            }
-        }
     }
 
     private void renderLayer(Layer layer) {
@@ -400,28 +212,29 @@ public class RenderingEngine {
     }
 
     private void render(RenderObject r) {
-        if (r instanceof TextObject t) {
+        if (r instanceof ImageObject i) {
+            renderImage(g, i.getImage(),
+                    Game.scale().scaleX(i.getLocation().x),
+                    Game.scale().scaleY(i.getLocation().y),
+                    Game.scale().scaleX(i.getBounds().getBounds().width),
+                    Game.scale().scaleY(i.getBounds().getBounds().height));
+        } else if (r instanceof ShapeObject s) {
+            System.out.println(s.getBounds());
+            renderShape(g, Game.scale().scaleShape(s.getBounds()), s.getBorderColor(), s.getFillColor(), s.getThickness());
+        } else if (r instanceof LineObject l) {
+            renderLine(g,
+                    Game.scale().scalePoint(l.getP1()),
+                    Game.scale().scalePoint(l.getP2()),
+                    l.getColor(), l.getThickness());
+        } else if (r instanceof TextObject t) {
             renderText(g, t.getText(), t.getColor(),
                     Game.scale().scaleFont(t.getFont()),
                     Game.scale().scaleX(t.getLocation().x),
                     Game.scale().scaleY(t.getLocation().y),
                     Game.scale().scaleX(t.getBounds().getBounds().width),
                     Game.scale().scaleY(t.getBounds().getBounds().height));
-        } else if (r instanceof ImageObject i) {
-            renderImage(g, i.getImage(),
-                    Game.scale().scaleX(i.getLocation().x),
-                    Game.scale().scaleY(i.getLocation().y),
-                    Game.scale().scaleX(i.getBounds().getBounds().width),
-                    Game.scale().scaleY(i.getBounds().getBounds().height));
         } else if (r instanceof HoverObject h) {
             renderShape(g, Game.scale().scaleShape(h.getBounds()), h.getHoverColor(), h.getHoverColor(), 1);
-        } else if (r instanceof LineObject l) {
-            renderLine(g,
-                    Game.scale().scalePoint(l.getP1()),
-                    Game.scale().scalePoint(l.getP2()),
-                    l.getColor(), l.getThickness());
-        } else if (r instanceof ShapeObject s) {
-            renderShape(g, Game.scale().scaleShape(s.getBounds()), s.getBorderColor(), s.getFillColor(), s.getThickness());
         }
     }
 }
