@@ -19,9 +19,6 @@ import game.components.GridComponent;
 import game.components.TooltipComponent;
 import game.entities.*;
 import game.handler.simulation.SimulationType;
-import game.intent.CableLayerSwitchIntent;
-import game.intent.SaveScoreIntent;
-import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -354,7 +351,6 @@ public class GameScene extends Scene {
                 "0",
                 font, new StartAction(null)
         );
-        layer0.addIntent(new CableLayerSwitchIntent(0));
         this.addEntityToScene(layer0);
 
         GenericButton layer1 = new GenericButton(
@@ -363,7 +359,6 @@ public class GameScene extends Scene {
                 "1",
                 font, new StartAction(null)
         );
-        layer1.addIntent(new CableLayerSwitchIntent(1));
         this.addEntityToScene(layer1);
 
         GenericButton layer2 = new GenericButton(
@@ -372,7 +367,6 @@ public class GameScene extends Scene {
                 "2",
                 font, new StartAction(null)
         );
-        layer2.addIntent(new CableLayerSwitchIntent(2));
         this.addEntityToScene(layer2);
 
         GenericButton layer3 = new GenericButton(
@@ -381,7 +375,6 @@ public class GameScene extends Scene {
                 "3",
                 font, new StartAction(null)
         );
-        layer3.addIntent(new CableLayerSwitchIntent(3));
         this.addEntityToScene(layer3);
     }
 
@@ -609,8 +602,6 @@ public class GameScene extends Scene {
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
                 "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(null)
         );
-        saveScore.addIntent(new SaveScoreIntent(score));
-        saveScore.addIntent(new StartIntent(Game.scene().getScene(-255)));
         addEntityToScene(saveScore);
 
         try {

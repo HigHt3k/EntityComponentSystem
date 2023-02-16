@@ -2,7 +2,6 @@ package engine.input;
 
 import engine.Game;
 import engine.ecs.entity.Entity;
-import engine.ecs.component.IntentComponent;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 

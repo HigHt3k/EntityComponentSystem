@@ -1,6 +1,5 @@
 package game.entities;
 
-import engine.ecs.component.IntentComponent;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.collision.CollisionObject;
@@ -58,10 +57,5 @@ public class GridEntity extends Entity {
         colliderComponent.addCollisionObject(new CollisionObject(bounds, hover));
         colliderComponent.setEntity(this);
         this.addComponent(colliderComponent);
-
-        // define IntentComponent
-        IntentComponent intents = new IntentComponent();
-        intents.setEntity(this);
-        this.addComponent(intents);
     }
 }

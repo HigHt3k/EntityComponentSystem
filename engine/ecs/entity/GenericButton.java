@@ -2,13 +2,10 @@ package engine.ecs.entity;
 
 import engine.ecs.component.action.Action;
 import engine.ecs.component.action.ActionComponent;
-import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
-import engine.ecs.component.IntentComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.*;
-import engine.ecs.intent.Intent;
 import engine.resource.colorpalettes.Bit8;
 
 import java.awt.*;
@@ -70,17 +67,5 @@ public class GenericButton extends Entity {
         actionComponent.addAction(MouseEvent.BUTTON1, action);
         actionComponent.setEntity(this);
         this.addComponent(actionComponent);
-
-        // Intent Handler
-        IntentComponent intents = new IntentComponent();
-        intents.setEntity(this);
-        // Add Hovering
-        this.addComponent(intents);
-    }
-
-    public void addIntent(Intent intent) {
-        IntentComponent intents = this.getComponent(IntentComponent.class);
-        intent.setIntentComponent(intents);
-        intents.addIntent(intent);
     }
 }

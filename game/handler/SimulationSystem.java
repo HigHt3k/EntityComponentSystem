@@ -1,23 +1,16 @@
 package game.handler;
 
 import engine.Game;
-import engine.IdGenerator;
 import engine.ecs.Query;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
-import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
-import engine.ecs.entity.GenericButton;
 import engine.ecs.system.SystemHandle;
 import game.components.*;
 import game.entities.CablePort;
-import game.entities.ScoreBox;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
-import game.intent.SaveScoreIntent;
-import game.intent.StartIntent;
 import game.scenes.GameScene;
 
 import java.awt.*;

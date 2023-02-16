@@ -1,15 +1,11 @@
 package game.handler;
 
 import engine.Game;
-import engine.ecs.component.IntentComponent;
-import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.entity.Entity;
-import engine.graphics.scene.Scene;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.entities.LevelButton;
-import game.intent.StartIntent;
 import game.scenes.LevelScene;
 
 import java.awt.event.KeyEvent;

@@ -9,7 +9,6 @@ import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
-import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -48,7 +47,6 @@ public class OptionsScene extends Scene {
                 font, new StartAction(Game.scene().getScene(-255))
         );
 
-        mainMenuButton.addIntent(new StartIntent());
         this.addEntityToScene(mainMenuButton);
 
         GenericButton exitButton = new GenericButton(

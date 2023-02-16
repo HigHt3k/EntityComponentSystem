@@ -1,7 +1,6 @@
 package game.entities;
 
 import engine.Game;
-import engine.ecs.component.IntentComponent;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
@@ -10,7 +9,6 @@ import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
-import engine.ecs.intent.Intent;
 import engine.resource.colorpalettes.Bit8;
 import game.components.*;
 import game.handler.simulation.SimulationState;
@@ -95,11 +93,6 @@ public class SimulationEntity extends Entity {
         cablePorts.setEntity(this);
         this.addComponent(cablePorts);
 
-        // define IntentComponent
-        IntentComponent intents = new IntentComponent();
-        intents.setEntity(this);
-        this.addComponent(intents);
-
         // define HoverIntent by default
 
         TooltipComponent toolTip = new TooltipComponent();
@@ -110,11 +103,5 @@ public class SimulationEntity extends Entity {
         toolTip.setEntity(this);
         this.addComponent(toolTip);
 
-    }
-
-    public void addIntent(Intent intent) {
-        IntentComponent intents = this.getComponent(IntentComponent.class);
-        intent.setIntentComponent(intents);
-        intents.addIntent(intent);
     }
 }

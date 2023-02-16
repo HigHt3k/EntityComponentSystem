@@ -1,6 +1,5 @@
 package game.entities;
 
-import engine.ecs.component.IntentComponent;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
@@ -68,10 +67,5 @@ public class BuildPanelEntity extends Entity {
         builder.setTileId(tileId);
         builder.setFailureDetectionRatio(failureDetectionRatio);
         this.addComponent(builder);
-
-        // define IntentComponent
-        IntentComponent intents = new IntentComponent();
-        intents.setEntity(this);
-        this.addComponent(intents);
     }
 }

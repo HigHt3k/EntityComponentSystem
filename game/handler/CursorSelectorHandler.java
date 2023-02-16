@@ -4,15 +4,12 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.Query;
 import engine.ecs.component.CursorComponent;
-import engine.ecs.component.IntentComponent;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.entity.Entity;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.entities.CursorEntity;
-import game.intent.StartIntent;
-import game.scenes.GameScene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
