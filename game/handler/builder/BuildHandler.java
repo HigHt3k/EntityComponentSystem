@@ -332,7 +332,7 @@ public class BuildHandler extends Handler {
                                             ));
                                 }
 
-                                currentBuildState = BuilderState.BUILDING_CABLE_REFACTORED;
+                                currentBuildState = BuilderState.BUILDING_CABLE;
                                 break;
                             }
                         }
@@ -353,21 +353,21 @@ public class BuildHandler extends Handler {
                 // check if state is building
                 else if (currentBuildState == BuilderState.BUILDING_SIMULATION) {
                     // try to place the component
-                    if(placeComponent(currentBuilding)) {
+                    if (placeComponent(currentBuilding)) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
                         break;
                     }
                 }
                 // check if state is building cable refactored
-                else if(currentBuildState == BuilderState.BUILDING_CABLE_REFACTORED) {
+                else if (currentBuildState == BuilderState.BUILDING_CABLE) {
                     // try to place component
-                    System.out.println(placeCableRefactored(currentBuilding));
-                    if(placeCableRefactored(currentBuilding)) {
+                    System.out.println(placeCable(currentBuilding));
+                    if (placeCable(currentBuilding)) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
 
-                        if(cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 0
+                        if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 0
                                 && cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
                             SimulationEntity newEntity = new SimulationEntity(
                                     cableBuildRepetitive.getName() + "_cable", IdGenerator.generateId(),
@@ -405,7 +405,7 @@ public class BuildHandler extends Handler {
                                                 .getAmount()
                                         ));
                             }
-                            currentBuildState = BuilderState.BUILDING_CABLE_REFACTORED;
+                            currentBuildState = BuilderState.BUILDING_CABLE;
 
                             break;
                         }
@@ -435,9 +435,9 @@ public class BuildHandler extends Handler {
             // check the button clicked is right click
             else if (e.getButton() == MouseEvent.BUTTON3) {
                 // handle if is building simulation component
-                if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE_REFACTORED) {
+                if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE) {
                     // remove the component
-                    if(putBackToStack(currentBuilding)) {
+                    if (putBackToStack(currentBuilding)) {
                         currentBuildState = BuilderState.NOT_BUILDING;
 
                         cableBuildRepetitive = null;
@@ -445,29 +445,7 @@ public class BuildHandler extends Handler {
                     }
                 }
                 // handle if building cable -> remove cable
-                else if(currentBuildState == BuilderState.BUILDING_CABLE) {
-                    ArrayList<CablePort> ports = currentBuilding.getComponent(CablePortsComponent.class).getCablePorts();
-                    // remove connections from port
-                    for(CablePort port : ports) {
-                        if(port.getConnectedEntity() == null) {
-                            continue;
-                        }
-                        for(CablePort other: port.getConnectedEntity().getComponent(CablePortsComponent.class).getCablePorts()) {
-                            if(other.getConnectedEntity() == currentBuilding) {
-                                other.setConnectedEntity(null);
-                            }
-                        }
-                        port.setConnectedEntity(null);
-
-                    }
-
-                    Game.scene().current().removeEntityFromScene(currentBuilding);
-
-                    currentBuildState = BuilderState.NOT_BUILDING;
-                    currentBuilding = null;
-                }
-                // handle if not building state -> remove component
-                else if(currentBuildState == BuilderState.NOT_BUILDING) {
+                else if (currentBuildState == BuilderState.NOT_BUILDING) {
                     // remove component at positon
                     Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
                     if(gridLocation == null) {
@@ -488,7 +466,7 @@ public class BuildHandler extends Handler {
                 }
             // check if no button is clicked
             } else if(e.getButton() == MouseEvent.NOBUTTON) {
-                if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE_REFACTORED) {
+                if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE) {
                     currentBuilding.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(e.getPoint()));
                 }
             }
@@ -883,7 +861,7 @@ public class BuildHandler extends Handler {
         return false;
     }
 
-    private boolean placeCableRefactored(Entity e) {
+    private boolean placeCable(Entity e) {
         Point gridPos = findEntityGridPosition(e
                 .getComponent(RenderComponent.class)
                 .getRenderObjects()
