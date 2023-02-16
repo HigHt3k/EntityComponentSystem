@@ -1,14 +1,14 @@
 package game.entities;
 
+import engine.ecs.component.IntentComponent;
+import engine.ecs.component.collision.ColliderComponent;
+import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
-import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
-import engine.ecs.component.IntentComponent;
-import engine.ecs.intent.HoverIntent;
 import game.components.GridComponent;
 
 import java.awt.*;
@@ -37,7 +37,8 @@ public class GridEntity extends Entity {
         // define GraphicsComponent
         RenderComponent renderComponent = new RenderComponent();
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER1, img));
-        renderComponent.addRenderObject(new HoverObject(new Point(x, y), bounds, HOVER_COLOR));
+        HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
+        renderComponent.addRenderObject(hover);
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
 
@@ -53,14 +54,14 @@ public class GridEntity extends Entity {
         collider.setEntity(this);
         this.addComponent(collider);
 
+        ColliderComponent colliderComponent = new ColliderComponent();
+        colliderComponent.addCollisionObject(new CollisionObject(bounds, hover));
+        colliderComponent.setEntity(this);
+        this.addComponent(colliderComponent);
+
         // define IntentComponent
         IntentComponent intents = new IntentComponent();
         intents.setEntity(this);
         this.addComponent(intents);
-
-        // define HoverIntent by default
-        HoverIntent hover = new HoverIntent();
-        hover.setIntentComponent(intents);
-        intents.addIntent(hover);
     }
 }

@@ -2,6 +2,7 @@ package engine.ecs.system;
 
 import engine.ecs.Query;
 import engine.ecs.component.collision.ColliderComponent;
+import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.entity.Entity;
@@ -25,11 +26,15 @@ public class HoverSystem extends SystemHandle {
         System.out.println(entities.size());
         for (Entity e : entities) {
             if (e.getComponent(ColliderComponent.class).getCollisionObjects() != null) {
-                if (e.getComponent(RenderComponent.class).getRenderObjectsOfType(HoverObject.class) != null) {
-                    if (e.getComponent(ColliderComponent.class).getCollisionObjects().get(0).isHovered()) {
-                        e.getComponent(RenderComponent.class).getRenderObjectsOfType(HoverObject.class).get(0).setHidden(false);
+                for (CollisionObject c : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
+                    if (c.getConnectedHoverObject() == null) {
+                        continue;
                     } else {
-                        e.getComponent(RenderComponent.class).getRenderObjectsOfType(HoverObject.class).get(0).setHidden(true);
+                        if (c.isHovered()) {
+                            c.getConnectedHoverObject().setHidden(false);
+                        } else {
+                            c.getConnectedHoverObject().setHidden(true);
+                        }
                     }
                 }
             }

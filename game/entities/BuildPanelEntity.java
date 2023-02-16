@@ -1,18 +1,15 @@
 package game.entities;
 
-import engine.Game;
+import engine.ecs.component.IntentComponent;
+import engine.ecs.component.collision.ColliderComponent;
+import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
-import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
-import engine.ecs.component.IntentComponent;
-import engine.ecs.intent.HoverIntent;
-import engine.graphics.elements.ToolTip;
 import engine.resource.colorpalettes.Bit8;
-import game.components.*;
+import game.components.BuildComponent;
 import game.handler.simulation.SimulationType;
 
 import java.awt.*;
@@ -47,15 +44,15 @@ public class BuildPanelEntity extends Entity {
 
         RenderComponent renderComponent = new RenderComponent();
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER2, img));
-        renderComponent.addRenderObject(new HoverObject(new Point(x, y), bounds, HOVER_COLOR));
+        HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
+        renderComponent.addRenderObject(hover);
         this.addComponent(renderComponent);
         renderComponent.setEntity(this);
 
-        // define CollisionComponent
-        CollisionComponent collider = new CollisionComponent();
-        collider.setCollisionBox(bounds);
-        collider.setEntity(this);
-        this.addComponent(collider);
+        ColliderComponent colliderComponent = new ColliderComponent();
+        colliderComponent.addCollisionObject(new CollisionObject(bounds, hover));
+        colliderComponent.setEntity(this);
+        this.addComponent(colliderComponent);
 
         // define BuildComponent
         BuildComponent builder = new BuildComponent();
@@ -73,11 +70,5 @@ public class BuildPanelEntity extends Entity {
         IntentComponent intents = new IntentComponent();
         intents.setEntity(this);
         this.addComponent(intents);
-
-        // define HoverIntent by default
-        HoverIntent hover = new HoverIntent();
-        hover.setIntentComponent(intents);
-        intents.addIntent(hover);
-
     }
 }

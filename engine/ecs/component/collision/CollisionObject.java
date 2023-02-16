@@ -1,14 +1,18 @@
 package engine.ecs.component.collision;
 
+import engine.ecs.component.graphics.objects.HoverObject;
+
 import java.awt.*;
 
 public class CollisionObject {
     private Shape collisionBoundaries;
     private boolean isClicked = false;
     private boolean isHovered = false;
+    private HoverObject connectedHoverObject;
 
-    public CollisionObject(Shape collisionBoundaries) {
+    public CollisionObject(Shape collisionBoundaries, HoverObject connectedHoverObject) {
         this.collisionBoundaries = collisionBoundaries;
+        this.connectedHoverObject = connectedHoverObject;
     }
 
     public Shape getCollisionBoundaries() {
@@ -29,5 +33,9 @@ public class CollisionObject {
 
     public void setHovered(boolean hovered) {
         isHovered = hovered;
+    }
+
+    public HoverObject getConnectedHoverObject() {
+        return connectedHoverObject;
     }
 }

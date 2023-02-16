@@ -1,17 +1,12 @@
 package engine.ecs.entity;
 
-import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.collision.ColliderComponent;
+import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.IntentComponent;
 import engine.ecs.component.graphics.RenderComponent;
-import engine.ecs.component.graphics.objects.Layer;
-import engine.ecs.component.graphics.objects.RenderObject;
-import engine.ecs.component.graphics.objects.ShapeObject;
-import engine.ecs.component.graphics.objects.TextObject;
-import engine.ecs.intent.HoverIntent;
+import engine.ecs.component.graphics.objects.*;
 import engine.ecs.intent.Intent;
 import engine.resource.colorpalettes.Bit8;
-import org.w3c.dom.Text;
 
 import java.awt.*;
 
@@ -30,6 +25,7 @@ public class GenericButton extends Entity {
     private static final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
     protected TextObject text;
     protected ShapeObject button;
+    protected HoverObject hover;
 
     /**
      * Create a generic functional button. addIntent needs to be used to add a purpose other than hovering to this button.
@@ -53,24 +49,23 @@ public class GenericButton extends Entity {
         RenderComponent renderComponent = new RenderComponent();
         this.button = new ShapeObject(new Point(x, y), bounds, Layer.UI, BOX_COLOR, BOX_BORDER_COLOR, 1);
         this.text = new TextObject(new Point(x, y), bounds, Layer.UI, text, font, TEXT_COLOR);
+        this.hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
         renderComponent.addRenderObject(this.button);
         renderComponent.addRenderObject(this.text);
+        renderComponent.addRenderObject(this.hover);
         this.addComponent(renderComponent);
         renderComponent.setEntity(this);
 
         // Collider
-        CollisionComponent collider = new CollisionComponent();
-        collider.setEntity(this);
-        collider.setCollisionBox(bounds);
-        this.addComponent(collider);
+        ColliderComponent colliderComponent = new ColliderComponent();
+        colliderComponent.addCollisionObject(new CollisionObject(bounds, this.hover));
+        colliderComponent.setEntity(this);
+        this.addComponent(colliderComponent);
 
         // Intent Handler
         IntentComponent intents = new IntentComponent();
         intents.setEntity(this);
         // Add Hovering
-        HoverIntent hover = new HoverIntent();
-        hover.setIntentComponent(intents);
-        intents.addIntent(hover);
         this.addComponent(intents);
     }
 

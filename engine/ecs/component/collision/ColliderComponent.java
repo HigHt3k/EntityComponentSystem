@@ -19,4 +19,8 @@ public class ColliderComponent extends Component {
     public ArrayList<CollisionObject> getCollisionObjects() {
         return collisionObjects;
     }
+
+    public void addCollisionObject(CollisionObject collisionObject) {
+        collisionObjects.add(collisionObject);
+    }
 }

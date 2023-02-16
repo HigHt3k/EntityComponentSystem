@@ -1,16 +1,14 @@
 package game.entities;
 
 import engine.Game;
+import engine.ecs.component.IntentComponent;
+import engine.ecs.component.collision.ColliderComponent;
+import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
-import engine.ecs.component.graphics.objects.RenderObject;
 import engine.ecs.entity.Entity;
-import engine.ecs.component.collision.CollisionComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
-import engine.ecs.component.IntentComponent;
-import engine.ecs.intent.HoverIntent;
 import engine.ecs.intent.Intent;
 import engine.resource.colorpalettes.Bit8;
 import game.components.*;
@@ -52,7 +50,8 @@ public class SimulationEntity extends Entity {
 
         RenderComponent renderComponent = new RenderComponent();
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER2, img));
-        renderComponent.addRenderObject(new HoverObject(new Point(x, y), bounds, HOVER_COLOR));
+        HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
+        renderComponent.addRenderObject(hover);
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
 
@@ -70,25 +69,25 @@ public class SimulationEntity extends Entity {
         sim.setOutOfControlSignalsAccepted(outOfControlSignalsAccepted);
         sim.setFailureRecognitionRatio(failureDetectionRatio);
         sim.setTileId(tileId);
-        if(type == SimulationType.SENSOR) {
+        if (type == SimulationType.SENSOR) {
             sim.setSimulationState(SimulationState.CORRECT);
         }
         sim.setEntity(this);
         this.addComponent(sim);
 
         // define CollisionComponent
-        CollisionComponent collider = new CollisionComponent();
-        collider.setCollisionBox(bounds);
-        collider.setEntity(this);
-        this.addComponent(collider);
+        ColliderComponent colliderComponent = new ColliderComponent();
+        colliderComponent.addCollisionObject(new CollisionObject(bounds, hover));
+        colliderComponent.setEntity(this);
+        this.addComponent(colliderComponent);
 
         // define CablePortsComponent
         CablePortsComponent cablePorts = new CablePortsComponent();
         cablePorts.setIds(cablePortIdsIn, cablePortIdsOut);
-        for(int portId : cablePortIdsIn) {
+        for (int portId : cablePortIdsIn) {
             cablePorts.addCablePort(new CablePort(portId, CablePortType.IN, CablePortPosition.LEFT));
         }
-        for(int portId : cablePortIdsOut) {
+        for (int portId : cablePortIdsOut) {
             cablePorts.addCablePort(new CablePort(portId, CablePortType.OUT, CablePortPosition.RIGHT));
         }
         cablePorts.setEntity(this);
@@ -100,9 +99,6 @@ public class SimulationEntity extends Entity {
         this.addComponent(intents);
 
         // define HoverIntent by default
-        HoverIntent hover = new HoverIntent();
-        hover.setIntentComponent(intents);
-        intents.addIntent(hover);
 
         TooltipComponent toolTip = new TooltipComponent();
         toolTip.setTooltipText(Game.res().loadDescription(tileId));
