@@ -3,6 +3,7 @@ package game.scenes;
 import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.entity.GenericButton;
@@ -627,7 +628,7 @@ public class GameScene extends Scene {
 
         try {
             aircraft = new ImageEntity("aircraft", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/aircraft.png")), 1920 / 2, 1080 / 2, 200, 50, 5);
+                    ImageIO.read(new File("game/res/aircraft.png")), 1920 / 2, 1080 / 2, 200, 50, Layer.GAMELAYER3);
             addEntityToScene(aircraft);
         } catch (IOException e) {
             e.printStackTrace();
@@ -646,7 +647,7 @@ public class GameScene extends Scene {
 
         try {
             aircraft = new ImageEntity("aircraft", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/aircraft-crash.png")), 1920 / 2, 1080 / 2, 500, 200, 5);
+                    ImageIO.read(new File("game/res/aircraft-crash.png")), 1920 / 2, 1080 / 2, 500, 200, Layer.GAMELAYER3);
             addEntityToScene(aircraft);
         } catch (IOException e) {
             e.printStackTrace();
@@ -668,7 +669,7 @@ public class GameScene extends Scene {
     public void setAircraftAnimation() {
         try {
             aircraft = new ImageEntity("Aircraft", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/aircraft.png")), 0, 1080 / 2, 500, 200, 50);
+                    ImageIO.read(new File("game/res/aircraft.png")), 0, 1080 / 2, 500, 200, Layer.GAMELAYER3);
             addEntityToScene(aircraft);
         } catch (IOException e) {
             e.printStackTrace();
