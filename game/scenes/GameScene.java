@@ -6,7 +6,6 @@ import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.RenderObject;
@@ -528,7 +527,7 @@ public class GameScene extends Scene {
         try {
             description = descriptions.get(currentlyDisplayedDescriptionPart + i);
             currentlyDisplayedDescriptionPart += i;
-            descText.getComponent(GraphicsComponent.class).getTexts().set(0, description);
+            ((TextObject) descText.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(description);
         } catch(IndexOutOfBoundsException ex) {
             // This is okay here.
         }
@@ -644,15 +643,14 @@ public class GameScene extends Scene {
     }
 
     public void playAircraftAnimation() {
-        Rectangle prevBounds = aircraft.getComponent(GraphicsComponent.class).get_BOUNDS();
+        Rectangle prevBounds = (Rectangle) aircraft.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds();
         int newX;
         if (prevBounds.x + 1 > 1920) {
             newX = 0;
         } else {
             newX = prevBounds.x + 1;
         }
-        Rectangle newBounds = new Rectangle(newX, prevBounds.y, prevBounds.width, prevBounds.height);
-        aircraft.getComponent(GraphicsComponent.class).setBounds(newBounds);
+        aircraft.getComponent(RenderComponent.class).reposition(new Point(newX, prevBounds.y));
     }
 
     public void setAircraftAnimation() {

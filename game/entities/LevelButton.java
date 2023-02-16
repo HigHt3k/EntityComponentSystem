@@ -1,8 +1,6 @@
 package game.entities;
 
 import engine.ecs.component.action.Action;
-import engine.ecs.component.graphics.GraphicsComponent;
-import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.entity.GenericButton;
 import engine.resource.colorpalettes.Bit8;
 

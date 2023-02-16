@@ -2,15 +2,10 @@ package engine.graphics.render;
 
 import engine.Game;
 import engine.ecs.Query;
-import engine.ecs.component.CursorComponent;
-import engine.ecs.component.graphics.GraphicsObject;
-import engine.ecs.component.graphics.GraphicsObjectType;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.*;
 import engine.ecs.entity.Entity;
-import engine.ecs.component.graphics.GraphicsComponent;
 
-import javax.sound.sampled.Line;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -166,7 +161,7 @@ public class RenderingEngine {
     }
 
     /**
-     * Collects all entities and detects if they have a @{@link GraphicsComponent} which should be rendered
+     * Collects all entities and detects if they have a @{@link RenderComponent} which should be rendered
      */
     public void collectAndRenderEntities() {
         recollectEntities();

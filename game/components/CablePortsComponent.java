@@ -2,7 +2,6 @@ package game.components;
 
 import engine.Game;
 import engine.ecs.component.Component;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.entity.Entity;

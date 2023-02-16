@@ -4,9 +4,9 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
@@ -37,31 +37,32 @@ public class LevelScene extends Scene {
         StringBuilder players = new StringBuilder();
         StringBuilder highscores = new StringBuilder();
 
-        for(HighScore hs : Game.res().score().getLevelScores(levelId)) {
+        for (HighScore hs : Game.res().score().getLevelScores(levelId)) {
             players.append(hs.getName()).append("\n");
             highscores.append(hs.getScore()).append("\n");
         }
 
         System.out.println(levelId + ":" + players);
 
-        playersView.getComponent(GraphicsComponent.class).getTexts().set(0, players.toString());
-        highscoreView.getComponent(GraphicsComponent.class).getTexts().set(0, highscores.toString());
+        ((TextObject) playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(players.toString());
+        ((TextObject) highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(highscores.toString());
     }
 
     public void removeHighscores() {
-        playersView.getComponent(GraphicsComponent.class).getTexts().set(0, "");
-        highscoreView.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        ((TextObject) playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
+        ((TextObject) highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
     }
 
     public void showLevelInfo(int levelId) {
         GameScene s = (GameScene) Game.scene().getScene(levelId);
-        levelInfoHead.getComponent(GraphicsComponent.class).getTexts().set(0, s.getName());
-        levelInfoDesc.getComponent(GraphicsComponent.class).getTexts().set(0, String.valueOf(s.getDifficulty()));
+
+        ((TextObject) levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(s.getName());
+        ((TextObject) levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(String.valueOf(s.getDifficulty()));
     }
 
     public void removeLevelInfo() {
-        levelInfoDesc.getComponent(GraphicsComponent.class).getTexts().set(0, "");
-        levelInfoHead.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+        ((TextObject) levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
+        ((TextObject) levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
     }
 
     public LevelScene(String name, int id) {

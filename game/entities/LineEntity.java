@@ -1,6 +1,5 @@
 package game.entities;
 
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.LineObject;

@@ -1,16 +1,13 @@
 package game.entities;
 
 import engine.ecs.component.CursorComponent;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
-import engine.ecs.component.graphics.objects.RenderObject;
 import engine.ecs.entity.Entity;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.IOException;
 

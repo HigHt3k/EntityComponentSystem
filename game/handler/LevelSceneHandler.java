@@ -29,7 +29,7 @@ public class LevelSceneHandler extends Handler {
             for (Entity entity : entities) {
                 if (entity instanceof LevelButton lb) {
 
-                    // TODO: reimplement highscore view
+                        // TODO: reimplement highscore view
                         /* Scene s = lb.getComponent(ActionComponent.class).getActions().get(MouseEvent.BUTTON1).
                         if (s != null) {
                             ls.addHighscores(s.getId());
