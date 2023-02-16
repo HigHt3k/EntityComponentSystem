@@ -199,71 +199,6 @@ public class SimulationSystem extends SystemHandle {
         return null;
     }
 
-    private void medianVoter() {
-
-    }
-
-    private void averageVoter() {
-
-    }
-
-    private void MNVoter() {
-
-    }
-
-    private SimulationState winnerTakesItAllVoter(ArrayList<Entity> inputs) {
-        HashMap<SimulationState, Integer> counter = new HashMap<>();
-
-        // fill the hashmap counter
-        for(Entity e : inputs) {
-            counter.put(e.getComponent(SimulationComponent.class).getSimulationState(), 0);
-        }
-
-        // add if same
-        for(Entity e : inputs) {
-            counter.merge(e.getComponent(SimulationComponent.class).getSimulationState(), 1, Integer::sum);
-        }
-
-        Map.Entry<SimulationState, Integer> max = null;
-        for(Map.Entry<SimulationState, Integer> entry : counter.entrySet()) {
-            if(entry.getValue() > 0) {
-                max = entry;
-            }
-        }
-
-        return max.getKey();
-    }
-
-    private void calculateGroupFailureRatio(ArrayList<Entity> group) {
-        ArrayList<Entity> sensors = new ArrayList<>();
-        ArrayList<Entity> actuators = new ArrayList<>();
-        ArrayList<Entity> cpus = new ArrayList<>();
-
-        // distinct components
-        for(Entity e : group) {
-            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CPU) {
-                cpus.add(e);
-            } else if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.SENSOR) {
-                sensors.add(e);
-            } else if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
-                actuators.add(e);
-            }
-        }
-
-        // Single Component Failure
-        float failureProbability = 0f;
-        for(Entity e : group) {
-            failureProbability += e.getComponent(SimulationComponent.class).getFailureRatio();
-        }
-        /*
-
-        System.out.println(group);
-        System.out.println("Failure Probability for Single Component Failure: " + failureProbability);
-        System.out.println("... for a 2hrs flight: " + failureProbability * 2);
-
-         */
-    }
-
     private boolean validateGroup(ArrayList<Entity> group) {
         boolean hasCPU = false;
         boolean hasSensor = false;
@@ -305,17 +240,6 @@ public class SimulationSystem extends SystemHandle {
         }
 
         return group;
-    }
-
-    /**
-     * checks if a group is connected correctly and is able to simulate
-     * @param group: all entities to check for (a group)
-     * @return false if not properly connected, return true if properly connected
-     */
-    private boolean checkGroupState(ArrayList<Entity> group) {
-
-
-        return false;
     }
 
     private int[] getDistinctGroupIds() {
@@ -415,17 +339,6 @@ public class SimulationSystem extends SystemHandle {
                 case INOPERATIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 235, 0, 40));
             }
         }
-    }
-
-    private ArrayList<Entity> findCPUs(ArrayList<Entity> group) {
-        ArrayList<Entity> cpus = new ArrayList<>();
-
-        for(Entity g : group) {
-            if(g.getComponent(SimulationComponent.class) != null && g.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CPU) {
-                cpus.add(g);
-            }
-        }
-        return cpus;
     }
 
     private ArrayList<Entity> getSensors() {
