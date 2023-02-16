@@ -4,16 +4,11 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
-import engine.ecs.intent.ChangeLanguageIntent;
-import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
-import engine.resource.lang.LanguageType;
-import game.handler.CursorSelectorHandler;
 import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
@@ -62,7 +57,6 @@ public class OptionsScene extends Scene {
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3", font, new ExitAction()
         );
-        exitButton.addIntent(new ExitIntent());
         addEntityToScene(exitButton);
 
         GenericButton toggleLanguageEnglish = new GenericButton(
@@ -71,7 +65,6 @@ public class OptionsScene extends Scene {
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@10", font, new StartAction(null)
         );
-        toggleLanguageEnglish.addIntent(new ChangeLanguageIntent(LanguageType.EN_US));
         addEntityToScene(toggleLanguageEnglish);
 
         GenericButton toggleLanguageGerman = new GenericButton(
@@ -80,7 +73,6 @@ public class OptionsScene extends Scene {
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@11", font, new StartAction(null)
         );
-        toggleLanguageGerman.addIntent(new ChangeLanguageIntent(LanguageType.DE_DE));
         addEntityToScene(toggleLanguageGerman);
 
         GenericButton toggleLanguageGermanEasy = new GenericButton(
@@ -89,7 +81,6 @@ public class OptionsScene extends Scene {
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@12", font, new StartAction(null)
         );
-        toggleLanguageGermanEasy.addIntent(new ChangeLanguageIntent(LanguageType.DE_SIMPLE));
         addEntityToScene(toggleLanguageGermanEasy);
     }
 

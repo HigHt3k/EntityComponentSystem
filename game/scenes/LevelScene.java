@@ -2,7 +2,6 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
-import engine.ecs.component.IntentComponent;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.GraphicsComponent;
@@ -11,7 +10,6 @@ import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
-import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
@@ -20,16 +18,12 @@ import game.entities.LevelButton;
 import game.entities.LineEntity;
 import game.entities.SimplePanel;
 import game.entities.TextBody;
-import game.handler.CursorSelectorHandler;
-import game.handler.LevelSceneHandler;
-import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
 
 public class LevelScene extends Scene {
     private static final int ITEM_WIDTH = 350;

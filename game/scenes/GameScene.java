@@ -5,12 +5,11 @@ import engine.IdGenerator;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.CollisionComponent;
+import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
-import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
-import engine.ecs.intent.ExitIntent;
 import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
@@ -19,10 +18,7 @@ import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.TooltipComponent;
 import game.entities.*;
-import game.handler.CursorSelectorHandler;
 import game.handler.simulation.SimulationType;
-import game.handler.BuildHandler;
-import game.handler.SimulationSystem;
 import game.intent.CableLayerSwitchIntent;
 import game.intent.SaveScoreIntent;
 import game.intent.StartIntent;
@@ -339,7 +335,6 @@ public class GameScene extends Scene {
                 "@3",
                 font, new ExitAction()
         );
-        exitButton.addIntent(new ExitIntent());
         this.addEntityToScene(exitButton);
 
         GenericButton mainMenuButton = new GenericButton(
@@ -350,8 +345,6 @@ public class GameScene extends Scene {
                 "@4",
                 font, new StartAction(Game.scene().getScene(-255))
         );
-
-        mainMenuButton.addIntent(new StartIntent());
         this.addEntityToScene(mainMenuButton);
 
         // cable switch buttons

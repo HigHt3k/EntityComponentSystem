@@ -8,12 +8,7 @@ import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
-import engine.ecs.intent.ExitIntent;
-import engine.ecs.system.CollisionDetectionSystem;
-import engine.ecs.system.ActionSystem;
 import engine.graphics.scene.Scene;
-import game.handler.CursorSelectorHandler;
-import game.intent.StartIntent;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
