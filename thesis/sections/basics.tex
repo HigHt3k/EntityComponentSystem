@@ -60,10 +60,12 @@ It negatively affects the failure probability, but the integrity, meaning that t
 to noticing it.
 A number of different concepts is shown in the figures below, which also serves as a guideline to the level design of the game,
 since the presentation and understanding of exactly these concepts is the core of the game.
+
 \subsection{Game Design}\label{subsec:game-design}
 Game design is the conceptional process taking place at the very beginning of game development.
 Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
 reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
+
 \subsubsection{Educational Games}\label{subsubsec:educational-games}
 Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
 specifically intended to be educational.
@@ -72,6 +74,10 @@ games for studying and games that support health and growth.
 Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
 while maintaining a factor of entertainment.
 Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
+
+\subsubsection{Purpose of the Game}\label{subsubsec:purpose}
+The purpose of this thesis is to provide a game that can be used as a demonstrator at different events of the Institute for Aircraft
+Systems at the University of Stuttgart, such as the `Unitag'.
 
 \subsection{Markov Process}\label{subsec:markov-process}
 The aircraft design process generally has to comply with the requirements that are stated in regulatory files such as the FAR 25
@@ -84,6 +90,11 @@ part of this work and will therefore be explained in detail.
 A Markov process, also called Markov chain, is a mathematical model describing a system that changes over time.
 Future states of the model are determined only by its current state and by the transition probability, not taking into account
 the former states. \todo{add source}
+
+\subsubsection{States}\label{subsubsec:states}
+Possible states for the system design Markov model include the correct state and different failure states, such as out of control
+or passive failures.
+Each failure can also be of a different kind, e.g. a mechanical failure has a different probability than a loss of electrical power.
 
 \subsection{Entity Component System}\label{subsec:entity-component-system}
 For the game engine, a generic entity component system (ECS) design pattern is used.

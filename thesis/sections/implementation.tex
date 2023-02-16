@@ -2,33 +2,95 @@
 In this chapter, the implementation of the game engine including the basic framework, graphic rendering and input handling is described.
 The implementation of the features of the game itself are shown and the connections between different components is described by using a
 UML class diagram.
+
 \subsection{Programming Language}\label{subsec:programming-language}
 The programming language that was chosen up front is \textit{JAVA}.
 This decision was made based on the fact that it makes sense to have a) and object-oriented programming language in order to
 handle entities easily and b) because it is possible to run the program on almost every system due to \textit{JAVA} running
 in a virtual machine.
+
 \subsection{Game Engine Development}\label{subsec:game-engine-development}
-\subsubsection{Entity Component System}
-\subsection{Example Markov Chains}\label{subsec:example-markov-chains}
+The game engine was implemented as a separate, independent, enhanceable framework, which could also be used to design other
+games.
+It provides basic functionality for all features needed to design a game, such as input and system handling, rendering, configuration
+classes and managers.
+The implementation uses a basic entity-component-system as foundation and enhances this with further features.
+The ECS will be explained in detail in~\ref{subsubsec:entity-component-system2}.
+
+\subsubsection{Entity Component System}\label{subsubsec:entity-component-system2}
+The entity component system setup can be approached from a top-down point of view.
+A scene is the basic class that contains all information about the currently displayed entities and the handlers and systems to be used
+in the background.
+There exist multiple scenes of different classes, such as scenes for the game view, menu scenes etc., which can be created by
+inheriting the base scene class.
+Scenes can be added to the game by using the Scene Manager, which is also used to swap between available scenes.
+Each scene contains a list of entities, that could be referred to as a database of all available objects.
+Entities represent a combination of different data containers, so-called components.
+Components are unique to each entity object.
+There are some standard entities and components available.
+\textbf{Entity}:
+- GenericButton
+- ImageEntity
+- TextBody
+- NumberSelectorEntity
+\todo{add rest}
+
+\textbf{Component}:
+- CollisionComponent
+- GraphicsComponent
+- CursorComponent
+- IntentComponent (deprecated)
+
+\subsubsection{Query}\label{subsubsec:query}
+The query system is set up as a static class that can be accessed from anywhere.
+It implements methods that can be used to search for all entities of a class or entities that have a specified component
+attached to it within the currently displayed scene.
+The volume of entities can be seen as a database that is filtered by the query system to obtain only the needed components / entities
+for other systems. \todo{add graphic with database of ecs}
+
+\subsubsection{Rendering Engine}\label{subsubsec:graphics-engine}
+The Rendering Engine is the main part of all graphical components.
+It implements different engines for each graphical object (shape, image, text, line) that are called depending on the available data within the
+context.
+All content is rendered to a JPanel object by using the Graphics2D instance available by default.
+There are several options and parameters for rendering quality and display sizes that are considered during rendering.
+A rendering cycle looks as follows:
+- query relevant entities (entities containing the GraphicsComponent)
+- determine the available data per entity
+- send the data to the according renderer
+
+\subsubsection{Handler}\label{subsubsec:handler}
+Handlers are input listeners, which are event based.
+They can be implemented for different purposes, such as keyboard, mouse or controller inputs in general, but also to direct inputs by the user
+to a category, such as inputs for levels that trigger methods within the level itself, inputs to buttons or hovering over entities.
+They provide user inputs to manipulate the systems.
+
+\subsubsection{System}\label{subsubsec:system}
+In comparison to handlers, systems are time-based and triggered with every update loop of the game.
+They contain methods for different calculations, game logic or time-based events and actions.
+They operate at the same rate as the frame rate of e.g.\ the rendering engine, which is defined by the Game Loops rate.
+
+\subsubsection{Markov Processor}\label{subsubsec:example-markov-chains}
 In the following chapter, some examples for Markov chains that reflect the level designs will be shown and the implementation of the
 MarkovProcessor will be explained by using these graphs.
 
 \begin{center}
-    \begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
-    \tikzstyle{every node}=[scale=0.7]
-    \node (A) {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (C)[below of=A] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (B)[left of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (D)[right of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (E)[below left of=B] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (F)[right of=E] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (G)[right of=F] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (H)[right of=G] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (I)[right of=H] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \node (J)[right of=I] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-    \path
+    \begin{tikzpicture}
+        [->, >=stealth', auto, semithick, node distance=3cm]
+        \tikzstyle{every node}=[scale=0.7]
+        \node (A) {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (C)[below of=A] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (B)[left of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (D)[right of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (E)[below left of=B] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (F)[right of=E] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (G)[right of=F] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (H)[right of=G] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (I)[right of=H] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (J)[right of=I] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \path
     (A) edge (B)
-        (A) edge (C)
-    (A) edge (D)
+    (A) edge (C)
+        (A) edge (D)
     \end{tikzpicture}
 \end{center}

@@ -50,3 +50,27 @@ Furthermore, the game is designed to be understandable with a very low amount of
 A language management system will be implemented which is based on using IDs (tags) instead of the actual text for any text string.
 A processor is going to parse all available language files in XML format and a look-up table that maps each ID to the corresponding text string will be created.
 Within the Rendering Engine, each text is going to be rendered in the language the game is set to.
+
+\subsection{Level Design}\label{subsec:level-design}
+The level design is a main part of this work, as the progression through the game and the process of explaining different concepts
+within aircraft system design is heavily influenced by this.
+Therefore, levels were conceptualized before the implementation, to have a guideline for the actual implementation.
+Levels are categorized in difficulties, reaching from tutorial to hard.
+When passing a level, the user unlocks new content (e.g. levels) to progress through the game.
+Tutorials should guide the user through the features of this game and provide some insight on the basics of system design, so
+it can be used at later stages of the game.
+A visual representation of this is needed to provide enough input for younger age-groups to play and understand the game.
+However, for other users, some more in-depth knowledge is also provided in order to better understand calculations, simulations and
+game logic in the background.
+Tutorial levels explain the basic usage, such as cable and component (re-)placement and the different safety requirement
+categories.
+The categories are described by colors, from red (catastrophic) to blue (no safety effect).
+Each component that can be built in the level also has this information to it, so the user can visually see a representation
+of the criticality and the effect of the objects to the system and its requirements.
+Each level goal is defined by a safety requirement and a minimum count of correctly operating actuators (or other components, such
+as flight control computers, sensors, \ldots).
+As the user progresses through the levels, there will be harder goals in safety requirements that need to be solved by using
+redundancy concepts or mechanisms such as voting.
+As this work aims to explain most of the basic concepts, some levels should also take into consideration common-mode and common-cause
+failures.
+Here, the main goal is to provide insight into the differentiation of these, which can be done by using sensors of different types.
