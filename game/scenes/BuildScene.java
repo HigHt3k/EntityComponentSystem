@@ -14,6 +14,7 @@ import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
+import game.action.SaveAction;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.entities.simulation.BuildPanelEntity;
@@ -274,7 +275,7 @@ public class BuildScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font, new StartAction(Game.scene().getScene(-255))
+                font, new StartAction(-255)
         );
 
         this.addEntityToScene(mainMenuButton);
@@ -285,7 +286,7 @@ public class BuildScene extends Scene {
                 1600, 700,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@5",
-                font, new StartAction(null)
+                font, new SaveAction()
         );
         this.addEntityToScene(saveButton);
     }
