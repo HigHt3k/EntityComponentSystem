@@ -161,6 +161,8 @@ public class GameScene extends Scene {
         super(name, id);
         this.difficulty = difficulty;
         setupBuildPanel();
+        //TODO: move init()?
+        init();
     }
 
     /**
@@ -304,12 +306,13 @@ public class GameScene extends Scene {
 
     /**
      * add an Entity to the buildpanel
-     * @param imgId: the entity/img id
-     * @param amount: how many times can this be built?
+     *
+     * @param imgId:        the entity/img id
+     * @param amount:       how many times can this be built?
      * @param failureRatio: failure ratio of the entity
      */
-    public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded
-            , int outOfControlSignalsAccepted, float failureDetectionRatio) {
+    public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded,
+                                int outOfControlSignalsAccepted, float failureDetectionRatio) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 150 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 875, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
                 Game.res().loadTile(imgId), imgId,
@@ -318,7 +321,7 @@ public class GameScene extends Scene {
                 correctSignalsNeeded, outOfControlSignalsAccepted,
                 Game.res().loadDescription(imgId), failureDetectionRatio
         );
-        buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId-500);
+        buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId - 500);
         addEntityToScene(buildPanelEntity);
         numberOfBuildPanelElements++;
     }

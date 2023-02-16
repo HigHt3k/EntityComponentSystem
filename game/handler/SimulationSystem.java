@@ -4,6 +4,9 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.Query;
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.HoverObject;
+import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.system.SystemHandle;
@@ -327,10 +330,19 @@ public class SimulationSystem extends SystemHandle {
 
     private void updateGraphics() {
         for(Entity e : gatherRelevantEntities()) {
-            if(e.getComponent(SimulationComponent.class) == null || e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+            if (e.getComponent(SimulationComponent.class) == null || e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
                 continue;
             }
 
+            switch (e.getComponent(SimulationComponent.class).getSimulationState()) {
+                case CORRECT -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(0, 255, 0, 40));
+                case FAIL -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 132, 0, 40));
+                case PASSIVE -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(0, 0, 255, 40));
+                case OUT_OF_CONTROL -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 0, 0, 40));
+                case INOPERATIVE -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 235, 0, 40));
+            }
+
+            /*
             switch(e.getComponent(SimulationComponent.class).getSimulationState()) {
                 case CORRECT -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 255, 0, 40));
                 case FAIL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 132, 0, 40));
@@ -338,6 +350,8 @@ public class SimulationSystem extends SystemHandle {
                 case OUT_OF_CONTROL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 0, 0, 40));
                 case INOPERATIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 235, 0, 40));
             }
+
+             */
         }
     }
 

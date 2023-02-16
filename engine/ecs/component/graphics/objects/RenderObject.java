@@ -34,4 +34,12 @@ public class RenderObject {
     public void setHidden(boolean hidden) {
         this.hidden = hidden;
     }
+
+    public void setBounds(Shape bounds) {
+        this.bounds = bounds;
+    }
+
+    public void setLocation(Point location) {
+        this.location = location;
+    }
 }

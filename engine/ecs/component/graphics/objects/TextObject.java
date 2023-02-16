@@ -25,4 +25,8 @@ public class TextObject extends RenderObject {
     public Color getColor() {
         return color;
     }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 }

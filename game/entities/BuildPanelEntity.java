@@ -7,8 +7,10 @@ import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
 import engine.resource.colorpalettes.Bit8;
+import engine.resource.fonts.FontCollection;
 import game.components.BuildComponent;
 import game.handler.simulation.SimulationType;
 
@@ -43,9 +45,10 @@ public class BuildPanelEntity extends Entity {
         Rectangle bounds = new Rectangle(x, y, width, height);
 
         RenderComponent renderComponent = new RenderComponent();
-        renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER2, img));
+        renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.UI_FRONT, img));
         HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
         renderComponent.addRenderObject(hover);
+        renderComponent.addRenderObject(new TextObject(new Point(x, y), bounds, Layer.UI_FRONT, "", FontCollection.bit8Font, TEXT_COLOR));
         this.addComponent(renderComponent);
         renderComponent.setEntity(this);
 

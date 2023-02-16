@@ -8,6 +8,7 @@ import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.intent.Intent;
 import engine.resource.colorpalettes.Bit8;
@@ -52,6 +53,7 @@ public class SimulationEntity extends Entity {
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER2, img));
         HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
         renderComponent.addRenderObject(hover);
+        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), bounds, Layer.GAMELAYER3, Bit8.GREEN, null, 1));
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
 

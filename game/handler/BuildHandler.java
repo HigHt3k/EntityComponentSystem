@@ -4,6 +4,9 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.ImageObject;
+import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
@@ -159,11 +162,14 @@ public class BuildHandler extends Handler {
         for(Entity entity : entities) {
             // check for click on a next/prev button
             if (entity instanceof BuildPanelEntity buildPanelEntity) {
-                if(buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
-                    buildPanelEntity.getComponent(GraphicsComponent.class).getTexts().set(0,
-                        String.valueOf(buildPanelEntity.getComponent(BuildComponent.class).getAmount()));
+                if (buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
+                    ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
+                            .getRenderObjectsOfType(TextObject.class).get(0))
+                            .setText(String.valueOf(buildPanelEntity.getComponent(BuildComponent.class).getAmount()));
                 else
-                    buildPanelEntity.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+                    ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
+                            .getRenderObjectsOfType(TextObject.class).get(0))
+                            .setText("");
             }
             // check the button clicked is left click
             if (e.getButton() == MouseEvent.BUTTON1) {
@@ -183,66 +189,74 @@ public class BuildHandler extends Handler {
                                 if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CPU) {
                                     newEntity = new SimulationEntity(
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            entity.getComponent(GraphicsComponent.class).getImage(),entity.getComponent(BuildComponent.class).getTileId(),
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
                                             entity.getComponent(BuildComponent.class).getSimulationType(),
                                             entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
                                             entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
-                                            new int[] {0,1,2,3}, new int[] {0,1,2,3},
+                                            new int[]{0, 1, 2, 3}, new int[]{0, 1, 2, 3},
                                             true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
                                 } else if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.SENSOR) {
                                     newEntity = new SimulationEntity(
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            entity.getComponent(GraphicsComponent.class).getImage(),entity.getComponent(BuildComponent.class).getTileId(),
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
                                             entity.getComponent(BuildComponent.class).getSimulationType(),
                                             entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
                                             entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
-                                            new int[] {}, new int[] {0,1,2,3},
+                                            new int[]{}, new int[]{0, 1, 2, 3},
                                             true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
                                     newEntity.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
                                 } else if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
                                     newEntity = new SimulationEntity(
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            entity.getComponent(GraphicsComponent.class).getImage(),entity.getComponent(BuildComponent.class).getTileId(),
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
                                             entity.getComponent(BuildComponent.class).getSimulationType(),
                                             entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
                                             entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
-                                            new int[] {0,1,2,3}, new int[] {},
+                                            new int[]{0, 1, 2, 3}, new int[]{},
                                             true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
                                 } else if(entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.VOTE) {
                                     newEntity = new SimulationEntity(
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
-                                            entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            entity.getComponent(GraphicsComponent.class).getImage(), entity.getComponent(BuildComponent.class).getTileId(),
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
                                             entity.getComponent(BuildComponent.class).getSimulationType(),
                                             entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
                                             entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
-                                            new int[]{0, 1, 2, 3}, new int[]{0,1,2,3},
+                                            new int[]{0, 1, 2, 3}, new int[]{0, 1, 2, 3},
                                             true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
                                     );
                                     System.out.println("added new vote entity");
@@ -254,17 +268,17 @@ public class BuildHandler extends Handler {
                                 entity.getComponent(BuildComponent.class)
                                         .subtractFromAmount();
                                 if(entity.getComponent(BuildComponent.class).getAmount() > 100) {
-                                    entity.getComponent(GraphicsComponent.class)
-                                            .getTexts()
-                                            .set(0, "");
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText("");
                                 } else {
-                                    entity.getComponent(GraphicsComponent.class)
-                                            .getTexts()
-                                            .set(0,
-                                                    String.valueOf(entity.getComponent(BuildComponent.class)
-                                                            .getAmount()
-                                                    )
-                                            );
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText(String.valueOf(entity.getComponent(BuildComponent.class)
+                                                    .getAmount()
+                                            ));
                                 }
                                 currentBuildState = BuilderState.BUILDING_SIMULATION;
 
@@ -274,17 +288,19 @@ public class BuildHandler extends Handler {
                                     && entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
                                 SimulationEntity newEntity = new SimulationEntity(
                                         entity.getName() + "_cable", IdGenerator.generateId(),
-                                        entity.getComponent(GraphicsComponent.class).get_BOUNDS().x,
-                                        entity.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                        entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                        entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
                                         cellSize,
                                         cellSize,
                                         -1, -1,
-                                        entity.getComponent(GraphicsComponent.class).getImage(),entity.getComponent(BuildComponent.class).getTileId(),
+                                        ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                .getImage(),
+                                        entity.getComponent(BuildComponent.class).getTileId(),
                                         entity.getComponent(BuildComponent.class).getFailureRatio(),
                                         entity.getComponent(BuildComponent.class).getSimulationType(),
                                         1, 0,
-                                        new int[] {entity.getComponent(BuildComponent.class).getPortId()},
-                                        new int[] {entity.getComponent(BuildComponent.class).getPortId()},
+                                        new int[]{entity.getComponent(BuildComponent.class).getPortId()},
+                                        new int[]{entity.getComponent(BuildComponent.class).getPortId()},
                                         true, 0f
                                 );
                                 cableBuildRepetitive = entity;
@@ -294,17 +310,17 @@ public class BuildHandler extends Handler {
                                 entity.getComponent(BuildComponent.class)
                                         .subtractFromAmount();
                                 if(entity.getComponent(BuildComponent.class).getAmount() > 100) {
-                                    entity.getComponent(GraphicsComponent.class)
-                                            .getTexts()
-                                            .set(0, "");
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText("");
                                 } else {
-                                    entity.getComponent(GraphicsComponent.class)
-                                            .getTexts()
-                                            .set(0,
-                                                    String.valueOf(entity.getComponent(BuildComponent.class)
-                                                            .getAmount()
-                                                    )
-                                            );
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText(String.valueOf(entity.getComponent(BuildComponent.class)
+                                                    .getAmount()
+                                            ));
                                 }
 
                                 currentBuildState = BuilderState.BUILDING_CABLE_REFACTORED;
@@ -345,12 +361,14 @@ public class BuildHandler extends Handler {
                                 && cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
                             SimulationEntity newEntity = new SimulationEntity(
                                     cableBuildRepetitive.getName() + "_cable", IdGenerator.generateId(),
-                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().x,
-                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).get_BOUNDS().y,
+                                    cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                    cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
                                     cellSize,
                                     cellSize,
                                     -1, -1,
-                                    cableBuildRepetitive.getComponent(GraphicsComponent.class).getImage(),cableBuildRepetitive.getComponent(BuildComponent.class).getTileId(),
+                                    ((ImageObject) cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                            .getImage(),
+                                    cableBuildRepetitive.getComponent(BuildComponent.class).getTileId(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getFailureRatio(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType(),
                                     1, 0,
@@ -365,17 +383,17 @@ public class BuildHandler extends Handler {
                             cableBuildRepetitive.getComponent(BuildComponent.class)
                                     .subtractFromAmount();
                             if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 100) {
-                                cableBuildRepetitive.getComponent(GraphicsComponent.class)
-                                        .getTexts()
-                                        .set(0, "");
+                                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
+                                        .getRenderObjectsOfType(TextObject.class)
+                                        .get(0))
+                                        .setText("");
                             } else {
-                                cableBuildRepetitive.getComponent(GraphicsComponent.class)
-                                        .getTexts()
-                                        .set(0,
-                                                String.valueOf(cableBuildRepetitive.getComponent(BuildComponent.class)
-                                                        .getAmount()
-                                                )
-                                        );
+                                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
+                                        .getRenderObjectsOfType(TextObject.class)
+                                        .get(0))
+                                        .setText(String.valueOf(cableBuildRepetitive.getComponent(BuildComponent.class)
+                                                .getAmount()
+                                        ));
                             }
                             currentBuildState = BuilderState.BUILDING_CABLE_REFACTORED;
 
@@ -460,17 +478,7 @@ public class BuildHandler extends Handler {
             // check if no button is clicked
             } else if(e.getButton() == MouseEvent.NOBUTTON) {
                 if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE_REFACTORED) {
-                    currentBuilding.getComponent(GraphicsComponent.class).reposition(e.getPoint());
-                }
-                else if(currentBuildState == BuilderState.BUILDING_CABLE) {
-                    // Reposition the cable end
-                    currentBuilding
-                            .getComponent(GraphicsComponent.class)
-                            .setLine(currentBuilding
-                                    .getComponent(GraphicsComponent.class)
-                                    .getLineStart(),
-                                    e.getPoint()
-                            );
+                    currentBuilding.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(e.getPoint()));
                 }
             }
         }
@@ -655,13 +663,20 @@ public class BuildHandler extends Handler {
                             if (build.getComponent(BuildComponent.class) != null) {
                                 if (m1.group(0).equals(m2.group(0))) {
                                     build.getComponent(BuildComponent.class).addToAmount();
-                                    if(build.getComponent(BuildComponent.class).getAmount() > 100) {
-                                        build.getComponent(GraphicsComponent.class).getTexts().set(0, "");
+                                    if (build.getComponent(BuildComponent.class).getAmount() > 100) {
+                                        ((TextObject) build.getComponent(RenderComponent.class)
+                                                .getRenderObjectsOfType(TextObject.class)
+                                                .get(0))
+                                                .setText("");
+                                    } else {
+                                        ((TextObject) build.getComponent(RenderComponent.class)
+                                                .getRenderObjectsOfType(TextObject.class)
+                                                .get(0))
+                                                .setText(String.valueOf(build.getComponent(BuildComponent.class)
+                                                        .getAmount()
+                                                ));
                                     }
-                                    else {
-                                        build.getComponent(GraphicsComponent.class).getTexts().set(0,
-                                                String.valueOf(build.getComponent(BuildComponent.class).getAmount()));
-                                    }
+
                                     for(CablePort c : e.getComponent(CablePortsComponent.class).getCablePorts()) {
                                         if(c.getConnectedEntity() == null) {
                                             continue;
@@ -697,16 +712,24 @@ public class BuildHandler extends Handler {
     }
 
     private boolean placeComponent(Entity e) {
-        Point gridPos = findEntityGridPosition(e.getComponent(GraphicsComponent.class).getBounds().getLocation());
+        Point gridPos = findEntityGridPosition(Game
+                .scale()
+                .scalePoint(e
+                        .getComponent(RenderComponent.class)
+                        .getRenderObjects()
+                        .get(0)
+                        .getBounds()
+                        .getBounds()
+                        .getLocation()));
 
-        if(gridPos == null) {
+        if (gridPos == null) {
             return false;
         }
 
         ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
         entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
 
-        if(entitiesAtSameCell.size() == 2) {
+        if (entitiesAtSameCell.size() == 2) {
             for (Entity replace : entitiesAtSameCell) {
                 if (replace.getComponent(SimulationComponent.class) != null) {
                     // replace an Entity
@@ -722,11 +745,13 @@ public class BuildHandler extends Handler {
                                 (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                         ));
                         // Set Grapics and Collision box
-                        e.getComponent(GraphicsComponent.class).reposition(new Point(replace.getComponent(GraphicsComponent.class)
-                                .getBounds().getLocation()));
-                        e.getComponent(CollisionComponent.class)
+                        e.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(
+                                new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation()))
+                        );
+                        //TODO: Add collision box
+                        /*e.getComponent(CollisionComponent.class)
                                 .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
-
+*/
 
 
                         Game.logger().info("Successfully added a new entity to the grid.\n" +
@@ -789,12 +814,15 @@ public class BuildHandler extends Handler {
                             (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                     ));
                     // Set Grapics and Collision box
-                    e.getComponent(GraphicsComponent.class).reposition(new Point(replace.getComponent(GraphicsComponent.class)
-                            .getBounds().getLocation()));
-                    e.getComponent(GraphicsComponent.class).setShape(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
+                    e.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(
+                            new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation()))
+                    );
+                    //TODO: Collision box
+                    /*
                     e.getComponent(CollisionComponent.class)
                             .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
 
+                     */
                     Game.logger().info("Successfully added a new entity to the grid.\n" +
                             "Name: " + e.getName() +
                             "\nPosition: " + e.getComponent(GridComponent.class).getGridLocation() +
@@ -848,9 +876,17 @@ public class BuildHandler extends Handler {
     }
 
     private boolean placeCableRefactored(Entity e) {
-        Point gridPos = findEntityGridPosition(e.getComponent(GraphicsComponent.class).getBounds().getLocation());
+        Point gridPos = findEntityGridPosition(Game
+                .scale()
+                .scalePoint(e
+                        .getComponent(RenderComponent.class)
+                        .getRenderObjects()
+                        .get(0)
+                        .getBounds()
+                        .getBounds()
+                        .getLocation()));
 
-        if(gridPos == null) {
+        if (gridPos == null) {
             return false;
         }
 
@@ -884,11 +920,14 @@ public class BuildHandler extends Handler {
                         (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                 ));
                 // Set Grapics and Collision box
-                e.getComponent(GraphicsComponent.class).reposition(new Point(replace.getComponent(GraphicsComponent.class)
-                        .getBounds().getLocation()));
-                e.getComponent(GraphicsComponent.class).setShape(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
-                e.getComponent(CollisionComponent.class)
+                e.getComponent(RenderComponent.class).reposition(Game.scale().upscalePoint(
+                        new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation()))
+                );
+                //TODO: Collision box
+                /*e.getComponent(CollisionComponent.class)
                         .setCollisionBox(new Rectangle(e.getComponent(GraphicsComponent.class).get_BOUNDS()));
+
+                 */
 
                 Game.logger().info("Successfully added a new entity to the grid.\n" +
                         "Name: " + e.getName() +

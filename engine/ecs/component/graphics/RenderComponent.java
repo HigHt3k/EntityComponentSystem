@@ -5,6 +5,7 @@ import engine.ecs.component.Component;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.RenderObject;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class RenderComponent extends Component {
@@ -46,5 +47,13 @@ public class RenderComponent extends Component {
             }
         }
         return objects;
+    }
+
+    public void reposition(Point p) {
+        for (RenderObject r : renderObjects) {
+            r.setLocation(new Point(p));
+            r.getBounds().getBounds().x = p.x;
+            r.getBounds().getBounds().y = p.y;
+        }
     }
 }

@@ -5,7 +5,7 @@ import java.awt.*;
 public class ShapeObject extends RenderObject {
     public Color fillColor;
     public Color borderColor;
-    public int thickness;
+    private int thickness;
 
     public ShapeObject(Point location, Shape bounds, Layer layer, Color fillColor, Color borderColor, int thickness) {
         super(location, bounds, layer);
@@ -24,5 +24,9 @@ public class ShapeObject extends RenderObject {
 
     public Color getFillColor() {
         return fillColor;
+    }
+
+    public void setFillColor(Color fillColor) {
+        this.fillColor = fillColor;
     }
 }
