@@ -8,12 +8,14 @@ import engine.ecs.intent.Intent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+@Deprecated
 public class SaveScoreIntent extends Intent {
     private int score;
 
     public SaveScoreIntent(int score) {
         this.score = score;
     }
+
     @Override
     public void handleIntent(KeyEvent e) {
 

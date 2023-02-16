@@ -7,6 +7,7 @@ import engine.ecs.component.IntentComponent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+@Deprecated
 public class ExitIntent extends Intent {
 
     @Override

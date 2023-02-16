@@ -8,6 +8,7 @@ import engine.ecs.intent.Intent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+@Deprecated
 public class SaveIntent extends Intent {
     @Override
     public void handleIntent(KeyEvent e) {

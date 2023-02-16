@@ -1,6 +1,7 @@
 package game.entities;
 
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.entity.GenericButton;
 import engine.resource.colorpalettes.Bit8;
 
@@ -23,15 +24,13 @@ public class LevelButton extends GenericButton {
      */
     public LevelButton(String name, int id, int x, int y, int width, int height, String text, Font font, Color c) {
         super(name, id, x, y, width, height, text, font);
-        GraphicsComponent graphics = this.getComponent(GraphicsComponent.class);
-        graphics.setBorderColor(lockedColor);
-        graphics.setFillColor(lockedColor);
+        this.button.borderColor = lockedColor;
+        this.button.fillColor = lockedColor;
         this.difficultyColor = c;
     }
 
     public void unlock() {
-        GraphicsComponent graphics = this.getComponent(GraphicsComponent.class);
-        graphics.setBorderColor(difficultyColor);
-        graphics.setFillColor(difficultyColor);
+        this.button.fillColor = difficultyColor;
+        this.button.borderColor = difficultyColor;
     }
 }

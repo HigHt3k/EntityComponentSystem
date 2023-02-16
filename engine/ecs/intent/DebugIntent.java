@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 /**
  * An intent to do "manual" debugging on press of a button.
  */
+@Deprecated
 public class DebugIntent extends Intent {
     @Override
     public void handleIntent(KeyEvent e) {

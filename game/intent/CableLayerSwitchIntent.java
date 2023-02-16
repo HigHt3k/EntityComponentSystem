@@ -9,8 +9,10 @@ import game.handler.BuildHandler;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+@Deprecated
 public class CableLayerSwitchIntent extends Intent {
     private int layer;
+
     @Override
     public void handleIntent(KeyEvent e) {
         if(e.getKeyCode() == 48 + layer) {

@@ -14,6 +14,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.security.Key;
 
+@Deprecated
 public class StartIntent extends Intent {
     private Scene scene;
 

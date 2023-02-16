@@ -16,8 +16,11 @@ public class Query {
      */
     public static <T extends Component> ArrayList<Entity> getEntitiesWithComponent(Class<T> componentClass) {
         ArrayList<Entity> entities = new ArrayList<>();
-        for(Entity e : Game.scene().current().getEntities()) {
-            if(e.getComponent(componentClass) != null) {
+        if (Game.scene().current() == null) {
+            return entities;
+        }
+        for (Entity e : Game.scene().current().getEntities()) {
+            if (e.getComponent(componentClass) != null) {
                 entities.add(e);
             }
         }

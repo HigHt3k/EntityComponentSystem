@@ -3,9 +3,15 @@ package engine.ecs.entity;
 import engine.ecs.component.collision.CollisionComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
 import engine.ecs.component.IntentComponent;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.Layer;
+import engine.ecs.component.graphics.objects.RenderObject;
+import engine.ecs.component.graphics.objects.ShapeObject;
+import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.intent.HoverIntent;
 import engine.ecs.intent.Intent;
 import engine.resource.colorpalettes.Bit8;
+import org.w3c.dom.Text;
 
 import java.awt.*;
 
@@ -22,6 +28,8 @@ public class GenericButton extends Entity {
     private static final Color BOX_COLOR = Bit8.CHROME;
     private static final Color BOX_BORDER_COLOR = Bit8.GREY;
     private static final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
+    protected TextObject text;
+    protected ShapeObject button;
 
     /**
      * Create a generic functional button. addIntent needs to be used to add a purpose other than hovering to this button.
@@ -41,19 +49,14 @@ public class GenericButton extends Entity {
         Rectangle bounds = new Rectangle(x, y, width, height);
 
         // Graphics Component properties
-        GraphicsComponent graphics = new GraphicsComponent();
-        graphics.setEntity(this);
-        graphics.setBounds(bounds);
-        graphics.setShape(bounds);
-        graphics.setFont(font);
-        graphics.setTextColor(TEXT_COLOR);
-        graphics.setBorderColor(BOX_BORDER_COLOR);
-        graphics.setFillColor(BOX_COLOR);
-        graphics.setHoverColor(HOVER_COLOR);
-        // --- always centered by default
-        graphics.addText(text);
-        graphics.addLocation(new Point(x, y));
-        this.addComponent(graphics);
+
+        RenderComponent renderComponent = new RenderComponent();
+        this.button = new ShapeObject(new Point(x, y), bounds, Layer.UI, BOX_COLOR, BOX_BORDER_COLOR, 1);
+        this.text = new TextObject(new Point(x, y), bounds, Layer.UI, text, font, TEXT_COLOR);
+        renderComponent.addRenderObject(this.button);
+        renderComponent.addRenderObject(this.text);
+        this.addComponent(renderComponent);
+        renderComponent.setEntity(this);
 
         // Collider
         CollisionComponent collider = new CollisionComponent();

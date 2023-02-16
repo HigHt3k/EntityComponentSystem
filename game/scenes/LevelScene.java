@@ -4,6 +4,7 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.IntentComponent;
 import engine.ecs.component.graphics.GraphicsComponent;
+import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.intent.ExitIntent;
@@ -258,14 +259,8 @@ public class LevelScene extends Scene {
                             if(e2 instanceof LevelButton lb2) {
                                 if(lb2.getComponent(IntentComponent.class).getIntent(StartIntent.class).getScene() instanceof GameScene gs2) {
                                     if(gs2.getId() == i) {
-                                        Point p1 = new Point(
-                                                lb.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().x + 25,
-                                                lb.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().y + 25
-                                        );
-                                        Point p2 = new Point(
-                                                lb2.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().x + 25,
-                                                lb2.getComponent(GraphicsComponent.class).get_BOUNDS().getLocation().y + 25
-                                        );
+                                        Point p1 = new Point(lb.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation());
+                                        Point p2 = new Point(lb2.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation());
                                         makeConnection(p1, p2);
                                     }
                                 }
