@@ -20,6 +20,8 @@ import game.components.GridComponent;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
 import game.entities.ui.NumberChooser;
+import game.entities.ui.NumberChooserX;
+import game.entities.ui.NumberChooserY;
 import game.handler.simulation.SimulationType;
 
 import javax.imageio.ImageIO;
@@ -47,8 +49,7 @@ public class BuildScene extends Scene {
 
     private final int BUILD_PANEL_X_MARGIN = 25;
 
-    private int xMax = 2;
-    private int yMax = 2;
+    public GridSize gridSize = new GridSize(2, 2);
 
     private int accGoal;
     private int sensGoal;
@@ -66,14 +67,6 @@ public class BuildScene extends Scene {
         return sensGoal;
     }
 
-    public int getxMax() {
-        return xMax;
-    }
-
-    public int getyMax() {
-        return yMax;
-    }
-
     public BuildScene(String name, int id) {
         super(name, id);
         setupBuildPanel();
@@ -81,8 +74,8 @@ public class BuildScene extends Scene {
         setupDescriptionPanel();
         setupButtons();
 
-        for(int x = 0; x < xMax; x++) {
-            for(int y = 0; y < yMax; y++) {
+        for (int x = 0; x < gridSize.x; x++) {
+            for (int y = 0; y < gridSize.y; y++) {
                 addGridElement(x, y);
             }
         }
@@ -95,17 +88,25 @@ public class BuildScene extends Scene {
         addToBuildPanel(503, 1000, 1e-25f, 1, 0, 0f);
     }
 
+    public int getxMax() {
+        return gridSize.x;
+    }
+
+    public int getyMax() {
+        return gridSize.y;
+    }
+
     public void updateGridSize() {
-        if(xMax > yMax && (xMax > 7 || yMax > 5)) {
-            CELL_SIZE = DESIGN_CELL_SIZE * 7 / xMax;
-        } else if(xMax > 7 || yMax > 5) {
-            CELL_SIZE = DESIGN_CELL_SIZE * 5 / yMax;
+        if (gridSize.x > gridSize.y && (gridSize.x > 7 || gridSize.y > 5)) {
+            CELL_SIZE = DESIGN_CELL_SIZE * 7 / gridSize.x;
+        } else if (gridSize.x > 7 || gridSize.y > 5) {
+            CELL_SIZE = DESIGN_CELL_SIZE * 5 / gridSize.y;
         } else {
             CELL_SIZE = DESIGN_CELL_SIZE;
         }
 
-        X_MARGIN = (1500 - xMax*CELL_SIZE)/2;
-        Y_MARGIN = (850 - yMax*CELL_SIZE)/2;
+        X_MARGIN = (1500 - gridSize.x * CELL_SIZE) / 2;
+        Y_MARGIN = (850 - gridSize.y * CELL_SIZE) / 2;
     }
 
     public String getDescription() {
@@ -146,15 +147,15 @@ public class BuildScene extends Scene {
     }
 
     public void removeAlLGridElementsOutside() {
-        System.out.println(xMax + " - " + yMax);
+        System.out.println(gridSize.x + " - " + gridSize.y);
         for(Entity e : new ArrayList<>(getEntities())) {
             if(e.getComponent(GridComponent.class) != null) {
                 System.out.println(e.getComponent(GridComponent.class).getGridLocation());
-                if(e.getComponent(GridComponent.class).getGridLocation().getX() >= xMax) {
+                if (e.getComponent(GridComponent.class).getGridLocation().getX() >= gridSize.x) {
                     removeEntityFromScene(e);
                     continue;
                 }
-                if(e.getComponent(GridComponent.class).getGridLocation().getY() >= yMax) {
+                if (e.getComponent(GridComponent.class).getGridLocation().getY() >= gridSize.y) {
                     removeEntityFromScene(e);
                     continue;
                 }
@@ -162,24 +163,18 @@ public class BuildScene extends Scene {
         }
     }
 
-    public void updateGridSize(int x, int y) {
-        if(x != -1)
-            xMax = x;
-
-        if(y != -1)
-            yMax = y;
-
-        for(int xx = 0; xx < xMax; xx++) {
-            for(int yy = 0; yy < yMax; yy++) {
+    public void updateGridSize(int some) {
+        for (int xx = 0; xx < gridSize.x; xx++) {
+            for (int yy = 0; yy < gridSize.y; yy++) {
                 boolean isSet = false;
-                for(Entity e : getEntities()) {
-                    if(e.getComponent(GridComponent.class) != null
+                for (Entity e : getEntities()) {
+                    if (e.getComponent(GridComponent.class) != null
                             && e.getComponent(GridComponent.class).getGridLocation().getY() == yy
                             && e.getComponent(GridComponent.class).getGridLocation().getX() == xx) {
                         isSet = true;
                     }
                 }
-                if(!isSet) {
+                if (!isSet) {
                     addGridElement(xx, yy);
                 }
             }
@@ -254,16 +249,6 @@ public class BuildScene extends Scene {
                 40, 40, 1, buildPanelEntity
         );
         addEntityToScene(nc2);
-        //TODO: Reimplement
-        /*NumberSelectorEntity numberSelectorEntity = new NumberSelectorEntity("build_element_" + imgId + "_selector", IdGenerator.generateId(),
-                BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE/8,
-                850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE * 5/4,
-                BUILD_CELL_SIZE/4 * 3, BUILD_CELL_SIZE/4, font, TEXT_COLOR, BOX_COLOR, BOX_BORDER_COLOR
-                );
-        numberSelectorEntity.setChange(buildPanelEntity);
-        addEntityToScene(numberSelectorEntity);
-
-         */
 
         numberOfBuildPanelElements++;
     }
@@ -340,36 +325,23 @@ public class BuildScene extends Scene {
             e.printStackTrace();
         }
 
+        NumberChooserX minusGridSizeX = new NumberChooserX(
+                "minus", IdGenerator.generateId(), "-", 1580, 300, 20, 20, -1, gridSize
+        );
+        addEntityToScene(minusGridSizeX);
+        NumberChooserX plusGridSizeX = new NumberChooserX(
+                "plus", IdGenerator.generateId(), "+", 1620, 300, 20, 20, +1, gridSize
+        );
+        addEntityToScene(plusGridSizeX);
 
-        for(int i = 1; i < 11; i++) {
-            String number = "";
-            if (i == 1) {
-                number = "1";
-            }
-            if (i == 10) {
-                number = "10";
-            }
-            //TODO: reimplement build size
+        NumberChooserY minusGridSizeY = new NumberChooserY(
+                "minus", IdGenerator.generateId(), "-", 1580, 400, 20, 20, -1, gridSize
+        );
+        addEntityToScene(minusGridSizeY);
+        NumberChooserY plusGridSizeY = new NumberChooserY(
+                "plus", IdGenerator.generateId(), "+", 1620, 400, 20, 20, +1, gridSize
+        );
+        addEntityToScene(plusGridSizeY);
 
-            /* GenericButton sliderX = new GenericButton(
-                    "Slider_X", IdGenerator.generateId(),
-                    1580 + i*20, 300,
-                    20, 10,
-                    number, font,
-            );
-            sliderX.addIntent(new GridSizeIntent(i, -1));
-            addEntityToScene(sliderX);
-
-            GenericButton sliderY = new GenericButton(
-                    "Slider_Y", IdGenerator.generateId(),
-                    1580 + i*20, 400,
-                    20, 10,
-                    number, font
-            );
-            sliderY.addIntent(new GridSizeIntent(-1, i));
-            addEntityToScene(sliderY);
-
-             */
-        }
     }
 }
