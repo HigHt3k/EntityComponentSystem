@@ -582,7 +582,7 @@ public class GameScene extends Scene {
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
-                "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(null)
+                "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(-255)
         );
         addEntityToScene(saveScore);
 

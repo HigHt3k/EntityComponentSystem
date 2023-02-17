@@ -137,7 +137,6 @@ public class BuildHandler extends Handler {
             cellSize = gs.getCellSize();
             prev = gs.getPrevious();
             next = gs.getNext();
-            Entity validate = gs.getValidate();
 
             if(e.getButton() == MouseEvent.BUTTON1) {
                 if (prev.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
@@ -147,9 +146,6 @@ public class BuildHandler extends Handler {
                 } else if (next.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
                         .contains(Game.scale().upscalePoint(e.getPoint()))) {
                     gs.setDescriptionDisplayUsingOffset(+1);
-                } else if (validate.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
-                        .contains(Game.scale().upscalePoint(e.getPoint()))) {
-                    Game.system().getSystem(SimulationSystem.class).finish();
                 } else if (Game.scene().current().getEntityByName("back") != null) {
                     if (Game.scene().current().getEntityByName("back").getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
                             .contains(Game.scale().upscalePoint(e.getPoint()))) {
