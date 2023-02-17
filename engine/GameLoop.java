@@ -35,6 +35,7 @@ public class GameLoop extends Thread {
             Game.system().handle();
             Game.scene().current().update();
             Game.frame().getRenderPanel().repaint();
+            Game.sound().collectAndPlayEntities();
         }
     }
 

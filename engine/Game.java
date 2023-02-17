@@ -9,6 +9,7 @@ import engine.input.InputManager;
 import engine.graphics.render.ScalingEngine;
 import engine.logic.GameLogic;
 import engine.resource.ResourceManager;
+import engine.sound.SoundEngine;
 
 import java.util.logging.Logger;
 
@@ -25,6 +26,7 @@ public class Game {
     private static final RenderingEngine graphics = new RenderingEngine();
     private static final ScalingEngine scale = new ScalingEngine();
     private static final ResourceManager res = new ResourceManager();
+    private static final SoundEngine sound = new SoundEngine();
     private static SceneManager sceneManager;
     private static InputManager inputManager;
     private static SystemManager systemManager;
@@ -44,6 +46,10 @@ public class Game {
 
     public static ResourceManager res() {
         return res;
+    }
+
+    public static SoundEngine sound() {
+        return sound;
     }
 
     public static GameConfiguration config() {
