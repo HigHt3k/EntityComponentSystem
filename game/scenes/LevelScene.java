@@ -150,7 +150,7 @@ public class LevelScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font, new StartAction(Game.scene().getScene(-255))
+                font, new StartAction(-255)
         );
         this.addEntityToScene(mainMenuButton);
 

@@ -9,6 +9,8 @@ import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
+import engine.resource.colorpalettes.Bit8;
+import engine.resource.fonts.FontCollection;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -23,12 +25,12 @@ public class MenuScene extends Scene {
     public MenuScene(String name, int id) {
         super(name, id);
 
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
+        Font font = FontCollection.scaleFont(FontCollection.bit8Font, 40f);
 
         // Create the Menu GUI
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("game/res/cockpit.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -38,7 +40,8 @@ public class MenuScene extends Scene {
                 "Play", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@0", font, new StartAction(new LevelScene("level", -254))
+                "@0", font, new StartAction(new LevelScene("level", -254)),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(playButton);
 
@@ -46,25 +49,45 @@ public class MenuScene extends Scene {
                 "Build", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@1", font, new StartAction(new BuildScene("build", -250))
+                "@1", font, new StartAction(new BuildScene("build", -250)),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(buildButton);
 
-        GenericButton optionsButton = new GenericButton(
-                "Options", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "@2", font, new StartAction(new OptionsScene("options", -249))
-        );
-        addEntityToScene(optionsButton);
-
         GenericButton exitButton = new GenericButton(
                 "Exit", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 3,
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@3", font, new ExitAction()
+                "@3", font, new ExitAction(),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(exitButton);
+
+        GenericButton options = null;
+        try {
+            options = new GenericButton(
+                    "options", IdGenerator.generateId(),
+                    1800, 50, 64, 64,
+                    new StartAction(new OptionsScene("options", -249)),
+                    ImageIO.read(new File("game/res/menus/gui/gear.png"))
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(options);
+
+        GenericButton sound = null;
+        try {
+            sound = new GenericButton(
+                    "sound", IdGenerator.generateId(),
+                    1700, 50, 64, 64,
+                    new StartAction(null),
+                    ImageIO.read(new File("game/res/menus/gui/speaker.png"))
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(sound);
     }
 
     @Override
