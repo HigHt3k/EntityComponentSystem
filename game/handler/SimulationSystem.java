@@ -90,8 +90,7 @@ public class SimulationSystem extends SystemHandle {
         animation.start();
 
         markov();
-
-        animation.interrupt();
+        animation.stop();
 
         if (validateGoal()) {
             if (Game.scene().current() instanceof GameScene gs) {
@@ -306,18 +305,6 @@ public class SimulationSystem extends SystemHandle {
                 System.exit(1);
             }
         }
-
-
-
-        // debugger
-        /*System.out.println("-----groups---------");
-        for(Entity e : gatherRelevantEntities()) {
-            if(e.getComponent(SimulationComponent.class) != null) {
-                System.out.println(e.getName() + "|||||" + e.getComponent(SimulationComponent.class).getGroupId());
-            }
-        }
-        */
-
     }
 
     private void updateGraphics() {
@@ -333,17 +320,6 @@ public class SimulationSystem extends SystemHandle {
                 case OUT_OF_CONTROL -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 0, 0, 40));
                 case INOPERATIVE -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 235, 0, 40));
             }
-
-            /*
-            switch(e.getComponent(SimulationComponent.class).getSimulationState()) {
-                case CORRECT -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 255, 0, 40));
-                case FAIL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 132, 0, 40));
-                case PASSIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(0, 0, 255, 40));
-                case OUT_OF_CONTROL -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 0, 0, 40));
-                case INOPERATIVE -> e.getComponent(GraphicsComponent.class).setFillColor(new Color(255, 235, 0, 40));
-            }
-
-             */
         }
     }
 
@@ -366,16 +342,16 @@ public class SimulationSystem extends SystemHandle {
         if(e.getComponent(CablePortsComponent.class) != null) {
             ArrayList<CablePort> ports = e.getComponent(CablePortsComponent.class).getCablePorts();
 
-            for(CablePort port : ports) {
-                if(group.contains(port.getConnectedEntity())) {
+            for (CablePort port : ports) {
+                if (group.contains(port.getConnectedEntity())) {
                     continue;
                 }
 
-                if(port.getType() == CablePortType.IN) {
+                if (port.getType() == CablePortType.IN) {
                     continue;
                 }
 
-                if(port.getConnectedEntity() == null) {
+                if (port.getConnectedEntity() == null) {
                     continue;
                 }
 
@@ -383,35 +359,6 @@ public class SimulationSystem extends SystemHandle {
                 group.addAll(getInterconnection(port.getConnectedEntity()));
             }
         }
-
-        // refactored version:
-
-        // TODO: old version (delete when the other one is finished):
-        /*
-        if(e.getComponent(CablePortsComponent.class) != null) {
-            ArrayList<CablePort> ports = e.getComponent(CablePortsComponent.class).getCablePorts();
-
-            for(CablePort port : ports) {
-                if(group.contains(port.getConnectedEntity())) {
-                    continue;
-                }
-
-                if(port.getType() == CablePortType.IN) {
-                    continue;
-                }
-
-                if(port.getConnectedEntity() == null) {
-                    continue;
-                }
-
-                group.add(port.getConnectedEntity());
-                tempGroup.addAll(group);
-                group.addAll(getInterconnection(port.getConnectedEntity()));
-                tempGroup.addAll(group);
-            }
-        }
-
-         */
 
         return group;
     }
