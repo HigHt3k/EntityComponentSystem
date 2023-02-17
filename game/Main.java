@@ -84,7 +84,7 @@ public class Main {
         //Game.scene().setCurrentScene(-260);
         Game.scene().addScene(new MenuScene("Menu", -255));
         Game.scene().addScene(new TestScene("test", -1000));
-        Game.scene().setCurrentScene(-255);
+        Game.scene().setCurrentScene(-1000);
         Game.scene().initScenes();
         Game.system().addSystem(new SimulationSystem());
         Game.system().addSystem(new ActionSystem());

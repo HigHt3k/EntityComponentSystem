@@ -5,6 +5,7 @@ import engine.IdGenerator;
 import engine.graphics.scene.Scene;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.ui.NumberChooser;
+import game.entities.ui.ScaleEntity;
 import game.handler.simulation.SimulationType;
 
 public class TestScene extends Scene {
@@ -25,6 +26,10 @@ public class TestScene extends Scene {
                 "+", 367, 400, 33, 33, 1, bp
         );
         addEntityToScene(nc2);
+
+        ScaleEntity scaleEntity = new ScaleEntity("scale", IdGenerator.generateId());
+
+        addEntityToScene(scaleEntity);
     }
 
     @Override

@@ -67,6 +67,8 @@ public class SimulationSystem extends SystemHandle {
                     if (Game.scene().current() instanceof GameScene gs) {
                         System.out.println("running the animation");
                         gs.playAircraftAnimation();
+                        Game.graphics().collectAndRenderEntities();
+                        System.out.println("rendered");
                     }
                 }
             }
@@ -88,9 +90,8 @@ public class SimulationSystem extends SystemHandle {
             }
         };
         animation.start();
-
         markov();
-        animation.stop();
+        animation.interrupt();
 
         if (validateGoal()) {
             if (Game.scene().current() instanceof GameScene gs) {
