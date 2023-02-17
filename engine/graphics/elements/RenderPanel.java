@@ -8,7 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class RenderPanel extends JPanel {
-    private Scene currentScene;
 
     public RenderPanel(final Dimension size) {
         this.setSize(size);
@@ -16,10 +15,6 @@ public class RenderPanel extends JPanel {
         this.setPreferredSize(size);
         this.setFocusable(true);
         this.requestFocusInWindow();
-    }
-
-    public void setCurrentScene(Scene currentScene) {
-        this.currentScene = currentScene;
     }
 
     @Override
