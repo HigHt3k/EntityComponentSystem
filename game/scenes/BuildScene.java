@@ -19,6 +19,7 @@ import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
+import game.entities.ui.NumberChooser;
 import game.handler.simulation.SimulationType;
 
 import javax.imageio.ImageIO;
@@ -240,6 +241,19 @@ public class BuildScene extends Scene {
             numberOfBuildPanelElements++;
             return;
         }
+
+        NumberChooser nc = new NumberChooser("number", IdGenerator.generateId(),
+                "-", BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
+                850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
+                40, 40, -1, buildPanelEntity
+        );
+        addEntityToScene(nc);
+        NumberChooser nc2 = new NumberChooser("number", IdGenerator.generateId(),
+                "+", BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE - 40,
+                850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
+                40, 40, 1, buildPanelEntity
+        );
+        addEntityToScene(nc2);
         //TODO: Reimplement
         /*NumberSelectorEntity numberSelectorEntity = new NumberSelectorEntity("build_element_" + imgId + "_selector", IdGenerator.generateId(),
                 BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE/8,

@@ -80,10 +80,6 @@ public class BuildHandler extends Handler {
         }
     }
 
-    public void setCurrentCableLayer(int id) {
-        this.currentCableLayer = id;
-    }
-
     private void printAllSimComponents() {
         if(Game.scene().current() instanceof GameScene gs) {
             ArrayList<Entity> entities = gs.getEntities();
@@ -729,7 +725,7 @@ public class BuildHandler extends Handler {
             return false;
         }
 
-        ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
+        ArrayList<Entity> entitiesAtSameCell;
         entitiesAtSameCell = getEntitiesAtGridPosition(gridPos);
 
         if (entitiesAtSameCell.size() == 2) {

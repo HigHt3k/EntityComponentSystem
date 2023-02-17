@@ -8,6 +8,7 @@ import game.handler.builder.BuildHandler;
 import game.handler.CursorSelectorHandler;
 import game.handler.SimulationSystem;
 import game.scenes.MenuScene;
+import game.scenes.test.TestScene;
 
 import java.io.File;
 import java.util.Objects;
@@ -82,6 +83,7 @@ public class Main {
         //Game.scene().addScene(new TestTextScene("Test", -260));
         //Game.scene().setCurrentScene(-260);
         Game.scene().addScene(new MenuScene("Menu", -255));
+        Game.scene().addScene(new TestScene("test", -1000));
         Game.scene().setCurrentScene(-255);
         Game.scene().initScenes();
         Game.system().addSystem(new SimulationSystem());
