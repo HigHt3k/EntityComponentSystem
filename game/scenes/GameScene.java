@@ -16,6 +16,7 @@ import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
+import engine.resource.colorpalettes.ColorPalette;
 import engine.resource.fonts.FontCollection;
 import game.action.ValidateAction;
 import game.components.BuildComponent;
@@ -344,7 +345,8 @@ public class GameScene extends Scene {
                 1600, 850 + ITEM_HEIGHT + ITEM_MARGIN * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3",
-                font, new ExitAction()
+                FontCollection.bit8FontHuge, new ExitAction(),
+                Bit8.CHROME,null, null
         );
         this.addEntityToScene(exitButton);
 
@@ -354,7 +356,8 @@ public class GameScene extends Scene {
                 1600, 850 + ITEM_MARGIN,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font, new StartAction(Game.scene().getScene(-255))
+                FontCollection.bit8FontHuge, new StartAction(Game.scene().getScene(-255)),
+                Bit8.CHROME,null, null
         );
         this.addEntityToScene(mainMenuButton);
     }
@@ -393,51 +396,51 @@ public class GameScene extends Scene {
         Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
 
         Entity desc = new SimplePanel("desc", IdGenerator.generateId(),
-                1500, 0, 402, 350, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+                1500, 0, 402, 350, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
         addEntityToScene(desc);
 
         Entity goal = new SimplePanel("goal", IdGenerator.generateId(),
-                1500, 350, 402, 200, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+                1500, 350, 402, 200, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
         addEntityToScene(goal);
 
         Entity tips = new SimplePanel("tips", IdGenerator.generateId(),
-                1500, 550, 402, 300, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+                1500, 550, 402, 300, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
         addEntityToScene(tips);
 
         tipsText = new TextBody("tipsText", IdGenerator.generateId(),
-                1500, 550, 402, 180, fontMed, Bit8.DARK_GREY, "");
+                1500, 550, 402, 180, fontMed, Bit8.CHROME, "");
         addEntityToScene(tipsText);
 
         failTipDesc = new TextBody("failTipDesc", IdGenerator.generateId(),
-                1500, 730, 250, 15, fontMed,Bit8.DARK_GREY, "");
+                1500, 730, 250, 15, fontMed,Bit8.CHROME, "");
         addEntityToScene(failTipDesc);
 
         failTipText = new TextBody("failTipText", IdGenerator.generateId(),
-                1750, 730, 152, 15,fontMed, Bit8.DARK_GREY, "");
+                1750, 730, 152, 15,fontMed, Bit8.CHROME, "");
         addEntityToScene(failTipText);
 
         correctSignalsTipDesc = new TextBody("correctSignalsTipDesc", IdGenerator.generateId(),
-                1500, 760, 250, 15, fontMed,Bit8.DARK_GREY, "");
+                1500, 760, 250, 15, fontMed,Bit8.CHROME, "");
         addEntityToScene(correctSignalsTipDesc);
 
         correctSignalsTipText = new TextBody("correctSignalsTipText", IdGenerator.generateId(),
-                1750, 760, 152, 15, fontMed, Bit8.DARK_GREY, "");
+                1750, 760, 152, 15, fontMed, Bit8.CHROME, "");
         addEntityToScene(correctSignalsTipText);
 
         acceptedOOCTipDesc = new TextBody("acceptedOOCTipDesc", IdGenerator.generateId(),
-                1500, 790, 250, 15, fontMed,Bit8.DARK_GREY, "");
+                1500, 790, 250, 15, fontMed,Bit8.CHROME, "");
         addEntityToScene(acceptedOOCTipDesc);
 
         acceptedOOCTipText = new TextBody("acceptedOOCTipText", IdGenerator.generateId(),
-                1750, 790, 152, 15,fontMed, Bit8.DARK_GREY, "");
+                1750, 790, 152, 15,fontMed, Bit8.CHROME, "");
         addEntityToScene(acceptedOOCTipText);
 
         descText = new TextBody("descText", IdGenerator.generateId(),
-                1500, 50, 402, 300, fontMed, Bit8.DARK_GREY, description);
+                1500, 50, 402, 300, fontMed, Bit8.CHROME, description);
         addEntityToScene(descText);
 
         Entity descHead = new TextBody("descHead", IdGenerator.generateId(),
-                1500, 0, 402, 50, fontBig, Bit8.DARK_GREY, "@49");
+                1500, 0, 402, 50, fontBig, Bit8.CHROME, "@49");
         addEntityToScene(descHead);
 
         previous = new GenericButton("previous", IdGenerator.generateId(),
@@ -449,11 +452,11 @@ public class GameScene extends Scene {
         addEntityToScene(next);
 
         Entity goalHead = new TextBody("goalHead", IdGenerator.generateId(),
-                1500, 350, 402, 50, fontBig, Bit8.DARK_GREY, "@50");
+                1500, 350, 402, 50, fontBig, Bit8.CHROME, "@50");
         addEntityToScene(goalHead);
 
         Entity safetyReqDesc = new TextBody("safetyReqDesc", IdGenerator.generateId(),
-                1500, 430, 250, 15, fontMed, Bit8.DARK_GREY, "@51");
+                1500, 430, 250, 15, fontMed, Bit8.CHROME, "@51");
         addEntityToScene(safetyReqDesc);
 
         Color safetyReqColor = getSafetyReqColor(getGoal());
@@ -463,16 +466,16 @@ public class GameScene extends Scene {
         addEntityToScene(safetyReqContent);
 
         Entity minActuatorsDesc = new TextBody("minActuatorsDesc", IdGenerator.generateId(),
-                1500, 400, 250, 15, fontMed, Bit8.DARK_GREY, "@52"
+                1500, 400, 250, 15, fontMed, Bit8.CHROME, "@52"
                 );
         addEntityToScene(minActuatorsDesc);
 
         Entity minActuatorsContent = new TextBody("minActuatorsContent", IdGenerator.generateId(),
-                1750, 400, 152, 15, fontMed, Bit8.DARK_GREY, String.valueOf(accGoal));
+                1750, 400, 152, 15, fontMed, Bit8.CHROME, String.valueOf(accGoal));
         addEntityToScene(minActuatorsContent);
 
         validate = new GenericButton("validate", IdGenerator.generateId(),
-                1500 + (1920 - 1500) / 2 - 300 / 2, 480, 300, 50, "@30", fontBig, new ValidateAction());
+                1500 + (1920 - 1500) / 2 - 300 / 2, 480, 300, 50, "@30", FontCollection.bit8FontHuge, new ValidateAction(), Bit8.CHROME,null, null);
         addEntityToScene(validate);
     }
 

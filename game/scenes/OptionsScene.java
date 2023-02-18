@@ -10,6 +10,8 @@ import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
+import engine.resource.colorpalettes.Bit8;
+import engine.resource.fonts.FontCollection;
 import engine.resource.lang.LanguageType;
 
 import javax.imageio.ImageIO;
@@ -29,12 +31,12 @@ public class OptionsScene extends Scene {
     public OptionsScene(String name, int id) {
         super(name, id);
 
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
+        Font font = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
 
         // Create the Menu GUI
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("game/res/cockpit.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -46,7 +48,8 @@ public class OptionsScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font, new StartAction(-255)
+                font, new StartAction(-255),
+                Bit8.CHROME,null, null
         );
 
         this.addEntityToScene(mainMenuButton);
@@ -55,7 +58,8 @@ public class OptionsScene extends Scene {
                 "Exit", IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@3", font, new ExitAction()
+                "@3", font, new ExitAction(),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(exitButton);
 
@@ -63,7 +67,8 @@ public class OptionsScene extends Scene {
                 "English", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@10", font, new ChangeLanguageAction(LanguageType.EN_US)
+                "@10", font, new ChangeLanguageAction(LanguageType.EN_US),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(toggleLanguageEnglish);
 
@@ -71,7 +76,8 @@ public class OptionsScene extends Scene {
                 "German", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@11", font, new ChangeLanguageAction(LanguageType.DE_DE)
+                "@11", font, new ChangeLanguageAction(LanguageType.DE_DE),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(toggleLanguageGerman);
 
@@ -79,7 +85,8 @@ public class OptionsScene extends Scene {
                 "GermanSimple", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@12", font, new ChangeLanguageAction(LanguageType.DE_SIMPLE)
+                "@12", font, new ChangeLanguageAction(LanguageType.DE_SIMPLE),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(toggleLanguageGermanEasy);
     }

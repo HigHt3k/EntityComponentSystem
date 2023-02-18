@@ -13,6 +13,7 @@ import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
+import engine.resource.colorpalettes.ColorPalette;
 import engine.resource.fonts.FontCollection;
 import engine.resource.score.HighScore;
 import game.action.ShowLevelInfoAction;
@@ -71,14 +72,14 @@ public class LevelScene extends Scene {
     public LevelScene(String name, int id) {
         super(name, id);
 
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 15f);
+        Font font = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
         Game.res().score().loadScores("game/res/scores/highscores.xml");
 
         // Create the Menu GUI
 
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/bottom-view-plane-sky.jpg")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("game/res/cockpit.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -88,31 +89,31 @@ public class LevelScene extends Scene {
         Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
 
         Entity levelInfoPanel = new SimplePanel("level_info", IdGenerator.generateId(),
-                1500, 0, 402, 300, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+                1500, 0, 402, 300, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
         addEntityToScene(levelInfoPanel);
 
         levelInfoHead = new TextBody("levelInfoHead", IdGenerator.generateId(),
-                1500, 0, 402, 50, fontBig, Bit8.DARK_GREY, "");
+                1500, 0, 402, 50, fontBig, Bit8.CHROME, "");
         addEntityToScene(levelInfoHead);
 
         levelInfoDesc = new TextBody("levelinfoDesc", IdGenerator.generateId(),
-                1500, 50,402, 250, fontMed, Bit8.DARK_GREY, "");
+                1500, 50,402, 250, fontMed, Bit8.CHROME, "");
         addEntityToScene(levelInfoDesc);
 
         Entity highscorePanel = new SimplePanel("highscore_panel", IdGenerator.generateId(),
-                1500, 300, 402, 500, Bit8.CHROME, Bit8.JAM, Bit8.DARK_GREY);
+                1500, 300, 402, 500, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
         addEntityToScene(highscorePanel);
 
         Entity highscoreHead= new TextBody("highscoreHead", IdGenerator.generateId(),
-                1500, 300, 402, 50, fontBig, Bit8.DARK_GREY, "Highscores");
+                1500, 300, 402, 50, fontBig, Bit8.CHROME, "Highscores");
         addEntityToScene(highscoreHead);
 
         playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
-                1500, 350, 250, 450, fontMed, Bit8.DARK_GREY, "");
+                1500, 350, 250, 450, fontMed, Bit8.CHROME, "");
         addEntityToScene(playersView);
 
         highscoreView = new TextBody("highscoreView", IdGenerator.generateId(),
-                1750, 350, 152, 450, fontMed, Bit8.DARK_GREY, "");
+                1750, 350, 152, 450, fontMed, Bit8.CHROME, "");
         addEntityToScene(highscoreView);
 
         BufferedImage blue = null;
@@ -164,7 +165,8 @@ public class LevelScene extends Scene {
                 1600, 800,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font, new StartAction(-255)
+                font, new StartAction(-255),
+                Bit8.CHROME,null, null
         );
         this.addEntityToScene(mainMenuButton);
 
@@ -172,7 +174,8 @@ public class LevelScene extends Scene {
                 "Exit", IdGenerator.generateId(),
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@3", font, new ExitAction()
+                "@3", font, new ExitAction(),
+                Bit8.CHROME,null, null
         );
         addEntityToScene(exitButton);
     }
