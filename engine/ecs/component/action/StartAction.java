@@ -2,6 +2,7 @@ package engine.ecs.component.action;
 
 import engine.Game;
 import engine.graphics.scene.Scene;
+import game.scenes.GameScene;
 
 public class StartAction extends Action {
     private Scene scene;
@@ -18,8 +19,16 @@ public class StartAction extends Action {
     @Override
     public void handle() {
         if (scene != null) {
-            System.out.println("set scene to: " + scene.getName());
-            Game.scene().setCurrentScene(scene);
+            if(scene instanceof GameScene gs) {
+                if(gs.isUnlocked()) {
+                    System.out.println("set scene to: " + scene.getName());
+                    Game.scene().setCurrentScene(scene);
+                }
+            } else {
+                System.out.println("set scene to: " + scene.getName());
+                Game.scene().setCurrentScene(scene);
+            }
+
         } else if (id != -1) {
             Game.scene().setCurrentScene(id);
         }

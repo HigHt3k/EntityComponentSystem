@@ -16,17 +16,17 @@ import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import engine.resource.score.HighScore;
 import game.action.ShowLevelInfoAction;
-import game.entities.ui.LevelButton;
-import game.entities.ui.LineEntity;
-import game.entities.ui.SimplePanel;
-import game.entities.ui.TextBody;
+import game.entities.ui.*;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
+import java.util.logging.Level;
 
 public class LevelScene extends Scene {
     private static final int ITEM_WIDTH = 350;
@@ -115,32 +115,46 @@ public class LevelScene extends Scene {
                 1750, 350, 152, 450, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(highscoreView);
 
-        addLevel(1, 300, 300, Bit8.CORNFLOWER_BLUE);
+        BufferedImage blue = null;
+        BufferedImage red = null;
+        BufferedImage green = null;
+        BufferedImage yellow = null;
+
+        try {
+            blue = ImageIO.read(new File("game/res/menus/gui/processor_blue.png"));
+            red = ImageIO.read(new File("game/res/menus/gui/processor_red.png"));
+            yellow = ImageIO.read(new File("game/res/menus/gui/processor_yellow.png"));
+            green = ImageIO.read(new File("game/res/menus/gui/processor_green.png"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        addLevel(1, 300, 300, blue);
         unlockLevel(1);
-        addLevel(2, 300, 400, Bit8.CORNFLOWER_BLUE);
-        addLevel(3, 300, 500, Bit8.CORNFLOWER_BLUE);
-        addLevel(4, 300, 600, Bit8.CORNFLOWER_BLUE);
-        addLevel(5, 300, 700, Bit8.CORNFLOWER_BLUE);
-        addLevel(6, 500, 200, Bit8.DARK_PASTEL_GREEN);
-        addLevel(7,500, 300, Bit8.DARK_PASTEL_GREEN);
-        addLevel(8,500, 400, Bit8.DARK_PASTEL_GREEN);
-        addLevel(9,500, 500, Bit8.DARK_PASTEL_GREEN);
-        addLevel(10,500, 600, Bit8.DARK_PASTEL_GREEN);
-        addLevel(11,500, 700, Bit8.DARK_PASTEL_GREEN);
-        addLevel(12,500, 800, Bit8.DARK_PASTEL_GREEN);
-        addLevel(13,500, 900, Bit8.DARK_PASTEL_GREEN);
-        addLevel(14,700,400, Bit8.ORANGE);
-        addLevel(15,700,500, Bit8.ORANGE);
-        addLevel(16,700,600, Bit8.ORANGE);
-        addLevel(17,700,700, Bit8.ORANGE);
-        addLevel(18,700,800, Bit8.ORANGE);
-        addLevel(19,700,900, Bit8.ORANGE);
-        addLevel(20, 1000, 300, Bit8.RED);
-        addLevel(21, 1000, 400, Bit8.RED);
-        addLevel(22, 1000, 500, Bit8.RED);
-        addLevel(23, 1000, 600, Bit8.RED);
-        addLevel(24, 1000, 700, Bit8.RED);
-        addLevel(25, 1000, 800, Bit8.RED);
+        addLevel(2, 300, 400, blue);
+        addLevel(3, 300, 500, blue);
+        addLevel(4, 300, 600, blue);
+        addLevel(5, 300, 700, blue);
+        addLevel(6, 500, 200, green);
+        addLevel(7,500, 300, green);
+        addLevel(8,500, 400, green);
+        addLevel(9,500, 500, green);
+        addLevel(10,500, 600, green);
+        addLevel(11,500, 700, green);
+        addLevel(12,500, 800, green);
+        addLevel(13,500, 900, green);
+        addLevel(14,700,400, yellow);
+        addLevel(15,700,500, yellow);
+        addLevel(16,700,600, yellow);
+        addLevel(17,700,700, yellow);
+        addLevel(18,700,800, yellow);
+        addLevel(19,700,900, yellow);
+        addLevel(20, 1000, 300, red);
+        addLevel(21, 1000, 400, red);
+        addLevel(22, 1000, 500, red);
+        addLevel(23, 1000, 600, red);
+        addLevel(24, 1000, 700, red);
+        addLevel(25, 1000, 800, red);
         makeConnections();
         unlockAll();
 
@@ -165,8 +179,8 @@ public class LevelScene extends Scene {
 
     public void unlockLevel(int id) {
         for(Entity e : getEntities()) {
-            if (e instanceof LevelButton lb) {
-                if (lb.getName() == "lvl" + id) {
+            if (e instanceof LevelImageButton lb) {
+                if (Objects.equals(lb.getName(), "lvl" + id)) {
                     lb.unlock();
                 }
             }
@@ -175,7 +189,7 @@ public class LevelScene extends Scene {
 
     private void unlockAll() {
         for (Entity e : getEntities()) {
-            if (e instanceof LevelButton lb) {
+            if (e instanceof LevelImageButton lb) {
                 lb.unlock();
             }
         }
@@ -186,10 +200,11 @@ public class LevelScene extends Scene {
         }
     }
 
-    private void addLevel(int id, int x, int y, Color c) {
-        LevelButton lvl = new LevelButton("lvl" + id, IdGenerator.generateId(),
-                x, y, 50, 50, "", FontCollection.bit8Font, c,
-                new StartAction(Game.scene().getScene(id)));
+    private void addLevel(int id, int x, int y, BufferedImage image) {
+        LevelImageButton lvl = new LevelImageButton("lvl" + id, IdGenerator.generateId(),
+                x, y, 50, 50, "", FontCollection.bit8Font,
+                new StartAction(Game.scene().getScene(id)),
+                image);
         lvl.getComponent(ActionComponent.class).addAction(MouseEvent.NOBUTTON, new ShowLevelInfoAction(id));
         addEntityToScene(lvl);
     }
@@ -230,13 +245,13 @@ public class LevelScene extends Scene {
     private void makeConnections() {
         ArrayList<Entity> entities = (ArrayList<Entity>) getEntities().clone();
         for(Entity e : entities) {
-            if(e instanceof LevelButton lb) {
+            if(e instanceof LevelImageButton lb) {
                 Scene s = Game.scene().getScene(Integer.parseInt(lb.getName().replace("lvl", "")));
                 if (s != null) {
                     if (s instanceof GameScene gs) {
                         for (int i : gs.getUnlocksNeeded()) {
                             for (Entity e2 : entities) {
-                                if (e2 instanceof LevelButton lb2) {
+                                if (e2 instanceof LevelImageButton lb2) {
                                     Scene s2 = Game.scene().getScene(Integer.parseInt(lb2.getName().replace("lvl", "")));
                                     if (s2 instanceof GameScene gs2) {
                                         if (gs2.getId() == i) {
@@ -256,7 +271,7 @@ public class LevelScene extends Scene {
 
     private void makeConnection(Point p1, Point p2) {
         Entity line = new LineEntity("line_connector", IdGenerator.generateId(),
-                new Point(p1.x + 25, p1.y + 25), new Point(p2.x + 25, p2.y + 25), 4, Bit8.NAVY);
+                new Point(p1.x + 25, p1.y + 25), new Point(p2.x + 25, p2.y + 25), 4, Bit8.GREY);
         addEntityToScene(line);
     }
 }
