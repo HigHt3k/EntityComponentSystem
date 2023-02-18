@@ -4,10 +4,9 @@ import engine.ecs.Query;
 import engine.ecs.component.SoundComponent;
 import engine.ecs.entity.Entity;
 
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
-import javax.sound.sampled.LineUnavailableException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class SoundEngine {
@@ -16,16 +15,21 @@ public class SoundEngine {
         ArrayList<Entity> entities = Query.getEntitiesWithComponent(SoundComponent.class);
 
         for(Entity e : entities) {
-            Clip clip = null;
-            try {
-                clip = AudioSystem.getClip();
-                clip.open(e.getComponent(SoundComponent.class).getAudioInputStream());
-            } catch (LineUnavailableException ex) {
-                throw new RuntimeException(ex);
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
+            if(!e.getComponent(SoundComponent.class).isPlaying()) {
+                playSound(e.getComponent(SoundComponent.class).getAudioInputStream());
+                e.getComponent(SoundComponent.class).setPlaying(true);
             }
+        }
+    }
 
+    private synchronized void playSound(AudioInputStream audioInputStream) {
+        Clip clip;
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

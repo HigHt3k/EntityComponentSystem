@@ -11,8 +11,11 @@ import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
+import game.entities.ui.SoundEntity;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -24,6 +27,16 @@ public class MenuScene extends Scene {
 
     public MenuScene(String name, int id) {
         super(name, id);
+
+        try {
+            SoundEntity sound = new SoundEntity("menu background sound", IdGenerator.generateId(), AudioSystem.getAudioInputStream(
+                    new File("game/res/sound/2020-06-18_-_8_Bit_Retro_Funk_-_www.FesliyanStudios.com_David_Renda.wav")));
+            addEntityToScene(sound);
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         Font font = FontCollection.scaleFont(FontCollection.bit8Font, 40f);
 
