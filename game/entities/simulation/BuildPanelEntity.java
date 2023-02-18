@@ -1,5 +1,6 @@
 package game.entities.simulation;
 
+import engine.Game;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
@@ -11,6 +12,7 @@ import engine.ecs.entity.Entity;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import game.components.BuildComponent;
+import game.components.TooltipComponent;
 import game.handler.simulation.SimulationType;
 
 import java.awt.*;
@@ -47,7 +49,7 @@ public class BuildPanelEntity extends Entity {
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.UI_FRONT, img));
         HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
         renderComponent.addRenderObject(hover);
-        renderComponent.addRenderObject(new TextObject(new Point(x, y), bounds, Layer.UI_FRONT, "", FontCollection.bit8Font, TEXT_COLOR));
+        renderComponent.addRenderObject(new TextObject(new Point(x + bounds.width / 2 - 20, (int) (y + bounds.height * 1.035f)), bounds, Layer.UI_FRONT, "", FontCollection.bit8Font, TEXT_COLOR));
         this.addComponent(renderComponent);
         renderComponent.setEntity(this);
 
@@ -67,5 +69,13 @@ public class BuildPanelEntity extends Entity {
         builder.setTileId(tileId);
         builder.setFailureDetectionRatio(failureDetectionRatio);
         this.addComponent(builder);
+
+        TooltipComponent toolTip = new TooltipComponent();
+        toolTip.setTooltipText(Game.res().loadDescription(tileId));
+        toolTip.setFailureRatio(String.valueOf(failureRatio));
+        toolTip.setAcceptedOOCSignals(String.valueOf(outOfControlSignalsAccepted));
+        toolTip.setCorrectInputSignals(String.valueOf(correctSignalsNeeded));
+        toolTip.setEntity(this);
+        this.addComponent(toolTip);
     }
 }
