@@ -114,6 +114,8 @@ public class BuildHandler extends Handler {
                         System.out.println("Current State: " + e.getComponent(SimulationComponent.class).getSimulationState());
                         System.out.println("Minimum Correct signals: " + e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded());
                         System.out.println("Maximum Out Of Control signals: " + e.getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted());
+                        System.out.println("Failure Prob: " + e.getComponent(SimulationComponent.class).getFailureRatio());
+                        System.out.println("Failure Recognition Ratio: " + e.getComponent(SimulationComponent.class).getFailureRecognitionRatio());
                     }
                     if(e.getComponent(GridComponent.class) != null)
                         System.out.println("at position: " + e.getComponent(GridComponent.class).getGridLocation());
