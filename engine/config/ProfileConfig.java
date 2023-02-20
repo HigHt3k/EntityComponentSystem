@@ -1,8 +1,6 @@
 package engine.config;
 
-import engine.Game;
-import engine.profile.NameCollection;
-import engine.resource.score.HighScore;
+import engine.resource.profile.NameCollection;
 
 public class ProfileConfig {
 
