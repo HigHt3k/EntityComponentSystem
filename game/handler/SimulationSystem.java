@@ -27,16 +27,22 @@ public class SimulationSystem extends SystemHandle {
         //Base score for finishing the level
         int score = 100;
 
+        GameScene scene;
+        if (Game.scene().current() instanceof GameScene gameScene) {
+            scene = gameScene;
+        } else {
+            return -1;
+        }
         double[] probabilities = MarkovProcessor
                 .getProbabilityForStatesWith(
                         MarkovProcessor.currentSystemState,
-                        1, 0, 0, 0, 20, 20
+                        scene.getAccGoal(), scene.getSensGoal(), scene.getcGoal(), 0, 20, 20
                 );
 
-        if(Game.scene().current() instanceof GameScene gs) {
+        if (Game.scene().current() instanceof GameScene gs) {
             score -= Math.abs(Math.abs(Math.log10(probabilities[0])) - Math.abs(Math.log10(gs.getGoal()))) * 10;
 
-            for(Entity e : gs.getEntities()) {
+            for (Entity e : gs.getEntities()) {
                 if(e.getComponent(BuildComponent.class) != null && e.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
                     score += 10 * e.getComponent(BuildComponent.class).getAmount();
                 }
@@ -109,15 +115,21 @@ public class SimulationSystem extends SystemHandle {
     }
 
     private boolean validateGoal() {
+        GameScene scene;
+        if (Game.scene().current() instanceof GameScene gameScene) {
+            scene = gameScene;
+        } else {
+            return false;
+        }
         double[] probabilities = MarkovProcessor
                 .getProbabilityForStatesWith(
                         MarkovProcessor.currentSystemState,
-                        1, 0, 0, 0, 20, 20
+                        scene.getAccGoal(), scene.getSensGoal(), scene.getcGoal(), 0, 20, 20
                 );
         System.out.println("passive: " + probabilities[0]);
         System.out.println("ooc: " + probabilities[1]);
 
-        if(Game.scene().current() instanceof GameScene gs)
+        if (Game.scene().current() instanceof GameScene gs)
             return probabilities[0] - eps <= gs.getGoal() && probabilities[1] - eps <= gs.getGoal();
 
         return false;

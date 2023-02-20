@@ -546,6 +546,14 @@ public class GameScene extends Scene {
         return accGoal;
     }
 
+    public int getSensGoal() {
+        return sensGoal;
+    }
+
+    public int getcGoal() {
+        return cGoal;
+    }
+
     public double getGoal() {
         return goal;
     }
