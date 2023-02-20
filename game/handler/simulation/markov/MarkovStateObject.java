@@ -30,7 +30,7 @@ public class MarkovStateObject {
     }
 
     public ArrayList<Integer> getInputObjects() {
-        return inputObjects;
+        return (ArrayList<Integer>) inputObjects.clone();
     }
 
     public void setInputObjects(ArrayList<Integer> inputObjects) {
