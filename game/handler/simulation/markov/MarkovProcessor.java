@@ -178,14 +178,18 @@ public class MarkovProcessor {
             }
         }
         if(!hasFailed) {
-            if (currentOOCActuatorCount <= OOCActuatorCount && currentOOCCPUCount <= OOCCPUCount && currentOOCSensorCount <= OOCSensorCount
-                    && (currentCorrectActuatorCount == correctActuatorCount - 1
-                    || currentCorrectSensorCount == correctSensorCount - 1
-                    || currentCorrectCPUCount == correctCPUCount - 1)) {
+            if (
+                    currentOOCActuatorCount <= OOCActuatorCount
+                            && currentOOCCPUCount <= OOCCPUCount
+                            && currentOOCSensorCount <= OOCSensorCount
+                            && (currentCorrectActuatorCount <= correctActuatorCount - 1
+                            || currentCorrectSensorCount <= correctSensorCount - 1
+                            || currentCorrectCPUCount <= correctCPUCount - 1)
+            ) {
                 System.out.println("Adding passive probability of state: " + state.selfToText() + " : " + state.getStateProbability());
                 probabilityPassive += state.getStateProbability();
                 state.getNext().clear();
-            } else if(currentOOCActuatorCount > OOCActuatorCount || currentOOCCPUCount > OOCCPUCount || currentOOCSensorCount > OOCSensorCount) {
+            } else if (currentOOCActuatorCount > OOCActuatorCount || currentOOCCPUCount > OOCCPUCount || currentOOCSensorCount > OOCSensorCount) {
                 System.out.println("Adding ooc probability of state: " + state.selfToText() + " : " + state.getStateProbability());
                 probabilityOOC += state.getStateProbability();
                 state.getNext().clear();
@@ -225,6 +229,14 @@ public class MarkovProcessor {
         }
     }
 
+    public static void markovStartRefactored(MarkovState start) {
+        if(start.isFailed()) {
+            // handle the failure
+        } else {
+
+        }
+    }
+
     /**
      * Start the Markov Chain generation
      * @param start: node to calculate from; at the beginning this is supposed to be the root node.
@@ -236,6 +248,7 @@ public class MarkovProcessor {
             ArrayList<MarkovStateObject> objectsOutOfControl = new ArrayList<>();
             ArrayList<MarkovStateObject> markovStateObjects = start.getMarkovStateObjects();
             int failedIndex = -1;
+            // TODO: Remove this, generate all three states at once or skip fail state completely
             for (int i = 0; i < markovStateObjects.size(); i++) {
                 MarkovStateObject mso = markovStateObjects.get(i);
                 SimulationState statePassive = mso.getState();
@@ -266,7 +279,7 @@ public class MarkovProcessor {
             // update other connected components with the same state.
             // update input states of each list
             //TODO: Delete this ugly for loop; only thing it does is do the same thing multiple times so everything is updated correctly...
-            for(int i = 0; i < objectsPassive.size(); i++) {
+            for(int i = 0; i < objectsPassive.size() * 2; i++) {
                 for (MarkovStateObject mso : objectsPassive) {
                     ArrayList<SimulationState> inputStates = new ArrayList<>();
                     for (MarkovStateObject msoOther : objectsPassive) {
@@ -398,6 +411,7 @@ public class MarkovProcessor {
                 }
                 if (mso.getState() == SimulationState.FAIL) {
                     // return because there is a failed component already
+                    System.out.println(start.selfToText() + " : return because a component is failed");
                     return;
                 }
 
