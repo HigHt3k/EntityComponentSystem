@@ -42,6 +42,6 @@ public class NameCollection {
     };
 
     public static String buildName() {
-        return adjectives[rand.nextInt(adjectives.length)] + names[rand.nextInt(names.length)];
+        return adjectives[rand.nextInt(adjectives.length)] + " " + names[rand.nextInt(names.length)];
     }
 }

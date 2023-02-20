@@ -12,6 +12,7 @@ import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import game.entities.ui.SoundEntity;
+import game.entities.ui.TextBody;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
@@ -48,6 +49,12 @@ public class MenuScene extends Scene {
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
+
+        TextBody playerName = new TextBody("profile name", IdGenerator.generateId(),
+                50, 50, 300, 50, FontCollection.bit8FontMedium, Bit8.CHROME, Game.config().getProfile().profile
+        );
+        addEntityToScene(playerName);
+        //TODO: add button to change name
 
         GenericButton playButton = new GenericButton(
                 "Play", IdGenerator.generateId(),
