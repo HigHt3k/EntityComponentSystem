@@ -2,6 +2,7 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.ColliderComponent;
@@ -18,6 +19,7 @@ import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.colorpalettes.ColorPalette;
 import engine.resource.fonts.FontCollection;
+import game.action.SaveScoreAction;
 import game.action.ValidateAction;
 import game.components.BuildComponent;
 import game.components.GridComponent;
@@ -32,6 +34,7 @@ import game.handler.simulation.SimulationType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -63,6 +66,7 @@ public class GameScene extends Scene {
     private double goal = 10e-4;
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
+    private int score = 0;
 
     private Entity previous;
     private Entity next;
@@ -578,7 +582,12 @@ public class GameScene extends Scene {
         ((TextObject) getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public void displayLevelFinished(int score) {
+        this.score = score;
         addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score,
                 1920 / 2 - 200, 1080 / 2 - 100, 400, 200, "level passed!"));
@@ -587,7 +596,7 @@ public class GameScene extends Scene {
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
                 "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(-255)
         );
-        //TODO: implement save score
+        saveScore.getComponent(ActionComponent.class).addAction(MouseEvent.BUTTON1, new SaveScoreAction());
         addEntityToScene(saveScore);
 
         try {

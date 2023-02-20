@@ -38,7 +38,7 @@ public class GameConfiguration {
         return language;
     }
 
-    public static ProfileConfig getProfile() {
+    public ProfileConfig getProfile() {
         return profile;
     }
 }
