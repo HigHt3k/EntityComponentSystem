@@ -8,10 +8,15 @@ public class GameConfiguration {
     private LanguageType language = LanguageType.EN_US;
     private static final ControlsConfig controls = new ControlsConfig();
     private static final ProfileConfig profile = new ProfileConfig();
+    private static final SoundConfiguration sound = new SoundConfiguration();
     //TODO: what other configurations are needed? Language?
 
     public GameConfiguration() {
 
+    }
+
+    public SoundConfiguration getSound() {
+        return sound;
     }
 
     public ControlsConfig getControls() {

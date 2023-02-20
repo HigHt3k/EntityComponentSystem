@@ -2,6 +2,7 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.objects.Layer;
@@ -11,6 +12,7 @@ import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
+import game.action.MuteAction;
 import game.entities.ui.SoundEntity;
 import game.entities.ui.TextBody;
 
@@ -18,6 +20,7 @@ import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
@@ -104,6 +107,7 @@ public class MenuScene extends Scene {
                     new StartAction(null),
                     ImageIO.read(new File("game/res/menus/gui/speaker.png"))
             );
+            sound.getComponent(ActionComponent.class).addAction(MouseEvent.BUTTON1, new MuteAction());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
