@@ -132,4 +132,8 @@ public class HighScoreManager {
 
         return highscores;
     }
+
+    public ArrayList<HighScore> getScores() {
+        return scores;
+    }
 }

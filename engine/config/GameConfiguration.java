@@ -7,6 +7,7 @@ public class GameConfiguration {
     private boolean debug = false;
     private LanguageType language = LanguageType.EN_US;
     private static final ControlsConfig controls = new ControlsConfig();
+    private static final ProfileConfig profile = new ProfileConfig();
     //TODO: what other configurations are needed? Language?
 
     public GameConfiguration() {
@@ -37,4 +38,7 @@ public class GameConfiguration {
         return language;
     }
 
+    public static ProfileConfig getProfile() {
+        return profile;
+    }
 }
