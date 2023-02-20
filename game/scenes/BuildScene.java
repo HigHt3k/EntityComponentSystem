@@ -82,10 +82,10 @@ public class BuildScene extends Scene {
         addToBuildPanel(201, 0, 1e-4f, 0, 0, 0.9f);
         addToBuildPanel(203, 0, 1e-4f, 1, 0, 0.9f);
         addToBuildPanel(205, 0, 1e-4f, 2, 0, 0.9f);
-        addToBuildPanel(500, 1000, 1e-25f, 1, 0, 0f);
-        addToBuildPanel(501, 1000, 1e-25f, 1, 0, 0f);
-        addToBuildPanel(502, 1000, 1e-25f, 1, 0, 0f);
-        addToBuildPanel(503, 1000, 1e-25f, 1, 0, 0f);
+        addToBuildPanel(500, 1000, 0, 1, 0, 0f);
+        addToBuildPanel(501, 1000, 0, 1, 0, 0f);
+        addToBuildPanel(502, 1000, 0, 1, 0, 0f);
+        addToBuildPanel(503, 1000, 0, 1, 0, 0f);
     }
 
     public int getxMax() {
