@@ -2,13 +2,8 @@ package game.handler;
 
 import engine.Game;
 import engine.IdGenerator;
-import engine.ecs.Query;
 import engine.ecs.component.CursorComponent;
-import engine.ecs.component.collision.ColliderComponent;
-import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
-import engine.ecs.component.graphics.objects.HoverObject;
-import engine.ecs.entity.Entity;
 import engine.graphics.scene.Scene;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
@@ -18,7 +13,6 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class CursorSelectorHandler extends Handler {
     private CursorEntity cursor;
@@ -61,16 +55,33 @@ public class CursorSelectorHandler extends Handler {
                 y -= 1 * Game.config().getControls().getCursorSpeed();
                 moveCursor(x, y);
             }
-            case KeyEvent.VK_ENTER -> {
-                //select();
-                sendNewMouseEvent(new MouseEvent(
-                        Game.frame().getRenderPanel(),
-                        MouseEvent.MOUSE_CLICKED,
-                        1,
-                        InputEvent.BUTTON1_MASK,
-                        Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON1
-                ));
-            }
+            case KeyEvent.VK_ENTER -> sendNewMouseEvent(new MouseEvent(
+                    Game.frame().getRenderPanel(),
+                    MouseEvent.MOUSE_CLICKED,
+                    1,
+                    InputEvent.BUTTON1_MASK,
+                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON1
+            ));
+            case KeyEvent.VK_ESCAPE -> sendNewMouseEvent(new MouseEvent(
+                    Game.frame().getRenderPanel(),
+                    MouseEvent.MOUSE_CLICKED,
+                    1,
+                    InputEvent.BUTTON3_MASK,
+                    Game.scale().scaleX(x),
+                    Game.scale().scaleY(y),
+                    1, false,
+                    MouseEvent.BUTTON3
+            ));
+            case KeyEvent.VK_TAB -> sendNewMouseEvent(new MouseEvent(
+                    Game.frame().getRenderPanel(),
+                    MouseEvent.MOUSE_CLICKED,
+                    1,
+                    InputEvent.BUTTON2_MASK,
+                    Game.scale().scaleX(x),
+                    Game.scale().scaleY(y),
+                    1, false,
+                    MouseEvent.BUTTON2
+            ));
         }
     }
 
@@ -84,22 +95,9 @@ public class CursorSelectorHandler extends Handler {
     }
 
     private void moveCursor(int x, int y) {
-        ArrayList<Entity> collisionEntities = Query.getEntitiesWithComponent(ColliderComponent.class);
         cursor.getComponent(RenderComponent.class).reposition(new Point(x, y));
         cursor.getComponent(CursorComponent.class).reposition(new Point(x, y));
 
-        /*for (Entity entity : collisionEntities) {
-            for (CollisionObject c : entity.getComponent(ColliderComponent.class).getCollisionObjects()) {
-                if (c.getCollisionBoundaries()
-                        .contains(cursor.getComponent(CursorComponent.class).getCursorPosition())) {
-                    cursor.getComponent(CursorComponent.class)
-                            .setSelected(entity);
-                    c.setHovered(true);
-                } else {
-                    c.setHovered(false);
-                }
-            }
-        }*/
         MouseEvent mouseEvent = new MouseEvent(
                 Game.frame().getRenderPanel(),
                 MouseEvent.MOUSE_MOVED,
@@ -108,15 +106,5 @@ public class CursorSelectorHandler extends Handler {
                 Game.scale().scaleX(x), Game.scale().scaleY(y), 0, false, MouseEvent.NOBUTTON
         );
         sendNewMouseEvent(mouseEvent);
-    }
-
-    private void select() {
-        ArrayList<CollisionObject> collisionObjects = cursor.getComponent(CursorComponent.class)
-                .getSelected().getComponent(ColliderComponent.class).getCollisionObjects();
-        for (CollisionObject c : collisionObjects) {
-            if (c.isHovered()) {
-                c.setClicked(true);
-            }
-        }
     }
 }
