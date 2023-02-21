@@ -50,12 +50,20 @@
         component by using the right mouse button or directly replace it by using the correct component on the same
         tile. Connect all the components again.
     </string>
-    <string id="60000">Duplex System</string>
-    <string id="60001">The given system is not safety enough and might lead to major incidents due to exhausted cabin
+    <string id="60000">Duplex System 1</string>
+    <string id="60001">The given system is not safe enough and might lead to major incidents due to exhausted cabin
         crew.
     </string>
     <string id="60002">Try to enhance this system to meet the major safety condition for the actuator.</string>
     <string id="70000">Multiple Actuators</string>
-    <string id="70001">You have two sensors and two actuators that need to correctly work with a hazardous safety requirement.</string>
-    <string id="70002">No actuator should fail in this scenario.</string>
+    <string id="70001">You have two sensors and two actuators that need to correctly work with a hazardous safety
+        requirement.
+    </string>
+    <string id="70002">No actuator should fail in this scenario, i.e. no failed signals should be received. Actuators
+        themselves are failsafe in this scenario.
+    </string>
+    <string id="80000">Duplex System 2</string>
+    <string id="80001">In this scenario, you are given two sensors and one actuator. Computers and Actuators are
+        failsafe, meaning they only fail when provided with too many failed signals.
+    </string>
 </strings>

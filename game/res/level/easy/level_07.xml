@@ -5,20 +5,22 @@
         <part>@70002</part>
     </description>
     <goal>1e-7</goal>
-    <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
+    <goalDefinition workingActuators="2" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <unlocks>
-        <unlock>6</unlock>
+        <unlock>8</unlock>
     </unlocks>
     <build>
-        <entity id="201" amount="2" safety="1e-4" failureDetectionRatio="0.9" correctSignalsNeeded="0"
-                outOfControlSignalsAccepted="0"/>
-        <entity id="207" amount="2" safety="1e-5" failureDetectionRatio="0.9" correctSignalsNeeded="0"
-                outOfControlSignalsAccepted="0"/>
-        <entity id="203" amount="2" safety="1e-4" failureDetectionRatio="0.9" correctSignalsNeeded="1"
+        <entity id="203" amount="2" safety="1e-4" failureDetectionRatio="1" correctSignalsNeeded="1"
                 outOfControlSignalsAccepted="0"/>
     </build>
     <layer id="0" name="Tile Layer 1">
+        <entity x="0" y="0" id="201" interactable="false" safety="1e-4" failureDetectionRatio="1"
+                correctSignalsNeeded="0"
+                outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="2" id="201" interactable="false" safety="1e-4" failureDetectionRatio="1"
+                correctSignalsNeeded="0"
+                outOfControlSignalsAccepted="0"/>
         <entity x="4" y="0" id="205" interactable="false" safety="0" failureDetectionRatio="1" correctSignalsNeeded="1"
                 outOfControlSignalsAccepted="0"/>
         <entity x="4" y="2" id="205" interactable="false" safety="0" failureDetectionRatio="1" correctSignalsNeeded="1"
