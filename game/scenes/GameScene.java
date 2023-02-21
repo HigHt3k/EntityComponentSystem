@@ -564,11 +564,17 @@ public class GameScene extends Scene {
     public Entity getFailTipText() {
         return failTipText;
     }
-//
+
+    //
     public Entity getCorrectSignalsTipText() {
         return correctSignalsTipText;
     }
 
+    /**
+     * Display the currently hovered tool tip component
+     *
+     * @param entity: the entity which contains the tool tip
+     */
     public void displayToolTip(Entity entity) {
         ((TextObject) getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(
                 entity.getComponent(TooltipComponent.class).getTooltipText());
@@ -580,6 +586,9 @@ public class GameScene extends Scene {
         ((TextObject) getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@53");
     }
 
+    /**
+     * Remove the tool tip
+     */
     public void displayEmptyToolTip() {
         ((TextObject) getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
         ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
@@ -590,6 +599,11 @@ public class GameScene extends Scene {
         ((TextObject) getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
     }
 
+    /**
+     * Get the score from the current scene
+     *
+     * @return the score
+     */
     public int getScore() {
         return score;
     }
@@ -623,6 +637,11 @@ public class GameScene extends Scene {
         createScale(probabilities);
     }
 
+    /**
+     * Display a level not finished screen including some information about the reason
+     *
+     * @param probabilities: the probabilities needed to calculate the scale
+     */
     public void displayLevelNotFinished(double[] probabilities) {
         addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), 0,
@@ -645,6 +664,11 @@ public class GameScene extends Scene {
         createScale(probabilities);
     }
 
+    /**
+     * Create a scale representing proximity of the user solution to the target failure probability
+     *
+     * @param probabilities: Passive and OOC failure probabilities for the users' solution
+     */
     private void createScale(double[] probabilities) {
         int scaleWidth = 500;
         int positionGoal;
@@ -682,6 +706,9 @@ public class GameScene extends Scene {
         addEntityToScene(scoreScale);
     }
 
+    /**
+     * play an animation while the system is calculating
+     */
     public void playAircraftAnimation() {
         if (aircraft == null) {
             return;
@@ -696,6 +723,9 @@ public class GameScene extends Scene {
         aircraft.getComponent(RenderComponent.class).reposition(new Point(newX, prevBounds.y));
     }
 
+    /**
+     * set the objects for the aircraft flying animation
+     */
     public void setAircraftAnimation() {
         try {
             aircraft = new ImageEntity("Aircraft", IdGenerator.generateId(),
@@ -706,6 +736,9 @@ public class GameScene extends Scene {
         }
     }
 
+    /**
+     * Remove the aircraft animation
+     */
     public void removeAircraftAnimation() {
         removeEntityFromScene(aircraft);
         aircraft = null;
