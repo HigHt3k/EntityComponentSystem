@@ -603,10 +603,15 @@ public class GameScene extends Scene {
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
-                "BACK TO MENU", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(-255)
+                "SAVE SCORE", FontCollection.bit8FontMedium, new SaveScoreAction()
         );
-        saveScore.getComponent(ActionComponent.class).addAction(MouseEvent.BUTTON1, new SaveScoreAction());
         addEntityToScene(saveScore);
+
+        addEntityToScene(new GenericButton(
+                "Back to Menu", IdGenerator.generateId(),
+                1920 / 2 - 150, 1080 / 2 - 50, 300, 40,
+                "BACK TO MENU", FontCollection.bit8FontMedium, new StartAction(-255)
+        ));
 
         try {
             aircraft = new ImageEntity("aircraft", IdGenerator.generateId(),
