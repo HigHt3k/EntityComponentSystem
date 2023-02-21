@@ -314,7 +314,7 @@ public class BuildHandler extends Handler {
                     return true;
                 }
             }
-            // check if clicked component is a cable; left click changes the output direction, mid click the input direction
+            // check if clicked component is a cable; left click changes the output direction, mid-click the input direction
             else if (entity.getComponent(SimulationComponent.class) != null) {
                 if (entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
                     int outId = entity.getComponent(CablePortsComponent.class).getOutIds()[0];
@@ -420,7 +420,7 @@ public class BuildHandler extends Handler {
                     }
                 }
             }
-            // check mid click to rotate
+            // check mid-click to rotate
 
             else if(e.getButton() == MouseEvent.BUTTON2) {
                 cycleCable(entity, e);
@@ -441,10 +441,10 @@ public class BuildHandler extends Handler {
     /**
      * Remove the Component currently building or from grid
      *
-     * @param e: Mouese Event
+     * @param e: Mouse Event
      */
     private void removeComponent(MouseEvent e) {
-        // handle if is building simulation component
+        // handle if it is building simulation component
         if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE) {
             // remove the component
             if (putBackToStack(currentBuilding)) {
@@ -456,7 +456,7 @@ public class BuildHandler extends Handler {
         }
         // handle if building cable -> remove cable
         else if (currentBuildState == BuilderState.NOT_BUILDING) {
-            // remove component at positon
+            // remove component at position
             Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
             if (gridLocation == null) {
                 return;
@@ -740,7 +740,7 @@ public class BuildHandler extends Handler {
                                 (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
                                 (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                         ));
-                        // Set Grapics and Collision box
+                        // Set Graphics and Collision box
                         e.getComponent(RenderComponent.class).reposition(
                                 new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                         );
@@ -808,7 +808,7 @@ public class BuildHandler extends Handler {
                             (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
                             (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                     ));
-                    // Set Grapics and Collision box
+                    // Set Graphics and Collision box
                     e.getComponent(RenderComponent.class).reposition(
                             new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                     );
@@ -912,7 +912,7 @@ public class BuildHandler extends Handler {
                         (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
                         (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                 ));
-                // Set Grapics and Collision box
+                // Set Graphics and Collision box
                 e.getComponent(RenderComponent.class).reposition(
                         new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                 );
@@ -967,7 +967,7 @@ public class BuildHandler extends Handler {
                 return true;
             }
         }
-        System.out.println("Returing cos end of method");
+        System.out.println("Returning cos end of method");
         return false;
     }
 
