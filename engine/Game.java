@@ -10,6 +10,7 @@ import engine.graphics.render.ScalingEngine;
 import engine.logic.GameLogic;
 import engine.resource.ResourceManager;
 import engine.sound.SoundEngine;
+import game.handler.CursorSelectorHandler;
 
 import java.util.logging.Logger;
 
@@ -107,6 +108,7 @@ public class Game {
      * start the game
      */
     public static synchronized void start() {
+        input().getHandler(CursorSelectorHandler.class).init();
         logger.info("Game started");
         gameLoop.setStarted();
         gameLoop.start();

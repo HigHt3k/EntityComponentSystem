@@ -9,6 +9,7 @@ import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.HoverObject;
 import engine.ecs.entity.Entity;
+import engine.graphics.scene.Scene;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.entities.simulation.CursorEntity;
@@ -19,14 +20,18 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class CursorSelectorHandler extends Handler {
-    private final CursorEntity cursor;
+    private CursorEntity cursor;
 
     public CursorSelectorHandler() {
         super(HandlerType.EVENT);
+    }
 
+    public void init() {
         cursor = new CursorEntity("cursor", IdGenerator.generateId());
-        Game.scene().current().addEntityToScene(cursor);
-        System.out.println("added Cursor");
+        for (Scene s : Game.scene().getScenes()) {
+            System.out.println(s.getName());
+            s.addEntityToScene(cursor);
+        }
     }
 
     public CursorEntity getCursor() {
