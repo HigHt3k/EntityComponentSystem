@@ -66,6 +66,7 @@ public class GameScene extends Scene {
     private int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
     private int score = 0;
+    private int tries = 0;
 
     private Entity previous;
     private Entity next;
@@ -609,7 +610,8 @@ public class GameScene extends Scene {
     }
 
     public void displayLevelFinished(int score, double[] probabilities) {
-        this.score = score;
+        this.score = (int) (score * Math.pow(0.98f, tries));
+        tries++;
         addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score,
                 1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "level passed!"));
@@ -643,6 +645,7 @@ public class GameScene extends Scene {
      * @param probabilities: the probabilities needed to calculate the scale
      */
     public void displayLevelNotFinished(double[] probabilities) {
+        tries++;
         addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), 0,
                 1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "Requirements not met!"));
