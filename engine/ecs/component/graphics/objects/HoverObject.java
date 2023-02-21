@@ -11,6 +11,12 @@ public class HoverObject extends RenderObject {
         setHidden(true);
     }
 
+    public HoverObject(Point location, Shape bounds, Color hoverColor, Layer layer) {
+        super(location, bounds, layer);
+        this.hoverColor = hoverColor;
+        setHidden(true);
+    }
+
     public Color getHoverColor() {
         return hoverColor;
     }

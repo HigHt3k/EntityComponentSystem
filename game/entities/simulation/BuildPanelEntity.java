@@ -47,7 +47,7 @@ public class BuildPanelEntity extends Entity {
 
         RenderComponent renderComponent = new RenderComponent();
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.UI_FRONT, img));
-        HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
+        HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR, Layer.UI_HOVER);
         renderComponent.addRenderObject(hover);
         renderComponent.addRenderObject(new TextObject(new Point(x + bounds.width / 2 - 20, (int) (y + bounds.height * 1.035f)), bounds, Layer.UI_FRONT, "", FontCollection.bit8Font, TEXT_COLOR));
         this.addComponent(renderComponent);
