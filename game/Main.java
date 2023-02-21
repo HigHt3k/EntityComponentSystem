@@ -7,6 +7,8 @@ import engine.resource.lang.LanguageType;
 import game.handler.builder.BuildHandler;
 import game.handler.CursorSelectorHandler;
 import game.handler.SimulationSystem;
+import game.scenes.BuildScene;
+import game.scenes.LevelScene;
 import game.scenes.MenuScene;
 import game.scenes.test.TestScene;
 
@@ -75,7 +77,7 @@ public class Main {
             for (File f : Objects.requireNonNull(listOfFiles)) {
                 Game.res().loadLevel(f.getPath());
             }
-        } catch(NullPointerException ex) {
+        } catch (NullPointerException ex) {
             Game.logger().severe("No levels found, please add levels to the res/level folder \n" + ex);
             // Exit game with a warning on screen
         }
@@ -84,6 +86,8 @@ public class Main {
         //Game.scene().setCurrentScene(-260);
         Game.scene().addScene(new MenuScene("Menu", -255));
         Game.scene().addScene(new TestScene("test", -1000));
+        Game.scene().addScene(new LevelScene("level", -254));
+        Game.scene().addScene(new BuildScene("build", -250));
         Game.scene().setCurrentScene(-255);
         Game.scene().initScenes();
         Game.system().addSystem(new SimulationSystem());

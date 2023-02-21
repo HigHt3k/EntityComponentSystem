@@ -63,8 +63,8 @@ public class MenuScene extends Scene {
                 "Play", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@0", font, new StartAction(new LevelScene("level", -254)),
-                Bit8.CHROME,null, null
+                "@0", font, new StartAction(-254),
+                Bit8.CHROME, null, null
         );
         addEntityToScene(playButton);
 
@@ -72,8 +72,8 @@ public class MenuScene extends Scene {
                 "Build", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
-                "@1", font, new StartAction(new BuildScene("build", -250)),
-                Bit8.CHROME,null, null
+                "@1", font, new StartAction(-250),
+                Bit8.CHROME, null, null
         );
         addEntityToScene(buildButton);
 
