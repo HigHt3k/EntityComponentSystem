@@ -165,11 +165,16 @@ public class SimulationSystem extends SystemHandle {
             if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.VOTE) {
                 e.getComponent(SimulationComponent.class).setSimulationState(voteOutputState(e));
             } else {
-                if (Collections.frequency(e.getComponent(SimulationComponent.class).getInputStates(), SimulationState.CORRECT)
+                if (Collections.frequency(e.getComponent(SimulationComponent.class).getInputStates(), SimulationState.OUT_OF_CONTROL)
+                        > e.getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
+                    e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.OUT_OF_CONTROL);
+                } else if (Collections.frequency(e.getComponent(SimulationComponent.class).getInputStates(), SimulationState.CORRECT)
                         >= e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
                     e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
-                } else {
+                } else if (e.getComponent(SimulationComponent.class).getInputStates().size() < e.getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
                     e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.INOPERATIVE);
+                } else {
+                    e.getComponent(SimulationComponent.class).setSimulationState(SimulationState.PASSIVE);
                 }
             }
         }
@@ -275,6 +280,9 @@ public class SimulationSystem extends SystemHandle {
             if(validateGroup(group)) {
                 for (Entity e : group) {
                     if (e.getComponent(SimulationComponent.class) != null) {
+                        if (e.getComponent(SimulationComponent.class).getSimulationState() == SimulationState.INOPERATIVE) {
+                            continue;
+                        }
                         if (!entities.contains(e))
                             entities.add(e);
                     }

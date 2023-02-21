@@ -362,14 +362,20 @@ public class MarkovProcessor {
                                 }
                         }
                     } else {
-                        if (Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
-                                > mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
-                            mso.setState(SimulationState.OUT_OF_CONTROL);
+                        if (Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
+                                >= mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()
+                                && Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
+                                <= mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
+                            mso.setState(SimulationState.CORRECT);
                         } else if (Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
-                                < mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
+                                < mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()
+                                && Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL) <=
+                                mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted() &&
+                                Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL) <
+                                        Collections.frequency(mso.getInputStates(), SimulationState.PASSIVE)) {
                             mso.setState(SimulationState.PASSIVE);
                         } else {
-                            mso.setState(SimulationState.CORRECT);
+                            mso.setState(SimulationState.OUT_OF_CONTROL);
                         }
                     }
                 }
@@ -382,14 +388,20 @@ public class MarkovProcessor {
                     if (mso.getState() == SimulationState.PASSIVE || mso.getState() == SimulationState.OUT_OF_CONTROL || mso.getState() == SimulationState.INOPERATIVE) {
                         continue;
                     }
-                    if (Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
-                            > mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
-                        mso.setState(SimulationState.OUT_OF_CONTROL);
+                    if (Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
+                            >= mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()
+                            && Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
+                            <= mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
+                        mso.setState(SimulationState.CORRECT);
                     } else if (Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
-                            < mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()) {
+                            < mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()
+                            && Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL) <=
+                            mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted() &&
+                            Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL) <
+                                    Collections.frequency(mso.getInputStates(), SimulationState.PASSIVE)) {
                         mso.setState(SimulationState.PASSIVE);
                     } else {
-                        mso.setState(SimulationState.CORRECT);
+                        mso.setState(SimulationState.OUT_OF_CONTROL);
                     }
                 }
             }
