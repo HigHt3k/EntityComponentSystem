@@ -71,10 +71,8 @@ public class SimulationSystem extends SystemHandle {
                         e.printStackTrace();
                     }
                     if (Game.scene().current() instanceof GameScene gs) {
-                        System.out.println("running the animation");
                         gs.playAircraftAnimation();
                         Game.graphics().collectAndRenderEntities();
-                        System.out.println("rendered");
                     }
                 }
             }

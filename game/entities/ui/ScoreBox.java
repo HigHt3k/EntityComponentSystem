@@ -17,8 +17,8 @@ public class ScoreBox extends Entity {
         Rectangle r = new Rectangle(x, y, width, height);
 
         RenderComponent renderComponent = new RenderComponent();
-        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), r, Layer.GAMELAYER2, Bit8.PUMPKIN, Bit8.SCARLET, 1));
-        renderComponent.addRenderObject(new TextObject(new Point(x, y), r, Layer.GAMELAYER3, text, font, Bit8.DARK_GREY));
+        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), r, Layer.UI, Bit8.PUMPKIN, Bit8.SCARLET, 1));
+        renderComponent.addRenderObject(new TextObject(new Point(x, y), r, Layer.UI_FRONT, text, font, Bit8.DARK_GREY));
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
     }

@@ -698,7 +698,7 @@ public class GameScene extends Scene {
 
 
         ScaleEntity scoreScale = new ScaleEntity(
-                "Score Scale", IdGenerator.generateId(), 1920 / 2 - scaleWidth / 2, 1080 / 2 - 100, scaleWidth, 10,
+                "scale", IdGenerator.generateId(), 1920 / 2 - scaleWidth / 2, 1080 / 2 - 100, scaleWidth, 10,
                 new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionGoal, 1080 / 2 - 100), getSafetyReqColor(goal)),
                 new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionScoreOOC, 1080 / 2 - 100), Bit8.JAM),
                 new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionScorePassive, 1080 / 2 - 100), Bit8.CORNFLOWER_BLUE)

@@ -154,6 +154,7 @@ public class BuildHandler extends Handler {
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("back"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scorebox"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("aircraft"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scale"));
                     }
                 }
             }

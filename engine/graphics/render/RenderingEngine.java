@@ -169,9 +169,9 @@ public class RenderingEngine {
         renderLayer(Layer.GAMELAYER1);
         renderLayer(Layer.GAMELAYER2);
         renderLayer(Layer.GAMELAYER3);
+        renderLayer(Layer.HOVER);
         renderLayer(Layer.UI);
         renderLayer(Layer.UI_FRONT);
-        renderLayer(Layer.HOVER);
         renderLayer(Layer.TOOLTIP);
         renderLayer(Layer.UI_HOVER);
         renderLayer(Layer.CURSOR);
