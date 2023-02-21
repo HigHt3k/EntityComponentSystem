@@ -15,6 +15,7 @@ import engine.input.handler.HandlerType;
 import game.entities.simulation.CursorEntity;
 
 import java.awt.*;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -61,7 +62,14 @@ public class CursorSelectorHandler extends Handler {
                 moveCursor(x, y);
             }
             case KeyEvent.VK_ENTER -> {
-                select();
+                //select();
+                sendNewMouseEvent(new MouseEvent(
+                        Game.frame().getRenderPanel(),
+                        MouseEvent.MOUSE_CLICKED,
+                        1,
+                        InputEvent.BUTTON1_MASK,
+                        Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON1
+                ));
             }
         }
     }
@@ -71,12 +79,16 @@ public class CursorSelectorHandler extends Handler {
 
     }
 
+    private void sendNewMouseEvent(MouseEvent mouseEvent) {
+        Game.input().queueEvent(mouseEvent);
+    }
+
     private void moveCursor(int x, int y) {
         ArrayList<Entity> collisionEntities = Query.getEntitiesWithComponent(ColliderComponent.class);
         cursor.getComponent(RenderComponent.class).reposition(new Point(x, y));
         cursor.getComponent(CursorComponent.class).reposition(new Point(x, y));
 
-        for (Entity entity : collisionEntities) {
+        /*for (Entity entity : collisionEntities) {
             for (CollisionObject c : entity.getComponent(ColliderComponent.class).getCollisionObjects()) {
                 if (c.getCollisionBoundaries()
                         .contains(cursor.getComponent(CursorComponent.class).getCursorPosition())) {
@@ -87,8 +99,15 @@ public class CursorSelectorHandler extends Handler {
                     c.setHovered(false);
                 }
             }
-
-        }
+        }*/
+        MouseEvent mouseEvent = new MouseEvent(
+                Game.frame().getRenderPanel(),
+                MouseEvent.MOUSE_MOVED,
+                1,
+                InputEvent.BUTTON1_MASK,
+                Game.scale().scaleX(x), Game.scale().scaleY(y), 0, false, MouseEvent.NOBUTTON
+        );
+        sendNewMouseEvent(mouseEvent);
     }
 
     private void select() {
