@@ -39,6 +39,7 @@ public class CursorSelectorHandler extends Handler {
         int y = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().y;
 
         switch (e.getKeyCode()) {
+            //TODO: Add controller keycodes here
             case KeyEvent.VK_RIGHT -> {
                 x += 1 * Game.config().getControls().getCursorSpeed();
                 moveCursor(x, y);
