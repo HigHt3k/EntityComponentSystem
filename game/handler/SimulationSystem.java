@@ -99,17 +99,20 @@ public class SimulationSystem extends SystemHandle {
         markov();
         animation.interrupt();
 
-        if (validateGoal()) {
-            if (Game.scene().current() instanceof GameScene gs) {
+        if (Game.scene().current() instanceof GameScene gs) {
+            double[] probabilities = MarkovProcessor
+                    .getProbabilityForStatesWith(
+                            MarkovProcessor.currentSystemState,
+                            gs.getAccGoal(), gs.getSensGoal(), gs.getcGoal(), 0, 20, 20
+                    );
+            if (validateGoal()) {
                 if (!gs.isLevelPassed()) {
                     gs.setLevelPassed(true);
                     int score = calculateScore();
-                    gs.displayLevelFinished(score);
+                    gs.displayLevelFinished(score, probabilities);
                 }
-            }
-        } else {
-            if(Game.scene().current() instanceof GameScene gs) {
-                gs.displayLevelNotFinished();
+            } else {
+                gs.displayLevelNotFinished(probabilities);
             }
         }
     }

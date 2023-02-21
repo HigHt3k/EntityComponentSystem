@@ -27,9 +27,6 @@ public class TestScene extends Scene {
         );
         addEntityToScene(nc2);
 
-        ScaleEntity scaleEntity = new ScaleEntity("scale", IdGenerator.generateId());
-
-        addEntityToScene(scaleEntity);
     }
 
     @Override

@@ -27,10 +27,9 @@ import game.components.TooltipComponent;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
 import game.entities.simulation.SimulationEntity;
-import game.entities.ui.ScoreBox;
-import game.entities.ui.SimplePanel;
-import game.entities.ui.TextBody;
+import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
+import game.handler.simulation.markov.MarkovProcessor;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -595,11 +594,11 @@ public class GameScene extends Scene {
         return score;
     }
 
-    public void displayLevelFinished(int score) {
+    public void displayLevelFinished(int score, double[] probabilities) {
         this.score = score;
         addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score,
-                1920 / 2 - 200, 1080 / 2 - 100, 400, 200, "level passed!"));
+                1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "level passed!"));
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
@@ -620,12 +619,14 @@ public class GameScene extends Scene {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        createScale(probabilities);
     }
 
-    public void displayLevelNotFinished() {
+    public void displayLevelNotFinished(double[] probabilities) {
         addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
                 Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), 0,
-                1920 / 2 - 200, 1080 / 2 - 100, 400, 200, "Requirements not met!"));
+                1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "Requirements not met!"));
         GenericButton back = new GenericButton(
                 "back", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
@@ -640,9 +641,51 @@ public class GameScene extends Scene {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        createScale(probabilities);
+    }
+
+    private void createScale(double[] probabilities) {
+        int scaleWidth = 500;
+        int positionGoal;
+        int positionScoreOOC;
+        int positionScorePassive;
+        if (goal <= 0.0) {
+            positionGoal = scaleWidth;
+        } else {
+            positionGoal = (int) (Math.abs(Math.log10(goal)) * scaleWidth / 10);
+        }
+        if (probabilities[0] <= 0.0) {
+            positionScorePassive = scaleWidth;
+        } else {
+            positionScorePassive = (int) (Math.abs(Math.log10(probabilities[0])) * scaleWidth / 10);
+        }
+        if (positionScorePassive > scaleWidth) {
+            positionScorePassive = scaleWidth;
+        }
+        if (probabilities[1] <= 0.0) {
+            positionScoreOOC = scaleWidth;
+        } else {
+            positionScoreOOC = (int) (Math.abs(Math.log10(probabilities[1])) * scaleWidth / 10);
+        }
+        if (positionScoreOOC > scaleWidth) {
+            positionScoreOOC = scaleWidth;
+        }
+
+
+        ScaleEntity scoreScale = new ScaleEntity(
+                "Score Scale", IdGenerator.generateId(), 1920 / 2 - scaleWidth / 2, 1080 / 2 - 100, scaleWidth, 10,
+                new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionGoal, 1080 / 2 - 100), getSafetyReqColor(goal)),
+                new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionScoreOOC, 1080 / 2 - 100), Bit8.JAM),
+                new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionScorePassive, 1080 / 2 - 100), Bit8.CORNFLOWER_BLUE)
+        );
+        addEntityToScene(scoreScale);
     }
 
     public void playAircraftAnimation() {
+        if (aircraft == null) {
+            return;
+        }
         Rectangle prevBounds = (Rectangle) aircraft.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds();
         int newX;
         if (prevBounds.x + 1 > 1920) {

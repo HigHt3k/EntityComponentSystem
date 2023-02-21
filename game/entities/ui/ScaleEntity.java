@@ -9,7 +9,9 @@ import engine.resource.colorpalettes.Bit8;
 import java.awt.*;
 
 public class ScaleEntity extends Entity {
-    public ScaleEntity(String name, int id) {
+    public ScaleEntity(String name, int id,
+                       int x, int y, int width, int height,
+                       Marker marker1, Marker marker2, Marker marker3) {
         super(name, id);
 
         RenderComponent renderComponent = new RenderComponent();
@@ -17,22 +19,15 @@ public class ScaleEntity extends Entity {
         this.addComponent(renderComponent);
         renderComponent.addRenderObject(
                 new LineObject(
-                        new Point(200, 200),
-                        new Rectangle(200, 200, 500, 4),
-                        Layer.UI_FRONT, new Point(200, 200),
-                        new Point(700, 200),
-                        Bit8.CHROME, 2
+                        new Point(x, y),
+                        new Rectangle(x, y, width, height),
+                        Layer.UI_FRONT, new Point(x, y),
+                        new Point(x + width, y),
+                        Bit8.WHITE, 4
                 )
         );
-        renderComponent.addRenderObject(new LineObject(
-                new Point(395, 195), new Rectangle(395, 195, 10, 10), Layer.UI_FRONT,
-                new Point(395, 195), new Point(405, 205),
-                Bit8.GREEN, 4
-        ));
-        renderComponent.addRenderObject(new LineObject(
-                new Point(305, 195), new Rectangle(305, 195, 10, 10), Layer.UI_FRONT,
-                new Point(305, 195), new Point(315, 205),
-                Bit8.RED, 4
-        ));
+        renderComponent.addRenderObject(marker1.lineObject1);
+        renderComponent.addRenderObject(marker2.lineObject1);
+        renderComponent.addRenderObject(marker3.lineObject1);
     }
 }
