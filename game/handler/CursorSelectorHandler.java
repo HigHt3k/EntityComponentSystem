@@ -2,12 +2,21 @@ package game.handler;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.Query;
+import engine.ecs.component.CursorComponent;
+import engine.ecs.component.collision.ColliderComponent;
+import engine.ecs.component.collision.CollisionObject;
+import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.HoverObject;
+import engine.ecs.entity.Entity;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.entities.simulation.CursorEntity;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class CursorSelectorHandler extends Handler {
     private final CursorEntity cursor;
@@ -17,6 +26,7 @@ public class CursorSelectorHandler extends Handler {
 
         cursor = new CursorEntity("cursor", IdGenerator.generateId());
         Game.scene().current().addEntityToScene(cursor);
+        System.out.println("added Cursor");
     }
 
     public CursorEntity getCursor() {
@@ -25,9 +35,9 @@ public class CursorSelectorHandler extends Handler {
 
     @Override
     public void handle(KeyEvent e) {
-        /*ArrayList<Entity> collisionEntities = Query.getEntitiesWithComponent(CollisionComponent.class);
-        int x = cursor.getComponent(GraphicsComponent.class).getBounds().x;
-        int y = cursor.getComponent(GraphicsComponent.class).getBounds().y;
+        ArrayList<Entity> collisionEntities = Query.getEntitiesWithComponent(ColliderComponent.class);
+        int x = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().x;
+        int y = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().y;
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_RIGHT -> {
@@ -44,20 +54,22 @@ public class CursorSelectorHandler extends Handler {
             }
         }
 
-        cursor.getComponent(GraphicsComponent.class).reposition(new Point(x, y));
+        cursor.getComponent(RenderComponent.class).reposition(new Point(x, y));
         cursor.getComponent(CursorComponent.class).reposition(new Point(x, y));
 
         for(Entity entity : collisionEntities) {
-            if(entity.getComponent(CollisionComponent.class).contains(cursor.getComponent(CursorComponent.class).getCursorPosition())) {
-                if(cursor.getComponent(CursorComponent.class).getSelected() != null) {
-                    cursor.getComponent(CursorComponent.class).getSelected().getComponent(GraphicsComponent.class).unhovered();
+            for (CollisionObject c : entity.getComponent(ColliderComponent.class).getCollisionObjects()) {
+                if (c.getCollisionBoundaries()
+                        .contains(cursor.getComponent(CursorComponent.class).getCursorPosition())) {
+                    cursor.getComponent(CursorComponent.class)
+                            .setSelected(entity);
+                    c.setHovered(true);
+                } else {
+                    c.setHovered(false);
                 }
-                cursor.getComponent(CursorComponent.class).setSelected(entity);
-                entity.getComponent(GraphicsComponent.class).hovered();
             }
-        }
 
-         */
+        }
     }
 
     @Override
