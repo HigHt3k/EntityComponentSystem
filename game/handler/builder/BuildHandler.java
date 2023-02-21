@@ -2,7 +2,6 @@ package game.handler.builder;
 
 import engine.Game;
 import engine.IdGenerator;
-import engine.ecs.Query;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ImageObject;
@@ -15,6 +14,7 @@ import game.entities.simulation.BuildPanelEntity;
 import game.entities.cable.CablePort;
 import game.entities.cable.CablePortPosition;
 import game.entities.simulation.SimulationEntity;
+import game.handler.SimulationSystem;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
@@ -76,6 +76,7 @@ public class BuildHandler extends Handler {
         }
         if (e.getKeyCode() == KeyEvent.VK_4) {
             currentCableLayer = 3;
+            return;
         }
     }
 
@@ -130,23 +131,12 @@ public class BuildHandler extends Handler {
         }
     }
 
-    private void updateCellSize() {
-        if (Game.scene().current() instanceof GameScene gs) {
-            cellSize = gs.getCellSize();
-        } else if (Game.scene().current() instanceof BuildScene bs) {
-            cellSize = bs.getCellSize();
-        }
-    }
-
-    /**
-     * Handle the mouse event on the different buttons
-     *
-     * @param e: mouse event
-     */
-    private void handleButtons(MouseEvent e) {
+    @Override
+    public void handle(MouseEvent e) {
         Entity prev;
         Entity next;
         if (Game.scene().current() instanceof GameScene gs) {
+            cellSize = gs.getCellSize();
             prev = gs.getPrevious();
             next = gs.getNext();
 
@@ -168,236 +158,206 @@ public class BuildHandler extends Handler {
                     }
                 }
             }
+        } else if (Game.scene().current() instanceof BuildScene bs) {
+            cellSize = bs.getCellSize();
         }
-    }
 
-    private void handleToolTips(MouseEvent e) {
-        ArrayList<Entity> entities = Query.getEntitiesWithComponent(TooltipComponent.class);
+        ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
 
         for (Entity entity : entities) {
-            if (Game.scene().current() instanceof GameScene gs && entity.getComponent(ColliderComponent.class) != null) {
-                if (entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
-                        .contains(Game.scale().upscalePoint(e.getPoint()))) {
-                    gs.displayToolTip(entity);
-                    break;
-                } else {
-                    gs.displayEmptyToolTip();
-                }
-            }
-        }
-    }
-
-    private void setBuildPanelText(Entity entity) {
-        if (entity instanceof BuildPanelEntity buildPanelEntity) {
-            if (buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
-                ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
-                        .getRenderObjectsOfType(TextObject.class)
-                        .get(0))
-                        .setText(String.valueOf(buildPanelEntity.getComponent(BuildComponent.class).getAmount()));
-            else
-                ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
-                        .getRenderObjectsOfType(TextObject.class)
-                        .get(0))
-                        .setText("");
-        }
-    }
-
-    private SimulationEntity makeSimulationEntity(Entity entity) {
-        int[] cablePortsIn = new int[]{};
-        int[] cablePortsOut = new int[]{};
-        switch (entity.getComponent(BuildComponent.class).getSimulationType()) {
-            case SENSOR -> {
-                cablePortsIn = new int[]{};
-                cablePortsOut = new int[]{0, 1, 2, 3};
-            }
-            case CPU, VOTE -> {
-                cablePortsIn = new int[]{0, 1, 2, 3};
-                cablePortsOut = new int[]{0, 1, 2, 3};
-            }
-            case ACTUATOR -> {
-                cablePortsIn = new int[]{0, 1, 2, 3};
-                cablePortsOut = new int[]{};
-            }
-            case CABLE -> {
-                cablePortsIn = new int[]{entity.getComponent(BuildComponent.class).getPortId()};
-                cablePortsOut = new int[]{entity.getComponent(BuildComponent.class).getPortId()};
-            }
-        }
-        return new SimulationEntity(
-                entity.getName() + "_simulation", IdGenerator.generateId(),
-                entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
-                entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
-                cellSize,
-                cellSize,
-                -1, -1,
-                ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
-                        .getImage(),
-                entity.getComponent(BuildComponent.class).getTileId(),
-                entity.getComponent(BuildComponent.class).getFailureRatio(),
-                entity.getComponent(BuildComponent.class).getSimulationType(),
-                entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
-                entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
-                cablePortsIn, cablePortsOut,
-                true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
-        );
-    }
-
-    private boolean handleNotBuilding(Entity entity, MouseEvent e) {
-        // check location of the click
-        if (entity.getComponent(ColliderComponent.class) != null
-                && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries() != null
-                && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
-                .contains(Game.scale().upscalePoint(e.getPoint()))) {
-            // check if the click was on a BuildComponent first -> create new Simulation Entity
-            if (entity.getComponent(BuildComponent.class) != null) {
-                // check amount left, >0? -> new Entity
-                if (entity.getComponent(BuildComponent.class).getAmount() > 0
-                        && entity.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
-                    SimulationEntity newEntity = null;
-
-                    if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CPU) {
-                        newEntity = makeSimulationEntity(entity);
-                    } else if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.SENSOR) {
-                        newEntity = makeSimulationEntity(entity);
-                        newEntity.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
-                    } else if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
-                        newEntity = makeSimulationEntity(entity);
-                    } else if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.VOTE) {
-                        newEntity = makeSimulationEntity(entity);
-                    }
-
-                    currentBuilding = newEntity;
-                    Game.scene().current().addEntityToScene(newEntity);
-
-                    entity.getComponent(BuildComponent.class)
-                            .subtractFromAmount();
-                    if (entity.getComponent(BuildComponent.class).getAmount() > 100) {
-                        ((TextObject) entity.getComponent(RenderComponent.class)
-                                .getRenderObjectsOfType(TextObject.class)
-                                .get(0))
-                                .setText("");
+            if (entity.getComponent(TooltipComponent.class) != null) {
+                if (Game.scene().current() instanceof GameScene gs && entity.getComponent(ColliderComponent.class) != null) {
+                    if (entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                            .contains(Game.scale().upscalePoint(e.getPoint()))) {
+                        gs.displayToolTip(entity);
+                        break;
                     } else {
-                        ((TextObject) entity.getComponent(RenderComponent.class)
-                                .getRenderObjectsOfType(TextObject.class)
-                                .get(0))
-                                .setText(String.valueOf(entity.getComponent(BuildComponent.class)
-                                        .getAmount()
-                                ));
+                        gs.displayEmptyToolTip();
                     }
-                    currentBuildState = BuilderState.BUILDING_SIMULATION;
-
-                    return true;
-                } else if (entity.getComponent(BuildComponent.class).getAmount() > 0
-                        && entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
-                    SimulationEntity newEntity = makeSimulationEntity(entity);
-                    cableBuildRepetitive = entity;
-                    currentBuilding = newEntity;
-                    Game.scene().current().addEntityToScene(newEntity);
-
-                    entity.getComponent(BuildComponent.class)
-                            .subtractFromAmount();
-                    if (entity.getComponent(BuildComponent.class).getAmount() > 100) {
-                        ((TextObject) entity.getComponent(RenderComponent.class)
-                                .getRenderObjectsOfType(TextObject.class)
-                                .get(0))
-                                .setText("");
-                    } else {
-                        ((TextObject) entity.getComponent(RenderComponent.class)
-                                .getRenderObjectsOfType(TextObject.class)
-                                .get(0))
-                                .setText(String.valueOf(entity.getComponent(BuildComponent.class)
-                                        .getAmount()
-                                ));
-                    }
-
-                    currentBuildState = BuilderState.BUILDING_CABLE;
-                    return true;
-                }
-            }
-            // check if clicked component is a cable; left click changes the output direction, mid-click the input direction
-            else if (entity.getComponent(SimulationComponent.class) != null) {
-                if (entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
-                    int outId = entity.getComponent(CablePortsComponent.class).getOutIds()[0];
-                    if (outId == currentCableLayer) {
-                        entity.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT).cyclePosition();
-                        entity.getComponent(CablePortsComponent.class).updateImage();
-                        updateConnection(entity, CablePortType.OUT);
-                    }
-                }
-
-            }
-        }
-        return false;
-    }
-
-    private void buildRepetitive() {
-        if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 0
-                && cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
-            SimulationEntity newEntity = makeSimulationEntity(cableBuildRepetitive);
-
-            currentBuilding = newEntity;
-            Game.scene().current().addEntityToScene(newEntity);
-
-            cableBuildRepetitive.getComponent(BuildComponent.class)
-                    .subtractFromAmount();
-            if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 100) {
-                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
-                        .getRenderObjectsOfType(TextObject.class)
-                        .get(0))
-                        .setText("");
-            } else {
-                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
-                        .getRenderObjectsOfType(TextObject.class)
-                        .get(0))
-                        .setText(String.valueOf(cableBuildRepetitive.getComponent(BuildComponent.class)
-                                .getAmount()
-                        ));
-            }
-            currentBuildState = BuilderState.BUILDING_CABLE;
-        }
-    }
-
-    /**
-     * Cycle a cable
-     *
-     * @param entity: the cable to cycle
-     * @param e:      Mouse Event
-     */
-    private void cycleCable(Entity entity, MouseEvent e) {
-        if (entity.getComponent(ColliderComponent.class) != null
-                && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
-                .contains(Game.scale().upscalePoint(e.getPoint()))) {
-            if (entity.getComponent(SimulationComponent.class) != null) {
-                if (entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
-                    int inId = entity.getComponent(CablePortsComponent.class).getInIds()[0];
-                    if (inId == currentCableLayer) {
-                        entity.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN).cyclePosition();
-                        entity.getComponent(CablePortsComponent.class).updateImage();
-                        updateConnection(entity, CablePortType.IN);
-                    }
-
                 }
             }
         }
-    }
-
-    @Override
-    public void handle(MouseEvent e) {
-        updateCellSize();
-        handleButtons(e);
-        handleToolTips(e);
-
-        ArrayList<Entity> entities = Query.getEntitiesWithComponent(BuildComponent.class);
 
         for (Entity entity : entities) {
             // check for click on a next/prev button
-            setBuildPanelText(entity);
+            if (entity instanceof BuildPanelEntity buildPanelEntity) {
+                if (buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
+                    ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
+                            .getRenderObjectsOfType(TextObject.class).get(0))
+                            .setText(String.valueOf(buildPanelEntity.getComponent(BuildComponent.class).getAmount()));
+                else
+                    ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
+                            .getRenderObjectsOfType(TextObject.class).get(0))
+                            .setText("");
+            }
             // check the button clicked is left click
             if (e.getButton() == MouseEvent.BUTTON1) {
                 // Handle events when builder is not building
                 if (currentBuildState == BuilderState.NOT_BUILDING) {
-                    if (handleNotBuilding(entity, e)) {
-                        break;
+                    // check location of the click
+                    if (entity.getComponent(ColliderComponent.class) != null
+                            && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries() != null
+                            && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                            .contains(Game.scale().upscalePoint(e.getPoint()))) {
+                        // check if the click was on a BuildComponent first -> create new Simulation Entity
+                        if (entity.getComponent(BuildComponent.class) != null) {
+                            // check amount left, >0? -> new Entity
+                            if (entity.getComponent(BuildComponent.class).getAmount() > 0
+                                    && entity.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
+                                SimulationEntity newEntity = null;
+
+                                if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CPU) {
+                                    newEntity = new SimulationEntity(
+                                            entity.getName() + "_simulation", IdGenerator.generateId(),
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
+                                            cellSize,
+                                            cellSize,
+                                            -1, -1,
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
+                                            entity.getComponent(BuildComponent.class).getFailureRatio(),
+                                            entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
+                                            new int[]{0, 1, 2, 3}, new int[]{0, 1, 2, 3},
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
+                                    );
+                                } else if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.SENSOR) {
+                                    newEntity = new SimulationEntity(
+                                            entity.getName() + "_simulation", IdGenerator.generateId(),
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
+                                            cellSize,
+                                            cellSize,
+                                            -1, -1,
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
+                                            entity.getComponent(BuildComponent.class).getFailureRatio(),
+                                            entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
+                                            new int[]{}, new int[]{0, 1, 2, 3},
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
+                                    );
+                                    newEntity.getComponent(SimulationComponent.class).setSimulationState(SimulationState.CORRECT);
+                                } else if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.ACTUATOR) {
+                                    newEntity = new SimulationEntity(
+                                            entity.getName() + "_simulation", IdGenerator.generateId(),
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
+                                            cellSize,
+                                            cellSize,
+                                            -1, -1,
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
+                                            entity.getComponent(BuildComponent.class).getFailureRatio(),
+                                            entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
+                                            new int[]{0, 1, 2, 3}, new int[]{},
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
+                                    );
+                                } else if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.VOTE) {
+                                    newEntity = new SimulationEntity(
+                                            entity.getName() + "_simulation", IdGenerator.generateId(),
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                            entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
+                                            cellSize,
+                                            cellSize,
+                                            -1, -1,
+                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                    .getImage(),
+                                            entity.getComponent(BuildComponent.class).getTileId(),
+                                            entity.getComponent(BuildComponent.class).getFailureRatio(),
+                                            entity.getComponent(BuildComponent.class).getSimulationType(),
+                                            entity.getComponent(BuildComponent.class).getCorrectSignalsNeeded(),
+                                            entity.getComponent(BuildComponent.class).getOutOfControlSignalsAccepted(),
+                                            new int[]{0, 1, 2, 3}, new int[]{0, 1, 2, 3},
+                                            true, entity.getComponent(BuildComponent.class).getFailureDetectionRatio()
+                                    );
+                                    System.out.println("added new vote entity");
+                                }
+
+                                currentBuilding = newEntity;
+                                Game.scene().current().addEntityToScene(newEntity);
+
+                                entity.getComponent(BuildComponent.class)
+                                        .subtractFromAmount();
+                                if (entity.getComponent(BuildComponent.class).getAmount() > 100) {
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText("");
+                                } else {
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText(String.valueOf(entity.getComponent(BuildComponent.class)
+                                                    .getAmount()
+                                            ));
+                                }
+                                currentBuildState = BuilderState.BUILDING_SIMULATION;
+
+                                break;
+                            } else if (entity.getComponent(BuildComponent.class).getAmount() > 0
+                                    && entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
+                                SimulationEntity newEntity = new SimulationEntity(
+                                        entity.getName() + "_cable", IdGenerator.generateId(),
+                                        entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                        entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
+                                        cellSize,
+                                        cellSize,
+                                        -1, -1,
+                                        ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                                .getImage(),
+                                        entity.getComponent(BuildComponent.class).getTileId(),
+                                        entity.getComponent(BuildComponent.class).getFailureRatio(),
+                                        entity.getComponent(BuildComponent.class).getSimulationType(),
+                                        1, 0,
+                                        new int[]{entity.getComponent(BuildComponent.class).getPortId()},
+                                        new int[]{entity.getComponent(BuildComponent.class).getPortId()},
+                                        true, 0f
+                                );
+                                cableBuildRepetitive = entity;
+                                currentBuilding = newEntity;
+                                Game.scene().current().addEntityToScene(newEntity);
+
+                                entity.getComponent(BuildComponent.class)
+                                        .subtractFromAmount();
+                                if (entity.getComponent(BuildComponent.class).getAmount() > 100) {
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText("");
+                                } else {
+                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                            .getRenderObjectsOfType(TextObject.class)
+                                            .get(0))
+                                            .setText(String.valueOf(entity.getComponent(BuildComponent.class)
+                                                    .getAmount()
+                                            ));
+                                }
+
+                                currentBuildState = BuilderState.BUILDING_CABLE;
+                                break;
+                            }
+                        }
+                        // check if clicked component is a cable; left click changes the output direction, mid click the input direction
+                        else if (entity.getComponent(SimulationComponent.class) != null) {
+                            if (entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+                                int outId = entity.getComponent(CablePortsComponent.class).getOutIds()[0];
+                                if (outId == currentCableLayer) {
+                                    entity.getComponent(CablePortsComponent.class).getCablePort(outId, CablePortType.OUT).cyclePosition();
+                                    entity.getComponent(CablePortsComponent.class).updateImage();
+                                    updateConnection(entity, CablePortType.OUT);
+                                }
+                            }
+
+                        }
                     }
                 }
                 // check if state is building
@@ -409,26 +369,111 @@ public class BuildHandler extends Handler {
                         break;
                     }
                 }
-                // check if state is building cable
+                // check if state is building cable refactored
                 else if (currentBuildState == BuilderState.BUILDING_CABLE) {
                     // try to place component
+                    System.out.println(placeCable(currentBuilding));
                     if (placeCable(currentBuilding)) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
-                        buildRepetitive();
-                        break;
+
+                        if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 0
+                                && cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
+                            SimulationEntity newEntity = new SimulationEntity(
+                                    cableBuildRepetitive.getName() + "_cable", IdGenerator.generateId(),
+                                    cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,
+                                    cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().y,
+                                    cellSize,
+                                    cellSize,
+                                    -1, -1,
+                                    ((ImageObject) cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                            .getImage(),
+                                    cableBuildRepetitive.getComponent(BuildComponent.class).getTileId(),
+                                    cableBuildRepetitive.getComponent(BuildComponent.class).getFailureRatio(),
+                                    cableBuildRepetitive.getComponent(BuildComponent.class).getSimulationType(),
+                                    1, 0,
+                                    new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
+                                    new int[]{cableBuildRepetitive.getComponent(BuildComponent.class).getPortId()},
+                                    true, 0f
+                            );
+
+                            currentBuilding = newEntity;
+                            Game.scene().current().addEntityToScene(newEntity);
+
+                            cableBuildRepetitive.getComponent(BuildComponent.class)
+                                    .subtractFromAmount();
+                            if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 100) {
+                                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
+                                        .getRenderObjectsOfType(TextObject.class)
+                                        .get(0))
+                                        .setText("");
+                            } else {
+                                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
+                                        .getRenderObjectsOfType(TextObject.class)
+                                        .get(0))
+                                        .setText(String.valueOf(cableBuildRepetitive.getComponent(BuildComponent.class)
+                                                .getAmount()
+                                        ));
+                            }
+                            currentBuildState = BuilderState.BUILDING_CABLE;
+
+                            break;
+                        }
                     }
                 }
             }
-            // check mid-click to rotate
+            // check mid click to rotate
 
-            else if(e.getButton() == MouseEvent.BUTTON2) {
-                cycleCable(entity, e);
+            else if (e.getButton() == MouseEvent.BUTTON2) {
+                if (entity.getComponent(ColliderComponent.class) != null
+                        && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                        .contains(Game.scale().upscalePoint(e.getPoint()))) {
+                    if (entity.getComponent(SimulationComponent.class) != null) {
+                        if (entity.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+                            int inId = entity.getComponent(CablePortsComponent.class).getInIds()[0];
+                            if (inId == currentCableLayer) {
+                                entity.getComponent(CablePortsComponent.class).getCablePort(inId, CablePortType.IN).cyclePosition();
+                                entity.getComponent(CablePortsComponent.class).updateImage();
+                                updateConnection(entity, CablePortType.IN);
+                            }
+
+                        }
+                    }
+                }
             }
 
             // check the button clicked is right click
             else if (e.getButton() == MouseEvent.BUTTON3) {
-                removeComponent(e);
+                // handle if is building simulation component
+                if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE) {
+                    // remove the component
+                    if (putBackToStack(currentBuilding)) {
+                        currentBuildState = BuilderState.NOT_BUILDING;
+
+                        cableBuildRepetitive = null;
+                        currentBuilding = null;
+                    }
+                }
+                // handle if building cable -> remove cable
+                else if (currentBuildState == BuilderState.NOT_BUILDING) {
+                    // remove component at positon
+                    Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
+                    if (gridLocation == null) {
+                        return;
+                    } else {
+                        ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
+                        entitiesAtSameCell = getEntitiesAtGridPosition(gridLocation);
+
+                        for (Entity remove : entitiesAtSameCell) {
+                            if (remove.isRemovable() && remove.getComponent(SimulationComponent.class) != null) {
+                                if (putBackToStack(remove)) {
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                }
                 // check if no button is clicked
             } else if (e.getButton() == MouseEvent.NOBUTTON) {
                 if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE) {
@@ -438,50 +483,6 @@ public class BuildHandler extends Handler {
         }
     }
 
-    /**
-     * Remove the Component currently building or from grid
-     *
-     * @param e: Mouse Event
-     */
-    private void removeComponent(MouseEvent e) {
-        // handle if it is building simulation component
-        if (currentBuildState == BuilderState.BUILDING_SIMULATION || currentBuildState == BuilderState.BUILDING_CABLE) {
-            // remove the component
-            if (putBackToStack(currentBuilding)) {
-                currentBuildState = BuilderState.NOT_BUILDING;
-
-                cableBuildRepetitive = null;
-                currentBuilding = null;
-            }
-        }
-        // handle if building cable -> remove cable
-        else if (currentBuildState == BuilderState.NOT_BUILDING) {
-            // remove component at position
-            Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
-            if (gridLocation == null) {
-                return;
-            } else {
-                ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
-                entitiesAtSameCell = getEntitiesAtGridPosition(gridLocation);
-
-                for (Entity remove : entitiesAtSameCell) {
-                    if (remove.isRemovable() && remove.getComponent(SimulationComponent.class) != null) {
-                        if (putBackToStack(remove)) {
-                            return;
-                        }
-                    }
-                }
-            }
-
-        }
-    }
-
-    /**
-     * Update connections of cable & Entity
-     *
-     * @param e:    Entity
-     * @param type: Type of cable port (IN/OUT)
-     */
     private void updateConnection(Entity e, CablePortType type) {
         int id;
         if (type == CablePortType.IN) {
@@ -644,7 +645,7 @@ public class BuildHandler extends Handler {
     }
 
     private boolean putBackToStack(Entity e) {
-        if (e instanceof SimulationEntity) {
+        if (e instanceof SimulationEntity se) {
             if (e.getComponent(SimulationComponent.class) != null) {
                 if (e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
                     if (e.getComponent(CablePortsComponent.class).getCablePort(e.getComponent(CablePortsComponent.class).getOutIds()[0], CablePortType.OUT).getConnectedEntity() != null) {
@@ -683,11 +684,11 @@ public class BuildHandler extends Handler {
                                                 .getComponent(CablePortsComponent.class)
                                                 .getCablePort(
                                                         c.getConnectedEntity()
-                                                        .getComponent(CablePortsComponent.class)
-                                                        .getPortIdOfConnectedEntity(e),
+                                                                .getComponent(CablePortsComponent.class)
+                                                                .getPortIdOfConnectedEntity(e),
                                                         c.getConnectedEntity()
-                                                        .getComponent(CablePortsComponent.class)
-                                                        .getPortTypeOfConnectedEntity(e)
+                                                                .getComponent(CablePortsComponent.class)
+                                                                .getPortTypeOfConnectedEntity(e)
                                                 )
                                                 .setConnectedEntity(null);
                                     }
@@ -740,7 +741,7 @@ public class BuildHandler extends Handler {
                                 (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
                                 (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                         ));
-                        // Set Graphics and Collision box
+                        // Set Grapics and Collision box
                         e.getComponent(RenderComponent.class).reposition(
                                 new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                         );
@@ -808,7 +809,7 @@ public class BuildHandler extends Handler {
                             (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
                             (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                     ));
-                    // Set Graphics and Collision box
+                    // Set Grapics and Collision box
                     e.getComponent(RenderComponent.class).reposition(
                             new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                     );
@@ -912,7 +913,7 @@ public class BuildHandler extends Handler {
                         (int) replace.getComponent(GridComponent.class).getGridLocation().getX(),
                         (int) replace.getComponent(GridComponent.class).getGridLocation().getY()
                 ));
-                // Set Graphics and Collision box
+                // Set Grapics and Collision box
                 e.getComponent(RenderComponent.class).reposition(
                         new Point(replace.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation())
                 );
@@ -967,7 +968,7 @@ public class BuildHandler extends Handler {
                 return true;
             }
         }
-        System.out.println("Returning cos end of method");
+        System.out.println("Returing cos end of method");
         return false;
     }
 
