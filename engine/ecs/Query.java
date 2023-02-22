@@ -27,6 +27,13 @@ public class Query {
         return entities;
     }
 
+    /**
+     * Query a list for entities with a component class attached to them.
+     * @param componentClass: The component to query for
+     * @param <T>
+     * @param filter: prefiltered list
+     * @return: A list of all entities with the specified component
+     */
     public static <T extends Component> ArrayList<Entity> getEntitiesWithComponent(Class<T> componentClass, ArrayList<Entity> filter) {
         ArrayList<Entity> entities = new ArrayList<>();
         if (Game.scene().current() == null) {
