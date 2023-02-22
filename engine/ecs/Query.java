@@ -56,4 +56,28 @@ public class Query {
         }
         return entities;
     }
+
+    /**
+     * Query all available entities in the current scene for entities with a list of components
+     *
+     * @param componentClasses: classes of the components attached to the entities to query for
+     * @return List with entities that were queried by the system
+     * @param <T>
+     */
+    public static <T extends Entity> ArrayList<Entity> getEntitiesWithComponents(Class<T>[] componentClasses) {
+        ArrayList<Entity> entities = new ArrayList<>();
+        for(Entity e : Game.scene().current().getEntities()) {
+            boolean hasAllComponents = true;
+            for(Class<T> c : componentClasses) {
+                if(e.getClass() != c) {
+                    hasAllComponents = false;
+                    break;
+                }
+            }
+            if(hasAllComponents) {
+                entities.add(e);
+            }
+        }
+        return entities;
+    }
 }
