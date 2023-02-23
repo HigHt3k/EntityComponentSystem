@@ -9,10 +9,19 @@ public class CollisionObject {
     private boolean isClicked = false;
     private boolean isHovered = false;
     private final HoverObject connectedHoverObject;
+    private boolean deactivated = false;
 
     public CollisionObject(Shape collisionBoundaries, HoverObject connectedHoverObject) {
         this.collisionBoundaries = collisionBoundaries;
         this.connectedHoverObject = connectedHoverObject;
+    }
+
+    public boolean isDeactivated() {
+        return deactivated;
+    }
+
+    public void setDeactivated(boolean deactivated) {
+        this.deactivated = deactivated;
     }
 
     public Shape getCollisionBoundaries() {

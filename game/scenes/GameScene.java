@@ -32,6 +32,7 @@ import game.entities.simulation.SimulationEntity;
 import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
+import game.scenes.helpers.BuildPanelPage;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -49,6 +50,8 @@ public class GameScene extends Scene {
     private int Y_MARGIN = 300;
     private final Color TEXT_COLOR = Bit8.DARK_GREY;
     private boolean unlocked = false;
+    private int nextNewPage = -1;
+    private int currentPageShown = 0;
 
     // Category colors
     private final Color NSE = Bit8.CORNFLOWER_BLUE;
@@ -93,6 +96,8 @@ public class GameScene extends Scene {
     private int accGoal;
     private int sensGoal;
     private int cGoal;
+
+    private ArrayList<BuildPanelPage> pages = new ArrayList<>();
 
     public boolean isUnlocked() {
         return unlocked;
@@ -329,6 +334,13 @@ public class GameScene extends Scene {
      */
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded,
                                 int outOfControlSignalsAccepted, float failureDetectionRatio) {
+        // create new page
+        if (numberOfBuildPanelElements % 6 == 0) {
+            numberOfBuildPanelElements = 0;
+            nextNewPage++;
+            pages.add(new BuildPanelPage(nextNewPage));
+        }
+
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 160 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 839, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
                 Game.res().loadTile(imgId), imgId,
@@ -339,6 +351,8 @@ public class GameScene extends Scene {
         );
         buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId - 500);
         addEntityToScene(buildPanelEntity);
+        pages.get(nextNewPage).addToPage(buildPanelEntity);
+        updateBuildPanel();
         numberOfBuildPanelElements++;
     }
 
@@ -373,14 +387,53 @@ public class GameScene extends Scene {
     public void updateGridSize() {
         if(xMax > yMax && (xMax > 7 || yMax > 5)) {
             CELL_SIZE = DESIGN_CELL_SIZE * 7 / xMax;
-        } else if(xMax > 7 || yMax > 5) {
+        } else if (xMax > 7 || yMax > 5) {
             CELL_SIZE = DESIGN_CELL_SIZE * 5 / yMax;
         } else {
             CELL_SIZE = DESIGN_CELL_SIZE;
         }
 
-        X_MARGIN = (1500 - xMax*CELL_SIZE)/2;
-        Y_MARGIN = (850 - yMax*CELL_SIZE)/2;
+        X_MARGIN = (1500 - xMax * CELL_SIZE) / 2;
+        Y_MARGIN = (850 - yMax * CELL_SIZE) / 2;
+    }
+
+    public void nextBuildPanelPage() {
+        int maxPages = pages.size() - 1;
+        currentPageShown += 1;
+        if (currentPageShown > maxPages) {
+            currentPageShown = 0;
+        }
+        updateBuildPanel();
+    }
+
+    public void prevBuildPanelPage() {
+        currentPageShown -= 1;
+        if (currentPageShown < 0) {
+            currentPageShown = pages.size() - 1;
+        }
+        updateBuildPanel();
+    }
+
+    public void updateBuildPanel() {
+        for (BuildPanelPage page : pages) {
+            for (Entity e : page.getEntitiesInPage()) {
+                for (RenderObject ro : e.getComponent(RenderComponent.class).getRenderObjects()) {
+                    if (page.getPageId() == currentPageShown) {
+                        ro.setHidden(false);
+                    } else {
+                        ro.setHidden(true);
+                    }
+                }
+
+                for (CollisionObject co : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
+                    if (page.getPageId() == currentPageShown) {
+                        co.setDeactivated(false);
+                    } else {
+                        co.setDeactivated(true);
+                    }
+                }
+            }
+        }
     }
 
     /**

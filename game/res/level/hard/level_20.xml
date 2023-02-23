@@ -12,6 +12,10 @@
     <build>
         <entity id="201" amount="1" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
         <entity id="203" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="205" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="206" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="207" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="202" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </build>
     <layer id="0" name="Tile Layer 1">
         <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>

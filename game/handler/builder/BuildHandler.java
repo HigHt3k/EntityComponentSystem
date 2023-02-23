@@ -198,7 +198,8 @@ public class BuildHandler extends Handler {
                     if (entity.getComponent(ColliderComponent.class) != null
                             && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries() != null
                             && entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
-                            .contains(Game.scale().upscalePoint(e.getPoint()))) {
+                            .contains(Game.scale().upscalePoint(e.getPoint()))
+                            && !entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).isDeactivated()) {
                         // check if the click was on a BuildComponent first -> create new Simulation Entity
                         if (entity.getComponent(BuildComponent.class) != null) {
                             // check amount left, >0? -> new Entity
