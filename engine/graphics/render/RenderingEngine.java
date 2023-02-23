@@ -48,7 +48,16 @@ public class RenderingEngine {
                                   TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment) {
         // TODO: Handle text rendering with vertical / horizontal alignment options
         if (horizontalAlignment == TextHorizontalAlignment.CENTER && verticalAlignment == TextVerticalAlignment.CENTER) {
-            TextRenderer.render(g, text, color, font, new Point(x, y));
+            int left = 0;
+            int top = 0;
+
+            g.setFont(font);
+            int w = g.getFontMetrics().stringWidth(text);
+            int h = g.getFontMetrics().getHeight();
+
+            left = (width - w) / 2;
+
+            TextRenderer.render(g, text, color, font, new Point(x + left, y + top));
         } else {
             renderText(g, text, color, font, x, y, width, height);
         }
