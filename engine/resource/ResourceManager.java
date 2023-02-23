@@ -295,6 +295,59 @@ public class ResourceManager {
 
     public void saveLevel(Scene scene) {
         if(scene instanceof BuildScene bs) {
+            JTextField fail = new JTextField(8);
+            JTextField actuatorsCorrect = new JTextField(5);
+            JTextField computersCorrect = new JTextField(5);
+            JTextField sensorsCorrect = new JTextField(5);
+            JTextField actuatorsOOC = new JTextField(5);
+            JTextField computersOOC = new JTextField(5);
+            JTextField sensorsOOC = new JTextField(5);
+
+            JPanel myPanel = new JPanel();
+            myPanel.setLayout(new GridLayout(7, 3));
+            myPanel.add(new JLabel("Failure Probability: "));
+            myPanel.add(fail);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Correct Sensors Minimum: "));
+            myPanel.add(sensorsCorrect);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("OOC Sensors Maximum: "));
+            myPanel.add(sensorsOOC);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Correct Computers Minimum: "));
+            myPanel.add(computersCorrect);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("OOC Computers Maximum: "));
+            myPanel.add(computersOOC);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("Correct Actuators Minimum: "));
+            myPanel.add(actuatorsCorrect);
+            myPanel.add(Box.createHorizontalStrut(15)); // a spacer
+            myPanel.add(new JLabel("OOC Actuators Maximum: "));
+            myPanel.add(actuatorsOOC);
+
+            int correctActuatorCount;
+            int correctComputerCount;
+            int correctSensorCount;
+            float failureProbability;
+
+            int res = JOptionPane.showConfirmDialog(null, myPanel,
+                    "Set the level goal", JOptionPane.OK_CANCEL_OPTION);
+            if (res == JOptionPane.OK_OPTION) {
+                try {
+                    correctActuatorCount = Integer.parseInt(actuatorsCorrect.getText());
+                    correctComputerCount = Integer.parseInt(computersCorrect.getText());
+                    correctSensorCount = Integer.parseInt(sensorsCorrect.getText());
+                    failureProbability = Float.parseFloat(fail.getText());
+                } catch (NumberFormatException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "invalid number formats");
+                    return;
+                }
+            } else {
+                return;
+            }
+
             String path = JOptionPane.showInputDialog("Enter a level name");
             if (path == null) {
                 return;
@@ -314,13 +367,13 @@ public class ResourceManager {
                 root.appendChild(description);
 
                 Element goal = doc.createElement("goal");
-                goal.setTextContent(String.valueOf(bs.getGoal()));
+                goal.setTextContent(String.valueOf(failureProbability));
                 root.appendChild(goal);
 
                 Element goalDefinition = doc.createElement("goalDefinition");
-                goalDefinition.setAttribute("workingActuators", String.valueOf(bs.getAccGoal())); // change value
-                goalDefinition.setAttribute("workingSensors", String.valueOf(bs.getSensGoal())); // change value
-                goalDefinition.setAttribute("workingComputers", String.valueOf(bs.getcGoal())); // change value
+                goalDefinition.setAttribute("workingActuators", String.valueOf(correctActuatorCount)); // change value
+                goalDefinition.setAttribute("workingSensors", String.valueOf(correctSensorCount)); // change value
+                goalDefinition.setAttribute("workingComputers", String.valueOf(correctComputerCount)); // change value
                 root.appendChild(goalDefinition);
 
                 Element tileset = doc.createElement("tileset");
@@ -329,8 +382,8 @@ public class ResourceManager {
 
                 Element build = doc.createElement("build");
                 // get all buildable
-                for(Entity e : bs.getEntities()) {
-                    if(e.getComponent(BuildComponent.class) != null) {
+                for (Entity e : bs.getEntities()) {
+                    if (e.getComponent(BuildComponent.class) != null) {
                         Element entity = doc.createElement("entity");
                         entity.setAttribute("id", String.valueOf(e.getComponent(BuildComponent.class).getTileId()));
                         entity.setAttribute("amount", String.valueOf(e.getComponent(BuildComponent.class).getAmount()));
