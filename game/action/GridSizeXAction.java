@@ -22,6 +22,11 @@ public class GridSizeXAction extends Action {
             if (Game.scene().current() instanceof BuildScene bs) {
                 bs.updateGridSize(0);
             }
+        } else if (i.x == 0 && amount > 0) {
+            i.x += amount;
+            if (Game.scene().current() instanceof BuildScene bs) {
+                bs.updateGridSize(0);
+            }
         }
     }
 }

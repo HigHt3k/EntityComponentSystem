@@ -111,7 +111,7 @@ public class GenericButton extends Entity {
         RenderComponent renderComponent = new RenderComponent();
         this.button = new ShapeObject(new Point(x, y), bounds, Layer.UI, BOX_COLOR, BOX_BORDER_COLOR, 1);
         this.text = new TextObject(new Point(x, y), bounds, Layer.UI, text, font, TEXT_COLOR);
-        this.hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
+        this.hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR, Layer.UI_HOVER);
         renderComponent.addRenderObject(this.button);
         renderComponent.addRenderObject(this.text);
         renderComponent.addRenderObject(this.hover);

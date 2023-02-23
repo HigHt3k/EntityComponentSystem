@@ -25,9 +25,13 @@
     <string id="53">Correct Inputs:</string>
     <string id="54">Failure Ratio:</string>
     <string id="55">Accepted OOC:</string>
+    <string id="56">X Size of the grid:</string>
+    <string id="57">Y Size of the grid:</string>
     <string id="1000">Example Duplex system with two sensors, two cpus and one actuator.</string>
     <string id="10000">Tutorial 1: Connecting Cables</string>
-    <string id="10001">Welcome to the game. In this tutorial series you are going to learn all the basics you need to start implementing your own systems.</string>
+    <string id="10001">Welcome to the game. In this tutorial series you are going to learn all the basics you need to
+        start implementing your own systems.
+    </string>
     <string id="10002">You are presented a game field where components need to be connected by using cables.</string>
     <string id="10003">Click a cable from the bottom panel and drag it between the components.</string>
     <string id="10004">If correctly connected, the component will now light up green.</string>

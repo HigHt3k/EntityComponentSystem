@@ -14,14 +14,15 @@ import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
+import engine.resource.colorpalettes.Bit8;
+import engine.resource.colorpalettes.ColorPalette;
+import engine.resource.fonts.FontCollection;
 import game.action.SaveAction;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
-import game.entities.ui.NumberChooser;
-import game.entities.ui.NumberChooserX;
-import game.entities.ui.NumberChooserY;
+import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
 
 import javax.imageio.ImageIO;
@@ -237,17 +238,29 @@ public class BuildScene extends Scene {
             return;
         }
 
-        NumberChooser nc = new NumberChooser("number", IdGenerator.generateId(),
-                "-", BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
-                850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
-                40, 40, -1, buildPanelEntity
-        );
+        NumberChooser nc = null;
+        try {
+            nc = new NumberChooser("number", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/gui/minus.png")),
+                    BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
+                    850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
+                    25, 25, -1, buildPanelEntity
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addEntityToScene(nc);
-        NumberChooser nc2 = new NumberChooser("number", IdGenerator.generateId(),
-                "+", BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE - 40,
-                850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
-                40, 40, 1, buildPanelEntity
-        );
+        NumberChooser nc2 = null;
+        try {
+            nc2 = new NumberChooser("number", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/gui/plus.png")),
+                    BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE - 25,
+                    850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
+                    25, 25, 1, buildPanelEntity
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addEntityToScene(nc2);
 
         numberOfBuildPanelElements++;
@@ -257,35 +270,36 @@ public class BuildScene extends Scene {
      * setup method for buttons in the GameScene
      */
     private void setupButtons() {
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
         GenericButton exitButton = new GenericButton(
                 "Exit",
                 IdGenerator.generateId(),
-                1600, 900,
+                1600, 850 + ITEM_HEIGHT + ITEM_MARGIN * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3",
-                font, new ExitAction()
+                FontCollection.bit8FontHuge, new ExitAction(),
+                Bit8.CHROME, null, null
         );
         this.addEntityToScene(exitButton);
 
         GenericButton mainMenuButton = new GenericButton(
                 "Menu_button",
                 IdGenerator.generateId(),
-                1600, 800,
+                1600, 850 + ITEM_MARGIN,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
-                font, new StartAction(-255)
+                FontCollection.bit8FontHuge, new StartAction(Game.scene().getScene(-255)),
+                Bit8.CHROME, null, null
         );
-
         this.addEntityToScene(mainMenuButton);
 
         // Save button
         GenericButton saveButton = new GenericButton(
                 "Save_button", IdGenerator.generateId(),
-                1600, 700,
+                1600, 850 - ITEM_HEIGHT,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@5",
-                font, new SaveAction()
+                FontCollection.bit8FontHuge, new SaveAction(),
+                Bit8.CHROME, null, null
         );
         this.addEntityToScene(saveButton);
     }
@@ -307,40 +321,70 @@ public class BuildScene extends Scene {
      * setup method for the description panel (right side)
      */
     private void setupDescriptionPanel() {
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
-        GenericButton exitButton = new GenericButton(
-                "Exit",
-                IdGenerator.generateId(),
-                1600, 900,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "EXIT",
-                font, new ExitAction()
-        );
+        Entity desc = new SimplePanel("desc", IdGenerator.generateId(),
+                1500, 0, 402, 350, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
+        addEntityToScene(desc);
 
+        Entity goal = new SimplePanel("goal", IdGenerator.generateId(),
+                1500, 350, 402, 200, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
+        addEntityToScene(goal);
+
+        Entity tips = new SimplePanel("tips", IdGenerator.generateId(),
+                1500, 550, 402, 300, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
+        addEntityToScene(tips);
+
+        Entity xSize = new TextBody("xSize", IdGenerator.generateId(),
+                1500, 50, 202, 50, FontCollection.bit8FontMedium, Bit8.CHROME, "@56");
+        addEntityToScene(xSize);
+
+        NumberChooserX minusGridSizeX = null;
         try {
-            ImageEntity descriptionPanel = new ImageEntity("Description Panel", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/box_new.png")), 1500, 0, 420, 850, Layer.UI);
-            addEntityToScene(descriptionPanel);
+            minusGridSizeX = new NumberChooserX(
+                    "minus", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/gui/minus.png")),
+                    1702, 50, 50, 50, -1, gridSize
+            );
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        NumberChooserX minusGridSizeX = new NumberChooserX(
-                "minus", IdGenerator.generateId(), "-", 1580, 300, 20, 20, -1, gridSize
-        );
         addEntityToScene(minusGridSizeX);
-        NumberChooserX plusGridSizeX = new NumberChooserX(
-                "plus", IdGenerator.generateId(), "+", 1620, 300, 20, 20, +1, gridSize
-        );
+        NumberChooserX plusGridSizeX = null;
+        try {
+            plusGridSizeX = new NumberChooserX(
+                    "plus", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/gui/plus.png")),
+                    1752, 50, 50, 50, +1, gridSize
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addEntityToScene(plusGridSizeX);
 
-        NumberChooserY minusGridSizeY = new NumberChooserY(
-                "minus", IdGenerator.generateId(), "-", 1580, 400, 20, 20, -1, gridSize
-        );
+        Entity ySize = new TextBody("ySize", IdGenerator.generateId(),
+                1500, 150, 202, 50, FontCollection.bit8FontMedium, Bit8.CHROME, "@57");
+        addEntityToScene(ySize);
+
+        NumberChooserY minusGridSizeY = null;
+        try {
+            minusGridSizeY = new NumberChooserY(
+                    "minus", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/gui/minus.png")),
+                    1702, 150, 50, 50, -1, gridSize
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addEntityToScene(minusGridSizeY);
-        NumberChooserY plusGridSizeY = new NumberChooserY(
-                "plus", IdGenerator.generateId(), "+", 1620, 400, 20, 20, +1, gridSize
-        );
+        NumberChooserY plusGridSizeY = null;
+        try {
+            plusGridSizeY = new NumberChooserY(
+                    "plus", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/menus/gui/plus.png")),
+                    1752, 150, 50, 50, +1, gridSize
+            );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addEntityToScene(plusGridSizeY);
 
 
