@@ -61,7 +61,7 @@ public class LanguageManager {
                 Element string = (Element) strings.item(i);
 
                 int id = Integer.parseInt(string.getAttribute("id"));
-                String content = String.valueOf(string.getTextContent());
+                String content = removeLineBreaks(String.valueOf(string.getTextContent()));
 
                 l.getLanguage().put(id, content);
             }
@@ -81,12 +81,22 @@ public class LanguageManager {
             if(l.getLanguageType() != languageType) {
                 continue;
             }
-            if(l.getLanguage().get(id) == null) {
+            if (l.getLanguage().get(id) == null) {
                 return "@value_not_found: " + id;
             }
             return l.getLanguage().get(id);
         }
 
         return "@value_not_found: " + id;
+    }
+
+    /**
+     * removes line breaks after parsing a xml file
+     *
+     * @param in: string to remove the linebreaks from
+     * @return: converted string without any linebreak
+     */
+    private String removeLineBreaks(String in) {
+        return in.replaceAll("[\\t\\n\\r]+", " ");
     }
 }
