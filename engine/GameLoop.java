@@ -28,13 +28,15 @@ public class GameLoop extends Thread {
      */
     protected void process() {
         if(started) {
-            if (!paused) {
-                Game.logic().update();
-            }
+            // handle inputs
             Game.input().handle();
+            // handle systems
             Game.system().handle();
+            // update the scene
             Game.scene().current().update();
+            // render entities
             Game.frame().getRenderPanel().repaint();
+            // play sounds
             Game.sound().collectAndPlayEntities();
         }
     }

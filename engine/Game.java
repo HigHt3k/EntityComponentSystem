@@ -7,7 +7,6 @@ import engine.graphics.elements.GameFrame;
 import engine.graphics.render.RenderingEngine;
 import engine.input.InputManager;
 import engine.graphics.render.ScalingEngine;
-import engine.logic.GameLogic;
 import engine.resource.ResourceManager;
 import engine.sound.SoundEngine;
 import game.handler.CursorSelectorHandler;
@@ -38,9 +37,6 @@ public class Game {
 
     // Threads
     private static GameLoop gameLoop;
-
-    // Logic
-    private static GameLogic gameLogic;
 
     // variables
     private static boolean paused = false;
@@ -73,10 +69,6 @@ public class Game {
         return gameFrame;
     }
 
-    public static GameLogic logic() {
-        return gameLogic;
-    }
-
     public static InputManager input() {
         return inputManager;
     }
@@ -98,7 +90,6 @@ public class Game {
         inputManager = new InputManager();
         gameFrame = new GameFrame();
         sceneManager = new SceneManager();
-        gameLogic = new GameLogic();
         gameLoop = new GameLoop();
         logger.info(info.getTitle() + " by " + info.getAuthor() + "\nVersion: " + info.getVersion() + "\n" + info.getDescription());
         logger.info("Game initialized successfully.");
