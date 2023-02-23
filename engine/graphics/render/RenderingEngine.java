@@ -47,6 +47,11 @@ public class RenderingEngine {
     public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height,
                                   TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment) {
         // TODO: Handle text rendering with vertical / horizontal alignment options
+        if (horizontalAlignment == TextHorizontalAlignment.CENTER && verticalAlignment == TextVerticalAlignment.CENTER) {
+            TextRenderer.render(g, text, color, font, new Point(x, y));
+        } else {
+            renderText(g, text, color, font, x, y, width, height);
+        }
     }
 
     /**
@@ -222,12 +227,23 @@ public class RenderingEngine {
                     Game.scale().scalePoint(l.getP2()),
                     l.getColor(), l.getThickness());
         } else if (r instanceof TextObject t) {
-            renderText(g, t.getText(), t.getColor(),
-                    Game.scale().scaleFont(t.getFont()),
-                    Game.scale().scaleX(t.getLocation().x),
-                    Game.scale().scaleY(t.getLocation().y),
-                    Game.scale().scaleX(t.getBounds().getBounds().width),
-                    Game.scale().scaleY(t.getBounds().getBounds().height));
+            if (t.getHorizontalAlignment() != null && t.getVerticalAlignment() != null) {
+                renderText(g, t.getText(), t.getColor(),
+                        Game.scale().scaleFont(t.getFont()),
+                        Game.scale().scaleX(t.getLocation().x),
+                        Game.scale().scaleY(t.getLocation().y),
+                        Game.scale().scaleX(t.getBounds().getBounds().width),
+                        Game.scale().scaleY(t.getBounds().getBounds().height),
+                        t.getHorizontalAlignment(),
+                        t.getVerticalAlignment());
+            } else {
+                renderText(g, t.getText(), t.getColor(),
+                        Game.scale().scaleFont(t.getFont()),
+                        Game.scale().scaleX(t.getLocation().x),
+                        Game.scale().scaleY(t.getLocation().y),
+                        Game.scale().scaleX(t.getBounds().getBounds().width),
+                        Game.scale().scaleY(t.getBounds().getBounds().height));
+            }
         } else if (r instanceof HoverObject h) {
             renderShape(g, Game.scale().scaleShape(h.getBounds()), h.getHoverColor(), h.getHoverColor(), 1);
         }
