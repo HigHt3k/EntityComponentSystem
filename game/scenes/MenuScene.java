@@ -12,6 +12,7 @@ import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
+import game.action.ChangeNameAction;
 import game.action.MuteAction;
 import game.entities.ui.SoundEntity;
 import game.entities.ui.TextBody;
@@ -58,6 +59,18 @@ public class MenuScene extends Scene {
         );
         addEntityToScene(playerName);
         //TODO: add button to change name
+        GenericButton edit = null;
+        try {
+            edit = new GenericButton(
+                    "edit", IdGenerator.generateId(),
+                    20, 40, 35, 35,
+                    new ChangeNameAction(playerName),
+                    ImageIO.read(new File("game/res/menus/gui/pen.png"))
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(edit);
 
         GenericButton playButton = new GenericButton(
                 "Play", IdGenerator.generateId(),
