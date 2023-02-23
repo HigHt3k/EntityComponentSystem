@@ -17,10 +17,19 @@ import java.awt.event.MouseEvent;
 public class CursorSelectorHandler extends Handler {
     private CursorEntity cursor;
 
+    /**
+     * Creates a new CursorSelectorHandler of the HandlerType "EVENT", that listens to inputs of keyboard and
+     * controllers and converts them to their according mouse inputs.
+     * A MouseEvent is distributed and added to the EventQueue in the InputManager, which is then processed by other
+     * Handlers.
+     */
     public CursorSelectorHandler() {
         super(HandlerType.EVENT);
     }
 
+    /**
+     * Initialize the CursorSelectorHandler and add a cursor
+     */
     public void init() {
         cursor = new CursorEntity("cursor", IdGenerator.generateId());
         for (Scene s : Game.scene().getScenes()) {
@@ -29,10 +38,22 @@ public class CursorSelectorHandler extends Handler {
         }
     }
 
+
+    /**
+     * Get the cursor entity
+     *
+     * @return the cursor
+     */
     public CursorEntity getCursor() {
         return cursor;
     }
 
+    /**
+     * Handle incoming key events. Update cursor position and emulate MouseEvents that are queued
+     * to the {@link engine.input.InputManager}'s mouse event queue.
+     *
+     * @param e: the {@link KeyEvent}
+     */
     @Override
     public void handle(KeyEvent e) {
         int x = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().x;
@@ -91,10 +112,21 @@ public class CursorSelectorHandler extends Handler {
 
     }
 
+    /**
+     * queue a new {@link MouseEvent} to the {@link engine.input.InputManager}
+     *
+     * @param mouseEvent
+     */
     private void sendNewMouseEvent(MouseEvent mouseEvent) {
         Game.input().queueEvent(mouseEvent);
     }
 
+    /**
+     * Move the cursor on the screen based on coordinates x and y
+     *
+     * @param x: x position to move cursor to
+     * @param y: y position to move cursor to
+     */
     private void moveCursor(int x, int y) {
         cursor.getComponent(RenderComponent.class).reposition(new Point(x, y));
         cursor.getComponent(CursorComponent.class).reposition(new Point(x, y));
