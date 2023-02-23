@@ -21,8 +21,8 @@
     <string id="26">A Computer from CPUCompany.</string>
     <string id="27">Actuator produced by ACTive.</string>
     <string id="30">VALIDATE</string>
-    <string id="49">LEVEL INFORMATION</string>
-    <string id="50">GOAL INFORMATION</string>
+    <string id="49">INFORMATION</string>
+    <string id="50">GOAL</string>
     <string id="51">Safety Requirement:</string>
     <string id="52">Minimum Actuators:</string>
     <string id="53">Correct Inputs:</string>
