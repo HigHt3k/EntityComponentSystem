@@ -71,6 +71,7 @@ public class RenderPanel extends JPanel {
             @Override
             public void keyReleased(KeyEvent e) {
                 super.keyReleased(e);
+                Game.input().queueEvent(e);
             }
         });
     }

@@ -13,9 +13,14 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.security.Key;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 public class CursorSelectorHandler extends Handler {
     private CursorEntity cursor;
+    private final Set<Integer> pressedKeys = new HashSet<>();
 
     /**
      * Creates a new CursorSelectorHandler of the HandlerType "EVENT", that listens to inputs of keyboard and
@@ -59,24 +64,38 @@ public class CursorSelectorHandler extends Handler {
         int x = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().x;
         int y = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().y;
 
+        if (e.getKeyCode() == KeyEvent.VK_LEFT || e.getKeyCode() == KeyEvent.VK_RIGHT
+                || e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+                pressedKeys.add(e.getKeyCode());
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+                pressedKeys.remove(e.getKeyCode());
+            }
+
+            // handle movement
+            for (Integer pressedKey : pressedKeys) {
+                switch (pressedKey) {
+                    //TODO: Add controller keycodes here
+                    case KeyEvent.VK_RIGHT -> {
+                        x += 1 * Game.config().getControls().getCursorSpeed();
+                    }
+                    case KeyEvent.VK_LEFT -> {
+                        x -= 1 * Game.config().getControls().getCursorSpeed();
+                    }
+                    case KeyEvent.VK_DOWN -> {
+                        y += 1 * Game.config().getControls().getCursorSpeed();
+                    }
+                    case KeyEvent.VK_UP -> {
+                        y -= 1 * Game.config().getControls().getCursorSpeed();
+                    }
+                }
+            }
+            moveCursor(x, y);
+            return;
+        }
+
+        // handle other keys
         switch (e.getKeyCode()) {
-            //TODO: Add controller keycodes here
-            case KeyEvent.VK_RIGHT -> {
-                x += 1 * Game.config().getControls().getCursorSpeed();
-                moveCursor(x, y);
-            }
-            case KeyEvent.VK_LEFT -> {
-                x -= 1 * Game.config().getControls().getCursorSpeed();
-                moveCursor(x, y);
-            }
-            case KeyEvent.VK_DOWN -> {
-                y += 1 * Game.config().getControls().getCursorSpeed();
-                moveCursor(x, y);
-            }
-            case KeyEvent.VK_UP -> {
-                y -= 1 * Game.config().getControls().getCursorSpeed();
-                moveCursor(x, y);
-            }
             case KeyEvent.VK_ENTER -> sendNewMouseEvent(new MouseEvent(
                     Game.frame().getRenderPanel(),
                     MouseEvent.MOUSE_CLICKED,
