@@ -9,6 +9,8 @@ import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
+import engine.graphics.render.TextHorizontalAlignment;
+import engine.graphics.render.TextVerticalAlignment;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import game.action.SetAmountAction;
@@ -31,13 +33,14 @@ public class NumberChooser extends Entity {
         this.addComponent(renderComponent);
 
         ShapeObject shapeObject = new ShapeObject(new Point(x, y),
-                new Rectangle(x, y, width, height), Layer.UI, Bit8.ORANGE, Bit8.SCARLET, 1);
+                new Rectangle(x, y, width, height), Layer.UI, Bit8.TRANSPARENT, Bit8.TRANSPARENT, 1);
         renderComponent.addRenderObject(shapeObject);
 
         renderComponent.addRenderObject(new TextObject(new Point(x, y),
-                new Rectangle(x, y, width, height), Layer.UI, text, FontCollection.bit8Font, Bit8.DARK_GREY));
+                new Rectangle(x, y, width, height), Layer.UI, text, FontCollection.bit8Font, Bit8.DARK_GREY,
+                TextHorizontalAlignment.CENTER, TextVerticalAlignment.CENTER));
 
-        HoverObject hover = new HoverObject(new Point(x, y), new Rectangle(x, y, width, height), HOVER_COLOR);
+        HoverObject hover = new HoverObject(new Point(x, y), new Rectangle(x, y, width, height), HOVER_COLOR, Layer.UI_HOVER);
         renderComponent.addRenderObject(hover);
 
         ColliderComponent colliderComponent = new ColliderComponent();
