@@ -19,6 +19,8 @@ import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.colorpalettes.ColorPalette;
 import engine.resource.fonts.FontCollection;
+import game.action.BuildPanelChange;
+import game.action.BuildPanelChangeAction;
 import game.action.SaveScoreAction;
 import game.action.ValidateAction;
 import game.components.BuildComponent;
@@ -39,7 +41,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameScene extends Scene {
-    private final int ITEM_MARGIN = 20;
+    private final int ITEM_MARGIN = 80;
+    private final int BUTTON_ITEM_MARGIN = 20;
     private final int ITEM_WIDTH = 230;
     private final int ITEM_HEIGHT = 60;
     private int X_MARGIN = 200;
@@ -327,7 +330,7 @@ public class GameScene extends Scene {
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded,
                                 int outOfControlSignalsAccepted, float failureDetectionRatio) {
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
-                150 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 875, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
+                160 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 839, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
                 Game.res().loadTile(imgId), imgId,
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
@@ -347,22 +350,22 @@ public class GameScene extends Scene {
         GenericButton exitButton = new GenericButton(
                 "Exit",
                 IdGenerator.generateId(),
-                1600, 850 + ITEM_HEIGHT + ITEM_MARGIN * 2,
+                1600, 850 + ITEM_HEIGHT + BUTTON_ITEM_MARGIN * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3",
                 FontCollection.bit8FontHuge, new ExitAction(),
-                Bit8.CHROME,null, null
+                Bit8.CHROME, null, null
         );
         this.addEntityToScene(exitButton);
 
         GenericButton mainMenuButton = new GenericButton(
                 "Menu_button",
                 IdGenerator.generateId(),
-                1600, 850 + ITEM_MARGIN,
+                1600, 850 + BUTTON_ITEM_MARGIN,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
                 FontCollection.bit8FontHuge, new StartAction(Game.scene().getScene(-255)),
-                Bit8.CHROME,null, null
+                Bit8.CHROME, null, null
         );
         this.addEntityToScene(mainMenuButton);
     }
@@ -386,8 +389,22 @@ public class GameScene extends Scene {
     private void setupBuildPanel() {
         try {
             ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/blueprint_scaled.png")), 0, 850, 1500, 1080 - 850, Layer.UI);
+                    ImageIO.read(new File("game/res/menus/blueprint8bit.png")), 0, 800, 1500, 1080 - 850, Layer.UI);
             addEntityToScene(buildPanel);
+
+            GenericButton leftButton = new GenericButton("left_build_panel", IdGenerator.generateId(),
+                    85, 890, 40, 40,
+                    new BuildPanelChangeAction(BuildPanelChange.LEFT),
+                    ImageIO.read(new File("game/res/menus/gui/button_left.png")));
+
+            addEntityToScene(leftButton);
+
+            GenericButton rightButton = new GenericButton("right_build_panel", IdGenerator.generateId(),
+                    1355, 890, 40, 40,
+                    new BuildPanelChangeAction(BuildPanelChange.RIGHT),
+                    ImageIO.read(new File("game/res/menus/gui/button_right.png")));
+            addEntityToScene(rightButton);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

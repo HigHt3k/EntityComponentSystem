@@ -71,7 +71,7 @@ public class GenericButton extends Entity {
         // Graphics Component properties
 
         RenderComponent renderComponent = new RenderComponent();
-        this.hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
+        this.hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR, Layer.UI_HOVER);
         renderComponent.addRenderObject(this.hover);
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.UI, img));
         this.addComponent(renderComponent);

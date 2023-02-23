@@ -16,8 +16,14 @@
  <tile id="201" type="SENSOR">
   <image width="32" height="32" source="game/res/avionics/sensor.png" description="@20" minNonPassive="1"/>
  </tile>
+ <tile id="202" type="SENSOR">
+  <image width="32" height="32" source="game/res/avionics/sensor.png" description="@25" minNonPassive="1"/>
+ </tile>
  <tile id="203" type="CPU">
   <image width="32" height="32" source="game/res/avionics/crdc.png" description="@21" minNonPassive="1"/>
+ </tile>
+ <tile id="204" type="CPU">
+  <image width="32" height="32" source="game/res/avionics/crdc.png" description="@26" minNonPassive="1"/>
  </tile>
  <tile id="205" type="ACTUATOR">
   <image width="32" height="32" source="game/res/avionics/actuator.png" description="@22" minNonPassive="1"/>
@@ -27,6 +33,9 @@
  </tile>
  <tile id="207" type="SENSOR">
   <image width="32" height="32" source="game/res/avionics/sensor_duplex.png" description="@24" minNonPassive="1"/>
+ </tile>
+ <tile id="208" type="ACTUATOR">
+  <image width="32" height="32" source="game/res/avionics/actuator.png" description="@27" minNonPassive="1"/>
  </tile>
  <tile id="1000">
   <image width="32" height="32" source="game/res/tiles/air.png"/>

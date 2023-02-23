@@ -17,6 +17,9 @@
     <string id="24">Dual Sensors act like an internal duplex system. There are 2 normal sensors generating data, which
         are compromised to a single output value. Dual Sensors have a lower probability of failure.
     </string>
+    <string id="25">This is a sensor component from a different production.</string>
+    <string id="26">A Computer from CPUCompany.</string>
+    <string id="27">Actuator produced by ACTive.</string>
     <string id="30">VALIDATE</string>
     <string id="49">LEVEL INFORMATION</string>
     <string id="50">GOAL INFORMATION</string>

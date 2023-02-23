@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<map height="2" id="1362" name="" width="4">
+    <description/>
+    <goal>0.001</goal>
+    <goalDefinition workingActuators="0" workingComputers="0" workingSensors="0"/>
+    <tileset source="base_tiles.xml"/>
+    <build>
+        <entity amount="0" correctSignalsNeeded="0" id="201" outOfControlSignalsAccepted="0" safety="1.0E-4"/>
+        <entity amount="0" correctSignalsNeeded="1" id="203" outOfControlSignalsAccepted="0" safety="1.0E-4"/>
+        <entity amount="0" correctSignalsNeeded="2" id="205" outOfControlSignalsAccepted="0" safety="1.0E-4"/>
+        <entity amount="1000" correctSignalsNeeded="1" id="500" outOfControlSignalsAccepted="0" safety="0.0"/>
+        <entity amount="1000" correctSignalsNeeded="1" id="501" outOfControlSignalsAccepted="0" safety="0.0"/>
+        <entity amount="1000" correctSignalsNeeded="1" id="502" outOfControlSignalsAccepted="0" safety="0.0"/>
+        <entity amount="1000" correctSignalsNeeded="1" id="503" outOfControlSignalsAccepted="0" safety="0.0"/>
+    </build>
+    <layer id="0" name="Tile layer 0"/>
+</map>
