@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -294,12 +295,16 @@ public class ResourceManager {
 
     public void saveLevel(Scene scene) {
         if(scene instanceof BuildScene bs) {
+            String path = JOptionPane.showInputDialog("Enter a level name");
+            if (path == null) {
+                return;
+            }
             try {
                 Document doc = db.newDocument();
 
                 Element root = doc.createElement("map");
                 root.setAttribute("id", String.valueOf(IdGenerator.generateId()));
-                root.setAttribute("name", bs.getName());
+                root.setAttribute("name", path);
                 root.setAttribute("width", String.valueOf(bs.getxMax()));
                 root.setAttribute("height", String.valueOf(bs.getyMax()));
                 doc.appendChild(root);
@@ -363,7 +368,7 @@ public class ResourceManager {
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
                 DOMSource source = new DOMSource(doc);
-                File f = new File("game/res/level/custom/" + Game.scene().current().getName() + ".xml");
+                File f = new File("game/res/level/custom/" + path + ".xml");
                 boolean fileCreated = f.createNewFile();
                 if(!fileCreated) {
                     Game.logger().severe("The file was not created - no level was saved!");
