@@ -384,6 +384,9 @@ public class GameScene extends Scene {
         this.addEntityToScene(mainMenuButton);
     }
 
+    /**
+     * Update the grid size / cell size
+     */
     public void updateGridSize() {
         if(xMax > yMax && (xMax > 7 || yMax > 5)) {
             CELL_SIZE = DESIGN_CELL_SIZE * 7 / xMax;
@@ -397,6 +400,9 @@ public class GameScene extends Scene {
         Y_MARGIN = (850 - yMax * CELL_SIZE) / 2;
     }
 
+    /**
+     * Set the next build panel page
+     */
     public void nextBuildPanelPage() {
         int maxPages = pages.size() - 1;
         currentPageShown += 1;
@@ -406,6 +412,9 @@ public class GameScene extends Scene {
         updateBuildPanel();
     }
 
+    /**
+     * Set the previous build panel page
+     */
     public void prevBuildPanelPage() {
         currentPageShown -= 1;
         if (currentPageShown < 0) {
@@ -414,6 +423,9 @@ public class GameScene extends Scene {
         updateBuildPanel();
     }
 
+    /**
+     * Update the build panel entities (hide graphics and deactivate colliders for pages that are not shown)
+     */
     public void updateBuildPanel() {
         for (BuildPanelPage page : pages) {
             for (Entity e : page.getEntitiesInPage()) {
