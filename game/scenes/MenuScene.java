@@ -48,14 +48,14 @@ public class MenuScene extends Scene {
         // Create the Menu GUI
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/cockpit.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("game/res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
 
         TextBody playerName = new TextBody("profile name", IdGenerator.generateId(),
-                50, 50, 300, 50, FontCollection.bit8FontMedium, Bit8.CHROME, Game.config().getProfile().profile
+                50, 50, 300, 50, FontCollection.bit8FontMedium, Bit8.DARK_GREY, Game.config().getProfile().profile
         );
         addEntityToScene(playerName);
         //TODO: add button to change name
@@ -77,7 +77,7 @@ public class MenuScene extends Scene {
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@0", font, new StartAction(-254),
-                Bit8.CHROME, null, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(playButton);
 
@@ -86,7 +86,7 @@ public class MenuScene extends Scene {
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@1", font, new StartAction(-250),
-                Bit8.CHROME, null, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(buildButton);
 
@@ -95,7 +95,7 @@ public class MenuScene extends Scene {
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3", font, new ExitAction(),
-                Bit8.CHROME,null, null
+                Bit8.DARK_GREY,null, null
         );
         addEntityToScene(exitButton);
 

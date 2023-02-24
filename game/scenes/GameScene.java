@@ -25,6 +25,7 @@ import game.action.SaveScoreAction;
 import game.action.ValidateAction;
 import game.components.BuildComponent;
 import game.components.GridComponent;
+import game.components.SimulationComponent;
 import game.components.TooltipComponent;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
@@ -79,6 +80,7 @@ public class GameScene extends Scene {
     private Entity descText;
     private Entity validate;
     private Entity tipsText;
+    private Entity tipsEntity;
     private Entity failTipText;
     private Entity correctSignalsTipText;
     private Entity acceptedOOCTipText;
@@ -109,6 +111,10 @@ public class GameScene extends Scene {
 
     public Entity getTipsText() {
         return tipsText;
+    }
+
+    public Entity getTipsEntity() {
+        return tipsEntity;
     }
 
     public Entity getAcceptedOOCTipDesc() {
@@ -177,6 +183,14 @@ public class GameScene extends Scene {
         this.difficulty = difficulty;
         setupBuildPanel();
         //TODO: move init()?
+
+        try {
+            ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+            addEntityToScene(background);
+        } catch (IOException e) {
+            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
+        }
     }
 
     /**
@@ -361,26 +375,31 @@ public class GameScene extends Scene {
      */
     private void setupButtons() {
         Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
-        GenericButton exitButton = new GenericButton(
-                "Exit",
-                IdGenerator.generateId(),
-                1600, 850 + ITEM_HEIGHT + BUTTON_ITEM_MARGIN * 2,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "@3",
-                FontCollection.bit8FontHuge, new ExitAction(),
-                Bit8.CHROME, null, null
-        );
+        GenericButton exitButton = null;
+        try {
+            exitButton = new GenericButton(
+                    "Exit",
+                    IdGenerator.generateId(),
+                    20, 40,
+                    64, 64, new ExitAction(),
+                    ImageIO.read(new File("game/res/menus/gui/buttons/exit_button.png")));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.addEntityToScene(exitButton);
 
-        GenericButton mainMenuButton = new GenericButton(
-                "Menu_button",
-                IdGenerator.generateId(),
-                1600, 850 + BUTTON_ITEM_MARGIN,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "@4",
-                FontCollection.bit8FontHuge, new StartAction(Game.scene().getScene(-255)),
-                Bit8.CHROME, null, null
-        );
+        GenericButton mainMenuButton = null;
+        try {
+            mainMenuButton = new GenericButton(
+                    "Menu_button",
+                    IdGenerator.generateId(),
+                    100, 40,
+                    64, 64,new StartAction(Game.scene().getScene(-255)),
+                    ImageIO.read(new File("game/res/menus/gui/buttons/menu_icon.png"))
+            );
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         this.addEntityToScene(mainMenuButton);
     }
 
@@ -506,38 +525,42 @@ public class GameScene extends Scene {
         try {
             tips = new ImageEntity("tips", IdGenerator.generateId(),
                     ImageIO.read(new File("game/res/menus/gui/hud_element_3.png")),
-                    1500, 550, 402, 300, Layer.UI);
+                    1500, 600, 402, 400, Layer.UI);
         } catch (IOException e) {
             e.printStackTrace();
         }
         addEntityToScene(tips);
 
+        tipsEntity = new TextBody("tipsEntityType", IdGenerator.generateId(),
+                1518, 620, 250, 50, fontBig, Bit8.CHROME, "");
+        addEntityToScene(tipsEntity);
+
         tipsText = new TextBody("tipsText", IdGenerator.generateId(),
-                1500, 550, 402, 180, fontMed, Bit8.CHROME, "");
+                1518, 752, 402 - 18, 300, fontMed, Bit8.CHROME, "");
         addEntityToScene(tipsText);
 
         failTipDesc = new TextBody("failTipDesc", IdGenerator.generateId(),
-                1500, 730, 250, 15, fontMed, Bit8.CHROME, "");
+                1540, 858, 250, 15, fontMed, Bit8.CHROME, "");
         addEntityToScene(failTipDesc);
 
         failTipText = new TextBody("failTipText", IdGenerator.generateId(),
-                1750, 730, 152, 15,fontMed, Bit8.CHROME, "");
+                1750, 858, 152, 15,fontMed, Bit8.CHROME, "");
         addEntityToScene(failTipText);
 
         correctSignalsTipDesc = new TextBody("correctSignalsTipDesc", IdGenerator.generateId(),
-                1500, 760, 250, 15, fontMed,Bit8.CHROME, "");
+                1540, 905, 250, 15, fontMed,Bit8.CHROME, "");
         addEntityToScene(correctSignalsTipDesc);
 
         correctSignalsTipText = new TextBody("correctSignalsTipText", IdGenerator.generateId(),
-                1750, 760, 152, 15, fontMed, Bit8.CHROME, "");
+                1750, 905, 152, 15, fontMed, Bit8.CHROME, "");
         addEntityToScene(correctSignalsTipText);
 
         acceptedOOCTipDesc = new TextBody("acceptedOOCTipDesc", IdGenerator.generateId(),
-                1500, 790, 250, 15, fontMed,Bit8.CHROME, "");
+                1540, 952, 250, 15, fontMed,Bit8.CHROME, "");
         addEntityToScene(acceptedOOCTipDesc);
 
         acceptedOOCTipText = new TextBody("acceptedOOCTipText", IdGenerator.generateId(),
-                1750, 790, 152, 15,fontMed, Bit8.CHROME, "");
+                1750, 952, 152, 15,fontMed, Bit8.CHROME, "");
         addEntityToScene(acceptedOOCTipText);
 
         descText = new TextBody("descText", IdGenerator.generateId(),
@@ -590,7 +613,7 @@ public class GameScene extends Scene {
         addEntityToScene(minActuatorsContent);
 
         validate = new GenericButton("validate", IdGenerator.generateId(),
-                1500 + (1920 - 1500) / 2 - 300 / 2, 480, 300, 50, "@30", FontCollection.bit8FontHuge, new ValidateAction(), Bit8.CHROME,null, null);
+                1500 + (1920 - 1500) / 2 - 300 / 2, 535, 300, 50, "@30", FontCollection.bit8FontHuge, new ValidateAction(), Bit8.CHROME,null, null);
         addEntityToScene(validate);
     }
 
@@ -695,6 +718,7 @@ public class GameScene extends Scene {
         ((TextObject) getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@54");
         ((TextObject) getAcceptedOOCTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@55");
         ((TextObject) getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@53");
+        ((TextObject) getTipsEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(String.valueOf(entity.getComponent(TooltipComponent.class).getType()));
     }
 
     /**
@@ -708,6 +732,7 @@ public class GameScene extends Scene {
         ((TextObject) getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
         ((TextObject) getAcceptedOOCTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
         ((TextObject) getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
+        ((TextObject) getTipsEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
     }
 
     /**
