@@ -103,6 +103,7 @@ public class SimulationEntity extends Entity {
         toolTip.setAcceptedOOCSignals(String.valueOf(outOfControlSignalsAccepted));
         toolTip.setCorrectInputSignals(String.valueOf(correctSignalsNeeded));
         toolTip.setEntity(this);
+        toolTip.setType(String.valueOf(type));
         this.addComponent(toolTip);
 
     }

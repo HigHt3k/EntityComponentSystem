@@ -76,6 +76,7 @@ public class BuildPanelEntity extends Entity {
         toolTip.setAcceptedOOCSignals(String.valueOf(outOfControlSignalsAccepted));
         toolTip.setCorrectInputSignals(String.valueOf(correctSignalsNeeded));
         toolTip.setEntity(this);
+        toolTip.setType(String.valueOf(simulationType));
         this.addComponent(toolTip);
     }
 }

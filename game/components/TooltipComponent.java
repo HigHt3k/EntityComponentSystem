@@ -9,9 +9,19 @@ public class TooltipComponent extends Component {
     private String correctInputSignals;
     private String acceptedOOCSignals;
 
+    private String type;
+
     @Override
     public void update() {
 
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getFailureRatio() {
