@@ -2,6 +2,9 @@ package engine.config;
 
 import engine.resource.profile.NameCollection;
 
+/**
+ * Profile configuration, contains information about the username
+ */
 public class ProfileConfig {
 
     public String profile;
