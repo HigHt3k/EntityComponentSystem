@@ -515,7 +515,7 @@ public class GameScene extends Scene {
         try {
             goal = new ImageEntity("goal", IdGenerator.generateId(),
                     ImageIO.read(new File("game/res/menus/gui/hud_element_2.png")),
-                    1500, 325, 402, 200, Layer.UI);
+                    1500, 375, 402, 200, Layer.UI);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -590,26 +590,26 @@ public class GameScene extends Scene {
         addEntityToScene(next);
 
         Entity goalHead = new TextBody("goalHead", IdGenerator.generateId(),
-                1518, 346, 402, 50, fontBig, Bit8.CHROME, "@50");
+                1518, 396, 402, 50, fontBig, Bit8.CHROME, "@50");
         addEntityToScene(goalHead);
 
         Entity safetyReqDesc = new TextBody("safetyReqDesc", IdGenerator.generateId(),
-                1540, 430, 250, 15, fontMed, Bit8.CHROME, "@51");
+                1540, 480, 250, 15, fontMed, Bit8.CHROME, "@51");
         addEntityToScene(safetyReqDesc);
 
         Color safetyReqColor = getSafetyReqColor(getGoal());
 
         Entity safetyReqContent = new TextBody("safetyReqContent", IdGenerator.generateId(),
-                1780, 430, 152, 15, fontMed, safetyReqColor, String.valueOf(getGoal()));
+                1780, 480, 152, 15, fontMed, safetyReqColor, String.valueOf(getGoal()));
         addEntityToScene(safetyReqContent);
 
         Entity minActuatorsDesc = new TextBody("minActuatorsDesc", IdGenerator.generateId(),
-                1540, 477, 250, 15, fontMed, Bit8.CHROME, "@52"
+                1540, 527, 250, 15, fontMed, Bit8.CHROME, "@52"
         );
         addEntityToScene(minActuatorsDesc);
 
         Entity minActuatorsContent = new TextBody("minActuatorsContent", IdGenerator.generateId(),
-                1780, 477, 152, 15, fontMed, Bit8.CHROME, String.valueOf(accGoal));
+                1780, 527, 152, 15, fontMed, Bit8.CHROME, String.valueOf(accGoal));
         addEntityToScene(minActuatorsContent);
 
         validate = new GenericButton("validate", IdGenerator.generateId(),
