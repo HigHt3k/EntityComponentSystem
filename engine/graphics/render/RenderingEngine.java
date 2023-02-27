@@ -174,6 +174,10 @@ public class RenderingEngine {
         LineRenderer.render(g, p1, p2, color, thickness);
     }
 
+    public static void renderAnimation(Graphics2D g, Image animation, int x, int y, int width, int height) {
+        AnimationRenderer.renderAnimation(g, animation, x, y, width, height);
+    }
+
     /**
      * Collects all entities and detects if they have a @{@link RenderComponent} which should be rendered
      */
