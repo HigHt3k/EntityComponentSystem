@@ -49,7 +49,7 @@ public class OptionsScene extends Scene {
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@4",
                 font, new StartAction(-255),
-                Bit8.CHROME,null, null
+                Bit8.DARK_GREY, null, null
         );
 
         this.addEntityToScene(mainMenuButton);
@@ -59,7 +59,7 @@ public class OptionsScene extends Scene {
                 1600, 900,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@3", font, new ExitAction(),
-                Bit8.CHROME,null, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(exitButton);
 
@@ -68,7 +68,7 @@ public class OptionsScene extends Scene {
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@10", font, new ChangeLanguageAction(LanguageType.EN_US),
-                Bit8.CHROME,null, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(toggleLanguageEnglish);
 
@@ -77,7 +77,7 @@ public class OptionsScene extends Scene {
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@11", font, new ChangeLanguageAction(LanguageType.DE_DE),
-                Bit8.CHROME,null, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(toggleLanguageGerman);
 
@@ -86,7 +86,7 @@ public class OptionsScene extends Scene {
                 1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 2,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@12", font, new ChangeLanguageAction(LanguageType.DE_SIMPLE),
-                Bit8.CHROME,null, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(toggleLanguageGermanEasy);
     }
