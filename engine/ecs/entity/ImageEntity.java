@@ -1,6 +1,7 @@
 package engine.ecs.entity;
 
 import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.AnimationObject;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.Layer;
 
@@ -14,6 +15,15 @@ public class ImageEntity extends Entity {
 
         RenderComponent renderComponent = new RenderComponent();
         renderComponent.addRenderObject(new ImageObject(new Point(x, y), new Rectangle(x, y, width, height), layer, img));
+        this.addComponent(renderComponent);
+        addComponent(renderComponent);
+    }
+
+    public ImageEntity(String name, int id, Image img, int x, int y, int width, int height, Layer layer) {
+        super(name, id);
+
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new AnimationObject(new Point(x, y), new Rectangle(x, y, width, height), layer, img));
         this.addComponent(renderComponent);
         addComponent(renderComponent);
     }

@@ -2,7 +2,6 @@ package game.scenes;
 
 import engine.Game;
 import engine.IdGenerator;
-import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.collision.ColliderComponent;
@@ -17,7 +16,6 @@ import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
-import engine.resource.colorpalettes.ColorPalette;
 import engine.resource.fonts.FontCollection;
 import game.action.BuildPanelChange;
 import game.action.BuildPanelChangeAction;
@@ -25,21 +23,21 @@ import game.action.SaveScoreAction;
 import game.action.ValidateAction;
 import game.components.BuildComponent;
 import game.components.GridComponent;
-import game.components.SimulationComponent;
 import game.components.TooltipComponent;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
 import game.entities.simulation.SimulationEntity;
 import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
-import game.handler.simulation.markov.MarkovProcessor;
 import game.scenes.helpers.BuildPanelPage;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class GameScene extends Scene {
@@ -99,7 +97,44 @@ public class GameScene extends Scene {
     private int sensGoal;
     private int cGoal;
 
-    private ArrayList<BuildPanelPage> pages = new ArrayList<>();
+    private final ArrayList<BuildPanelPage> pages = new ArrayList<>();
+
+    /**
+     * create a new GameScene object;
+     * @param name
+     * @param id
+     */
+    public GameScene(String name, int id, Difficulty difficulty) {
+        super(name, id);
+        this.difficulty = difficulty;
+        setupBuildPanel();
+        //TODO: move init()?
+
+        try {
+            ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+            addEntityToScene(background);
+        } catch (IOException e) {
+            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
+        }
+
+        try {
+            Image img = new ImageIcon(new File("game/res/animations/yuri-rodrigues-explosion-visualize.gif").toURL()).getImage();
+            ImageEntity gif = new ImageEntity("gif test", IdGenerator.generateId(),
+                    img, 0, 0, 100, 100, Layer.UI);
+            addEntityToScene(gif);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            ImageEntity aircraftGameScene = new ImageEntity("aircraftGameScene", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/backgrounds/aircraft-game-scene.png")), X_MARGIN, Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.BACKGROUND);
+            addEntityToScene(aircraftGameScene);
+        } catch (IOException e) {
+            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
+        }
+    }
 
     public boolean isUnlocked() {
         return unlocked;
@@ -171,26 +206,6 @@ public class GameScene extends Scene {
      */
     public void setCurrentlyBuilding(Entity entity) {
         currentlyBuilding = entity;
-    }
-
-    /**
-     * create a new GameScene object;
-     * @param name
-     * @param id
-     */
-    public GameScene(String name, int id, Difficulty difficulty) {
-        super(name, id);
-        this.difficulty = difficulty;
-        setupBuildPanel();
-        //TODO: move init()?
-
-        try {
-            ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
-            addEntityToScene(background);
-        } catch (IOException e) {
-            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
-        }
     }
 
     /**

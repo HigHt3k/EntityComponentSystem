@@ -259,6 +259,9 @@ public class RenderingEngine {
             }
         } else if (r instanceof HoverObject h) {
             renderShape(g, Game.scale().scaleShape(h.getBounds()), h.getHoverColor(), h.getHoverColor(), 1);
+        } else if (r instanceof AnimationObject a) {
+            renderAnimation(g, a.getAnimation(), Game.scale().scaleX(a.getLocation().x), Game.scale().scaleY(a.getLocation().y),
+                    Game.scale().scaleX(a.getBounds().getBounds().width), Game.scale().scaleY(a.getBounds().getBounds().height));
         }
     }
 }
