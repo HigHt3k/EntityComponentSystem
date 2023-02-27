@@ -613,7 +613,7 @@ public class GameScene extends Scene {
         addEntityToScene(minActuatorsContent);
 
         validate = new GenericButton("validate", IdGenerator.generateId(),
-                1500 + (1920 - 1500) / 2 - 300 / 2, 535, 300, 50, "@30", FontCollection.bit8FontHuge, new ValidateAction(), Bit8.CHROME,null, null);
+                1200, 10, 300, 50, "@30", FontCollection.bit8FontHuge, new ValidateAction(), Bit8.DARK_GREY, null, null);
         addEntityToScene(validate);
     }
 
