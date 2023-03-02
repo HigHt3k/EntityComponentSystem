@@ -119,17 +119,8 @@ public class GameScene extends Scene {
         }
 
         try {
-            Image img = new ImageIcon(new File("game/res/animations/yuri-rodrigues-explosion-visualize.gif").toURL()).getImage();
-            ImageEntity gif = new ImageEntity("gif test", IdGenerator.generateId(),
-                    img, 0, 0, 100, 100, Layer.UI);
-            addEntityToScene(gif);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
             ImageEntity aircraftGameScene = new ImageEntity("aircraftGameScene", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/backgrounds/aircraft-game-scene.png")), X_MARGIN, Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.BACKGROUND);
+                    ImageIO.read(new File("game/res/backgrounds/aircraft-game-scene.png")), X_MARGIN - 120, Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.BACKGROUND);
             addEntityToScene(aircraftGameScene);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -815,6 +806,35 @@ public class GameScene extends Scene {
         }
 
         createScale(probabilities);
+
+        try {
+            Image img1 = new ImageIcon(new File("game/res/animations/explosion-medium-rotated.gif").toURL()).getImage();
+            ImageEntity ex1 = new ImageEntity("ex1", IdGenerator.generateId(),
+                    img1, 500, 300, 155, 155, Layer.GAMELAYER3,  false, 0);
+            addEntityToScene(ex1);
+
+            Image img2 = new ImageIcon(new File("game/res/animations/explosion-slow.gif").toURL()).getImage();
+            ImageEntity ex2 = new ImageEntity("ex2", IdGenerator.generateId(),
+                    img2, 700, 200, 200, 200, Layer.GAMELAYER3,  false, 0);
+            addEntityToScene(ex2);
+
+            Image img3 = new ImageIcon(new File("game/res/animations/explosion-medium.gif").toURL()).getImage();
+            ImageEntity ex3 = new ImageEntity("ex3", IdGenerator.generateId(),
+                    img3, 100, 250, 340, 340, Layer.GAMELAYER3, false, 0);
+            addEntityToScene(ex3);
+
+            Image img4 = new ImageIcon(new File("game/res/animations/explosion-medium-rotated.gif").toURL()).getImage();
+            ImageEntity ex4 = new ImageEntity("ex4", IdGenerator.generateId(),
+                    img4, 520, 700, 250, 200, Layer.GAMELAYER3, false, 0);
+            addEntityToScene(ex4);
+
+            Image img5 = new ImageIcon(new File("game/res/animations/explosion-slow.gif").toURL()).getImage();
+            ImageEntity ex5 = new ImageEntity("ex5", IdGenerator.generateId(),
+                    img5, 1050, 320, 370, 230, Layer.GAMELAYER3, false, 0);
+            addEntityToScene(ex5);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
