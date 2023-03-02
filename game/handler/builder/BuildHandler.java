@@ -160,6 +160,7 @@ public class BuildHandler extends Handler {
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex3"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex4"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex5"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("sky-animated"));
                     }
                 }
             }

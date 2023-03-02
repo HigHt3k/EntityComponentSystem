@@ -112,7 +112,7 @@ public class GameScene extends Scene {
 
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("game/res/backgrounds/sky-not-animated.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -120,7 +120,8 @@ public class GameScene extends Scene {
 
         try {
             ImageEntity aircraftGameScene = new ImageEntity("aircraftGameScene", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/backgrounds/aircraft-game-scene.png")), X_MARGIN - 120, Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.BACKGROUND);
+                    ImageIO.read(new File("game/res/backgrounds/aircraft-game-scene.png")), X_MARGIN - 120,
+                    Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.GAMELAYER1);
             addEntityToScene(aircraftGameScene);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -750,6 +751,17 @@ public class GameScene extends Scene {
         return score;
     }
 
+    public void playSky() {
+        try {
+            Image img1 = new ImageIcon(new File("game/res/animations/sky-animated.gif").toURL()).getImage();
+            ImageEntity ex1 = new ImageEntity("sky-animated", IdGenerator.generateId(),
+                    img1, 0, 0, 1920, 1080, Layer.BACKGROUND, false, 0);
+            addEntityToScene(ex1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void displayLevelFinished(int score, double[] probabilities) {
         this.score = (int) (score * Math.pow(0.98f, tries));
         tries++;
@@ -768,14 +780,6 @@ public class GameScene extends Scene {
                 1920 / 2 - 150, 1080 / 2 - 50, 300, 40,
                 "BACK TO MENU", FontCollection.bit8FontMedium, new StartAction(-255)
         ));
-
-        try {
-            aircraft = new ImageEntity("aircraft", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/aircraft.png")), 1920 / 2, 1080 / 2, 200, 50, Layer.GAMELAYER3);
-            addEntityToScene(aircraft);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         createScale(probabilities);
     }
@@ -796,14 +800,6 @@ public class GameScene extends Scene {
                 "TRY AGAIN", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(null)
         );
         addEntityToScene(back);
-
-        try {
-            aircraft = new ImageEntity("aircraft", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/aircraft-crash.png")), 1920 / 2, 1080 / 2, 500, 200, Layer.GAMELAYER3);
-            addEntityToScene(aircraft);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         createScale(probabilities);
 
