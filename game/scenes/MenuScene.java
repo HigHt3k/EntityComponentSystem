@@ -54,8 +54,16 @@ public class MenuScene extends Scene {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
 
+        try {
+            ImageEntity background = new ImageEntity("uni-stuttgart-logo", IdGenerator.generateId(),
+                    ImageIO.read(new File("game/res/logos/unistuttgart_logo_deutsch_cmyk-01.png")), 25, 25, 766/3, 193/3, Layer.BACKGROUND);
+            addEntityToScene(background);
+        } catch (IOException e) {
+            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
+        }
+
         TextBody playerName = new TextBody("profile name", IdGenerator.generateId(),
-                50, 50, 300, 50, FontCollection.bit8FontMedium, Bit8.DARK_GREY, Game.config().getProfile().profile
+                1300, 70, 300, 64, FontCollection.bit8FontLarge, Bit8.DARK_GREY, Game.config().getProfile().profile
         );
         addEntityToScene(playerName);
         //TODO: add button to change name
@@ -63,7 +71,7 @@ public class MenuScene extends Scene {
         try {
             edit = new GenericButton(
                     "edit", IdGenerator.generateId(),
-                    20, 40, 35, 35,
+                    1600, 50, 64, 64,
                     new ChangeNameAction(playerName),
                     ImageIO.read(new File("game/res/menus/gui/pen.png"))
             );
