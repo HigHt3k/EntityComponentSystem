@@ -14,7 +14,7 @@ public class Query {
      * @param <T>
      * @return: A list of all entities with the specified component
      */
-    public static <T extends Component> ArrayList<Entity> getEntitiesWithComponent(Class<T> componentClass) {
+    public static synchronized <T extends Component> ArrayList<Entity> getEntitiesWithComponent(Class<T> componentClass) {
         ArrayList<Entity> entities = new ArrayList<>();
         if (Game.scene().current() == null) {
             return entities;

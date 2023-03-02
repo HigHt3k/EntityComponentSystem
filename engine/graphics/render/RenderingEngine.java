@@ -217,7 +217,7 @@ public class RenderingEngine {
         }
     }
 
-    public void recollectEntities() {
+    public synchronized void recollectEntities() {
         renderEntities = Query.getEntitiesWithComponent(RenderComponent.class);
     }
 

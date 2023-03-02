@@ -61,47 +61,29 @@ public class SimulationSystem extends SystemHandle {
     }
 
     public synchronized void finish() {
-        Thread animation = new Thread() {
-            @Override
-            public void run() {
-                while (!this.isInterrupted()) {
-                    try {
-                        sleep(1000 / 240);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    if (Game.scene().current() instanceof GameScene gs) {
-                        Game.graphics().collectAndRenderEntities();
-                    }
-                }
-            }
-
-            @Override
-            public synchronized void start() {
-                if (Game.scene().current() instanceof GameScene gs) {
-                    gs.playSky();
-                }
-                super.start();
-            }
-        };
-        animation.start();
-        markov();
-
         if (Game.scene().current() instanceof GameScene gs) {
-            double[] probabilities = MarkovProcessor
-                    .getProbabilityForStatesWith(
-                            MarkovProcessor.currentSystemState,
-                            gs.getAccGoal(), gs.getSensGoal(), gs.getcGoal(), 0, 20, 20
-                    );
-            if (validateGoal()) {
-                if (!gs.isLevelPassed()) {
-                    gs.setLevelPassed(true);
-                    int score = calculateScore();
-                    gs.displayLevelFinished(score, probabilities);
+            gs.playSky();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    markov();
+                    double[] probabilities = MarkovProcessor
+                            .getProbabilityForStatesWith(
+                                    MarkovProcessor.currentSystemState,
+                                    gs.getAccGoal(), gs.getSensGoal(), gs.getcGoal(), 0, 20, 20
+                            );
+                    if (validateGoal()) {
+                        if (!gs.isLevelPassed()) {
+                            gs.setLevelPassed(true);
+                            int score = calculateScore();
+                            gs.displayLevelFinished(score, probabilities);
+                        }
+                    } else {
+                        gs.displayLevelNotFinished(probabilities);
+                    }
                 }
-            } else {
-                gs.displayLevelNotFinished(probabilities);
-            }
+            });
+            thread.start();
         }
     }
 
