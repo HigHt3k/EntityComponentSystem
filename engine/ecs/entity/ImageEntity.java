@@ -19,11 +19,11 @@ public class ImageEntity extends Entity {
         addComponent(renderComponent);
     }
 
-    public ImageEntity(String name, int id, Image img, int x, int y, int width, int height, Layer layer) {
+    public ImageEntity(String name, int id, Image img, int x, int y, int width, int height, Layer layer, boolean randomize, long pauseFrames) {
         super(name, id);
 
         RenderComponent renderComponent = new RenderComponent();
-        renderComponent.addRenderObject(new AnimationObject(new Point(x, y), new Rectangle(x, y, width, height), layer, img));
+        renderComponent.addRenderObject(new AnimationObject(new Point(x, y), new Rectangle(x, y, width, height), layer, img, randomize, pauseFrames));
         this.addComponent(renderComponent);
         addComponent(renderComponent);
     }

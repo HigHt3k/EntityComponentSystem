@@ -5,7 +5,9 @@ import engine.ecs.Query;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.*;
 import engine.ecs.entity.Entity;
+import engine.ecs.entity.ImageEntity;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.*;
@@ -23,6 +25,8 @@ public class RenderingEngine {
     public static final int MARGIN = (int) (15 * scaleW); //px
 
     private ArrayList<Entity> renderEntities;
+
+    private Random randomizer = new Random();
 
     private Graphics2D g;
 
@@ -260,8 +264,25 @@ public class RenderingEngine {
         } else if (r instanceof HoverObject h) {
             renderShape(g, Game.scale().scaleShape(h.getBounds()), h.getHoverColor(), h.getHoverColor(), 1);
         } else if (r instanceof AnimationObject a) {
-            renderAnimation(g, a.getAnimation(), Game.scale().scaleX(a.getLocation().x), Game.scale().scaleY(a.getLocation().y),
-                    Game.scale().scaleX(a.getBounds().getBounds().width), Game.scale().scaleY(a.getBounds().getBounds().height));
+            if(a.isPaused()) {
+                if(a.getCurFrame() >= a.getPauseFrames()) {
+                    a.setCurFrame(0);
+                    a.setPaused(false);
+                } else {
+                    a.setCurFrame(a.getCurFrame() + 1);
+                }
+            } else {
+                if (a.isRandomize() && randomizer.nextInt(10000) > 9950) {
+                    a.setPaused(true);
+                } else {
+                    renderAnimation(g,
+                            a.getAnimation(),
+                            Game.scale().scaleX(a.getLocation().x),
+                            Game.scale().scaleY(a.getLocation().y),
+                            Game.scale().scaleX(a.getBounds().getBounds().width),
+                            Game.scale().scaleY(a.getBounds().getBounds().height));
+                }
+            }
         }
     }
 }
