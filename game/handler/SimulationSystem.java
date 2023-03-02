@@ -71,7 +71,6 @@ public class SimulationSystem extends SystemHandle {
                         e.printStackTrace();
                     }
                     if (Game.scene().current() instanceof GameScene gs) {
-                        gs.playAircraftAnimation();
                         Game.graphics().collectAndRenderEntities();
                     }
                 }
@@ -80,22 +79,13 @@ public class SimulationSystem extends SystemHandle {
             @Override
             public synchronized void start() {
                 if (Game.scene().current() instanceof GameScene gs) {
-                    gs.setAircraftAnimation();
+                    gs.playSky();
                 }
                 super.start();
-            }
-
-            @Override
-            public void interrupt() {
-                super.interrupt();
-                if (Game.scene().current() instanceof GameScene gs) {
-                    gs.removeAircraftAnimation();
-                }
             }
         };
         animation.start();
         markov();
-        animation.interrupt();
 
         if (Game.scene().current() instanceof GameScene gs) {
             double[] probabilities = MarkovProcessor

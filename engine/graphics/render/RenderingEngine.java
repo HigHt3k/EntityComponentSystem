@@ -48,7 +48,7 @@ public class RenderingEngine {
      * @param horizontalAlignment: horizontal alignment within box
      * @param verticalAlignment:   vertical alignment within box
      */
-    public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height,
+    public static synchronized void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height,
                                   TextHorizontalAlignment horizontalAlignment, TextVerticalAlignment verticalAlignment) {
         // TODO: Handle text rendering with vertical / horizontal alignment options
         if (horizontalAlignment == TextHorizontalAlignment.CENTER && verticalAlignment == TextVerticalAlignment.CENTER) {
@@ -79,7 +79,7 @@ public class RenderingEngine {
      * @param width:  width of text box
      * @param height: height of text box
      */
-    public static void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
+    public static synchronized void renderText(Graphics2D g, String text, Color color, Font font, int x, int y, int width, int height) {
         if (text == null) {
             return;
         }
@@ -139,7 +139,7 @@ public class RenderingEngine {
      * @param borderColor: Color to draw border
      * @param fillColor:   fill color, if null then not filled
      */
-    public static void renderShape(Graphics2D g, Shape shape, Color borderColor, Color fillColor, int thickness) {
+    public static synchronized void renderShape(Graphics2D g, Shape shape, Color borderColor, Color fillColor, int thickness) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
 
@@ -156,7 +156,7 @@ public class RenderingEngine {
      * @param width:  size in x direction (px)
      * @param height: size in y direction (px)
      */
-    public static void renderImage(Graphics2D g, BufferedImage img, int x, int y, int width, int height) {
+    public static synchronized void renderImage(Graphics2D g, BufferedImage img, int x, int y, int width, int height) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
 
@@ -171,21 +171,21 @@ public class RenderingEngine {
      * @param color: Line Color
      * @param thickness: Line thickness
      */
-    public static void renderLine(Graphics2D g, Point p1, Point p2, Color color, int thickness) {
+    public static synchronized void renderLine(Graphics2D g, Point p1, Point p2, Color color, int thickness) {
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 Game.config().renderConfiguration().getAntialiasing());
 
         LineRenderer.render(g, p1, p2, color, thickness);
     }
 
-    public static void renderAnimation(Graphics2D g, Image animation, int x, int y, int width, int height) {
+    public static synchronized void renderAnimation(Graphics2D g, Image animation, int x, int y, int width, int height) {
         AnimationRenderer.renderAnimation(g, animation, x, y, width, height);
     }
 
     /**
      * Collects all entities and detects if they have a @{@link RenderComponent} which should be rendered
      */
-    public void collectAndRenderEntities() {
+    public synchronized void collectAndRenderEntities() {
         recollectEntities();
         renderLayer(Layer.BACKGROUND);
         renderLayer(Layer.GAMELAYER1);
@@ -208,7 +208,7 @@ public class RenderingEngine {
         this.g = g;
     }
 
-    private void renderLayer(Layer layer) {
+    private synchronized void renderLayer(Layer layer) {
         for (RenderObject r : collectRenderObjects(layer)) {
             if (r.isHidden()) {
                 continue;
@@ -229,7 +229,7 @@ public class RenderingEngine {
         return renderObjects;
     }
 
-    private void render(RenderObject r) {
+    private synchronized void render(RenderObject r) {
         if (r instanceof ImageObject i) {
             renderImage(g, i.getImage(),
                     Game.scale().scaleX(i.getLocation().x),

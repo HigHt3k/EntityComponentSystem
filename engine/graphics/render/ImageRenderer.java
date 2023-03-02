@@ -17,7 +17,7 @@ public class ImageRenderer {
      * @param width: width of the image
      * @param height: height of the image
      */
-    public static void render(Graphics2D g, BufferedImage img, int x, int y, int width, int height) {
+    public static synchronized void render(Graphics2D g, BufferedImage img, int x, int y, int width, int height) {
         g.drawImage(img, x, y, width, height, null);
     }
 }

@@ -31,7 +31,7 @@ public class TextRenderer {
      * @param font: font type
      * @param location: location on screen
      */
-    public static void render(Graphics2D g, String text, Color color, Font font, Point location) {
+    public static synchronized void render(Graphics2D g, String text, Color color, Font font, Point location) {
         g.setColor(color);
         g.setFont(font);
 
@@ -47,7 +47,7 @@ public class TextRenderer {
      * @param location: location on screen
      * @param rotation: rotation in degrees
      */
-    public static void render(Graphics2D g, String text, Color color, Point location, float rotation) {
+    public static synchronized void render(Graphics2D g, String text, Color color, Point location, float rotation) {
         g.setColor(color);
         g.setFont(DEFAULT_FONT);
         g.rotate(rotation);
@@ -67,7 +67,7 @@ public class TextRenderer {
      * @param location: location on screen
      * @param rotation: rotation
      */
-    public static void render(Graphics2D g, String text, Color color, Font font, Point location, float rotation) {
+    public static synchronized void render(Graphics2D g, String text, Color color, Font font, Point location, float rotation) {
         g.setColor(color);
         g.setFont(font);
         g.rotate(rotation);

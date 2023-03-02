@@ -16,7 +16,7 @@ public class ShapeRenderer {
      * @param fillColor: fill color of the shape
      * @param thickness: border thickness of the snape
      */
-    public static void render(Graphics2D g, Shape shape, Color borderColor, Color fillColor, int thickness) {
+    public static synchronized void render(Graphics2D g, Shape shape, Color borderColor, Color fillColor, int thickness) {
         if(shape == null) {
             return;
         }
