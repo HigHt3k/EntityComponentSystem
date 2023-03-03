@@ -14,7 +14,6 @@ public class ShowLevelInfoAction extends Action {
     @Override
     public void handle() {
         if (Game.scene().current() instanceof LevelScene ls) {
-            System.out.println("Showing ls info");
             ls.addHighscores(levelId);
             ls.showLevelInfo(levelId);
         }

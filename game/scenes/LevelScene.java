@@ -46,8 +46,6 @@ public class LevelScene extends Scene {
             highscores.append(hs.getScore()).append("\n");
         }
 
-        System.out.println(levelId + ":" + players);
-
         ((TextObject) playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(players.toString());
         ((TextObject) highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(highscores.toString());
     }
