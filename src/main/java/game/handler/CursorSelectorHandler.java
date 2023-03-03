@@ -133,9 +133,29 @@ public class CursorSelectorHandler extends Handler {
     }
 
     @Override
-    public void handle(InputAction e) {
-        switch (e) {
-            case A -> System.out.println("A press");
+    public synchronized void handle(InputAction e) {
+        int x = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().x;
+        int y = cursor.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds().getBounds().y;
+
+        if(e == InputAction.MOVE_DOWN || e == InputAction.MOVE_UP || e == InputAction.MOVE_LEFT || e == InputAction.MOVE_RIGHT) {
+            switch (e) {
+                case MOVE_LEFT -> x -= 1 * Game.config().getControls().getControllerSpeed();
+                case MOVE_RIGHT -> x += 1 * Game.config().getControls().getControllerSpeed();
+                case MOVE_UP -> y -= 1 * Game.config().getControls().getControllerSpeed();
+                case MOVE_DOWN -> y += 1 * Game.config().getControls().getControllerSpeed();
+            }
+            moveCursor(x, y);
+            return;
+        }
+
+        switch(e) {
+            case A -> sendNewMouseEvent(new MouseEvent(
+                    Game.frame().getRenderPanel(),
+                    MouseEvent.MOUSE_CLICKED,
+                    1,
+                    InputEvent.BUTTON1_MASK,
+                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON1
+            ));
         }
     }
 
@@ -144,7 +164,8 @@ public class CursorSelectorHandler extends Handler {
      *
      * @param mouseEvent
      */
-    private void sendNewMouseEvent(MouseEvent mouseEvent) {
+    private synchronized void sendNewMouseEvent(MouseEvent mouseEvent) {
+        System.out.println("Queue new mouse event: " + mouseEvent);
         Game.input().queueEvent(mouseEvent);
     }
 
@@ -154,7 +175,7 @@ public class CursorSelectorHandler extends Handler {
      * @param x: x position to move cursor to
      * @param y: y position to move cursor to
      */
-    private void moveCursor(int x, int y) {
+    private synchronized void moveCursor(int x, int y) {
         cursor.getComponent(RenderComponent.class).reposition(new Point(x, y));
         cursor.getComponent(CursorComponent.class).reposition(new Point(x, y));
 

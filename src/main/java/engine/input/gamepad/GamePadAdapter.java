@@ -10,58 +10,52 @@ import java.util.Set;
 
 public class GamePadAdapter {
 
-    private final ControllerManager controllers;
-
     /**
      * Create a game pad adapter which uses jamepad library to find controllers and get their inputs
      */
     public GamePadAdapter() {
-        controllers = new ControllerManager();
-        controllers.initSDLGamepad();
-        if (controllers.getState(0).isConnected) {
-            Game.logger().info("Successfully initialized controller(s).\nAmount: " + controllers.getNumControllers());
-        } else {
-            Game.logger().info("No controllers connected.");
-        }
-    }
+        Thread controllerInputThread = new Thread(() -> {
+            ControllerManager controllers = new ControllerManager();
+            controllers.initSDLGamepad();
 
-    /**
-     * Get the action set currently detected, i.e. all currently pressed buttons.
-     * All possible actions are defined here.
-     *
-     * @return a set of all distinct current actions
-     */
-    public Set<InputAction> actions() {
-        ControllerState currState = controllers.getState(0);
-        if (!currState.isConnected) {
-            return Collections.emptySet();
-        }
+            if (controllers.getState(0) != null) {
+                Game.logger().info("Successfully initialized controller(s).\nAmount: " + controllers.getNumControllers() + "\nState"
+                        + controllers.getState(0).isConnected + "\nType" +
+                        controllers.getState(0).controllerType);
+            } else {
+                Game.logger().info("No controllers connected.");
+            }
 
-        Set<InputAction> actions = new HashSet<>();
-        if (currState.dpadLeft) {
-            actions.add(InputAction.MOVE_LEFT);
-        }
-        if (currState.dpadRight) {
-            actions.add(InputAction.MOVE_RIGHT);
-        }
-        if (currState.dpadUp) {
-            actions.add(InputAction.MOVE_UP);
-        }
-        if (currState.dpadDown) {
-            actions.add(InputAction.MOVE_DOWN);
-        }
-        if (currState.a) {
-            actions.add(InputAction.A);
-        }
-        return actions;
-    }
-
-    /**
-     * check if a controller is currently connected
-     *
-     * @return true if controller connected, false else
-     */
-    public boolean isConnected() {
-        return controllers.getState(0).isConnected;
+            if (controllers.getState(0).isConnected) {
+                while (true) {
+                    ControllerState currState = controllers.getState(0);
+                    if (currState.a) {
+                        Game.input().queueEvent(InputAction.A);
+                    }
+                    if(currState.b) {
+                        Game.input().queueEvent(InputAction.B);
+                    }
+                    if(currState.dpadDown) {
+                        Game.input().queueEvent(InputAction.MOVE_DOWN);
+                    }
+                    if(currState.dpadRight) {
+                        Game.input().queueEvent(InputAction.MOVE_RIGHT);
+                    }
+                    if(currState.dpadUp) {
+                        Game.input().queueEvent(InputAction.MOVE_UP);
+                    }
+                    if(currState.dpadLeft) {
+                        Game.input().queueEvent(InputAction.MOVE_LEFT);
+                    }
+                    if(currState.lb) {
+                        Game.input().queueEvent(InputAction.LB);
+                    }
+                    if(currState.rb) {
+                        Game.input().queueEvent(InputAction.RB);
+                    }
+                }
+            }
+        });
+        controllerInputThread.start();
     }
 }

@@ -24,26 +24,26 @@ public class RenderPanel extends JPanel {
         Game.graphics().collectAndRenderEntities();
     }
 
-    public void init() {
+    public synchronized void init() {
         this.addMouseListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public synchronized void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
                 Game.input().queueEvent(e);
             }
 
             @Override
-            public void mousePressed(MouseEvent e) {
+            public synchronized void mousePressed(MouseEvent e) {
                 super.mousePressed(e);
             }
 
             @Override
-            public void mouseReleased(MouseEvent e) {
+            public synchronized void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
             }
 
             @Override
-            public void mouseWheelMoved(MouseWheelEvent e) {
+            public synchronized void mouseWheelMoved(MouseWheelEvent e) {
                 super.mouseWheelMoved(e);
             }
         });
@@ -58,18 +58,18 @@ public class RenderPanel extends JPanel {
 
         this.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyTyped(KeyEvent e) {
+            public synchronized void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
             }
 
             @Override
-            public void keyPressed(KeyEvent e) {
+            public synchronized void keyPressed(KeyEvent e) {
                 super.keyPressed(e);
                 Game.input().queueEvent(e);
             }
 
             @Override
-            public void keyReleased(KeyEvent e) {
+            public synchronized void keyReleased(KeyEvent e) {
                 super.keyReleased(e);
                 Game.input().queueEvent(e);
             }

@@ -31,10 +31,14 @@ public class InputManager {
     /**
      * Handle inputs from mouse, keyboard and controllers
      */
-    public void handle() {
-        collectGamePadEvents();
+    public synchronized void handle() {
+        // make set of game pad events, only handle each input action once per frame, there may be more due to another thread collecting the events.
+        HashSet hs = new HashSet(gamePadEvents);
+        gamePadEvents.clear();
+        gamePadEvents.addAll(hs);
         while (!gamePadEvents.isEmpty()) {
             InputAction e = gamePadEvents.get(0);
+            System.out.println(e);
             if (e == null) {
                 gamePadEvents.remove(e);
                 continue;
@@ -80,11 +84,11 @@ public class InputManager {
         }
     }
 
-    public void queueEvent(MouseEvent e) {
+    public synchronized void queueEvent(MouseEvent e) {
         mouseEvents.add(e);
     }
 
-    public void queueEvent(KeyEvent e) {
+    public synchronized void queueEvent(KeyEvent e) {
         keyEvents.add(e);
     }
 
@@ -122,13 +126,7 @@ public class InputManager {
         return null;
     }
 
-    public void queueEvent(InputAction e) {
+    public synchronized void queueEvent(InputAction e) {
         gamePadEvents.add(e);
-    }
-
-    private void collectGamePadEvents() {
-        if (gamePadAdapter.isConnected()) {
-            gamePadEvents.addAll(gamePadAdapter.actions());
-        }
     }
 }
