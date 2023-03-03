@@ -19,16 +19,16 @@ import java.util.logging.Level;
 public class Main {
 
     public static void main(String[] args) {
-        Game.info().setTitle("Entity Component System Test");
-        Game.info().setAuthor("Johann Töpfer");
-        Game.info().setVersion("v0.0.1-SNAPSHOT");
+        Game.info().setTitle("SkyLogic");
+        Game.info().setAuthor("ILS - Institute for Aircraft Systems University of Stuttgart - Johann Töpfer");
+        Game.info().setVersion("v1.0.0");
         Game.info().setDescription("Educational game to show the concept of redundancy in aircraft system engineering.");
         Game.config().setLanguage(LanguageType.EN_US);
-        Game.config().setDebug(true);
+        Game.config().setDebug(false);
         Game.init();
 
         Game.logger().setLevel(Level.ALL);
-        Game.frame().setIcon("res/avionics/crdc.png");
+        Game.frame().setIcon("res/logos/skylogic-logo-icon.png");
         Game.res().loadTileSet("res/base_tiles.xml");
         Game.res().language().parseLanguageFile("res/lang/de_de.xml");
         Game.res().language().parseLanguageFile("res/lang/de_simple.xml");
