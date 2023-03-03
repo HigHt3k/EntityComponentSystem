@@ -2,7 +2,7 @@ package game.action;
 
 import engine.Game;
 import engine.ecs.component.action.Action;
-import game.scenes.LevelScene;
+import game.scenes.menu.LevelScene;
 
 public class ShowLevelInfoAction extends Action {
     private final int levelId;

@@ -3,7 +3,7 @@ package game.action;
 import engine.Game;
 import engine.ecs.component.action.Action;
 import engine.resource.score.HighScore;
-import game.scenes.GameScene;
+import game.scenes.game.GameScene;
 
 public class SaveScoreAction extends Action {
 

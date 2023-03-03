@@ -12,7 +12,7 @@ import game.handler.builder.BuildHandler;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
-import game.scenes.GameScene;
+import game.scenes.game.GameScene;
 
 import java.awt.*;
 import java.util.*;

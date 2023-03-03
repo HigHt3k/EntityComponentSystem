@@ -7,9 +7,9 @@ import engine.resource.lang.LanguageType;
 import game.handler.builder.BuildHandler;
 import game.handler.CursorSelectorHandler;
 import game.handler.SimulationSystem;
-import game.scenes.BuildScene;
-import game.scenes.LevelScene;
-import game.scenes.MenuScene;
+import game.scenes.game.BuildScene;
+import game.scenes.menu.LevelScene;
+import game.scenes.menu.MenuScene;
 import game.scenes.test.TestScene;
 
 import java.io.File;

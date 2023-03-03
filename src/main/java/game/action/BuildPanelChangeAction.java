@@ -2,7 +2,7 @@ package game.action;
 
 import engine.Game;
 import engine.ecs.component.action.Action;
-import game.scenes.GameScene;
+import game.scenes.game.GameScene;
 
 public class BuildPanelChangeAction extends Action {
     private BuildPanelChange buildPanelChange;

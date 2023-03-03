@@ -1,4 +1,4 @@
-package game.scenes;
+package game.scenes.game;
 
 import engine.Game;
 import engine.IdGenerator;
@@ -24,6 +24,7 @@ import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
 import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
+import game.scenes.GridSize;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

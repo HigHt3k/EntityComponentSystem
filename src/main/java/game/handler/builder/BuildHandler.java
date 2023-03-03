@@ -15,12 +15,11 @@ import game.entities.simulation.BuildPanelEntity;
 import game.entities.cable.CablePort;
 import game.entities.cable.CablePortPosition;
 import game.entities.simulation.SimulationEntity;
-import game.handler.SimulationSystem;
 import game.handler.simulation.SimulationState;
 import game.handler.simulation.SimulationType;
 import game.handler.simulation.markov.MarkovProcessor;
-import game.scenes.BuildScene;
-import game.scenes.GameScene;
+import game.scenes.game.BuildScene;
+import game.scenes.game.GameScene;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

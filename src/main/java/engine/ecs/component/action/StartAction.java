@@ -2,7 +2,7 @@ package engine.ecs.component.action;
 
 import engine.Game;
 import engine.graphics.scene.Scene;
-import game.scenes.GameScene;
+import game.scenes.game.GameScene;
 
 public class StartAction extends Action {
     private Scene scene;

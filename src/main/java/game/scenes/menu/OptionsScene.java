@@ -1,4 +1,4 @@
-package game.scenes;
+package game.scenes.menu;
 
 import engine.Game;
 import engine.IdGenerator;

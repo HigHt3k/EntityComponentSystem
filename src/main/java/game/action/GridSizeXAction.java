@@ -2,7 +2,7 @@ package game.action;
 
 import engine.Game;
 import engine.ecs.component.action.Action;
-import game.scenes.BuildScene;
+import game.scenes.game.BuildScene;
 import game.scenes.GridSize;
 
 public class GridSizeXAction extends Action {

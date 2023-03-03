@@ -1,4 +1,4 @@
-package game.scenes;
+package game.scenes.menu;
 
 import engine.Game;
 import engine.IdGenerator;
@@ -18,6 +18,7 @@ import engine.resource.fonts.FontCollection;
 import engine.resource.score.HighScore;
 import game.action.ShowLevelInfoAction;
 import game.entities.ui.*;
+import game.scenes.game.GameScene;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

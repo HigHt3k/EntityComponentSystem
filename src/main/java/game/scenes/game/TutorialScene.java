@@ -1,6 +1,6 @@
-package game.scenes;
+package game.scenes.game;
 
-import engine.Game;
+import game.scenes.Difficulty;
 
 public class TutorialScene extends GameScene {
     /**
