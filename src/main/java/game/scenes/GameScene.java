@@ -380,7 +380,6 @@ public class GameScene extends Scene {
      * setup method for buttons in the GameScene
      */
     private void setupButtons() {
-        Font font = Game.res().loadFont("res/font/joystix monospace.ttf", 18f);
         GenericButton exitButton = null;
         try {
             exitButton = new GenericButton(
@@ -765,7 +764,7 @@ public class GameScene extends Scene {
         this.score = (int) (score * Math.pow(0.98f, tries));
         tries++;
         addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
-                Game.res().loadFont("res/font/joystix monospace.ttf", 25f), score,
+                FontCollection.bit8FontLarge, score,
                 1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "level passed!"));
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
@@ -791,7 +790,7 @@ public class GameScene extends Scene {
     public void displayLevelNotFinished(double[] probabilities) {
         tries++;
         addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
-                Game.res().loadFont("res/font/joystix monospace.ttf", 25f), 0,
+                FontCollection.bit8FontLarge, 0,
                 1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "Requirements not met!"));
         GenericButton back = new GenericButton(
                 "back", IdGenerator.generateId(),

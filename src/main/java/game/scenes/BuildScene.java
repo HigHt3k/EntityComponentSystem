@@ -233,8 +233,6 @@ public class BuildScene extends Scene {
         buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId - 500);
         addEntityToScene(buildPanelEntity);
 
-        Font font = Game.res().loadFont("res/font/joystix monospace.ttf", 12f);
-
         if (buildPanelEntity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
             numberOfBuildPanelElements++;
             return;

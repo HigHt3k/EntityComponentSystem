@@ -281,7 +281,6 @@ public class ResourceManager {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //register the font
             ge.registerFont(customFont);
-            Game.logger().info("Successfully loaded font: " + customFont.getFontName());
             return customFont;
         } catch (IOException e) {
             Game.logger().severe("Font File not found at path " + path + ".\n" + e.getMessage());
