@@ -1,33 +1,71 @@
-\section{Basics}\label{sec:basics}
+\section{Fundamentals}\label{sec:fundamentals}
 In this chapter, some basic knowledge in order to understand the context and classify this work as a whole will be provided.
 The definitions of the most common terms used for aircraft system architecture and the formulas for calculating the relevant
-parameters are shown.~\ref{subsec:definitions-system-architecture}
+parameters are shown.~\ref{subsec:system-design}
 Since this work aims to implement a game, some basic understanding of games and the game development process is described in
 section~\ref{subsec:game-design}.
-\subsection{Definitions System Architecture}\label{subsec:definitions-system-architecture}
-\subsubsection{Failure Probability}
+
+\subsection{Science Day - University of Stuttgart}\label{subsec:science-day---university-of-stuttgart}
+
+\subsection{Java}\label{subsec:java}
+
+\subsubsection{Game Engines}\label{subsubsec:game-engines}
+
+\subsection{Game Design}\label{subsec:game-design}
+Game design is the conceptional process taking place at the very beginning of game development.
+Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
+reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
+
+\subsubsection{Intention}\label{subsubsec:intention}
+The purpose of this thesis is to provide a game that can be used as a demonstrator at different events of the Institute for Aircraft
+Systems at the University of Stuttgart, such as the `Unitag'.
+\subsubsection{Educational Games}\label{subsubsec:educational-games}
+Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
+specifically intended to be educational.
+However, there exist also games with the specified purpose of education, this may include simulations, persuasive games,
+games for studying and games that support health and growth.
+Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
+while maintaining a factor of entertainment.
+Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
+\subsubsection{Entity Component System}\label{subsubsec:entity-component-system}
+For the game engine, a generic entity component system (ECS) design pattern is used.
+The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
+Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
+Entities consist of a variety of components, while each entity can have different components based on the needs.
+A purely graphical entity which shows an image may only consist of a single graphics component, however another entity may contain
+a component for graphics, one for sound and another one that holds collision information.
+It is important to note, that components never change an entities' behavior, but only contain data that describes the entity.
+Systems are responsible for collecting all relevant entities (i.e.\ entities that contain specific components) and processing them.
+An example for a system is a rendering engine, which collects all graphical entities \& components and renders them to the screen by
+using the data that is stored within the respective graphics components.
+\\
+There are different approaches on the implementation of Entity Component Systems, and they may be combined with other programming
+patterns.
+\subsection{System Design}\label{subsec:system-design}
+\subsubsection{Failure Probability}\label{subsubsec:failure-probability}
 The probability of a failure of a system during a specified point in time is defined as~\cite{lfs2}:
 \begin{equation}
     \label{eq:failure-probability}
     P_f(t) \in [0,1]
 \end{equation}
-\subsubsection{Reliability}
+\subsubsection{Reliability}\label{subsubsec:reliability}
 Reliability defines the probability of a working system at a specified point in time,
 therefore it is the inverse of the failure probability~\cite{lfs2}:
 \begin{equation}
     \label{eq:reliability}
     P_k(t) = 1 - P_f(t) \in [0,1]
 \end{equation}
-\subsubsection{Integrity}
+\subsubsection{Integrity}\label{subsubsec:integrity}
 The detection probability of an error in a system is defined as integrity~\cite{lfs2}:
 \begin{equation}
     \label{eq:integrity}
     C \in [0,1]
 \end{equation}
-\subsubsection{Safety Effect}
+\subsubsection{Safety Effect}\label{subsubsec:safety-effect}
 There exist different categories of safety effects in the CS-25 for aircraft certification that define the requirements to different systems.
 A mapping of safety effect to minimum failure probability has to be achieved in order to successfully certify aircraft systems.
 The below table~\ref{tab:safety-effect} displays the different categories.
+
 \begin{table}[!htb]
     \centering
     \begin{tabular}{l|l|l}
@@ -41,7 +79,6 @@ The below table~\ref{tab:safety-effect} displays the different categories.
     \caption{Definition of safety effect categories}
     \label{tab:safety-effect}
 \end{table}
-
 \subsection{Redundancy Concepts}\label{subsec:redundancy-concepts}
 By default, the failure probability of integrated components is defined as $10e-4$, which means, that with only a single component
 safety effect requirements of categories higher than \textit{Major} are out of scope.
@@ -60,24 +97,7 @@ It negatively affects the failure probability, but the integrity, meaning that t
 to noticing it.
 A number of different concepts is shown in the figures below, which also serves as a guideline to the level design of the game,
 since the presentation and understanding of exactly these concepts is the core of the game.
-
-\subsection{Game Design}\label{subsec:game-design}
-Game design is the conceptional process taking place at the very beginning of game development.
-Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
-reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
-
-\subsubsection{Educational Games}\label{subsubsec:educational-games}
-Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
-specifically intended to be educational.
-However, there exist also games with the specified purpose of education, this may include simulations, persuasive games,
-games for studying and games that support health and growth.
-Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
-while maintaining a factor of entertainment.
-Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
-
-\subsubsection{Purpose of the Game}\label{subsubsec:purpose}
-The purpose of this thesis is to provide a game that can be used as a demonstrator at different events of the Institute for Aircraft
-Systems at the University of Stuttgart, such as the `Unitag'.
+\subsubsection{Safety Analysis}\label{subsubsec:safety-analysis}
 
 \subsection{Markov Process}\label{subsec:markov-process}
 The aircraft design process generally has to comply with the requirements that are stated in regulatory files such as the FAR 25
@@ -96,17 +116,3 @@ Possible states for the system design Markov model include the correct state and
 or passive failures.
 Each failure can also be of a different kind, e.g. a mechanical failure has a different probability than a loss of electrical power.
 
-\subsection{Entity Component System}\label{subsec:entity-component-system}
-For the game engine, a generic entity component system (ECS) design pattern is used.
-The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
-Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
-Entities consist of a variety of components, while each entity can have different components based on the needs.
-A purely graphical entity which shows an image may only consist of a single graphics component, however another entity may contain
-a component for graphics, one for sound and another one that holds collision information.
-It is important to note, that components never change an entities' behavior, but only contain data that describes the entity.
-Systems are responsible for collecting all relevant entities (i.e.\ entities that contain specific components) and processing them.
-An example for a system is a rendering engine, which collects all graphical entities \& components and renders them to the screen by
-using the data that is stored within the respective graphics components.
-\\
-There are different approaches on the implementation of Entity Component Systems, and they may be combined with other programming
-patterns.
