@@ -53,6 +53,18 @@ public class GamePadAdapter {
                     if(currState.rb) {
                         Game.input().queueEvent(InputAction.RB);
                     }
+                    if(currState.leftStickX < -0.5f) {
+                        Game.input().queueEvent(InputAction.MOVE_LEFT);
+                    }
+                    if(currState.leftStickX > 0.5f) {
+                        Game.input().queueEvent(InputAction.MOVE_RIGHT);
+                    }
+                    if(currState.leftStickY < -0.5f) {
+                        Game.input().queueEvent(InputAction.MOVE_DOWN);
+                    }
+                    if(currState.leftStickY > 0.5f) {
+                        Game.input().queueEvent(InputAction.MOVE_UP);
+                    }
                 }
             }
         });
