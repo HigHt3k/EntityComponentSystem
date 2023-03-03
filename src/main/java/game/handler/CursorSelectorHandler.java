@@ -39,7 +39,6 @@ public class CursorSelectorHandler extends Handler {
     public void init() {
         cursor = new CursorEntity("cursor", IdGenerator.generateId());
         for (Scene s : Game.scene().getScenes()) {
-            System.out.println(s.getName());
             s.addEntityToScene(cursor);
         }
     }
@@ -165,7 +164,6 @@ public class CursorSelectorHandler extends Handler {
      * @param mouseEvent
      */
     private synchronized void sendNewMouseEvent(MouseEvent mouseEvent) {
-        System.out.println("Queue new mouse event: " + mouseEvent);
         Game.input().queueEvent(mouseEvent);
     }
 

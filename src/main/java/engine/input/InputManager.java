@@ -38,7 +38,6 @@ public class InputManager {
         gamePadEvents.addAll(hs);
         while (!gamePadEvents.isEmpty()) {
             InputAction e = gamePadEvents.get(0);
-            System.out.println(e);
             if (e == null) {
                 gamePadEvents.remove(e);
                 continue;
