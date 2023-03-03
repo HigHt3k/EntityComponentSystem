@@ -3,7 +3,6 @@ package game;
 import engine.Game;
 import engine.ecs.system.ActionSystem;
 import engine.ecs.system.CollisionDetectionSystem;
-import engine.input.gamepad.GamePadAdapter;
 import engine.resource.lang.LanguageType;
 import game.handler.builder.BuildHandler;
 import game.handler.CursorSelectorHandler;
@@ -29,25 +28,25 @@ public class Main {
         Game.init();
 
         Game.logger().setLevel(Level.ALL);
-        Game.frame().setIcon("game/res/avionics/crdc.png");
-        Game.res().loadTileSet("game/res/base_tiles.xml");
-        Game.res().language().parseLanguageFile("game/res/lang/de_de.xml");
-        Game.res().language().parseLanguageFile("game/res/lang/de_simple.xml");
-        Game.res().language().parseLanguageFile("game/res/lang/en_us.xml");
+        Game.frame().setIcon("res/avionics/crdc.png");
+        Game.res().loadTileSet("res/base_tiles.xml");
+        Game.res().language().parseLanguageFile("res/lang/de_de.xml");
+        Game.res().language().parseLanguageFile("res/lang/de_simple.xml");
+        Game.res().language().parseLanguageFile("res/lang/en_us.xml");
 
-        File folder = new File("game/res/level/tutorial");
+        File folder = new File("res/level/tutorial");
         File[] listOfFiles = folder.listFiles();
 
         try {
             for (File f : Objects.requireNonNull(listOfFiles)) {
                 Game.res().loadLevel(f.getPath());
             }
-        } catch(NullPointerException ex) {
+        } catch (NullPointerException ex) {
             Game.logger().severe("No levels found, please add levels to the res/level folder \n" + ex);
             // Exit game with a warning on screen
         }
 
-        folder = new File("game/res/level/easy");
+        folder = new File("res/level/easy");
         listOfFiles = folder.listFiles();
 
         try {
@@ -59,7 +58,7 @@ public class Main {
             // Exit game with a warning on screen
         }
 
-        folder = new File("game/res/level/medium");
+        folder = new File("res/level/medium");
         listOfFiles = folder.listFiles();
 
         try {
@@ -71,7 +70,7 @@ public class Main {
             // Exit game with a warning on screen
         }
 
-        folder = new File("game/res/level/hard");
+        folder = new File("res/level/hard");
         listOfFiles = folder.listFiles();
 
         try {

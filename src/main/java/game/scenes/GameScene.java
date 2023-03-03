@@ -37,7 +37,6 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class GameScene extends Scene {
@@ -112,7 +111,7 @@ public class GameScene extends Scene {
 
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/backgrounds/sky-not-animated.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("res/backgrounds/sky-not-animated.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -120,7 +119,7 @@ public class GameScene extends Scene {
 
         try {
             ImageEntity aircraftGameScene = new ImageEntity("aircraftGameScene", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/backgrounds/aircraft-game-scene.png")), X_MARGIN - 120,
+                    ImageIO.read(new File("res/backgrounds/aircraft-game-scene.png")), X_MARGIN - 120,
                     Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.GAMELAYER1);
             addEntityToScene(aircraftGameScene);
         } catch (IOException e) {
@@ -381,7 +380,7 @@ public class GameScene extends Scene {
      * setup method for buttons in the GameScene
      */
     private void setupButtons() {
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f);
+        Font font = Game.res().loadFont("res/font/joystix monospace.ttf", 18f);
         GenericButton exitButton = null;
         try {
             exitButton = new GenericButton(
@@ -389,7 +388,7 @@ public class GameScene extends Scene {
                     IdGenerator.generateId(),
                     20, 40,
                     64, 64, new ExitAction(),
-                    ImageIO.read(new File("game/res/menus/gui/buttons/exit_button.png")));
+                    ImageIO.read(new File("res/menus/gui/buttons/exit_button.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -402,7 +401,7 @@ public class GameScene extends Scene {
                     IdGenerator.generateId(),
                     100, 40,
                     64, 64,new StartAction(Game.scene().getScene(-255)),
-                    ImageIO.read(new File("game/res/menus/gui/buttons/menu_icon.png"))
+                    ImageIO.read(new File("res/menus/gui/buttons/menu_icon.png"))
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -480,20 +479,20 @@ public class GameScene extends Scene {
     private void setupBuildPanel() {
         try {
             ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/blueprint8bit.png")), 0, 800, 1500, 1080 - 850, Layer.UI);
+                    ImageIO.read(new File("res/menus/blueprint8bit.png")), 0, 800, 1500, 1080 - 850, Layer.UI);
             addEntityToScene(buildPanel);
 
             GenericButton leftButton = new GenericButton("left_build_panel", IdGenerator.generateId(),
                     85, 890, 40, 40,
                     new BuildPanelChangeAction(BuildPanelChange.LEFT),
-                    ImageIO.read(new File("game/res/menus/gui/button_left.png")));
+                    ImageIO.read(new File("res/menus/gui/button_left.png")));
 
             addEntityToScene(leftButton);
 
             GenericButton rightButton = new GenericButton("right_build_panel", IdGenerator.generateId(),
                     1355, 890, 40, 40,
                     new BuildPanelChangeAction(BuildPanelChange.RIGHT),
-                    ImageIO.read(new File("game/res/menus/gui/button_right.png")));
+                    ImageIO.read(new File("res/menus/gui/button_right.png")));
             addEntityToScene(rightButton);
 
         } catch (IOException e) {
@@ -511,7 +510,7 @@ public class GameScene extends Scene {
         Entity desc = null;
         try {
             desc = new ImageEntity("desc", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/hud_element_1.png")),
+                    ImageIO.read(new File("res/menus/gui/hud_element_1.png")),
                     1500, 0, 402, 350, Layer.UI);
         } catch (IOException e) {
             e.printStackTrace();
@@ -521,7 +520,7 @@ public class GameScene extends Scene {
         Entity goal = null;
         try {
             goal = new ImageEntity("goal", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/hud_element_2.png")),
+                    ImageIO.read(new File("res/menus/gui/hud_element_2.png")),
                     1500, 375, 402, 200, Layer.UI);
         } catch (IOException e) {
             e.printStackTrace();
@@ -531,7 +530,7 @@ public class GameScene extends Scene {
         Entity tips = null;
         try {
             tips = new ImageEntity("tips", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/hud_element_3.png")),
+                    ImageIO.read(new File("res/menus/gui/hud_element_3.png")),
                     1500, 600, 402, 400, Layer.UI);
         } catch (IOException e) {
             e.printStackTrace();
@@ -581,7 +580,7 @@ public class GameScene extends Scene {
         try {
             previous = new GenericButton("previous", IdGenerator.generateId(),
                     1520, 280, 40, 40, new StartAction(null),
-                    ImageIO.read(new File("game/res/menus/gui/button_left_white.png")));
+                    ImageIO.read(new File("res/menus/gui/button_left_white.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -590,7 +589,7 @@ public class GameScene extends Scene {
         try {
             next = new GenericButton("next", IdGenerator.generateId(),
                     1840, 280, 40, 40, new StartAction(null),
-                    ImageIO.read(new File("game/res/menus/gui/button_right_white.png")));
+                    ImageIO.read(new File("res/menus/gui/button_right_white.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -753,7 +752,7 @@ public class GameScene extends Scene {
 
     public void playSky() {
         try {
-            Image img1 = new ImageIcon(new File("game/res/animations/sky-animated.gif").toURL()).getImage();
+            Image img1 = new ImageIcon(new File("res/animations/sky-animated.gif").toURL()).getImage();
             ImageEntity ex1 = new ImageEntity("sky-animated", IdGenerator.generateId(),
                     img1, 0, 0, 1920, 1080, Layer.BACKGROUND, false, 0);
             addEntityToScene(ex1);
@@ -766,7 +765,7 @@ public class GameScene extends Scene {
         this.score = (int) (score * Math.pow(0.98f, tries));
         tries++;
         addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
-                Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), score,
+                Game.res().loadFont("res/font/joystix monospace.ttf", 25f), score,
                 1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "level passed!"));
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
@@ -792,39 +791,39 @@ public class GameScene extends Scene {
     public void displayLevelNotFinished(double[] probabilities) {
         tries++;
         addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
-                Game.res().loadFont("game/res/font/joystix monospace.ttf", 25f), 0,
+                Game.res().loadFont("res/font/joystix monospace.ttf", 25f), 0,
                 1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "Requirements not met!"));
         GenericButton back = new GenericButton(
                 "back", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
-                "TRY AGAIN", Game.res().loadFont("game/res/font/joystix monospace.ttf", 18f), new StartAction(null)
+                "TRY AGAIN", Game.res().loadFont("res/font/joystix monospace.ttf", 18f), new StartAction(null)
         );
         addEntityToScene(back);
 
         createScale(probabilities);
 
         try {
-            Image img1 = new ImageIcon(new File("game/res/animations/explosion-medium-rotated.gif").toURL()).getImage();
+            Image img1 = new ImageIcon(new File("res/animations/explosion-medium-rotated.gif").toURL()).getImage();
             ImageEntity ex1 = new ImageEntity("ex1", IdGenerator.generateId(),
-                    img1, 500, 300, 155, 155, Layer.GAMELAYER3,  false, 0);
+                    img1, 500, 300, 155, 155, Layer.GAMELAYER3, false, 0);
             addEntityToScene(ex1);
 
-            Image img2 = new ImageIcon(new File("game/res/animations/explosion-slow.gif").toURL()).getImage();
+            Image img2 = new ImageIcon(new File("res/animations/explosion-slow.gif").toURL()).getImage();
             ImageEntity ex2 = new ImageEntity("ex2", IdGenerator.generateId(),
-                    img2, 700, 200, 200, 200, Layer.GAMELAYER3,  false, 0);
+                    img2, 700, 200, 200, 200, Layer.GAMELAYER3, false, 0);
             addEntityToScene(ex2);
 
-            Image img3 = new ImageIcon(new File("game/res/animations/explosion-medium.gif").toURL()).getImage();
+            Image img3 = new ImageIcon(new File("res/animations/explosion-medium.gif").toURL()).getImage();
             ImageEntity ex3 = new ImageEntity("ex3", IdGenerator.generateId(),
                     img3, 100, 250, 340, 340, Layer.GAMELAYER3, false, 0);
             addEntityToScene(ex3);
 
-            Image img4 = new ImageIcon(new File("game/res/animations/explosion-medium-rotated.gif").toURL()).getImage();
+            Image img4 = new ImageIcon(new File("res/animations/explosion-medium-rotated.gif").toURL()).getImage();
             ImageEntity ex4 = new ImageEntity("ex4", IdGenerator.generateId(),
                     img4, 520, 700, 250, 200, Layer.GAMELAYER3, false, 0);
             addEntityToScene(ex4);
 
-            Image img5 = new ImageIcon(new File("game/res/animations/explosion-slow.gif").toURL()).getImage();
+            Image img5 = new ImageIcon(new File("res/animations/explosion-slow.gif").toURL()).getImage();
             ImageEntity ex5 = new ImageEntity("ex5", IdGenerator.generateId(),
                     img5, 1050, 320, 370, 230, Layer.GAMELAYER3, false, 0);
             addEntityToScene(ex5);
@@ -898,7 +897,7 @@ public class GameScene extends Scene {
     public void setAircraftAnimation() {
         try {
             aircraft = new ImageEntity("Aircraft", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/aircraft.png")), 0, 1080 / 2, 500, 200, Layer.GAMELAYER3);
+                    ImageIO.read(new File("res/aircraft.png")), 0, 1080 / 2, 500, 200, Layer.GAMELAYER3);
             addEntityToScene(aircraft);
         } catch (IOException e) {
             e.printStackTrace();

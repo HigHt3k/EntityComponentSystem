@@ -27,7 +27,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.logging.Level;
 
 public class LevelScene extends Scene {
     private static final int ITEM_WIDTH = 350;
@@ -71,13 +70,13 @@ public class LevelScene extends Scene {
         super(name, id);
 
         Font font = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
-        Game.res().score().loadScores("game/res/scores/highscores.xml");
+        Game.res().score().loadScores("res/scores/highscores.xml");
 
         // Create the Menu GUI
 
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -120,10 +119,10 @@ public class LevelScene extends Scene {
         BufferedImage yellow = null;
 
         try {
-            blue = ImageIO.read(new File("game/res/menus/gui/processor_blue.png"));
-            red = ImageIO.read(new File("game/res/menus/gui/processor_red.png"));
-            yellow = ImageIO.read(new File("game/res/menus/gui/processor_yellow.png"));
-            green = ImageIO.read(new File("game/res/menus/gui/processor_green.png"));
+            blue = ImageIO.read(new File("res/menus/gui/processor_blue.png"));
+            red = ImageIO.read(new File("res/menus/gui/processor_red.png"));
+            yellow = ImageIO.read(new File("res/menus/gui/processor_yellow.png"));
+            green = ImageIO.read(new File("res/menus/gui/processor_green.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

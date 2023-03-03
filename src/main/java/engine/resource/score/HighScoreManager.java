@@ -44,7 +44,7 @@ public class HighScoreManager {
 
     public void addScore(HighScore score) {
         try {
-            Document document = db.parse("game/res/scores/highscores.xml");
+            Document document = db.parse("res/scores/highscores.xml");
             Element root = document.getDocumentElement();
 
             Element highscore = document.createElement("scoreItem");
@@ -64,7 +64,7 @@ public class HighScoreManager {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
             DOMSource source = new DOMSource(document);
-            File f = new File("game/res/scores/highscores.xml");
+            File f = new File("res/scores/highscores.xml");
             f.createNewFile();
             StreamResult result = new StreamResult(f);
             transformer.transform(source, result);

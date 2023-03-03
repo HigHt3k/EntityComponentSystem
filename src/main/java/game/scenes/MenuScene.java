@@ -35,7 +35,7 @@ public class MenuScene extends Scene {
 
         try {
             SoundEntity sound = new SoundEntity("menu background sound", IdGenerator.generateId(), AudioSystem.getAudioInputStream(
-                    new File("game/res/sound/2020-06-18_-_8_Bit_Retro_Funk_-_www.FesliyanStudios.com_David_Renda.wav")));
+                    new File("res/sound/2020-06-18_-_8_Bit_Retro_Funk_-_www.FesliyanStudios.com_David_Renda.wav")));
             addEntityToScene(sound);
         } catch (UnsupportedAudioFileException e) {
             throw new RuntimeException(e);
@@ -48,7 +48,7 @@ public class MenuScene extends Scene {
         // Create the Menu GUI
         try {
             ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
+                    ImageIO.read(new File("res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -56,7 +56,7 @@ public class MenuScene extends Scene {
 
         try {
             ImageEntity background = new ImageEntity("uni-stuttgart-logo", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/logos/unistuttgart_logo_deutsch_cmyk-01.png")), 25, 25, 766/3, 193/3, Layer.BACKGROUND);
+                    ImageIO.read(new File("res/logos/unistuttgart_logo_deutsch_cmyk-01.png")), 25, 25, 766 / 3, 193 / 3, Layer.BACKGROUND);
             addEntityToScene(background);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
@@ -73,7 +73,7 @@ public class MenuScene extends Scene {
                     "edit", IdGenerator.generateId(),
                     1600, 50, 64, 64,
                     new ChangeNameAction(playerName),
-                    ImageIO.read(new File("game/res/menus/gui/pen.png"))
+                    ImageIO.read(new File("res/menus/gui/pen.png"))
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -113,7 +113,7 @@ public class MenuScene extends Scene {
                     "options", IdGenerator.generateId(),
                     1800, 50, 64, 64,
                     new StartAction(new OptionsScene("options", -249)),
-                    ImageIO.read(new File("game/res/menus/gui/gear.png"))
+                    ImageIO.read(new File("res/menus/gui/gear.png"))
             );
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -126,7 +126,7 @@ public class MenuScene extends Scene {
                     "sound", IdGenerator.generateId(),
                     1700, 50, 64, 64,
                     new StartAction(null),
-                    ImageIO.read(new File("game/res/menus/gui/speaker.png"))
+                    ImageIO.read(new File("res/menus/gui/speaker.png"))
             );
             sound.getComponent(ActionComponent.class).addAction(MouseEvent.BUTTON1, new MuteAction());
         } catch (IOException e) {

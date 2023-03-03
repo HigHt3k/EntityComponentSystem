@@ -233,7 +233,7 @@ public class BuildScene extends Scene {
         buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId - 500);
         addEntityToScene(buildPanelEntity);
 
-        Font font = Game.res().loadFont("game/res/font/joystix monospace.ttf", 12f);
+        Font font = Game.res().loadFont("res/font/joystix monospace.ttf", 12f);
 
         if (buildPanelEntity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
             numberOfBuildPanelElements++;
@@ -243,7 +243,7 @@ public class BuildScene extends Scene {
         NumberChooser nc = null;
         try {
             nc = new NumberChooser("number", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/minus.png")),
+                    ImageIO.read(new File("res/menus/gui/minus.png")),
                     BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
                     850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
                     25, 25, -1, buildPanelEntity
@@ -255,7 +255,7 @@ public class BuildScene extends Scene {
         NumberChooser nc2 = null;
         try {
             nc2 = new NumberChooser("number", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/plus.png")),
+                    ImageIO.read(new File("res/menus/gui/plus.png")),
                     BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE - 25,
                     850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
                     25, 25, 1, buildPanelEntity
@@ -312,7 +312,7 @@ public class BuildScene extends Scene {
     private void setupBuildPanel() {
         try {
             ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/blueprint_scaled.png")), 0, 850, 1500, 1080 - 850, Layer.UI);
+                    ImageIO.read(new File("res/menus/blueprint_scaled.png")), 0, 850, 1500, 1080 - 850, Layer.UI);
             addEntityToScene(buildPanel);
         } catch (IOException e) {
             e.printStackTrace();
@@ -343,7 +343,7 @@ public class BuildScene extends Scene {
         try {
             minusGridSizeX = new NumberChooserX(
                     "minus", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/minus.png")),
+                    ImageIO.read(new File("res/menus/gui/minus.png")),
                     1702, 50, 50, 50, -1, gridSize
             );
         } catch (IOException e) {
@@ -354,7 +354,7 @@ public class BuildScene extends Scene {
         try {
             plusGridSizeX = new NumberChooserX(
                     "plus", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/plus.png")),
+                    ImageIO.read(new File("res/menus/gui/plus.png")),
                     1752, 50, 50, 50, +1, gridSize
             );
         } catch (IOException e) {
@@ -370,7 +370,7 @@ public class BuildScene extends Scene {
         try {
             minusGridSizeY = new NumberChooserY(
                     "minus", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/minus.png")),
+                    ImageIO.read(new File("res/menus/gui/minus.png")),
                     1702, 150, 50, 50, -1, gridSize
             );
         } catch (IOException e) {
@@ -381,7 +381,7 @@ public class BuildScene extends Scene {
         try {
             plusGridSizeY = new NumberChooserY(
                     "plus", IdGenerator.generateId(),
-                    ImageIO.read(new File("game/res/menus/gui/plus.png")),
+                    ImageIO.read(new File("res/menus/gui/plus.png")),
                     1752, 150, 50, 50, +1, gridSize
             );
         } catch (IOException e) {

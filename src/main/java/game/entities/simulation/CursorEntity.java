@@ -24,7 +24,7 @@ public class CursorEntity extends Entity {
         RenderComponent renderComponent = new RenderComponent();
         try {
             renderComponent.addRenderObject(new ImageObject(new Point(1920 / 2, 1080 / 2), new Rectangle(1920 / 2, 1080 / 2, 50, 50),
-                    Layer.CURSOR, ImageIO.read(new File("game/res/cursor.png"))));
+                    Layer.CURSOR, ImageIO.read(new File("res/cursor.png"))));
         } catch (IOException e) {
             e.printStackTrace();
         }

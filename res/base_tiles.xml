@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tileset name="tiles" tilewidth="16" tileheight="16" tilecount="3" columns="0">
+ <grid width="1" height="1"/>
+ <tile id="0">
+  <image width="16" height="16" source="res/tiles/cable.png"
+         description="Cables can be used to connect components with each other."/>
+ </tile>
+ <tile id="1">
+  <image width="16" height="16" source="res/tiles/concrete.png"/>
+ </tile>
+ <tile id="2">
+  <image width="16" height="16" source="res/tiles/wall.png"/>
+ </tile>
+ <tile id="200" type="CPU">
+  <image width="32" height="32" source="res/avionics/default.png"/>
+ </tile>
+ <tile id="201" type="SENSOR">
+  <image width="32" height="32" source="res/avionics/sensor.png" description="@20" minNonPassive="1"/>
+ </tile>
+ <tile id="202" type="SENSOR">
+  <image width="32" height="32" source="res/avionics/sensor.png" description="@25" minNonPassive="1"/>
+ </tile>
+ <tile id="203" type="CPU">
+  <image width="32" height="32" source="res/avionics/crdc.png" description="@21" minNonPassive="1"/>
+ </tile>
+ <tile id="204" type="CPU">
+  <image width="32" height="32" source="res/avionics/crdc.png" description="@26" minNonPassive="1"/>
+ </tile>
+ <tile id="205" type="ACTUATOR">
+  <image width="32" height="32" source="res/avionics/actuator.png" description="@22" minNonPassive="1"/>
+ </tile>
+ <tile id="206" type="VOTE">
+  <image width="32" height="32" source="res/avionics/voter.png" description="@23" minNonPassive="1"/>
+ </tile>
+ <tile id="207" type="SENSOR">
+  <image width="32" height="32" source="res/avionics/sensor_duplex.png" description="@24" minNonPassive="1"/>
+ </tile>
+ <tile id="208" type="ACTUATOR">
+  <image width="32" height="32" source="res/avionics/actuator.png" description="@27" minNonPassive="1"/>
+ </tile>
+ <tile id="1000">
+  <image width="32" height="32" source="res/tiles/air.png"/>
+ </tile>
+ <tile id="500" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red.png"/>
+ </tile>
+ <tile id="50000" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-left-left.png"/>
+ </tile>
+ <tile id="50001" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-left-top.png"/>
+ </tile>
+ <tile id="50002" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-left-right.png"/>
+ </tile>
+ <tile id="50003" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-left-bottom.png"/>
+ </tile>
+ <tile id="50010" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-top-left.png"/>
+ </tile>
+ <tile id="50011" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-top-top.png"/>
+ </tile>
+ <tile id="50012" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-top-right.png"/>
+ </tile>
+ <tile id="50013" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-top-bottom.png"/>
+ </tile>
+ <tile id="50020" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-right-left.png"/>
+ </tile>
+ <tile id="50021" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-right-top.png"/>
+ </tile>
+ <tile id="50022" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-right-right.png"/>
+ </tile>
+ <tile id="50023" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-right-bottom.png"/>
+ </tile>
+ <tile id="50030" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-bottom-left.png"/>
+ </tile>
+ <tile id="50031" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-bottom-top.png"/>
+ </tile>
+ <tile id="50032" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-bottom-right.png"/>
+ </tile>
+ <tile id="50033" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-red-bottom-bottom.png"/>
+ </tile>
+ <tile id="501" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue.png"/>
+ </tile>
+ <tile id="50100" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-left-left.png"/>
+ </tile>
+ <tile id="50101" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-left-top.png"/>
+ </tile>
+ <tile id="50102" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-left-right.png"/>
+ </tile>
+ <tile id="50103" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-left-bottom.png"/>
+ </tile>
+ <tile id="50110" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-top-left.png"/>
+ </tile>
+ <tile id="50111" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-top-top.png"/>
+ </tile>
+ <tile id="50112" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-top-right.png"/>
+ </tile>
+ <tile id="50113" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-top-bottom.png"/>
+ </tile>
+ <tile id="50120" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-right-left.png"/>
+ </tile>
+ <tile id="50121" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-right-top.png"/>
+ </tile>
+ <tile id="50122" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-right-right.png"/>
+ </tile>
+ <tile id="50123" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-right-bottom.png"/>
+ </tile>
+ <tile id="50130" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-bottom-left.png"/>
+ </tile>
+ <tile id="50131" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-bottom-top.png"/>
+ </tile>
+ <tile id="50132" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-bottom-right.png"/>
+ </tile>
+ <tile id="50133" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-blue-bottom-bottom.png"/>
+ </tile>
+ <tile id="502" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green.png"/>
+ </tile>
+ <tile id="50200" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-left-left.png"/>
+ </tile>
+ <tile id="50201" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-left-top.png"/>
+ </tile>
+ <tile id="50202" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-left-right.png"/>
+ </tile>
+ <tile id="50203" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-left-bottom.png"/>
+ </tile>
+ <tile id="50210" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-top-left.png"/>
+ </tile>
+ <tile id="50211" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-top-top.png"/>
+ </tile>
+ <tile id="50212" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-top-right.png"/>
+ </tile>
+ <tile id="50213" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-top-bottom.png"/>
+ </tile>
+ <tile id="50220" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-right-left.png"/>
+ </tile>
+ <tile id="50221" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-right-top.png"/>
+ </tile>
+ <tile id="50222" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-right-right.png"/>
+ </tile>
+ <tile id="50223" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-right-bottom.png"/>
+ </tile>
+ <tile id="50230" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-bottom-left.png"/>
+ </tile>
+ <tile id="50231" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-bottom-top.png"/>
+ </tile>
+ <tile id="50232" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-bottom-right.png"/>
+ </tile>
+ <tile id="50233" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-green-bottom-bottom.png"/>
+ </tile>
+ <tile id="503" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow.png"/>
+ </tile>
+ <tile id="50300" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-left-left.png"/>
+ </tile>
+ <tile id="50301" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-left-top.png"/>
+ </tile>
+ <tile id="50302" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-left-right.png"/>
+ </tile>
+ <tile id="50303" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-left-bottom.png"/>
+ </tile>
+ <tile id="50310" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-top-left.png"/>
+ </tile>
+ <tile id="50311" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-top-top.png"/>
+ </tile>
+ <tile id="50312" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-top-right.png"/>
+ </tile>
+ <tile id="50313" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-top-bottom.png"/>
+ </tile>
+ <tile id="50320" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-right-left.png"/>
+ </tile>
+ <tile id="50321" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-right-top.png"/>
+ </tile>
+ <tile id="50322" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-right-right.png"/>
+ </tile>
+ <tile id="50323" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-right-bottom.png"/>
+ </tile>
+ <tile id="50330" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-bottom-left.png"/>
+ </tile>
+ <tile id="50331" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-bottom-top.png"/>
+ </tile>
+ <tile id="50332" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-bottom-right.png"/>
+ </tile>
+ <tile id="50333" type="CABLE">
+  <image width="32" height="32" source="res/tiles/cable-yellow-bottom-bottom.png"/>
+ </tile>
+</tileset>
