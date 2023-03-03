@@ -3,6 +3,7 @@ package game;
 import engine.Game;
 import engine.ecs.system.ActionSystem;
 import engine.ecs.system.CollisionDetectionSystem;
+import engine.input.gamepad.GamePadAdapter;
 import engine.resource.lang.LanguageType;
 import game.handler.builder.BuildHandler;
 import game.handler.CursorSelectorHandler;

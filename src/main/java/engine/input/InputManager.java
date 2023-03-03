@@ -1,7 +1,10 @@
 package engine.input;
 
+import com.badlogic.gdx.Input;
 import engine.Game;
 import engine.ecs.entity.Entity;
+import engine.input.gamepad.GamePadAdapter;
+import engine.input.gamepad.InputAction;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 
@@ -10,31 +13,51 @@ import java.awt.event.MouseEvent;
 import java.util.*;
 
 public class InputManager {
+    private final GamePadAdapter gamePadAdapter;
     private final ArrayList<KeyEvent> keyEvents;
     private final ArrayList<MouseEvent> mouseEvents;
+    private ArrayList<InputAction> gamePadEvents;
 
     private ArrayList<Handler> handlers;
-    //TODO: implement game pad events and a game pad adapter
-    //private ArrayList<GamePadEvent> gamePadEvents;
 
     public InputManager() {
+        gamePadAdapter = new GamePadAdapter();
         keyEvents = new ArrayList<>();
         mouseEvents = new ArrayList<>();
+        gamePadEvents = new ArrayList<>();
         handlers = new ArrayList<>();
     }
 
+    /**
+     * Handle inputs from mouse, keyboard and controllers
+     */
     public void handle() {
-        ArrayList<Entity> entities = (ArrayList<Entity>) Game.scene().current().getEntities().clone();
+        collectGamePadEvents();
+        while (!gamePadEvents.isEmpty()) {
+            InputAction e = gamePadEvents.get(0);
+            if (e == null) {
+                gamePadEvents.remove(e);
+                continue;
+            }
 
-        while(!keyEvents.isEmpty()) {
+            for (Handler h : (ArrayList<Handler>) handlers.clone()) {
+                if (h.getHandlerType() == HandlerType.EVENT) {
+                    h.handle(e);
+                }
+            }
+
+            gamePadEvents.remove(e);
+        }
+
+        while (!keyEvents.isEmpty()) {
             KeyEvent e = keyEvents.get(0);
-            if(e == null) {
+            if (e == null) {
                 keyEvents.remove(e);
                 continue;
             }
 
-            for(Handler h : (ArrayList<Handler>) handlers.clone()) {
-                if(h.getHandlerType() == HandlerType.EVENT)
+            for (Handler h : (ArrayList<Handler>) handlers.clone()) {
+                if (h.getHandlerType() == HandlerType.EVENT)
                     h.handle(e);
             }
 
@@ -90,12 +113,22 @@ public class InputManager {
             if(componentClass.isAssignableFrom(h.getClass())) {
                 try {
                     return componentClass.cast(h);
-                } catch(ClassCastException e) {
+                } catch (ClassCastException e) {
                     e.printStackTrace();
                 }
             }
         }
 
         return null;
+    }
+
+    public void queueEvent(InputAction e) {
+        gamePadEvents.add(e);
+    }
+
+    private void collectGamePadEvents() {
+        if (gamePadAdapter.isConnected()) {
+            gamePadEvents.addAll(gamePadAdapter.actions());
+        }
     }
 }

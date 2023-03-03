@@ -5,6 +5,7 @@ import engine.ecs.Query;
 import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.entity.Entity;
+import engine.input.gamepad.InputAction;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 
@@ -43,6 +44,11 @@ public class CollisionDetectionSystem extends Handler {
                 }
             }
         }
+    }
+
+    @Override
+    public void handle(InputAction e) {
+
     }
 
     public void recollectEntities() {

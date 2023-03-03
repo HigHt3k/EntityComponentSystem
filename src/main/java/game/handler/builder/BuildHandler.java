@@ -7,6 +7,7 @@ import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ImageObject;
 import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
+import engine.input.gamepad.InputAction;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.components.*;
@@ -488,6 +489,11 @@ public class BuildHandler extends Handler {
                 }
             }
         }
+    }
+
+    @Override
+    public void handle(InputAction e) {
+
     }
 
     private void updateConnection(Entity e, CablePortType type) {

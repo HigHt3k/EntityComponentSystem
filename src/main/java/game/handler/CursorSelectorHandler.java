@@ -5,6 +5,7 @@ import engine.IdGenerator;
 import engine.ecs.component.CursorComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.graphics.scene.Scene;
+import engine.input.gamepad.InputAction;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.entities.simulation.CursorEntity;
@@ -129,6 +130,13 @@ public class CursorSelectorHandler extends Handler {
     @Override
     public void handle(MouseEvent e) {
 
+    }
+
+    @Override
+    public void handle(InputAction e) {
+        switch (e) {
+            case A -> System.out.println("A press");
+        }
     }
 
     /**

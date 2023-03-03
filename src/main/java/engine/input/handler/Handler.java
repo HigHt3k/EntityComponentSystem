@@ -1,5 +1,7 @@
 package engine.input.handler;
 
+import engine.input.gamepad.InputAction;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
@@ -11,7 +13,10 @@ public abstract class Handler {
     }
 
     public abstract void handle(KeyEvent e);
+
     public abstract void handle(MouseEvent e);
+
+    public abstract void handle(InputAction e);
 
     public HandlerType getHandlerType() {
         return handlerType;
