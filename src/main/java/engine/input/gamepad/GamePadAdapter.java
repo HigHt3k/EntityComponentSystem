@@ -8,7 +8,11 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import static java.lang.Thread.sleep;
+
 public class GamePadAdapter {
+    private boolean ltPressed = false;
+    private boolean rtPressed = false;
 
     /**
      * Create a game pad adapter which uses jamepad library to find controllers and get their inputs
@@ -28,6 +32,11 @@ public class GamePadAdapter {
 
             if (controllers.getState(0).isConnected) {
                 while (true) {
+                    try {
+                        sleep((long) (1000/Game.config().renderConfiguration().getFrameRate()));
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
                     ControllerState currState = controllers.getState(0);
                     if (currState.a) {
                         Game.input().queueEvent(InputAction.A);
@@ -64,6 +73,22 @@ public class GamePadAdapter {
                     }
                     if(currState.leftStickY > 0.5f) {
                         Game.input().queueEvent(InputAction.MOVE_UP);
+                    }
+                    if(currState.leftTrigger > 0.5f) {
+                        if(!ltPressed) {
+                            ltPressed = true;
+                            Game.input().queueEvent(InputAction.LT);
+                        }
+                    } else {
+                        ltPressed = false;
+                    }
+                    if(currState.rightTrigger > 0.5f) {
+                        if(!rtPressed) {
+                            rtPressed = true;
+                            Game.input().queueEvent(InputAction.RT);
+                        }
+                    } else {
+                        rtPressed = false;
                     }
                 }
             }

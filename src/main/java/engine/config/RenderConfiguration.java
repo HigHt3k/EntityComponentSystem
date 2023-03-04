@@ -19,12 +19,17 @@ public class RenderConfiguration {
     private float scaleWidth = 1.0f;
     private float scaleHeight = 1.0f;
     private float scaleGrid = 1.0f;
+    private float frameRate = 244.0f;
 
     private boolean fullscreenMode = false;
     private final Object aliasingText = RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
     private final Object aliasing = RenderingHints.VALUE_ANTIALIAS_ON;
 
     private int gridPx = DEFAULT_GRID_PX;
+
+    public float getFrameRate() {
+        return frameRate;
+    }
 
     /**
      * create a new RenderConfiguration. Sets the current screen size as resolution and scaling for this screen

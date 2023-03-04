@@ -148,12 +148,26 @@ public class CursorSelectorHandler extends Handler {
         }
 
         switch(e) {
-            case A -> sendNewMouseEvent(new MouseEvent(
+            case A, RT -> sendNewMouseEvent(new MouseEvent(
                     Game.frame().getRenderPanel(),
                     MouseEvent.MOUSE_CLICKED,
                     1,
                     InputEvent.BUTTON1_MASK,
                     Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON1
+            ));
+            case B -> sendNewMouseEvent(new MouseEvent(
+                    Game.frame().getRenderPanel(),
+                    MouseEvent.MOUSE_CLICKED,
+                    1,
+                    InputEvent.BUTTON3_MASK,
+                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON3
+            ));
+            case LT -> sendNewMouseEvent(new MouseEvent(
+                    Game.frame().getRenderPanel(),
+                    MouseEvent.MOUSE_CLICKED,
+                    1,
+                    InputEvent.BUTTON2_MASK,
+                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON2
             ));
         }
     }
