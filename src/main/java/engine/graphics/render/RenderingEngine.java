@@ -103,17 +103,25 @@ public class RenderingEngine {
         g.setFont(font);
 
         int maxWidth = width - 2 * MARGIN;
+        int rows = 1;
 
         // reformat the string
         StringBuilder tempLine = new StringBuilder();
         String tempWord = "";
         StringBuilder newText = new StringBuilder();
         for (int i = 0; i < text.length(); i++) {
+            if (rows * g.getFontMetrics().getHeight() > height) {
+                TextRenderer.render(g, newText.toString(), color, font, new Point(x + MARGIN, y));
+                break;
+            }
             tempWord += text.charAt(i);
             if (Character.isWhitespace(text.charAt(i)) || Character.isSpaceChar(text.charAt(i))) {
                 if (g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
-                    newText.append(tempLine).append("\n");
-                    tempLine = new StringBuilder();
+                    rows++;
+                    if (rows * g.getFontMetrics().getHeight() <= height) {
+                        newText.append(tempLine).append("\n");
+                        tempLine = new StringBuilder();
+                    }
                 } else {
                     tempLine.append(tempWord);
                     tempWord = "";
@@ -123,6 +131,7 @@ public class RenderingEngine {
 
         if (g.getFontMetrics().stringWidth(String.valueOf(tempLine)) + g.getFontMetrics().stringWidth(tempWord) > maxWidth) {
             newText.append(tempLine).append("\n").append(tempWord);
+            rows++;
         } else {
             tempLine.append(tempWord);
             newText.append(tempLine);
