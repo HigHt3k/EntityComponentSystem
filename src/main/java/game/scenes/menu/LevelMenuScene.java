@@ -3,21 +3,21 @@ package game.scenes.menu;
 import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.action.ActionComponent;
-import engine.ecs.component.action.ExitAction;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.RenderComponent;
-import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
-import engine.ecs.entity.GenericButton;
-import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.colorpalettes.ColorPalette;
 import engine.resource.fonts.FontCollection;
 import engine.resource.score.HighScore;
 import game.action.ShowLevelInfoAction;
-import game.entities.ui.*;
+import game.entities.ui.LevelImageButton;
+import game.entities.ui.LineEntity;
+import game.entities.ui.SimplePanel;
+import game.entities.ui.TextBody;
+import game.scenes.base.BaseMenuScene;
 import game.scenes.game.GameScene;
 
 import javax.imageio.ImageIO;
@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class LevelScene extends Scene {
+public class LevelMenuScene extends BaseMenuScene {
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
     private final Entity highscoreView;
@@ -37,52 +37,13 @@ public class LevelScene extends Scene {
     private final Entity levelInfoDesc;
     private final Entity levelInfoHead;
 
-    public void addHighscores(int levelId) {
-        StringBuilder players = new StringBuilder();
-        StringBuilder highscores = new StringBuilder();
-
-        for (HighScore hs : Game.res().score().getLevelScores(levelId)) {
-            players.append(hs.getName()).append("\n");
-            highscores.append(hs.getScore()).append("\n");
-        }
-
-        ((TextObject) playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(players.toString());
-        ((TextObject) highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(highscores.toString());
-    }
-
-    public void removeHighscores() {
-        ((TextObject) playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-    }
-
-    public void showLevelInfo(int levelId) {
-        GameScene s = (GameScene) Game.scene().getScene(levelId);
-
-        ((TextObject) levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(s.getName());
-        ((TextObject) levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(String.valueOf(s.getDifficulty()));
-    }
-
-    public void removeLevelInfo() {
-        ((TextObject) levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-    }
-
-    public LevelScene(String name, int id) {
+    public LevelMenuScene(String name, int id) {
         super(name, id);
 
         Font font = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
         Game.res().score().loadScores("res/scores/highscores.xml");
 
         // Create the Menu GUI
-
-        try {
-            ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/cablesBackground.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
-            addEntityToScene(background);
-        } catch (IOException e) {
-            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
-        }
-
         Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
         Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
 
@@ -156,26 +117,6 @@ public class LevelScene extends Scene {
         addLevel(25, 1000, 800, red);
         makeConnections();
         unlockAll();
-
-        GenericButton mainMenuButton = new GenericButton(
-                "Menu_button",
-                IdGenerator.generateId(),
-                1600, 800,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "@4",
-                font, new StartAction(-255),
-                Bit8.CHROME,null, null
-        );
-        this.addEntityToScene(mainMenuButton);
-
-        GenericButton exitButton = new GenericButton(
-                "Exit", IdGenerator.generateId(),
-                1600, 900,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "@3", font, new ExitAction(),
-                Bit8.CHROME,null, null
-        );
-        addEntityToScene(exitButton);
     }
 
     public void unlockLevel(int id) {
@@ -274,5 +215,25 @@ public class LevelScene extends Scene {
         Entity line = new LineEntity("line_connector", IdGenerator.generateId(),
                 new Point(p1.x + 25, p1.y + 25), new Point(p2.x + 25, p2.y + 25), 4, Bit8.GREY);
         addEntityToScene(line);
+    }
+
+    public void addHighscores(int levelId) {
+        StringBuilder players = new StringBuilder();
+        StringBuilder highscores = new StringBuilder();
+
+        for (HighScore hs : Game.res().score().getLevelScores(levelId)) {
+            players.append(hs.getName()).append("\n");
+            highscores.append(hs.getScore()).append("\n");
+        }
+
+        ((TextObject) playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(players.toString());
+        ((TextObject) highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(highscores.toString());
+    }
+
+    public void showLevelInfo(int levelId) {
+        GameScene s = (GameScene) Game.scene().getScene(levelId);
+
+        ((TextObject) levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(s.getName());
+        ((TextObject) levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(String.valueOf(s.getDifficulty()));
     }
 }

@@ -13,7 +13,7 @@ import game.components.GridComponent;
 import game.components.SimulationComponent;
 import game.handler.simulation.SimulationType;
 import game.scenes.game.BuildScene;
-import game.scenes.Difficulty;
+import game.scenes.util.Difficulty;
 import game.scenes.game.GameScene;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

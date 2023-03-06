@@ -24,7 +24,8 @@ import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
 import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
-import game.scenes.GridSize;
+import game.scenes.base.BaseGameFieldScene;
+import game.scenes.util.GridSize;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -32,18 +33,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BuildScene extends Scene {
+public class BuildScene extends BaseGameFieldScene {
     private final int ITEM_MARGIN = 20;
     private final int ITEM_WIDTH = 300;
     private final int ITEM_HEIGHT = 60;
-    private int X_MARGIN = 200;
-    private int Y_MARGIN = 300;
-    private final Color TEXT_COLOR = new Color(20, 20, 20, 255);
-    private final Color BOX_COLOR = new Color(200, 90, 0, 240);
-    private final Color BOX_BORDER_COLOR = new Color(40, 40, 40, 255);
-    private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
     private final int DESIGN_CELL_SIZE = 100;
-    private int CELL_SIZE = DESIGN_CELL_SIZE;
     private final int BUILD_CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
     private final double goal = 10e-4;
@@ -52,22 +46,6 @@ public class BuildScene extends Scene {
     private final int BUILD_PANEL_X_MARGIN = 25;
 
     public GridSize gridSize = new GridSize(2, 2);
-
-    private int accGoal;
-    private int sensGoal;
-    private int cGoal;
-
-    public int getAccGoal() {
-        return accGoal;
-    }
-
-    public int getcGoal() {
-        return cGoal;
-    }
-
-    public int getSensGoal() {
-        return sensGoal;
-    }
 
     public BuildScene(String name, int id) {
         super(name, id);
@@ -90,35 +68,6 @@ public class BuildScene extends Scene {
         addToBuildPanel(503, 1000, 0, 1, 0, 0f);
     }
 
-    public int getxMax() {
-        return gridSize.x;
-    }
-
-    public int getyMax() {
-        return gridSize.y;
-    }
-
-    public void updateGridSize() {
-        if (gridSize.x > gridSize.y && (gridSize.x > 7 || gridSize.y > 5)) {
-            CELL_SIZE = DESIGN_CELL_SIZE * 7 / gridSize.x;
-        } else if (gridSize.x > 7 || gridSize.y > 5) {
-            CELL_SIZE = DESIGN_CELL_SIZE * 5 / gridSize.y;
-        } else {
-            CELL_SIZE = DESIGN_CELL_SIZE;
-        }
-
-        X_MARGIN = (1500 - gridSize.x * CELL_SIZE) / 2;
-        Y_MARGIN = (850 - gridSize.y * CELL_SIZE) / 2;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public double getGoal() {
-        return goal;
-    }
-
     @Override
     public void init() {
         updateGridSize();
@@ -132,96 +81,13 @@ public class BuildScene extends Scene {
     }
 
     /**
-     * add an Entity that snaps to the grid. This method can e.g. be called from the {@link ResourceManager} to parse
-     * the level.XML file to the actual {@link GameScene}.
-     * A {@link GridComponent} is added to the Entity to store the grid position data, which can be called to validate entities against
-     * each other without having to calculate their grid position based on the actual screen position.
-     * @param x: x position in the grid
-     * @param y: y position in the grid
-     */
-    public void addGridElement(int x, int y) {
-        GridEntity gridEntity = new GridEntity("grid_element_" + x + ":" + y, IdGenerator.generateId(),
-                X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
-                x, y,
-                Game.res().loadTile(1)
-        );
-        addEntityToScene(gridEntity);
-    }
-
-    public void removeAlLGridElementsOutside() {
-        System.out.println(gridSize.x + " - " + gridSize.y);
-        for(Entity e : new ArrayList<>(getEntities())) {
-            if(e.getComponent(GridComponent.class) != null) {
-                System.out.println(e.getComponent(GridComponent.class).getGridLocation());
-                if (e.getComponent(GridComponent.class).getGridLocation().getX() >= gridSize.x) {
-                    removeEntityFromScene(e);
-                    continue;
-                }
-                if (e.getComponent(GridComponent.class).getGridLocation().getY() >= gridSize.y) {
-                    removeEntityFromScene(e);
-                    continue;
-                }
-            }
-        }
-    }
-
-    public void updateGridSize(int some) {
-        for (int xx = 0; xx < gridSize.x; xx++) {
-            for (int yy = 0; yy < gridSize.y; yy++) {
-                boolean isSet = false;
-                for (Entity e : getEntities()) {
-                    if (e.getComponent(GridComponent.class) != null
-                            && e.getComponent(GridComponent.class).getGridLocation().getY() == yy
-                            && e.getComponent(GridComponent.class).getGridLocation().getX() == xx) {
-                        isSet = true;
-                    }
-                }
-                if (!isSet) {
-                    addGridElement(xx, yy);
-                }
-            }
-        }
-
-        removeAlLGridElementsOutside();
-        updateGridSize();
-        updateEntitySize();
-    }
-
-    private void updateEntitySize() {
-        for(Entity e : getEntities()) {
-            if (e.getComponent(RenderComponent.class) == null) {
-                continue;
-            }
-
-            if (e.getComponent(GridComponent.class) == null) {
-                continue;
-            }
-            int x = (int) e.getComponent(GridComponent.class).getGridLocation().getX();
-            int y = (int) e.getComponent(GridComponent.class).getGridLocation().getY();
-            Rectangle bounds = new Rectangle(X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-            for (RenderObject r : e.getComponent(RenderComponent.class).getRenderObjects()) {
-                r.setLocation(bounds.getLocation());
-                r.setBounds(bounds);
-            }
-            for (CollisionObject c : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
-                c.setCollisionBoundaries(bounds);
-            }
-        }
-    }
-
-    public int getCellSize() {
-        return CELL_SIZE;
-    }
-
-    /**
      * add an Entity to the buildpanel
      * @param imgId: the entity/img id
      * @param amount: how many times can this be built?
      * @param failureRatio: failure ratio of the entity
      */
+    @Override
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted, float failureDetectionRatio) {
-
-
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
                 BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
                 850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
@@ -387,7 +253,5 @@ public class BuildScene extends Scene {
             e.printStackTrace();
         }
         addEntityToScene(plusGridSizeY);
-
-
     }
 }

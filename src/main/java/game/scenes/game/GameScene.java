@@ -29,8 +29,9 @@ import game.entities.simulation.GridEntity;
 import game.entities.simulation.SimulationEntity;
 import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
-import game.scenes.Difficulty;
-import game.scenes.helpers.BuildPanelPage;
+import game.scenes.base.BaseGameFieldScene;
+import game.scenes.util.Difficulty;
+import game.scenes.util.BuildPanelPage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -40,17 +41,8 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-public class GameScene extends Scene {
-    private final int ITEM_MARGIN = 80;
-    private final int BUTTON_ITEM_MARGIN = 20;
-    private final int ITEM_WIDTH = 230;
-    private final int ITEM_HEIGHT = 60;
-    private int X_MARGIN = 200;
-    private int Y_MARGIN = 300;
-    private final Color TEXT_COLOR = Bit8.DARK_GREY;
+public class GameScene extends BaseGameFieldScene {
     private boolean unlocked = false;
-    private int nextNewPage = -1;
-    private int currentPageShown = 0;
 
     // Category colors
     private final Color NSE = Bit8.CORNFLOWER_BLUE;
@@ -64,12 +56,8 @@ public class GameScene extends Scene {
     private final ArrayList<Integer> unlocksNeeded = new ArrayList<>();
 
     private final int DESIGN_CELL_SIZE = 128;
-    private int CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
-    private ArrayList<String> descriptions;
     private double goal = 10e-4;
-    private int numberOfBuildPanelElements = 0;
-    private Entity currentlyBuilding = null;
     private int score = 0;
     private int tries = 0;
 
@@ -85,17 +73,9 @@ public class GameScene extends Scene {
     private Entity failTipDesc;
     private Entity acceptedOOCTipDesc;
     private Entity correctSignalsTipDesc;
-    private Entity aircraft;
     private int currentlyDisplayedDescriptionPart = 0;
 
     private boolean levelPassed = false;
-
-    private int xMax;
-    private int yMax;
-
-    private int accGoal;
-    private int sensGoal;
-    private int cGoal;
 
     private final ArrayList<BuildPanelPage> pages = new ArrayList<>();
 
@@ -110,22 +90,6 @@ public class GameScene extends Scene {
         setupBuildPanel();
         //TODO: move init()?
 
-        try {
-            ImageEntity background = new ImageEntity("Background", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/backgrounds/sky-not-animated.png")), 0, 0, 1920, 1080, Layer.BACKGROUND);
-            addEntityToScene(background);
-        } catch (IOException e) {
-            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
-        }
-
-        try {
-            ImageEntity aircraftGameScene = new ImageEntity("aircraftGameScene", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/backgrounds/aircraft-game-scene.png")), X_MARGIN - 120,
-                    Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.GAMELAYER1);
-            addEntityToScene(aircraftGameScene);
-        } catch (IOException e) {
-            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
-        }
     }
 
     public boolean isUnlocked() {
@@ -176,30 +140,6 @@ public class GameScene extends Scene {
         this.levelPassed = levelPassed;
     }
 
-    public void setGridSize(int x, int y) {
-        //CELL_SIZE = 750/y;
-        xMax = x;
-        yMax = y;
-        updateGridSize();
-        updateEntitySize();
-    }
-
-    /**
-     * get the currently built entity
-     * @return: the entity
-     */
-    public Entity getCurrentlyBuilding() {
-        return currentlyBuilding;
-    }
-
-    /**
-     * set the currently built entity
-     * @param entity: the entity
-     */
-    public void setCurrentlyBuilding(Entity entity) {
-        currentlyBuilding = entity;
-    }
-
     /**
      * initialize the game scene; sets up the description panel and buttons
      */
@@ -214,167 +154,11 @@ public class GameScene extends Scene {
         addToBuildPanel(503, 1000, 0, 1, 0, 0f);
     }
 
-    private void updateEntitySize() {
-        for(Entity e : getEntities()) {
-            if (e.getComponent(RenderComponent.class) == null) {
-                continue;
-            }
-
-            if (e.getComponent(GridComponent.class) == null) {
-                continue;
-            }
-            int x = (int) e.getComponent(GridComponent.class).getGridLocation().getX();
-            int y = (int) e.getComponent(GridComponent.class).getGridLocation().getY();
-            Rectangle bounds = new Rectangle(X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE);
-            for (RenderObject r : e.getComponent(RenderComponent.class).getRenderObjects()) {
-                r.setLocation(bounds.getLocation());
-                r.setBounds(bounds);
-            }
-            for (CollisionObject c : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
-                c.setCollisionBoundaries(bounds);
-            }
-        }
-    }
-
-    /**
-     * set the description of the game scene
-     * @param description: the description
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDescriptions(ArrayList<String> descriptions) {
-        this.descriptions = descriptions;
-    }
-
-    /**
-     * set the goal of the level
-     * @param goal: target failure rate
-     */
-    public void setGoal(double goal) {
-        this.goal = goal;
-    }
-
-    /**
-     * @return the description as defined in the level.xml data
-     */
-    public String getDescription() {
-        return description;
-    }
-
     @Override
     public void update() {
         for(Entity e : getEntities()) {
             e.update();
         }
-    }
-
-
-
-    /**
-     * add an Entity that snaps to the grid. This method can e.g. be called from the {@link ResourceManager} to parse
-     * the level.XML file to the actual {@link GameScene}.
-     * A {@link GridComponent} is added to the Entity to store the grid position data, which can be called to validate entities against
-     * each other without having to calculate their grid position based on the actual screen position.
-     * @param x: x position in the grid
-     * @param y: y position in the grid
-     */
-    public void addGridElement(int x, int y) {
-        GridEntity gridEntity = new GridEntity("grid_element_" + x + ":" + y, IdGenerator.generateId(),
-                X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
-                x, y,
-                Game.res().loadTile(1)
-        );
-        addEntityToScene(gridEntity);
-    }
-
-    /**
-     * adds a SimulationEntity to the scene
-     * @param x: grid position at x
-     * @param y: grid position at y
-     * @param imgId: entity / image id
-     * @param failureRatio: failure ratio of the entity
-     * @param removable: can be removed or not
-     */
-    public void addSimulationElement(int x, int y, int imgId, float failureRatio,
-                                     int correctSignalsNeeded, int outOfControlSignalsAccepted, boolean removable, float failureDetectionRatio) {
-        if(Game.res().getTileSet().getType(imgId) == SimulationType.CPU) {
-            SimulationEntity simulationEntity = new SimulationEntity(
-                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
-                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
-                    x, y,
-                    Game.res().loadTile(imgId),imgId,
-                    failureRatio, Game.res().getTileSet().getType(imgId),
-                    correctSignalsNeeded, outOfControlSignalsAccepted,
-                    new int[] {0,1,2,3}, new int[] {0,1,2,3}, removable, failureDetectionRatio
-            );
-            addEntityToScene(simulationEntity);
-        } else if(Game.res().getTileSet().getType(imgId) == SimulationType.SENSOR) {
-            SimulationEntity simulationEntity = new SimulationEntity(
-                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
-                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
-                    x, y,
-                    Game.res().loadTile(imgId),imgId,
-                    failureRatio, Game.res().getTileSet().getType(imgId),
-                    correctSignalsNeeded, outOfControlSignalsAccepted,
-                    new int[] {}, new int[] {0,1,2,3}, removable, failureDetectionRatio
-            );
-            addEntityToScene(simulationEntity);
-        } else if(Game.res().getTileSet().getType(imgId) == SimulationType.ACTUATOR) {
-            SimulationEntity simulationEntity = new SimulationEntity(
-                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
-                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
-                    x, y,
-                    Game.res().loadTile(imgId),imgId,
-                    failureRatio, Game.res().getTileSet().getType(imgId),
-                    correctSignalsNeeded, outOfControlSignalsAccepted,
-                    new int[] {0,1,2,3}, new int[] {}, removable, failureDetectionRatio
-            );
-            addEntityToScene(simulationEntity);
-        } else if(Game.res().getTileSet().getType(imgId) == SimulationType.CABLE) {
-            SimulationEntity simulationEntity = new SimulationEntity(
-                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
-                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
-                    x, y,
-                    Game.res().loadTile(imgId),imgId,
-                    failureRatio, Game.res().getTileSet().getType(imgId),
-                    0, 0,
-                    new int[] {imgId - 500}, new int[] {imgId - 500}, removable, failureDetectionRatio
-            );
-            addEntityToScene(simulationEntity);
-        }
-    }
-
-    /**
-     * add an Entity to the buildpanel
-     *
-     * @param imgId:        the entity/img id
-     * @param amount:       how many times can this be built?
-     * @param failureRatio: failure ratio of the entity
-     */
-    public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded,
-                                int outOfControlSignalsAccepted, float failureDetectionRatio) {
-        // create new page
-        if (numberOfBuildPanelElements % 6 == 0) {
-            numberOfBuildPanelElements = 0;
-            nextNewPage++;
-            pages.add(new BuildPanelPage(nextNewPage));
-        }
-
-        BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
-                160 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 839, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
-                Game.res().loadTile(imgId), imgId,
-                amount, failureRatio,
-                Game.res().getTileSet().getType(imgId),
-                correctSignalsNeeded, outOfControlSignalsAccepted,
-                Game.res().loadDescription(imgId), failureDetectionRatio
-        );
-        buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId - 500);
-        addEntityToScene(buildPanelEntity);
-        pages.get(nextNewPage).addToPage(buildPanelEntity);
-        updateBuildPanel();
-        numberOfBuildPanelElements++;
     }
 
     /**
@@ -407,70 +191,6 @@ public class GameScene extends Scene {
             throw new RuntimeException(e);
         }
         this.addEntityToScene(mainMenuButton);
-    }
-
-    /**
-     * Update the grid size / cell size
-     */
-    public void updateGridSize() {
-        if(xMax > yMax && (xMax > 7 || yMax > 5)) {
-            CELL_SIZE = DESIGN_CELL_SIZE * 7 / xMax;
-        } else if (xMax > 7 || yMax > 5) {
-            CELL_SIZE = DESIGN_CELL_SIZE * 5 / yMax;
-        } else {
-            CELL_SIZE = DESIGN_CELL_SIZE;
-        }
-
-        X_MARGIN = (1500 - xMax * CELL_SIZE) / 2;
-        Y_MARGIN = (850 - yMax * CELL_SIZE) / 2;
-    }
-
-    /**
-     * Set the next build panel page
-     */
-    public void nextBuildPanelPage() {
-        int maxPages = pages.size() - 1;
-        currentPageShown += 1;
-        if (currentPageShown > maxPages) {
-            currentPageShown = 0;
-        }
-        updateBuildPanel();
-    }
-
-    /**
-     * Set the previous build panel page
-     */
-    public void prevBuildPanelPage() {
-        currentPageShown -= 1;
-        if (currentPageShown < 0) {
-            currentPageShown = pages.size() - 1;
-        }
-        updateBuildPanel();
-    }
-
-    /**
-     * Update the build panel entities (hide graphics and deactivate colliders for pages that are not shown)
-     */
-    public void updateBuildPanel() {
-        for (BuildPanelPage page : pages) {
-            for (Entity e : page.getEntitiesInPage()) {
-                for (RenderObject ro : e.getComponent(RenderComponent.class).getRenderObjects()) {
-                    if (page.getPageId() == currentPageShown) {
-                        ro.setHidden(false);
-                    } else {
-                        ro.setHidden(true);
-                    }
-                }
-
-                for (CollisionObject co : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
-                    if (page.getPageId() == currentPageShown) {
-                        co.setDeactivated(false);
-                    } else {
-                        co.setDeactivated(true);
-                    }
-                }
-            }
-        }
     }
 
     /**
@@ -671,32 +391,6 @@ public class GameScene extends Scene {
         }
     }
 
-    public int getCellSize() {
-        return CELL_SIZE;
-    }
-
-    public void setGoal(int act, int sens, int c) {
-        this.accGoal = act;
-        this.sensGoal = sens;
-        this.cGoal = c;
-    }
-
-    public int getAccGoal() {
-        return accGoal;
-    }
-
-    public int getSensGoal() {
-        return sensGoal;
-    }
-
-    public int getcGoal() {
-        return cGoal;
-    }
-
-    public double getGoal() {
-        return goal;
-    }
-
     public Entity getAcceptedOOCTipText() {
         return acceptedOOCTipText;
     }
@@ -872,43 +566,5 @@ public class GameScene extends Scene {
                 new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionScorePassive, 1080 / 2 - 100), Bit8.CORNFLOWER_BLUE)
         );
         addEntityToScene(scoreScale);
-    }
-
-    /**
-     * play an animation while the system is calculating
-     */
-    public void playAircraftAnimation() {
-        if (aircraft == null) {
-            return;
-        }
-        Rectangle prevBounds = (Rectangle) aircraft.getComponent(RenderComponent.class).getRenderObjects().get(0).getBounds();
-        int newX;
-        if (prevBounds.x + 1 > 1920) {
-            newX = 0;
-        } else {
-            newX = prevBounds.x + 1;
-        }
-        aircraft.getComponent(RenderComponent.class).reposition(new Point(newX, prevBounds.y));
-    }
-
-    /**
-     * set the objects for the aircraft flying animation
-     */
-    public void setAircraftAnimation() {
-        try {
-            aircraft = new ImageEntity("Aircraft", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/aircraft.png")), 0, 1080 / 2, 500, 200, Layer.GAMELAYER3);
-            addEntityToScene(aircraft);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Remove the aircraft animation
-     */
-    public void removeAircraftAnimation() {
-        removeEntityFromScene(aircraft);
-        aircraft = null;
     }
 }

@@ -1,4 +1,4 @@
-package game.scenes;
+package game.scenes.util;
 
 public enum Difficulty {
     TUTORIAL,

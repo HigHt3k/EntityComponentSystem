@@ -7,9 +7,8 @@ import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.*;
 import engine.ecs.entity.Entity;
 import engine.resource.colorpalettes.Bit8;
-import engine.resource.fonts.FontCollection;
 import game.action.GridSizeXAction;
-import game.scenes.GridSize;
+import game.scenes.util.GridSize;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

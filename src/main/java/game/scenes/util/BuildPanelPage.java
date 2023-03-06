@@ -1,4 +1,4 @@
-package game.scenes.helpers;
+package game.scenes.util;
 
 import engine.ecs.entity.Entity;
 

@@ -1,4 +1,4 @@
-package game.scenes;
+package game.scenes.util;
 
 public class GridSize {
     public int x;

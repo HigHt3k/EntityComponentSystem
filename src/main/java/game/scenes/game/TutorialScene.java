@@ -1,6 +1,6 @@
 package game.scenes.game;
 
-import game.scenes.Difficulty;
+import game.scenes.util.Difficulty;
 
 public class TutorialScene extends GameScene {
     /**
