@@ -87,7 +87,6 @@ public class GameScene extends BaseGameFieldScene {
     public GameScene(String name, int id, Difficulty difficulty) {
         super(name, id);
         this.difficulty = difficulty;
-        setupBuildPanel();
         //TODO: move init()?
 
     }
@@ -146,7 +145,6 @@ public class GameScene extends BaseGameFieldScene {
     public void init() {
         // Create the GUI including buttons going back to menu, exit etc.
         setupDescriptionPanel();
-        setupButtons();
         //TODO: move cable to xml? so only the necessary choices are shown
         addToBuildPanel(500, 1000, 0, 1, 0, 0f);
         addToBuildPanel(501, 1000, 0, 1, 0, 0f);
@@ -158,65 +156,6 @@ public class GameScene extends BaseGameFieldScene {
     public void update() {
         for(Entity e : getEntities()) {
             e.update();
-        }
-    }
-
-    /**
-     * setup method for buttons in the GameScene
-     */
-    private void setupButtons() {
-        GenericButton exitButton = null;
-        try {
-            exitButton = new GenericButton(
-                    "Exit",
-                    IdGenerator.generateId(),
-                    20, 40,
-                    64, 64, new ExitAction(),
-                    ImageIO.read(new File("res/menus/gui/buttons/exit_button.png")));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        this.addEntityToScene(exitButton);
-
-        GenericButton mainMenuButton = null;
-        try {
-            mainMenuButton = new GenericButton(
-                    "Menu_button",
-                    IdGenerator.generateId(),
-                    100, 40,
-                    64, 64,new StartAction(Game.scene().getScene(-255)),
-                    ImageIO.read(new File("res/menus/gui/buttons/menu_icon.png"))
-            );
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        this.addEntityToScene(mainMenuButton);
-    }
-
-    /**
-     * Setup method for the build panel
-     */
-    private void setupBuildPanel() {
-        try {
-            ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/blueprint8bit.png")), 0, 800, 1500, 1080 - 850, Layer.UI);
-            addEntityToScene(buildPanel);
-
-            GenericButton leftButton = new GenericButton("left_build_panel", IdGenerator.generateId(),
-                    85, 890, 40, 40,
-                    new BuildPanelChangeAction(BuildPanelChange.LEFT),
-                    ImageIO.read(new File("res/menus/gui/button_left.png")));
-
-            addEntityToScene(leftButton);
-
-            GenericButton rightButton = new GenericButton("right_build_panel", IdGenerator.generateId(),
-                    1355, 890, 40, 40,
-                    new BuildPanelChangeAction(BuildPanelChange.RIGHT),
-                    ImageIO.read(new File("res/menus/gui/button_right.png")));
-            addEntityToScene(rightButton);
-
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
