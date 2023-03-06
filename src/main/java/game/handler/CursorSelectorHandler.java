@@ -9,6 +9,7 @@ import engine.input.gamepad.InputAction;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
 import game.entities.simulation.CursorEntity;
+import game.handler.builder.BuildHandler;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
@@ -169,6 +170,22 @@ public class CursorSelectorHandler extends Handler {
                     InputEvent.BUTTON2_MASK,
                     Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON2
             ));
+            case RB -> {
+                BuildHandler buildHandler = Game.input().getHandler(BuildHandler.class);
+                int curLayer = buildHandler.getCurrentCableLayer();
+
+                if (curLayer < 3) {
+                    buildHandler.setCurrentCableLayer(curLayer + 1);
+                }
+            }
+            case LB -> {
+                BuildHandler buildHandler = Game.input().getHandler(BuildHandler.class);
+                int curLayer = buildHandler.getCurrentCableLayer();
+
+                if (curLayer > 0) {
+                    buildHandler.setCurrentCableLayer(curLayer - 1);
+                }
+            }
         }
     }
 

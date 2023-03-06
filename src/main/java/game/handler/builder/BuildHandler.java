@@ -40,13 +40,21 @@ public class BuildHandler extends Handler {
         super(HandlerType.EVENT);
     }
 
+    public int getCurrentCableLayer() {
+        return currentCableLayer;
+    }
+
+    public void setCurrentCableLayer(int currentCableLayer) {
+        this.currentCableLayer = currentCableLayer;
+    }
+
     @Override
     public void handle(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_D) {
+        if (e.getKeyCode() == KeyEvent.VK_D) {
             printAllEntitiesGridPosition();
             return;
         }
-        if(e.getKeyCode() == KeyEvent.VK_O) {
+        if (e.getKeyCode() == KeyEvent.VK_O) {
             printAllCablePorts();
             return;
         }
