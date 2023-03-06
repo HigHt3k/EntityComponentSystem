@@ -163,83 +163,31 @@ public class GameScene extends BaseGameFieldScene {
      * set up method for the right side description and info panel
      */
     private void setupDescriptionPanel() {
-        Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
-        Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
+        Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
+        Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
 
         Entity desc = null;
         try {
             desc = new ImageEntity("desc", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/gui/hud_element_1.png")),
-                    1500, 0, 402, 350, Layer.UI);
+                    ImageIO.read(new File("res/menus/gui/hud_element_4.png")),
+                    1415, 90, 474, 925, Layer.UI);
         } catch (IOException e) {
             e.printStackTrace();
         }
         addEntityToScene(desc);
 
-        Entity goal = null;
-        try {
-            goal = new ImageEntity("goal", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/gui/hud_element_2.png")),
-                    1500, 375, 402, 200, Layer.UI);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        addEntityToScene(goal);
-
-        Entity tips = null;
-        try {
-            tips = new ImageEntity("tips", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/gui/hud_element_3.png")),
-                    1500, 600, 402, 400, Layer.UI);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        addEntityToScene(tips);
-
-        tipsEntity = new TextBody("tipsEntityType", IdGenerator.generateId(),
-                1518, 620, 250, 50, fontBig, Bit8.CHROME, "");
-        addEntityToScene(tipsEntity);
-
-        tipsText = new TextBody("tipsText", IdGenerator.generateId(),
-                1518, 752, 402 - 18, 300, fontMed, Bit8.CHROME, "");
-        addEntityToScene(tipsText);
-
-        failTipDesc = new TextBody("failTipDesc", IdGenerator.generateId(),
-                1540, 858, 250, 15, fontMed, Bit8.CHROME, "");
-        addEntityToScene(failTipDesc);
-
-        failTipText = new TextBody("failTipText", IdGenerator.generateId(),
-                1750, 858, 152, 15,fontMed, Bit8.CHROME, "");
-        addEntityToScene(failTipText);
-
-        correctSignalsTipDesc = new TextBody("correctSignalsTipDesc", IdGenerator.generateId(),
-                1540, 905, 250, 15, fontMed,Bit8.CHROME, "");
-        addEntityToScene(correctSignalsTipDesc);
-
-        correctSignalsTipText = new TextBody("correctSignalsTipText", IdGenerator.generateId(),
-                1750, 905, 152, 15, fontMed, Bit8.CHROME, "");
-        addEntityToScene(correctSignalsTipText);
-
-        acceptedOOCTipDesc = new TextBody("acceptedOOCTipDesc", IdGenerator.generateId(),
-                1540, 952, 250, 15, fontMed,Bit8.CHROME, "");
-        addEntityToScene(acceptedOOCTipDesc);
-
-        acceptedOOCTipText = new TextBody("acceptedOOCTipText", IdGenerator.generateId(),
-                1750, 952, 152, 15,fontMed, Bit8.CHROME, "");
-        addEntityToScene(acceptedOOCTipText);
+        Entity descHead = new TextBody("descHead", IdGenerator.generateId(),
+                1515, 110, 320, 50, fontBig, Bit8.DARK_GREY, "@49");
+        addEntityToScene(descHead);
 
         descText = new TextBody("descText", IdGenerator.generateId(),
-                1518, 155, 402 - 18, 300, fontMed, Bit8.CHROME, description);
+                1450, 183, 414, 180, fontMed, Bit8.DARK_GREY, descriptions.get(0));
         addEntityToScene(descText);
-
-        Entity descHead = new TextBody("descHead", IdGenerator.generateId(),
-                1518, 20, 250, 50, fontBig, Bit8.CHROME, "@49");
-        addEntityToScene(descHead);
 
         try {
             previous = new GenericButton("previous", IdGenerator.generateId(),
-                    1520, 280, 40, 40, new StartAction(null),
-                    ImageIO.read(new File("res/menus/gui/button_left_white.png")));
+                    1420, 158 + 50, 40, 150, new StartAction(null),
+                    ImageIO.read(new File("res/menus/gui/button_left.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -247,39 +195,76 @@ public class GameScene extends BaseGameFieldScene {
 
         try {
             next = new GenericButton("next", IdGenerator.generateId(),
-                    1840, 280, 40, 40, new StartAction(null),
-                    ImageIO.read(new File("res/menus/gui/button_right_white.png")));
+                    1415 - 5 + 474 - 40, 158 + 50, 40, 150, new StartAction(null),
+                    ImageIO.read(new File("res/menus/gui/button_right.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
         addEntityToScene(next);
 
         Entity goalHead = new TextBody("goalHead", IdGenerator.generateId(),
-                1518, 396, 402, 50, fontBig, Bit8.CHROME, "@50");
+                1515, 420, 320, 50, fontBig, Bit8.DARK_GREY, "@50");
         addEntityToScene(goalHead);
 
         Entity safetyReqDesc = new TextBody("safetyReqDesc", IdGenerator.generateId(),
-                1540, 480, 250, 15, fontMed, Bit8.CHROME, "@51");
+                1425, 480, 320, 50, fontMed, Bit8.DARK_GREY, "@51");
         addEntityToScene(safetyReqDesc);
 
         Color safetyReqColor = getSafetyReqColor(getGoal());
 
         Entity safetyReqContent = new TextBody("safetyReqContent", IdGenerator.generateId(),
-                1780, 480, 152, 15, fontMed, safetyReqColor, String.valueOf(getGoal()));
+                1750, 480, 152, 50, fontMed, safetyReqColor, String.valueOf(getGoal()));
         addEntityToScene(safetyReqContent);
 
         Entity minActuatorsDesc = new TextBody("minActuatorsDesc", IdGenerator.generateId(),
-                1540, 527, 250, 15, fontMed, Bit8.CHROME, "@52"
+                1425, 527, 320, 50, fontMed, Bit8.DARK_GREY, "@52"
         );
         addEntityToScene(minActuatorsDesc);
 
         Entity minActuatorsContent = new TextBody("minActuatorsContent", IdGenerator.generateId(),
-                1780, 527, 152, 15, fontMed, Bit8.CHROME, String.valueOf(accGoal));
+                1750, 527, 152, 50, fontMed, Bit8.DARK_GREY, String.valueOf(accGoal));
         addEntityToScene(minActuatorsContent);
 
-        validate = new GenericButton("validate", IdGenerator.generateId(),
-                1200, 10, 300, 50, "@30", FontCollection.bit8FontHuge, new ValidateAction(), Bit8.DARK_GREY, null, null);
-        addEntityToScene(validate);
+        try {
+            validate = new GenericButton("validate", IdGenerator.generateId(),
+                    1800, 930, 64, 64, new ValidateAction(),
+                    ImageIO.read(new File("res/menus/gui/buttons/play_button.png")));
+            addEntityToScene(validate);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        tipsEntity = new TextBody("tipsEntityType", IdGenerator.generateId(),
+                1518, 610, 250, 50, fontBig, Bit8.DARK_GREY, "");
+        addEntityToScene(tipsEntity);
+
+        tipsText = new TextBody("tipsText", IdGenerator.generateId(),
+                1425, 682, 464, 120, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(tipsText);
+
+        failTipDesc = new TextBody("failTipDesc", IdGenerator.generateId(),
+                1425, 802, 250, 50, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(failTipDesc);
+
+        failTipText = new TextBody("failTipText", IdGenerator.generateId(),
+                1750, 802, 152, 50, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(failTipText);
+
+        correctSignalsTipDesc = new TextBody("correctSignalsTipDesc", IdGenerator.generateId(),
+                1425, 832, 250, 50, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(correctSignalsTipDesc);
+
+        correctSignalsTipText = new TextBody("correctSignalsTipText", IdGenerator.generateId(),
+                1750, 832, 152, 50, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(correctSignalsTipText);
+
+        acceptedOOCTipDesc = new TextBody("acceptedOOCTipDesc", IdGenerator.generateId(),
+                1425, 862, 250, 50, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(acceptedOOCTipDesc);
+
+        acceptedOOCTipText = new TextBody("acceptedOOCTipText", IdGenerator.generateId(),
+                1750, 862, 152, 50, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(acceptedOOCTipText);
     }
 
     public Entity getValidate() {
@@ -312,17 +297,14 @@ public class GameScene extends BaseGameFieldScene {
         }
     }
 
-    private Color getSafetyReqColor(double d) {
-        if(getGoal() <= 1e-9) {
+    public Color getSafetyReqColor(double d) {
+        if (getGoal() <= 1e-9) {
             return CATASTROPHIC;
-        }
-        else if(getGoal() <= 1e-7){
+        } else if (getGoal() <= 1e-7) {
             return HAZARDOUS;
-        }
-        else if(getGoal() <= 1e-5){
+        } else if (getGoal() <= 1e-5) {
             return MAJOR;
-        }
-        else if(getGoal() <= 1e-3) {
+        } else if (getGoal() <= 1e-3) {
             return MINOR;
         }
         else {
@@ -352,6 +334,7 @@ public class GameScene extends BaseGameFieldScene {
         ((TextObject) getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(
                 entity.getComponent(TooltipComponent.class).getTooltipText());
         ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(entity.getComponent(TooltipComponent.class).getFailureRatio());
+        ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setColor(getSafetyReqColor(Double.parseDouble(entity.getComponent(TooltipComponent.class).getFailureRatio())));
         ((TextObject) getCorrectSignalsTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(entity.getComponent(TooltipComponent.class).getCorrectInputSignals());
         ((TextObject) getAcceptedOOCTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(entity.getComponent(TooltipComponent.class).getAcceptedOOCSignals());
         ((TextObject) getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@54");
@@ -366,6 +349,7 @@ public class GameScene extends BaseGameFieldScene {
     public void displayEmptyToolTip() {
         ((TextObject) getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
         ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
+        ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setColor(Bit8.DARK_GREY);
         ((TextObject) getCorrectSignalsTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
         ((TextObject) getAcceptedOOCTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
         ((TextObject) getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");

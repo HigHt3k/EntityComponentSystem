@@ -14,7 +14,7 @@ public class TextBody extends Entity {
 
         RenderComponent renderComponent = new RenderComponent();
         renderComponent.addRenderObject(new TextObject(new Point(x, y), new Rectangle(x, y, width, height),
-                Layer.UI, text, font, textColor));
+                Layer.UI_FRONT, text, font, textColor));
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
     }

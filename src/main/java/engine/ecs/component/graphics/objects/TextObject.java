@@ -8,7 +8,7 @@ import java.awt.*;
 public class TextObject extends RenderObject {
     private String text;
     private final Font font;
-    private final Color color;
+    private Color color;
     private TextHorizontalAlignment horizontalAlignment;
     private TextVerticalAlignment verticalAlignment;
 
@@ -43,6 +43,10 @@ public class TextObject extends RenderObject {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setColor(Color c) {
+        this.color = c;
     }
 
     public TextHorizontalAlignment getHorizontalAlignment() {

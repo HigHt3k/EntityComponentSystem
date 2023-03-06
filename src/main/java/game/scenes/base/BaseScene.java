@@ -40,7 +40,7 @@ public class BaseScene extends Scene {
             exitButton = new GenericButton(
                     "Exit",
                     IdGenerator.generateId(),
-                    1800, 50,
+                    1800, 15,
                     64, 64, new ExitAction(),
                     ImageIO.read(new File("res/menus/gui/buttons/exit_button.png")));
         } catch (IOException e) {
@@ -52,7 +52,7 @@ public class BaseScene extends Scene {
         try {
             options = new GenericButton(
                     "options", IdGenerator.generateId(),
-                    1700, 50, 64, 64,
+                    1700, 15, 64, 64,
                     new StartAction(-249),
                     ImageIO.read(new File("res/menus/gui/gear.png"))
             );
@@ -65,7 +65,7 @@ public class BaseScene extends Scene {
         try {
             sound = new GenericButton(
                     "sound", IdGenerator.generateId(),
-                    1600, 50, 64, 64,
+                    1600, 15, 64, 64,
                     new StartAction(null),
                     ImageIO.read(new File("res/menus/gui/speaker.png"))
             );
@@ -80,7 +80,7 @@ public class BaseScene extends Scene {
             mainMenuButton = new GenericButton(
                     "Menu_button",
                     IdGenerator.generateId(),
-                    1500, 50,
+                    1500, 15,
                     64, 64, new StartAction(-255),
                     ImageIO.read(new File("res/menus/gui/buttons/menu_icon.png"))
             );
