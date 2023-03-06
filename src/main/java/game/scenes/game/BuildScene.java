@@ -25,6 +25,7 @@ import game.entities.simulation.GridEntity;
 import game.entities.ui.*;
 import game.handler.simulation.SimulationType;
 import game.scenes.base.BaseGameFieldScene;
+import game.scenes.util.BuildPanelPage;
 import game.scenes.util.GridSize;
 
 import javax.imageio.ImageIO;
@@ -34,10 +35,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class BuildScene extends BaseGameFieldScene {
-    private final int ITEM_MARGIN = 20;
     private final int ITEM_WIDTH = 300;
     private final int ITEM_HEIGHT = 60;
-    private final int DESIGN_CELL_SIZE = 100;
     private final int BUILD_CELL_SIZE = DESIGN_CELL_SIZE;
     private String description;
     private final double goal = 10e-4;
@@ -49,7 +48,6 @@ public class BuildScene extends BaseGameFieldScene {
 
     public BuildScene(String name, int id) {
         super(name, id);
-        setupBuildPanel();
 
         setupDescriptionPanel();
         setupButtons();
@@ -70,7 +68,7 @@ public class BuildScene extends BaseGameFieldScene {
 
     @Override
     public void init() {
-        updateGridSize();
+        updateGridSize(1);
     }
 
     @Override
@@ -88,9 +86,15 @@ public class BuildScene extends BaseGameFieldScene {
      */
     @Override
     public void addToBuildPanel(int imgId, int amount, float failureRatio, int correctSignalsNeeded, int outOfControlSignalsAccepted, float failureDetectionRatio) {
+        // create new page
+        if (numberOfBuildPanelElements % 6 == 0) {
+            numberOfBuildPanelElements = 0;
+            nextNewPage++;
+            pages.add(new BuildPanelPage(nextNewPage));
+        }
+
         BuildPanelEntity buildPanelEntity = new BuildPanelEntity("build_element_" + imgId, IdGenerator.generateId(),
-                BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
-                850 + BUILD_PANEL_X_MARGIN, BUILD_CELL_SIZE, BUILD_CELL_SIZE,
+                160 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN), 839, DESIGN_CELL_SIZE, DESIGN_CELL_SIZE,
                 Game.res().loadTile(imgId), imgId,
                 amount, failureRatio,
                 Game.res().getTileSet().getType(imgId),
@@ -99,6 +103,8 @@ public class BuildScene extends BaseGameFieldScene {
         );
         buildPanelEntity.getComponent(BuildComponent.class).setPortId(imgId - 500);
         addEntityToScene(buildPanelEntity);
+        pages.get(nextNewPage).addToPage(buildPanelEntity);
+        updateBuildPanel();
 
         if (buildPanelEntity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CABLE) {
             numberOfBuildPanelElements++;
@@ -109,8 +115,7 @@ public class BuildScene extends BaseGameFieldScene {
         try {
             nc = new NumberChooser("number", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/minus.png")),
-                    BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN),
-                    850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
+                    160 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN) + 20, 975,
                     25, 25, -1, buildPanelEntity
             );
         } catch (IOException e) {
@@ -121,8 +126,7 @@ public class BuildScene extends BaseGameFieldScene {
         try {
             nc2 = new NumberChooser("number", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/plus.png")),
-                    BUILD_PANEL_X_MARGIN + numberOfBuildPanelElements * (BUILD_CELL_SIZE + ITEM_MARGIN) + BUILD_CELL_SIZE - 25,
-                    850 + BUILD_PANEL_X_MARGIN + BUILD_CELL_SIZE + 10,
+                    160 + numberOfBuildPanelElements * (DESIGN_CELL_SIZE + ITEM_MARGIN) + DESIGN_CELL_SIZE - 45, 975,
                     25, 25, 1, buildPanelEntity
             );
         } catch (IOException e) {
@@ -130,35 +134,17 @@ public class BuildScene extends BaseGameFieldScene {
         }
         addEntityToScene(nc2);
 
+        pages.get(nextNewPage).addToPage(nc);
+        pages.get(nextNewPage).addToPage(nc2);
+
         numberOfBuildPanelElements++;
     }
+
 
     /**
      * setup method for buttons in the GameScene
      */
     private void setupButtons() {
-        GenericButton exitButton = new GenericButton(
-                "Exit",
-                IdGenerator.generateId(),
-                1600, 850 + ITEM_HEIGHT + ITEM_MARGIN * 2,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "@3",
-                FontCollection.bit8FontHuge, new ExitAction(),
-                Bit8.CHROME, null, null
-        );
-        this.addEntityToScene(exitButton);
-
-        GenericButton mainMenuButton = new GenericButton(
-                "Menu_button",
-                IdGenerator.generateId(),
-                1600, 850 + ITEM_MARGIN,
-                ITEM_WIDTH, ITEM_HEIGHT,
-                "@4",
-                FontCollection.bit8FontHuge, new StartAction(Game.scene().getScene(-255)),
-                Bit8.CHROME, null, null
-        );
-        this.addEntityToScene(mainMenuButton);
-
         // Save button
         GenericButton saveButton = new GenericButton(
                 "Save_button", IdGenerator.generateId(),
@@ -169,19 +155,6 @@ public class BuildScene extends BaseGameFieldScene {
                 Bit8.CHROME, null, null
         );
         this.addEntityToScene(saveButton);
-    }
-
-    /**
-     * Setup method for the build panel
-     */
-    private void setupBuildPanel() {
-        try {
-            ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/blueprint_scaled.png")), 0, 850, 1500, 1080 - 850, Layer.UI);
-            addEntityToScene(buildPanel);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -254,4 +227,58 @@ public class BuildScene extends BaseGameFieldScene {
         }
         addEntityToScene(plusGridSizeY);
     }
+
+    public void removeAlLGridElementsOutside() {
+        System.out.println(gridSize.x + " - " + gridSize.y);
+        for (Entity e : new ArrayList<>(getEntities())) {
+            if (e.getComponent(GridComponent.class) != null) {
+                System.out.println(e.getComponent(GridComponent.class).getGridLocation());
+                if (e.getComponent(GridComponent.class).getGridLocation().getX() >= gridSize.x) {
+                    removeEntityFromScene(e);
+                    continue;
+                }
+                if (e.getComponent(GridComponent.class).getGridLocation().getY() >= gridSize.y) {
+                    removeEntityFromScene(e);
+                    continue;
+                }
+            }
+        }
+    }
+
+    public void updateGridSize(int some) {
+        for (int xx = 0; xx < gridSize.x; xx++) {
+            for (int yy = 0; yy < gridSize.y; yy++) {
+                boolean isSet = false;
+                for (Entity e : getEntities()) {
+                    if (e.getComponent(GridComponent.class) != null
+                            && e.getComponent(GridComponent.class).getGridLocation().getY() == yy
+                            && e.getComponent(GridComponent.class).getGridLocation().getX() == xx) {
+                        isSet = true;
+                    }
+                }
+                if (!isSet) {
+                    addGridElement(xx, yy);
+                }
+            }
+        }
+
+        removeAlLGridElementsOutside();
+        updateGridSize();
+        updateEntitySize();
+    }
+
+
+    public void updateGridSize() {
+        if (gridSize.x > gridSize.y && (gridSize.x > 7 || gridSize.y > 5)) {
+            CELL_SIZE = DESIGN_CELL_SIZE * 7 / gridSize.x;
+        } else if (gridSize.x > 7 || gridSize.y > 5) {
+            CELL_SIZE = DESIGN_CELL_SIZE * 5 / gridSize.y;
+        } else {
+            CELL_SIZE = DESIGN_CELL_SIZE;
+        }
+
+        X_MARGIN = (1500 - gridSize.x * CELL_SIZE) / 2;
+        Y_MARGIN = (850 - gridSize.y * CELL_SIZE) / 2;
+    }
+
 }

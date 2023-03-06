@@ -2,7 +2,7 @@ package game.action;
 
 import engine.Game;
 import engine.ecs.component.action.Action;
-import game.scenes.game.GameScene;
+import game.scenes.base.BaseGameFieldScene;
 
 public class BuildPanelChangeAction extends Action {
     private BuildPanelChange buildPanelChange;
@@ -13,7 +13,7 @@ public class BuildPanelChangeAction extends Action {
 
     @Override
     public void handle() {
-        if (Game.scene().current() instanceof GameScene gs) {
+        if (Game.scene().current() instanceof BaseGameFieldScene gs) {
             if (buildPanelChange == BuildPanelChange.LEFT) {
                 gs.prevBuildPanelPage();
             } else if (buildPanelChange == BuildPanelChange.RIGHT) {

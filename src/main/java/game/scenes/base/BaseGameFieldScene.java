@@ -8,9 +8,12 @@ import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.RenderObject;
 import engine.ecs.entity.Entity;
+import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
 import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
+import game.action.BuildPanelChange;
+import game.action.BuildPanelChangeAction;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.entities.simulation.BuildPanelEntity;
@@ -30,7 +33,7 @@ import java.util.ArrayList;
  * this class can be used to inherit from to create the Build & GameScene.
  */
 public class BaseGameFieldScene extends BaseScene {
-    private final int ITEM_MARGIN = 80;
+    protected final int ITEM_MARGIN = 80;
     private final int BUTTON_ITEM_MARGIN = 20;
     private final int ITEM_WIDTH = 230;
     private final int ITEM_HEIGHT = 60;
@@ -42,21 +45,21 @@ public class BaseGameFieldScene extends BaseScene {
     private final Color HAZARDOUS = Bit8.ORANGE;
     private final Color CATASTROPHIC = Bit8.RED;
     private final ArrayList<Integer> unlocksNeeded = new ArrayList<>();
-    private final int DESIGN_CELL_SIZE = 128;
-    private final ArrayList<BuildPanelPage> pages = new ArrayList<>();
+    protected final int DESIGN_CELL_SIZE = 128;
+    protected final ArrayList<BuildPanelPage> pages = new ArrayList<>();
+    protected int CELL_SIZE = DESIGN_CELL_SIZE;
     protected ArrayList<String> descriptions;
     protected int accGoal;
     protected int sensGoal;
     protected int cGoal;
-    private int X_MARGIN = 200;
-    private int Y_MARGIN = 300;
+    protected int X_MARGIN = 200;
+    protected int Y_MARGIN = 300;
     private boolean unlocked = false;
-    private int nextNewPage = -1;
-    private int currentPageShown = 0;
-    private int CELL_SIZE = DESIGN_CELL_SIZE;
+    protected int nextNewPage = -1;
+    protected int currentPageShown = 0;
     private String description;
     private double goal = 10e-4;
-    private int numberOfBuildPanelElements = 0;
+    protected int numberOfBuildPanelElements = 0;
     private Entity currentlyBuilding = null;
     private int score = 0;
     private int tries = 0;
@@ -75,6 +78,7 @@ public class BaseGameFieldScene extends BaseScene {
     private Entity aircraft;
     private int currentlyDisplayedDescriptionPart = 0;
     private boolean levelPassed = false;
+
     private int xMax;
     private int yMax;
 
@@ -97,6 +101,7 @@ public class BaseGameFieldScene extends BaseScene {
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
+        setupBuildPanel();
     }
 
     /**
@@ -353,5 +358,40 @@ public class BaseGameFieldScene extends BaseScene {
         yMax = y;
         updateGridSize();
         updateEntitySize();
+    }
+
+    public int getxMax() {
+        return xMax;
+    }
+
+    public int getyMax() {
+        return yMax;
+    }
+
+    /**
+     * Setup method for the build panel
+     */
+    private void setupBuildPanel() {
+        try {
+            ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/blueprint8bit.png")), 0, 800, 1500, 1080 - 850, Layer.UI);
+            addEntityToScene(buildPanel);
+
+            GenericButton leftButton = new GenericButton("left_build_panel", IdGenerator.generateId(),
+                    85, 890, 40, 40,
+                    new BuildPanelChangeAction(BuildPanelChange.LEFT),
+                    ImageIO.read(new File("res/menus/gui/button_left.png")));
+
+            addEntityToScene(leftButton);
+
+            GenericButton rightButton = new GenericButton("right_build_panel", IdGenerator.generateId(),
+                    1355, 890, 40, 40,
+                    new BuildPanelChangeAction(BuildPanelChange.RIGHT),
+                    ImageIO.read(new File("res/menus/gui/button_right.png")));
+            addEntityToScene(rightButton);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
