@@ -34,17 +34,6 @@ import java.util.ArrayList;
  */
 public class BaseGameFieldScene extends BaseScene {
     protected final int ITEM_MARGIN = 80;
-    private final int BUTTON_ITEM_MARGIN = 20;
-    private final int ITEM_WIDTH = 230;
-    private final int ITEM_HEIGHT = 60;
-    private final Color TEXT_COLOR = Bit8.DARK_GREY;
-    // Category colors
-    private final Color NSE = Bit8.CORNFLOWER_BLUE;
-    private final Color MINOR = Bit8.DARK_PASTEL_GREEN;
-    private final Color MAJOR = Bit8.YELLOW;
-    private final Color HAZARDOUS = Bit8.ORANGE;
-    private final Color CATASTROPHIC = Bit8.RED;
-    private final ArrayList<Integer> unlocksNeeded = new ArrayList<>();
     protected final int DESIGN_CELL_SIZE = 128;
     protected final ArrayList<BuildPanelPage> pages = new ArrayList<>();
     protected int CELL_SIZE = DESIGN_CELL_SIZE;
@@ -60,24 +49,6 @@ public class BaseGameFieldScene extends BaseScene {
     private String description;
     private double goal = 10e-4;
     protected int numberOfBuildPanelElements = 0;
-    private Entity currentlyBuilding = null;
-    private int score = 0;
-    private int tries = 0;
-    private Entity previous;
-    private Entity next;
-    private Entity descText;
-    private Entity validate;
-    private Entity tipsText;
-    private Entity tipsEntity;
-    private Entity failTipText;
-    private Entity correctSignalsTipText;
-    private Entity acceptedOOCTipText;
-    private Entity failTipDesc;
-    private Entity acceptedOOCTipDesc;
-    private Entity correctSignalsTipDesc;
-    private Entity aircraft;
-    private int currentlyDisplayedDescriptionPart = 0;
-    private boolean levelPassed = false;
 
     private int xMax;
     private int yMax;
