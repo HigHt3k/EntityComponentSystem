@@ -33,7 +33,9 @@
     <string id="1000">Example Duplex system with two sensors, two cpus and one actuator.</string>
     <string id="10000">Tutorial 1: Connecting Cables</string>
     <string id="10001">Welcome to the game. In this tutorial series you are going to learn all the basics you need to
-        start implementing your own systems.
+        start implementing your own systems. TESTES TESTTES TESTEST TESTESTE STTEST ESTES TTESTESTESTT ESTESTE STTEST
+        ESTES TTESTESTESTT ESTESTE STTEST ESTES TTESTESTESTT ESTESTE STTEST ESTES TTESTESTESTT ESTESTE TTESTE ST EST
+        TEST ESTEST
     </string>
     <string id="10002">You are presented a game field where components need to be connected by using cables.</string>
     <string id="10003">Click a cable from the bottom panel and drag it between the components.</string>
