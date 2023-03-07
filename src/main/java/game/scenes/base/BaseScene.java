@@ -25,16 +25,6 @@ public class BaseScene extends Scene {
     public BaseScene(String name, int id) {
         super(name, id);
 
-        try {
-            SoundEntity sound = new SoundEntity("menu background sound", IdGenerator.generateId(), AudioSystem.getAudioInputStream(
-                    new File("res/sound/2020-06-18_-_8_Bit_Retro_Funk_-_www.FesliyanStudios.com_David_Renda.wav")));
-            addEntityToScene(sound);
-        } catch (UnsupportedAudioFileException e) {
-            Game.logger().severe("Unsupported Audio File!" + e.getMessage());
-        } catch (IOException e) {
-            Game.logger().severe("Input Error!" + e.getMessage());
-        }
-
         GenericButton exitButton = null;
         try {
             exitButton = new GenericButton(
