@@ -2,22 +2,15 @@
 In this chapter, the implementation of the game engine including the basic framework, graphic rendering and input handling is described.
 The implementation of the features of the game itself are shown and the connections between different components is described by using a
 UML class diagram.
-
-\subsection{Programming Language}\label{subsec:programming-language}
-The programming language that was chosen up front is \textit{JAVA}.
-This decision was made based on the fact that it makes sense to have a) and object-oriented programming language in order to
-handle entities easily and b) because it is possible to run the program on almost every system due to \textit{JAVA} running
-in a virtual machine.
-
-\subsection{Game Engine Development}\label{subsec:game-engine-development}
+\\
 The game engine was implemented as a separate, independent, enhanceable framework, which could also be used to design other
 games.
 It provides basic functionality for all features needed to design a game, such as input and system handling, rendering, configuration
 classes and managers.
 The implementation uses a basic entity-component-system as foundation and enhances this with further features.
-The ECS will be explained in detail in~\ref{subsubsec:entity-component-system2}.
+The ECS will be explained in detail in~\ref{subsec:entity-component-system}.
 
-\subsubsection{Entity Component System}\label{subsubsec:entity-component-system2}
+\subsection{Entity-Component-System}\label{subsec:entity-component-system}
 The entity component system setup can be approached from a top-down point of view.
 A scene is the basic class that contains all information about the currently displayed entities and the handlers and systems to be used
 in the background.
@@ -28,51 +21,6 @@ Each scene contains a list of entities, that could be referred to as a database 
 Entities represent a combination of different data containers, so-called components.
 Components are unique to each entity object.
 There are some standard entities and components available.
-\textbf{Entity}:
-- GenericButton
-- ImageEntity
-- TextBody
-- NumberSelectorEntity
-\todo{add rest}
-
-\textbf{Component}:
-- CollisionComponent
-- GraphicsComponent
-- CursorComponent
-- IntentComponent (deprecated)
-
-\subsubsection{Query}\label{subsubsec:query}
-The query system is set up as a static class that can be accessed from anywhere.
-It implements methods that can be used to search for all entities of a class or entities that have a specified component
-attached to it within the currently displayed scene.
-The volume of entities can be seen as a database that is filtered by the query system to obtain only the needed components / entities
-for other systems. \todo{add graphic with database of ecs}
-
-\subsubsection{Rendering Engine}\label{subsubsec:graphics-engine}
-The Rendering Engine is the main part of all graphical components.
-It implements different engines for each graphical object (shape, image, text, line) that are called depending on the available data within the
-context.
-All content is rendered to a JPanel object by using the Graphics2D instance available by default.
-There are several options and parameters for rendering quality and display sizes that are considered during rendering.
-A rendering cycle looks as follows:
-- query relevant entities (entities containing the GraphicsComponent)
-- determine the available data per entity
-- send the data to the according renderer
-
-\subsubsection{Handler}\label{subsubsec:handler}
-Handlers are input listeners, which are event based.
-They can be implemented for different purposes, such as keyboard, mouse or controller inputs in general, but also to direct inputs by the user
-to a category, such as inputs for levels that trigger methods within the level itself, inputs to buttons or hovering over entities.
-They provide user inputs to manipulate the systems.
-
-\subsubsection{System}\label{subsubsec:system}
-In comparison to handlers, systems are time-based and triggered with every update loop of the game.
-They contain methods for different calculations, game logic or time-based events and actions.
-They operate at the same rate as the frame rate of e.g.\ the rendering engine, which is defined by the Game Loops rate.
-
-\subsubsection{Markov Processor}\label{subsubsec:example-markov-chains}
-In the following chapter, some examples for Markov chains that reflect the level designs will be shown and the implementation of the
-MarkovProcessor will be explained by using these graphs.
 
 \begin{center}
     \begin{tikzpicture}
@@ -94,3 +42,83 @@ MarkovProcessor will be explained by using these graphs.
         (A) edge (D)
     \end{tikzpicture}
 \end{center}
+
+\subsection{UML Diagram}\label{subsec:uml-diagram}
+
+\subsection{Entities}\label{subsec:entities}
+\textbf{Entity}:
+- GenericButton
+- ImageEntity
+- TextBody
+- NumberSelectorEntity
+\todo{add rest}
+
+\subsection{Components}\label{subsec:components}
+\textbf{Component}:
+- CollisionComponent
+- GraphicsComponent
+- CursorComponent
+- IntentComponent (deprecated)
+\subsection{System}\label{subsec:system}
+In comparison to handlers, systems are time-based and triggered with every update loop of the game.
+They contain methods for different calculations, game logic or time-based events and actions.
+They operate at the same rate as the frame rate of e.g.\ the rendering engine, which is defined by the Game Loops rate.
+
+\subsubsection{Query}\label{subsubsec:query2}
+The query system is set up as a static class that can be accessed from anywhere.
+It implements methods that can be used to search for all entities of a class or entities that have a specified component
+attached to it within the currently displayed scene.
+The volume of entities can be seen as a database that is filtered by the query system to obtain only the needed components / entities
+for other systems. \todo{add graphic with database of ecs}
+
+\subsubsection{Action System}\label{subsubsec:action-system}
+Handlers are input listeners, which are event based.
+They can be implemented for different purposes, such as keyboard, mouse or controller inputs in general, but also to direct inputs by the user
+to a category, such as inputs for levels that trigger methods within the level itself, inputs to buttons or hovering over entities.
+They provide user inputs to manipulate the systems. \todo{rewrite}
+\subsubsection{Simulation System}\label{subsubsec:simulation-system}
+
+\subsubsection{Markov Processor}\label{subsubsec:example-markov-chains}
+In the following chapter, some examples for Markov chains that reflect the level designs will be shown and the implementation of the
+MarkovProcessor will be explained by using these graphs.
+\subsubsection{Build System}\label{subsubsec:build-system}
+
+\subsubsection{Rendering Engine}\label{subsubsec:graphics-engine}
+The Rendering Engine is the main part of all graphical components.
+It implements different engines for each graphical object (shape, image, text, line) that are called depending on the available data within the
+context.
+All content is rendered to a JPanel object by using the Graphics2D instance available by default.
+There are several options and parameters for rendering quality and display sizes that are considered during rendering.
+A rendering cycle looks as follows:
+- query relevant entities (entities containing the GraphicsComponent)
+- determine the available data per entity
+- send the data to the according renderer
+\subsubsection{Sound Engine}\label{subsubsec:sound-engine}
+
+\subsection{Input Handling}\label{subsec:input-handling}
+
+\subsection{Game Loop}
+The game loop
+\subsection{Data Storage \& Data Parsing}
+\subsubsection{Level}
+\subsubsection{Profile}
+\subsection{External Device Inputs}\label{subsec:external-device-inputs}
+\subsubsection{Mouse \& Keyboard}\label{subsubsec:mouse-&-keyboard}
+\subsubsection{Gamepad Integration}\label{subsubsec:gamepad-integration}
+For gamepad integration, the open source library \textit{Jamepad} is used.
+It automatically detects most USB controller devices and has an inbuilt button mapping which can be used in the implementation.
+A separate thread with a capture rate for controls which is equal and synchronized to the games' FPS is implemented to queue all controller
+events to the game engines' event queue and action system, where they are handled.
+Button handling is mostly implemented in a way that a button press creates a new mouse event and the cursor position which is then handled by the action
+systems' mouse event handling method.
+This reduces maintenance and new implementation of buttons and actions, while being guaranteed to work correctly with all devices.
+
+\subsection{Simulation}
+\subsection{Programming Language}\label{subsec:programming-language}
+The programming language that was chosen up front is \textit{JAVA}.
+This decision was made based on the fact that it makes sense to have a) and object-oriented programming language in order to
+handle entities easily and b) because it is possible to run the program on almost every system due to \textit{JAVA} running
+in a virtual machine.
+
+
+
