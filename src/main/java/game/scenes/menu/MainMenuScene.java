@@ -3,12 +3,15 @@ package game.scenes.menu;
 import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.component.action.StartAction;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.entity.GenericButton;
+import engine.ecs.entity.ImageEntity;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import game.entities.ui.SoundEntity;
 import game.scenes.base.BaseMenuScene;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.*;
@@ -30,13 +33,21 @@ public class MainMenuScene extends BaseMenuScene {
             Game.logger().severe("Input Error!" + e.getMessage());
         }
 
+        try {
+            ImageEntity logo = new ImageEntity("skylogic-logo", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/logos/skylogic-logo.png")), (int) (1920/2 - (515*1.5)/2), 100, (int) (515 * 1.5), 300, Layer.UI);
+            addEntityToScene(logo);
+        } catch (IOException e) {
+            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
+        }
+
         Font font = FontCollection.scaleFont(FontCollection.bit8Font, 40f);
         int ITEM_MARGIN = 20;
         int ITEM_HEIGHT = 60;
-        int ITEM_WIDTH = 350;
+        int ITEM_WIDTH = 200;
         GenericButton playButton = new GenericButton(
                 "Play", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
+                1920 / 2 - ITEM_WIDTH / 2, 500 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@0", font, new StartAction(-254),
                 Bit8.DARK_GREY, null, null
@@ -45,7 +56,7 @@ public class MainMenuScene extends BaseMenuScene {
 
         GenericButton buildButton = new GenericButton(
                 "Build", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
+                1920 / 2 - ITEM_WIDTH / 2, 500 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@1", font, new StartAction(-250),
                 Bit8.DARK_GREY, null, null
