@@ -5,8 +5,10 @@ import engine.IdGenerator;
 import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.action.StartAction;
 import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
+import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.colorpalettes.ColorPalette;
@@ -32,6 +34,8 @@ import java.util.Objects;
 public class LevelMenuScene extends BaseMenuScene {
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
+    protected int X_MARGIN = 200;
+    protected int Y_MARGIN = 300;
     private final Entity highscoreView;
     private final Entity playersView;
     private final Entity levelInfoDesc;
@@ -40,39 +44,49 @@ public class LevelMenuScene extends BaseMenuScene {
     public LevelMenuScene(String name, int id) {
         super(name, id);
 
-        Font font = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
+        try {
+            ImageEntity aircraftGameScene = new ImageEntity("aircraftGameScene", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/backgrounds/aircraft-game-scene.png")), X_MARGIN - 120,
+                    Y_MARGIN - 510, 1200, (int) (1200 * 1.0608f), Layer.GAMELAYER1);
+            addEntityToScene(aircraftGameScene);
+        } catch (IOException e) {
+            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
+        }
+
         Game.res().score().loadScores("res/scores/highscores.xml");
 
         // Create the Menu GUI
-        Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
-        Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 14f);
+        Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
+        Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
 
-        Entity levelInfoPanel = new SimplePanel("level_info", IdGenerator.generateId(),
-                1500, 0, 402, 300, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
+        Entity levelInfoPanel = null;
+        try {
+            levelInfoPanel = new ImageEntity("level_info", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/hud_element_5.png")),
+                    1415, 90, 474, 925, Layer.UI);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         addEntityToScene(levelInfoPanel);
 
         levelInfoHead = new TextBody("levelInfoHead", IdGenerator.generateId(),
-                1500, 0, 402, 50, fontBig, Bit8.CHROME, "");
+                1515, 110, 320, 50, fontBig, Bit8.DARK_GREY, "");
         addEntityToScene(levelInfoHead);
 
         levelInfoDesc = new TextBody("levelinfoDesc", IdGenerator.generateId(),
-                1500, 50,402, 250, fontMed, Bit8.CHROME, "");
+                1450, 183, 414, 180, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(levelInfoDesc);
 
-        Entity highscorePanel = new SimplePanel("highscore_panel", IdGenerator.generateId(),
-                1500, 300, 402, 500, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
-        addEntityToScene(highscorePanel);
-
         Entity highscoreHead= new TextBody("highscoreHead", IdGenerator.generateId(),
-                1500, 300, 402, 50, fontBig, Bit8.CHROME, "Highscores");
+                1515, 420, 320, 50, fontBig, Bit8.DARK_GREY, "Highscores");
         addEntityToScene(highscoreHead);
 
         playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
-                1500, 350, 250, 450, fontMed, Bit8.CHROME, "");
+                1425, 480, 320, 450, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(playersView);
 
         highscoreView = new TextBody("highscoreView", IdGenerator.generateId(),
-                1750, 350, 152, 450, fontMed, Bit8.CHROME, "");
+                1750, 480, 150, 450, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(highscoreView);
 
         BufferedImage blue = null;
@@ -89,32 +103,35 @@ public class LevelMenuScene extends BaseMenuScene {
             throw new RuntimeException(e);
         }
 
-        addLevel(1, 300, 300, blue);
+        addLevel(1, 375, 375, blue);
         unlockLevel(1);
-        addLevel(2, 300, 400, blue);
-        addLevel(3, 300, 500, blue);
-        addLevel(4, 300, 600, blue);
-        addLevel(5, 300, 700, blue);
-        addLevel(6, 500, 200, green);
-        addLevel(8, 500, 300, green);
-        addLevel(7, 500, 400, green);
-        addLevel(9, 500, 500, green);
-        addLevel(10, 500, 600, green);
-        addLevel(11, 500, 700, green);
-        addLevel(12, 500, 800, green);
-        addLevel(13, 500, 900, green);
-        addLevel(14, 700, 400, yellow);
-        addLevel(15, 700, 500, yellow);
-        addLevel(16, 700, 600, yellow);
-        addLevel(17, 700, 700, yellow);
-        addLevel(18, 700, 800, yellow);
-        addLevel(19,700,900, yellow);
-        addLevel(20, 1000, 300, red);
-        addLevel(21, 1000, 400, red);
-        addLevel(22, 1000, 500, red);
-        addLevel(23, 1000, 600, red);
-        addLevel(24, 1000, 700, red);
-        addLevel(25, 1000, 800, red);
+        addLevel(2, 435, 425, blue);
+        addLevel(3, 495, 375, blue);
+        addLevel(4, 565, 425, blue);
+        addLevel(5, 635, 375, blue);
+        addLevel(6, 675, 300, green);
+        addLevel(8, 675, 230, green);
+        addLevel(7, 650, 160, green);
+        addLevel(9, 625, 90, green);
+        addLevel(10, 750, 104, green);
+        addLevel(11, 750, 275, green);
+        addLevel(12, 725, 400, green);
+        addLevel(13, 700, 500, green);
+
+        addLevel(14, 675, 600, yellow);
+        addLevel(15, 645, 670, yellow);
+        addLevel(16, 605, 740, yellow);
+        addLevel(17, 570, 810, yellow);
+        addLevel(18, 530, 880, yellow);
+        addLevel(19,760,550, yellow);
+
+        addLevel(20, 800, 425, red);
+        addLevel(21, 860, 375, red);
+        addLevel(22, 940, 425, red);
+        addLevel(23, 1000, 375, red);
+        addLevel(24, 1060, 425, red);
+        addLevel(25, 1120, 400, red);
+
         makeConnections();
         unlockAll();
     }
