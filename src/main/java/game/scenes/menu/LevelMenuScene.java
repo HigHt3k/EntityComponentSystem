@@ -40,6 +40,7 @@ public class LevelMenuScene extends BaseMenuScene {
     private final Entity playersView;
     private final Entity levelInfoDesc;
     private final Entity levelInfoHead;
+    private boolean firstTimeOpened = true;
 
     public LevelMenuScene(String name, int id) {
         super(name, id);
@@ -58,36 +59,6 @@ public class LevelMenuScene extends BaseMenuScene {
         // Create the Menu GUI
         Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
         Font fontMed = FontCollection.scaleFont(FontCollection.bit8Font, 18f);
-
-        Entity levelInfoPanel = null;
-        try {
-            levelInfoPanel = new ImageEntity("level_info", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/gui/hud_element_5.png")),
-                    1415, 90, 474, 925, Layer.UI);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        addEntityToScene(levelInfoPanel);
-
-        levelInfoHead = new TextBody("levelInfoHead", IdGenerator.generateId(),
-                1515, 110, 320, 50, fontBig, Bit8.DARK_GREY, "");
-        addEntityToScene(levelInfoHead);
-
-        levelInfoDesc = new TextBody("levelinfoDesc", IdGenerator.generateId(),
-                1450, 183, 414, 180, fontMed, Bit8.DARK_GREY, "");
-        addEntityToScene(levelInfoDesc);
-
-        Entity highscoreHead= new TextBody("highscoreHead", IdGenerator.generateId(),
-                1515, 420, 320, 50, fontBig, Bit8.DARK_GREY, "Highscores");
-        addEntityToScene(highscoreHead);
-
-        playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
-                1425, 480, 320, 450, fontMed, Bit8.DARK_GREY, "");
-        addEntityToScene(playersView);
-
-        highscoreView = new TextBody("highscoreView", IdGenerator.generateId(),
-                1750, 480, 150, 450, fontMed, Bit8.DARK_GREY, "");
-        addEntityToScene(highscoreView);
 
         BufferedImage blue = null;
         BufferedImage red = null;
@@ -134,6 +105,41 @@ public class LevelMenuScene extends BaseMenuScene {
 
         makeConnections();
         unlockAll();
+
+        if(firstTimeOpened) {
+            tutorialDialogue();
+            firstTimeOpened = false;
+        }
+
+        Entity levelInfoPanel = null;
+        try {
+            levelInfoPanel = new ImageEntity("level_info", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/hud_element_5.png")),
+                    1415, 90, 474, 925, Layer.UI);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(levelInfoPanel);
+
+        levelInfoHead = new TextBody("levelInfoHead", IdGenerator.generateId(),
+                1515, 110, 320, 50, fontBig, Bit8.DARK_GREY, "");
+        addEntityToScene(levelInfoHead);
+
+        levelInfoDesc = new TextBody("levelinfoDesc", IdGenerator.generateId(),
+                1450, 183, 414, 180, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(levelInfoDesc);
+
+        Entity highscoreHead= new TextBody("highscoreHead", IdGenerator.generateId(),
+                1515, 420, 320, 50, fontBig, Bit8.DARK_GREY, "Highscores");
+        addEntityToScene(highscoreHead);
+
+        playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
+                1425, 480, 320, 450, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(playersView);
+
+        highscoreView = new TextBody("highscoreView", IdGenerator.generateId(),
+                1750, 480, 150, 450, fontMed, Bit8.DARK_GREY, "");
+        addEntityToScene(highscoreView);
     }
 
     public void unlockLevel(int id) {
@@ -252,5 +258,59 @@ public class LevelMenuScene extends BaseMenuScene {
 
         ((TextObject) levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(s.getName());
         ((TextObject) levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(String.valueOf(s.getDifficulty()));
+    }
+
+    /**
+     * Show a tutorial / introduction dialogue before starting to choose a level
+     */
+    private void tutorialDialogue() {
+        // make background blurry
+        Entity blur = new SimplePanel("blur", IdGenerator.generateId(),
+                0, 0, 1920, 1080, Bit8.setAlpha(Bit8.WHITE, 120), null, null);
+        addEntityToScene(blur);
+
+        // create character models
+        Entity tina = null;
+        try {
+            tina = new ImageEntity("tina", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/character/Tina-Technik.png")), 1200, 500, 19 * 12, 27 * 12, Layer.UI);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(tina);
+
+        Entity ingo = null;
+        try {
+            ingo = new ImageEntity("ingo", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/character/Ingo-Ingenieur.png")), 200, 600, 19 * 12, 27 * 12, Layer.UI);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(ingo);
+
+
+        // Speech bubble for character Ingo
+        Entity speechBubble1 = null;
+        try {
+            speechBubble1 = new ImageEntity("bubble1", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/speechbubble.png")), 200, 400, 64*4, 32*4, Layer.UI);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(speechBubble1);
+
+        // Speech bubble for character Tina
+        Entity speechBubble2 = null;
+        try {
+            speechBubble2 = new ImageEntity("bubble2", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/speechbubble.png")), 1200, 300, 64*4, 32*4, Layer.UI);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        addEntityToScene(speechBubble2);
+    }
+
+    public void showDialoguePart(int dialogueId) {
+
     }
 }
