@@ -298,13 +298,13 @@ public class GameScene extends BaseGameFieldScene {
     }
 
     public Color getSafetyReqColor(double d) {
-        if (getGoal() <= 1e-9) {
+        if (d <= 1e-9) {
             return CATASTROPHIC;
-        } else if (getGoal() <= 1e-7) {
+        } else if (d <= 1e-7) {
             return HAZARDOUS;
-        } else if (getGoal() <= 1e-5) {
+        } else if (d <= 1e-5) {
             return MAJOR;
-        } else if (getGoal() <= 1e-3) {
+        } else if (d <= 1e-3) {
             return MINOR;
         }
         else {
