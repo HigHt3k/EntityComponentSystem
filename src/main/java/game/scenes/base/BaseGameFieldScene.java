@@ -7,6 +7,7 @@ import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.RenderObject;
+import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
@@ -19,6 +20,7 @@ import game.components.GridComponent;
 import game.entities.simulation.BuildPanelEntity;
 import game.entities.simulation.GridEntity;
 import game.entities.simulation.SimulationEntity;
+import game.entities.ui.SimplePanel;
 import game.handler.simulation.SimulationType;
 import game.scenes.game.GameScene;
 import game.scenes.util.BuildPanelPage;
@@ -53,6 +55,8 @@ public class BaseGameFieldScene extends BaseScene {
     private int xMax;
     private int yMax;
 
+    protected Entity box;
+
     public BaseGameFieldScene(String name, int id) {
         super(name, id);
 
@@ -73,6 +77,10 @@ public class BaseGameFieldScene extends BaseScene {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
         setupBuildPanel();
+
+        box = new SimplePanel("box", IdGenerator.generateId(),
+                50, 50, 200, 200, null, Bit8.DARK_GREY, null);
+        addEntityToScene(box);
     }
 
     /**
@@ -182,6 +190,11 @@ public class BaseGameFieldScene extends BaseScene {
         addEntityToScene(gridEntity);
     }
 
+    protected void updateBox() {
+        box.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setLocation(new Point(X_MARGIN, Y_MARGIN));
+        box.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setBounds(new Rectangle(X_MARGIN, Y_MARGIN, xMax * CELL_SIZE, yMax * CELL_SIZE));
+    }
+
     /**
      * Update the grid size / cell size
      */
@@ -196,6 +209,8 @@ public class BaseGameFieldScene extends BaseScene {
 
         X_MARGIN = (1500 - xMax * CELL_SIZE) / 2;
         Y_MARGIN = (850 - yMax * CELL_SIZE) / 2;
+
+        updateBox();
     }
 
     /**

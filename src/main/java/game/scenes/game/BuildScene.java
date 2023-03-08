@@ -9,6 +9,7 @@ import engine.ecs.component.collision.CollisionObject;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.RenderObject;
+import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
 import engine.ecs.entity.ImageEntity;
@@ -265,6 +266,7 @@ public class BuildScene extends BaseGameFieldScene {
         removeAlLGridElementsOutside();
         updateGridSize();
         updateEntitySize();
+        updateBox();
     }
 
 
@@ -281,4 +283,9 @@ public class BuildScene extends BaseGameFieldScene {
         Y_MARGIN = (850 - gridSize.y * CELL_SIZE) / 2;
     }
 
+    @Override
+    protected void updateBox() {
+        box.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setLocation(new Point(X_MARGIN, Y_MARGIN));
+        box.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setBounds(new Rectangle(X_MARGIN, Y_MARGIN, gridSize.x * CELL_SIZE, gridSize.y * CELL_SIZE));
+    }
 }
