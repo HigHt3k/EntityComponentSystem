@@ -6,6 +6,7 @@ import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.ShapeObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.system.SystemHandle;
+import engine.resource.colorpalettes.Bit8;
 import game.components.*;
 import game.entities.cable.CablePort;
 import game.handler.builder.BuildHandler;
@@ -310,11 +311,11 @@ public class SimulationSystem extends SystemHandle {
             }
 
             switch (e.getComponent(SimulationComponent.class).getSimulationState()) {
-                case CORRECT -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(0, 255, 0, 40));
-                case FAIL -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 132, 0, 40));
-                case PASSIVE -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(0, 0, 255, 40));
-                case OUT_OF_CONTROL -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 0, 0, 40));
-                case INOPERATIVE -> ((ShapeObject) e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0)).setFillColor(new Color(255, 235, 0, 40));
+                case CORRECT -> e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setFillColor(Bit8.GREEN);
+                case FAIL -> e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setFillColor(Bit8.ORANGE);
+                case PASSIVE -> e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setFillColor(Bit8.BLUE);
+                case OUT_OF_CONTROL -> e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setFillColor(Bit8.RED);
+                case INOPERATIVE -> e.getComponent(RenderComponent.class).getRenderObjectsOfType(ShapeObject.class).get(0).setFillColor(Bit8.YELLOW);
             }
         }
     }

@@ -50,10 +50,10 @@ public class SimulationEntity extends Entity {
         Rectangle bounds = new Rectangle(x, y, width, height);
 
         RenderComponent renderComponent = new RenderComponent();
-        renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER2, img));
+        renderComponent.addRenderObject(new ShapeObject(new Point(x + 10, y + 10), new Rectangle(x + 10, y + 10, width-20, height-20), Layer.GAMELAYER2, null, null, 1));
+        renderComponent.addRenderObject(new ImageObject(new Point(x, y), bounds, Layer.GAMELAYER3, img));
         HoverObject hover = new HoverObject(new Point(x, y), bounds, HOVER_COLOR);
         renderComponent.addRenderObject(hover);
-        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), bounds, Layer.GAMELAYER3, null, null, 1));
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
 
