@@ -54,11 +54,11 @@ public class Query {
      * @param <T>
      * @return List with entities that were queried
      */
-    public static <T extends Entity> ArrayList<Entity> getEntitiesOfClassType(Class<T> entityClass) {
-        ArrayList<Entity> entities = new ArrayList<>();
+    public static <T extends Entity> ArrayList<T> getEntitiesOfClassType(Class<T> entityClass) {
+        ArrayList<T> entities = new ArrayList<>();
         for (Entity e : Game.scene().current().getEntities()) {
             if (e.getClass() == entityClass) {
-                entities.add(e);
+                entities.add(entityClass.cast(e));
             }
         }
         return entities;
