@@ -258,15 +258,15 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
             highscores.append(hs.getScore()).append("\n");
         }
 
-        ((TextObject) playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(players.toString());
-        ((TextObject) highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(highscores.toString());
+        playersView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(players.toString());
+        highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(highscores.toString());
     }
 
     public void showLevelInfo(int levelId) {
         GameScene s = (GameScene) Game.scene().getScene(levelId);
 
-        ((TextObject) levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(s.getName());
-        ((TextObject) levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(String.valueOf(s.getDifficulty()));
+        levelInfoHead.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(s.getName());
+        levelInfoDesc.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(String.valueOf(s.getDifficulty()));
     }
 
     /**
