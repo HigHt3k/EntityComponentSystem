@@ -203,9 +203,15 @@ public class ResourceManager {
                                 failureDetectionRatio = Float.parseFloat(entity.getAttribute("failureDetectionRatio"));
                             }
 
-                            int correctSignalsNeeded = Integer.parseInt(entity.getAttribute("correctSignalsNeeded"));
-                            int outOfControlSignalsAccepted = Integer.parseInt(entity.getAttribute("outOfControlSignalsAccepted"));
+                            int correctSignalsNeeded = 0;
+                            if(!entity.getAttribute("correctSignalsNeeded").equals("")) {
+                                correctSignalsNeeded = Integer.parseInt(entity.getAttribute("correctSignalsNeeded"));
+                            }
 
+                            int outOfControlSignalsAccepted = 0;
+                            if(!entity.getAttribute("outOfControlSignalsAccepted").equals("")) {
+                                outOfControlSignalsAccepted = Integer.parseInt(entity.getAttribute("outOfControlSignalsAccepted"));
+                            }
                             scene.addSimulationElement(x, y, entityId, safety,correctSignalsNeeded, outOfControlSignalsAccepted, interactable, failureDetectionRatio);
                         }
                     }
