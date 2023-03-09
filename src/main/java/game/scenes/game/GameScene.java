@@ -398,6 +398,15 @@ public class GameScene extends BaseGameFieldScene {
                 "BACK TO MENU", FontCollection.bit8FontMedium, new StartAction(-255)
         ));
 
+        try {
+            Image img1 = new ImageIcon(new File("res/menus/gui/fireworks1.gif").toURL()).getImage();
+            ImageEntity ex1 = new ImageEntity("ex1", IdGenerator.generateId(),
+                    img1, -100, -500, 2000, 2000, Layer.GAMELAYER3, false, 0);
+            addEntityToScene(ex1);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
         createScale(probabilities);
     }
 
