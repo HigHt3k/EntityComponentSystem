@@ -399,11 +399,22 @@ public class GameScene extends BaseGameFieldScene {
 
         createScale(probabilities);
 
+        Entity scoreText = new TextBody("scoreText", IdGenerator.generateId(),
+                1920/2 - 200, 1080/2 - 150, 200, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@61"
+                );
+        addEntityToScene(scoreText);
+        Entity scoreContent = new TextBody("scoreContent", IdGenerator.generateId(),
+                1920/2, 1080/2 - 150, 200, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(score)
+        );
+        addEntityToScene(scoreContent);
+
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 100, 300, 40,
                 "@59", FontCollection.bit8FontLarge, new SaveScoreAction(),
-                null, Bit8.DARK_GREY, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(saveScore);
 
@@ -411,7 +422,7 @@ public class GameScene extends BaseGameFieldScene {
                 "Back to Menu", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 160, 300, 40,
                 "@60", FontCollection.bit8FontLarge, new StartAction(-255),
-                null, Bit8.DARK_GREY, null
+                Bit8.DARK_GREY, null, null
         ));
     }
 
@@ -466,7 +477,7 @@ public class GameScene extends BaseGameFieldScene {
                 "back", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 100, 300, 40,
                 "@58", FontCollection.bit8FontLarge, new StartAction(null),
-                null, Bit8.DARK_GREY, null
+                Bit8.DARK_GREY, null, null
         );
         addEntityToScene(back);
     }

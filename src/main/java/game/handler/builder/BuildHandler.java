@@ -173,6 +173,8 @@ public class BuildHandler extends Handler {
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarker"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarker"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarker"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scoreText"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scoreContent"));
                     }
                 }
             }
