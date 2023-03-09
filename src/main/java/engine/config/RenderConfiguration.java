@@ -3,6 +3,7 @@ package engine.config;
 import engine.Game;
 import engine.graphics.render.RenderingEngine;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**

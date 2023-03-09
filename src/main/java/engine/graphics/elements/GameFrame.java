@@ -37,4 +37,18 @@ public class GameFrame extends JFrame {
             e.printStackTrace();
         }
     }
+
+    public void toggleFullScreen() {
+        if(Game.config().renderConfiguration().getFullscreenMode()) {
+            Game.frame().dispose();
+            Game.frame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+            Game.frame().setUndecorated(true);
+            Game.frame().setVisible(true);
+        } else {
+            Game.frame().dispose();
+            Game.frame().setExtendedState(JFrame.NORMAL);
+            Game.frame().setUndecorated(false);
+            Game.frame().setVisible(true);
+        }
+    }
 }
