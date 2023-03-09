@@ -24,6 +24,7 @@ import game.entities.ui.TextBody;
 import game.handler.tutorial.TutorialHandler;
 import game.scenes.base.BaseMenuScene;
 import game.scenes.game.GameScene;
+import game.scenes.tutorial.Tutorial;
 import game.scenes.util.CharacterTalking;
 
 import javax.imageio.ImageIO;
@@ -35,7 +36,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class LevelMenuScene extends BaseMenuScene {
+public class LevelMenuScene extends BaseMenuScene implements Tutorial {
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
     protected int X_MARGIN = 200;
@@ -271,7 +272,8 @@ public class LevelMenuScene extends BaseMenuScene {
     /**
      * Show a tutorial / introduction dialogue before starting to choose a level
      */
-    private void tutorialDialogue() {
+    @Override
+    public void tutorialDialogue() {
         tutorialRunning = true;
         deactivateMap();
         Game.input().addHandler(new TutorialHandler());
@@ -334,13 +336,20 @@ public class LevelMenuScene extends BaseMenuScene {
      * Check if the tutorial is currently running
      * @return true if running, false if not running
      */
+    @Override
     public boolean isTutorialRunning() {
         return tutorialRunning;
+    }
+
+    @Override
+    public void setTutorialRunning() {
+
     }
 
     /**
      * Show the next tutorial part / speechbubble text. Remove if the text is finished
      */
+    @Override
     public void showNextTutorialText() {
         if(tinaId == 809 && ingoId == 804) {
             activateMap();
@@ -371,7 +380,8 @@ public class LevelMenuScene extends BaseMenuScene {
         }
     }
 
-    private void removeTutorial() {
+    @Override
+    public void removeTutorial() {
         tutorialRunning = false;
         Game.input().removeHandler(TutorialHandler.class);
         removeEntityFromScene(getEntityByName("text1"));

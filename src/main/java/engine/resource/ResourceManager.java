@@ -13,6 +13,7 @@ import game.components.GridComponent;
 import game.components.SimulationComponent;
 import game.handler.simulation.SimulationType;
 import game.scenes.game.BuildScene;
+import game.scenes.game.TutorialScene;
 import game.scenes.util.Difficulty;
 import game.scenes.game.GameScene;
 import org.w3c.dom.Document;
@@ -144,8 +145,12 @@ public class ResourceManager {
                 }
 
                 Difficulty difficulty = Difficulty.valueOf(level.getAttribute("difficulty"));
-
-                GameScene scene = new GameScene(levelName, mapId, difficulty);
+                GameScene scene;
+                if(difficulty == Difficulty.TUTORIAL) {
+                    scene = new TutorialScene(levelName, mapId, difficulty);
+                } else {
+                    scene = new GameScene(levelName, mapId, difficulty);
+                }
                 if(descriptions.size() > 0) {
                     scene.setDescription(descriptions.get(0));
                 }

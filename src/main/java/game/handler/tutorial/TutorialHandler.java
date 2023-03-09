@@ -4,6 +4,7 @@ import engine.Game;
 import engine.input.gamepad.InputAction;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
+import game.scenes.game.TutorialScene;
 import game.scenes.menu.LevelMenuScene;
 
 import java.awt.event.KeyEvent;
@@ -23,8 +24,12 @@ public class TutorialHandler extends Handler {
     public void handle(MouseEvent e) {
         if(e.getButton() == MouseEvent.BUTTON1) {
             if(Game.scene().current() instanceof LevelMenuScene lms) {
-                if(lms.isTutorialRunning()) {
+                if (lms.isTutorialRunning()) {
                     lms.showNextTutorialText();
+                }
+            } else if(Game.scene().current() instanceof TutorialScene ts) {
+                if(ts.isTutorialRunning()) {
+                    ts.showNextTutorialText();
                 }
             } else {
                 return;
