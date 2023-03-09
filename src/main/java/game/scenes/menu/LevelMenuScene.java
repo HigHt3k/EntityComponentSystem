@@ -19,8 +19,10 @@ import game.entities.ui.LevelImageButton;
 import game.entities.ui.LineEntity;
 import game.entities.ui.SimplePanel;
 import game.entities.ui.TextBody;
+import game.handler.tutorial.TutorialHandler;
 import game.scenes.base.BaseMenuScene;
 import game.scenes.game.GameScene;
+import game.scenes.util.CharacterTalking;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -41,6 +43,10 @@ public class LevelMenuScene extends BaseMenuScene {
     private final Entity levelInfoDesc;
     private final Entity levelInfoHead;
     private boolean firstTimeOpened = true;
+    private boolean tutorialRunning = false;
+    private int tinaId = 805;
+    private int ingoId = 800;
+    private CharacterTalking currentlyTalking;
 
     public LevelMenuScene(String name, int id) {
         super(name, id);
@@ -264,16 +270,18 @@ public class LevelMenuScene extends BaseMenuScene {
      * Show a tutorial / introduction dialogue before starting to choose a level
      */
     private void tutorialDialogue() {
+        tutorialRunning = true;
+        Game.input().addHandler(new TutorialHandler());
         // make background blurry
         Entity blur = new SimplePanel("blur", IdGenerator.generateId(),
-                0, 0, 1920, 1080, Bit8.setAlpha(Bit8.WHITE, 120), null, null);
+                0, 0, 1920, 1080, Bit8.setAlpha(Bit8.WHITE, 170), null, null);
         addEntityToScene(blur);
 
         // create character models
         Entity tina = null;
         try {
             tina = new ImageEntity("tina", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/character/Tina-Technik.png")), 1200, 500, 19 * 12, 27 * 12, Layer.UI);
+                    ImageIO.read(new File("res/character/Tina-Technik.png")), 1100, 500, 19 * 12, 27 * 12, Layer.UI);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -282,7 +290,7 @@ public class LevelMenuScene extends BaseMenuScene {
         Entity ingo = null;
         try {
             ingo = new ImageEntity("ingo", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/character/Ingo-Ingenieur.png")), 200, 600, 19 * 12, 27 * 12, Layer.UI);
+                    ImageIO.read(new File("res/character/Ingo-Ingenieur.png")), 450, 600, 19 * 12, 27 * 12, Layer.UI);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -293,24 +301,70 @@ public class LevelMenuScene extends BaseMenuScene {
         Entity speechBubble1 = null;
         try {
             speechBubble1 = new ImageEntity("bubble1", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/speechbubble.png")), 200, 400, 64*4, 32*4, Layer.UI);
+                    ImageIO.read(new File("res/menus/speechbubble.png")), 200, 400, 64*8, 32*8, Layer.UI);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         addEntityToScene(speechBubble1);
+        Entity textIngo = new TextBody("text1", IdGenerator.generateId(),
+                220, 410, 64*8 - 40, 32*8 - 20, FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@" + ingoId);
+        addEntityToScene(textIngo);
+        currentlyTalking = CharacterTalking.INGO;
+        ingoId++;
+
 
         // Speech bubble for character Tina
         Entity speechBubble2 = null;
         try {
             speechBubble2 = new ImageEntity("bubble2", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/speechbubble.png")), 1200, 300, 64*4, 32*4, Layer.UI);
+                    ImageIO.read(new File("res/menus/speechbubble.png")), 800, 300, 64*8, 32*8, Layer.UI);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         addEntityToScene(speechBubble2);
+        Entity textTina = new TextBody("text2", IdGenerator.generateId(),
+                820, 310, 64*8-40, 32*8-20, FontCollection.bit8FontLarge, Bit8.DARK_GREY, "");
+        addEntityToScene(textTina);
     }
 
-    public void showDialoguePart(int dialogueId) {
+    /**
+     * Check if the tutorial is currently running
+     * @return true if running, false if not running
+     */
+    public boolean isTutorialRunning() {
+        return tutorialRunning;
+    }
 
+    /**
+     * Show the next tutorial part / speechbubble text. Remove if the text is finished
+     */
+    public void showNextTutorialText() {
+        if(tinaId == 809 && ingoId == 804) {
+            removeTutorial();
+            return;
+        }
+        if(currentlyTalking == CharacterTalking.INGO) {
+            getEntityByName("text1").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+            getEntityByName("text2").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@" + tinaId);
+            tinaId++;
+            currentlyTalking = CharacterTalking.TINA;
+        } else if(currentlyTalking == CharacterTalking.TINA) {
+            getEntityByName("text1").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@" + ingoId);
+            getEntityByName("text2").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+            ingoId++;
+            currentlyTalking = CharacterTalking.INGO;
+        }
+    }
+
+    private void removeTutorial() {
+        tutorialRunning = false;
+        Game.input().removeHandler(TutorialHandler.class);
+        removeEntityFromScene(getEntityByName("text1"));
+        removeEntityFromScene(getEntityByName("text2"));
+        removeEntityFromScene(getEntityByName("blur"));
+        removeEntityFromScene(getEntityByName("bubble1"));
+        removeEntityFromScene(getEntityByName("bubble2"));
+        removeEntityFromScene(getEntityByName("ingo"));
+        removeEntityFromScene(getEntityByName("tina"));
     }
 }
