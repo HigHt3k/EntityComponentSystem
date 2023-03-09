@@ -23,4 +23,16 @@ public class ColliderComponent extends Component {
     public void addCollisionObject(CollisionObject collisionObject) {
         collisionObjects.add(collisionObject);
     }
+
+    public void deactivateAllObjects() {
+        for(CollisionObject c : collisionObjects) {
+            c.setDeactivated(true);
+        }
+    }
+
+    public void activateAllObjects() {
+        for(CollisionObject c : collisionObjects) {
+            c.setDeactivated(false);
+        }
+    }
 }

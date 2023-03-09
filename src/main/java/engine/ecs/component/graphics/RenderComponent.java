@@ -56,4 +56,16 @@ public class RenderComponent extends Component {
             r.setBounds(bounds);
         }
     }
+
+    public void hideAllObjects() {
+        for(RenderObject r : renderObjects) {
+            r.setHidden(true);
+        }
+    }
+
+    public void showAllObjects() {
+        for(RenderObject r : renderObjects) {
+            r.setHidden(false);
+        }
+    }
 }
