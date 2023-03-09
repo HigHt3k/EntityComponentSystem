@@ -2,20 +2,27 @@ package game.handler;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.Query;
 import engine.ecs.component.CursorComponent;
 import engine.ecs.component.graphics.RenderComponent;
+import engine.ecs.component.graphics.objects.ImageObject;
+import engine.ecs.entity.Entity;
 import engine.graphics.scene.Scene;
 import engine.input.gamepad.InputAction;
 import engine.input.handler.Handler;
 import engine.input.handler.HandlerType;
+import game.components.BuildComponent;
 import game.entities.simulation.CursorEntity;
 import game.handler.builder.BuildHandler;
+import game.scenes.base.BaseGameFieldScene;
+import game.scenes.game.GameScene;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -23,6 +30,8 @@ import java.util.Set;
 public class CursorSelectorHandler extends Handler {
     private CursorEntity cursor;
     private final Set<Integer> pressedKeys = new HashSet<>();
+    private boolean isInBuildPanel = false;
+    private int buildPanelIndex = 0;
 
     /**
      * Creates a new CursorSelectorHandler of the HandlerType "EVENT", that listens to inputs of keyboard and
@@ -149,13 +158,15 @@ public class CursorSelectorHandler extends Handler {
         }
 
         switch(e) {
-            case A, RT -> sendNewMouseEvent(new MouseEvent(
-                    Game.frame().getRenderPanel(),
-                    MouseEvent.MOUSE_CLICKED,
-                    1,
-                    InputEvent.BUTTON1_MASK,
-                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON1
-            ));
+            case A, RT -> {
+                sendNewMouseEvent(new MouseEvent(
+                        Game.frame().getRenderPanel(),
+                        MouseEvent.MOUSE_CLICKED,
+                        1,
+                        InputEvent.BUTTON1_MASK,
+                        Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON1
+                ));
+            }
             case B -> sendNewMouseEvent(new MouseEvent(
                     Game.frame().getRenderPanel(),
                     MouseEvent.MOUSE_CLICKED,
@@ -184,6 +195,60 @@ public class CursorSelectorHandler extends Handler {
 
                 if (curLayer > 0) {
                     buildHandler.setCurrentCableLayer(curLayer - 1);
+                }
+            }
+            case DPAD_DOWN -> {
+                // open the build panel, set cursor there
+                if(Game.scene().current() instanceof BaseGameFieldScene scene) {
+                    isInBuildPanel = true;
+
+                    // get any build element
+                    ArrayList<Entity> entities = Query.getEntitiesWithComponent(BuildComponent.class);
+                    if(entities.isEmpty()) {
+                        break;
+                    }
+                    buildPanelIndex = 0;
+
+                    int xBuild = entities.get(buildPanelIndex).getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0).getLocation().x;
+                    int yBuild = entities.get(buildPanelIndex).getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0).getLocation().y;
+
+                    moveCursor(xBuild, yBuild);
+                }
+            }
+            case DPAD_RIGHT -> {
+                if(isInBuildPanel) {
+                    ArrayList<Entity> entities = Query.getEntitiesWithComponent(BuildComponent.class);
+                    if(entities.isEmpty()) {
+                        break;
+                    }
+
+                    buildPanelIndex++;
+                    if(buildPanelIndex >= entities.size()) {
+                        buildPanelIndex--;
+                    }
+
+                    int xBuild = entities.get(buildPanelIndex).getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0).getLocation().x;
+                    int yBuild = entities.get(buildPanelIndex).getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0).getLocation().y;
+
+                    moveCursor(xBuild, yBuild);
+                }
+            }
+            case DPAD_LEFT -> {
+                if(isInBuildPanel) {
+                    ArrayList<Entity> entities = Query.getEntitiesWithComponent(BuildComponent.class);
+                    if(entities.isEmpty()) {
+                        break;
+                    }
+
+                    buildPanelIndex--;
+                    if(buildPanelIndex < 0 ) {
+                        buildPanelIndex++;
+                    }
+
+                    int xBuild = entities.get(buildPanelIndex).getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0).getLocation().x;
+                    int yBuild = entities.get(buildPanelIndex).getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0).getLocation().y;
+
+                    moveCursor(xBuild, yBuild);
                 }
             }
         }

@@ -5,6 +5,7 @@ import engine.ecs.component.Component;
 import engine.ecs.entity.Entity;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Query {
 
@@ -86,5 +87,14 @@ public class Query {
             }
         }
         return entities;
+    }
+
+    public static Entity getEntityWithName(String name) {
+        for(Entity e : Game.scene().current().getEntities()) {
+            if(Objects.equals(e.getName(), name)) {
+                return e;
+            }
+        }
+        return null;
     }
 }

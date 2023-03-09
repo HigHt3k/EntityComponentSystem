@@ -49,6 +49,7 @@ public class InputManager {
                 }
             }
 
+            gamePadAdapter.getButtonsPressed().remove(e);
             gamePadEvents.remove(e);
         }
 
