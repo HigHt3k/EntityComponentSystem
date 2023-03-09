@@ -9,7 +9,7 @@ public class TutorialScene extends GameScene implements Tutorial {
     private boolean firstTimeOpened = true;
     private boolean tutorialRunning = false;
     /**
-     * create a new GameScene object;
+     * create a new Tutorial Scene object;
      *
      * @param name
      * @param id
@@ -32,6 +32,7 @@ public class TutorialScene extends GameScene implements Tutorial {
     public void tutorialDialogue() {
         tutorialRunning = true;
         Game.input().addHandler(new TutorialHandler());
+
     }
 
     @Override

@@ -382,9 +382,16 @@ public class GameScene extends BaseGameFieldScene {
     public void displayLevelFinished(int score, double[] probabilities) {
         this.score = (int) (score * Math.pow(0.98f, tries));
         tries++;
-        addEntityToScene(new ScoreBox("Scorebox", IdGenerator.generateId(),
-                FontCollection.bit8FontLarge, score,
-                1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "level passed!"));
+
+        try {
+            Entity scoreBox = new ImageEntity("scorebox", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/hud_element_7.png")),
+                    1920/2 - 131*3 - 40, 1080/2 - 62*3 - 20, 131 * 6 + 80, 62 * 6 + 40, Layer.UI);
+            addEntityToScene(scoreBox);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         GenericButton saveScore = new GenericButton(
                 "ScoreSaveButton", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
@@ -417,17 +424,15 @@ public class GameScene extends BaseGameFieldScene {
      */
     public void displayLevelNotFinished(double[] probabilities) {
         tries++;
-        addEntityToScene(new ScoreBox("scorebox", IdGenerator.generateId(),
-                FontCollection.bit8FontLarge, 0,
-                1920 / 2 - 300, 1080 / 2 - 250, 600, 500, "Requirements not met!"));
-        GenericButton back = new GenericButton(
-                "back", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
-                "TRY AGAIN", Game.res().loadFont("res/font/joystix monospace.ttf", 18f), new StartAction(null)
-        );
-        addEntityToScene(back);
 
-        createScale(probabilities);
+        try {
+            Entity scoreBox = new ImageEntity("scorebox", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/hud_element_7.png")),
+                    1920/2 - 131*3 - 40, 1080/2 - 62*3 - 20, 131 * 6 + 80, 62 * 6 + 40, Layer.UI);
+            addEntityToScene(scoreBox);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         try {
             Image img1 = new ImageIcon(new File("res/animations/explosion-medium-rotated.gif").toURL()).getImage();
@@ -457,6 +462,14 @@ public class GameScene extends BaseGameFieldScene {
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+
+        createScale(probabilities);
+        GenericButton back = new GenericButton(
+                "back", IdGenerator.generateId(),
+                1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
+                "TRY AGAIN", Game.res().loadFont("res/font/joystix monospace.ttf", 18f), new StartAction(null)
+        );
+        addEntityToScene(back);
     }
 
     /**
@@ -465,19 +478,19 @@ public class GameScene extends BaseGameFieldScene {
      * @param probabilities: Passive and OOC failure probabilities for the users' solution
      */
     private void createScale(double[] probabilities) {
-        int scaleWidth = 500;
+        int scaleWidth = 128*4;
         int positionGoal;
         int positionScoreOOC;
         int positionScorePassive;
         if (goal <= 0.0) {
             positionGoal = scaleWidth;
         } else {
-            positionGoal = (int) (Math.abs(Math.log10(goal)) * scaleWidth / 10);
+            positionGoal = (int) (Math.abs(Math.log10(goal)) * scaleWidth / 11);
         }
         if (probabilities[0] <= 0.0) {
             positionScorePassive = scaleWidth;
         } else {
-            positionScorePassive = (int) (Math.abs(Math.log10(probabilities[0])) * scaleWidth / 10);
+            positionScorePassive = (int) (Math.abs(Math.log10(probabilities[0])) * scaleWidth / 11);
         }
         if (positionScorePassive > scaleWidth) {
             positionScorePassive = scaleWidth;
@@ -485,19 +498,21 @@ public class GameScene extends BaseGameFieldScene {
         if (probabilities[1] <= 0.0) {
             positionScoreOOC = scaleWidth;
         } else {
-            positionScoreOOC = (int) (Math.abs(Math.log10(probabilities[1])) * scaleWidth / 10);
+            positionScoreOOC = (int) (Math.abs(Math.log10(probabilities[1])) * scaleWidth / 11);
         }
         if (positionScoreOOC > scaleWidth) {
             positionScoreOOC = scaleWidth;
         }
 
+        Entity scale = null;
+        try {
+            scale = new ImageEntity("scale", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/scale.png")),
+                    1920/2 - scaleWidth/2, 1080/2 - 16*2, scaleWidth, 16*4, Layer.UI);
+            addEntityToScene(scale);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        ScaleEntity scoreScale = new ScaleEntity(
-                "scale", IdGenerator.generateId(), 1920 / 2 - scaleWidth / 2, 1080 / 2 - 100, scaleWidth, 10,
-                new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionGoal, 1080 / 2 - 100), getSafetyReqColor(goal)),
-                new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionScoreOOC, 1080 / 2 - 100), Bit8.JAM),
-                new Marker(new Point(1920 / 2 - scaleWidth / 2 + positionScorePassive, 1080 / 2 - 100), Bit8.CORNFLOWER_BLUE)
-        );
-        addEntityToScene(scoreScale);
     }
 }

@@ -17,6 +17,7 @@
         <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
         <entity x="1" y="0" id="499" interactable="false"/>
         <entity x="2" y="0" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="3" y="0" id="499" interactable="false"/>
         <entity x="4" y="0" id="205" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </layer>
 </map>
