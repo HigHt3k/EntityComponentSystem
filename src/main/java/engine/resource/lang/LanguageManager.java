@@ -14,6 +14,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 // TODO: Implement
 public class LanguageManager {
@@ -98,5 +99,37 @@ public class LanguageManager {
      */
     private String removeLineBreaks(String in) {
         return in.replaceAll("[\\t\\n\\r]+", " ");
+    }
+
+    public void printTranslationMissing() {
+        // use english as comparator since this is the implementation language
+        Language l = getLanguage(LanguageType.EN_US);
+        Language ger = getLanguage(LanguageType.DE_DE);
+        Language gerSimple = getLanguage(LanguageType.DE_SIMPLE);
+
+        compareLanguages(l, ger);
+        compareLanguages(l, gerSimple);
+    }
+
+    private void compareLanguages(Language l1, Language l2) {
+        System.out.println("Comparing " + l1.getLanguageType() + " and " + l2.getLanguageType());
+        for(Map.Entry<Integer, String> languageEntry : l1.getLanguage().entrySet()) {
+            int key = languageEntry.getKey();
+            String value = languageEntry.getValue();
+
+            String valueOther = l2.getLanguage().get(key);
+            if(valueOther == null || valueOther.equals("")) {
+                System.out.println("Translation missing: @" + key);
+            }
+        }
+    }
+
+    public Language getLanguage(LanguageType languageType) {
+        for(Language l : languages) {
+            if(l.getLanguageType() == languageType) {
+                return l;
+            }
+        }
+        return null;
     }
 }

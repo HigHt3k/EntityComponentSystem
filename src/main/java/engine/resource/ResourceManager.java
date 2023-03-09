@@ -4,6 +4,7 @@ import engine.Game;
 import engine.IdGenerator;
 import engine.ecs.entity.Entity;
 import engine.graphics.scene.Scene;
+import engine.resource.lang.Language;
 import engine.resource.lang.LanguageManager;
 import engine.resource.score.HighScore;
 import engine.resource.score.HighScoreManager;

@@ -34,6 +34,8 @@ public class Main {
         Game.res().language().parseLanguageFile("res/lang/de_de.xml");
         Game.res().language().parseLanguageFile("res/lang/de_simple.xml");
         Game.res().language().parseLanguageFile("res/lang/en_us.xml");
+        //debugging
+        Game.res().language().printTranslationMissing();
 
         File folder = new File("res/level/tutorial");
         File[] listOfFiles = folder.listFiles();
