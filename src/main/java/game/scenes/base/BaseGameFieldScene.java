@@ -128,6 +128,13 @@ public class BaseGameFieldScene extends BaseScene {
             );
             addEntityToScene(simulationEntity);
         } else if (Game.res().getTileSet().getType(imgId) == SimulationType.CABLE) {
+            String portIdString = String.valueOf(imgId);
+            int portId;
+            if(portIdString.length() == 5) {
+                portId = Integer.parseInt(portIdString.substring(0, 3)) - 500;
+            } else {
+                portId = Integer.parseInt(portIdString) - 500;
+            }
             SimulationEntity simulationEntity = new SimulationEntity(
                     "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
                     X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
@@ -135,7 +142,7 @@ public class BaseGameFieldScene extends BaseScene {
                     Game.res().loadTile(imgId), imgId,
                     failureRatio, Game.res().getTileSet().getType(imgId),
                     0, 0,
-                    new int[]{imgId - 500}, new int[]{imgId - 500}, removable, failureDetectionRatio
+                    new int[]{portId}, new int[]{portId}, removable, failureDetectionRatio
             );
             addEntityToScene(simulationEntity);
         } else if (Game.res().getTileSet().getType(imgId) == SimulationType.VOTE) {
