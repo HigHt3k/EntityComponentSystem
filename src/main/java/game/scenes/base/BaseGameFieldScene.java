@@ -138,6 +138,28 @@ public class BaseGameFieldScene extends BaseScene {
                     new int[]{imgId - 500}, new int[]{imgId - 500}, removable, failureDetectionRatio
             );
             addEntityToScene(simulationEntity);
+        } else if (Game.res().getTileSet().getType(imgId) == SimulationType.VOTE) {
+            SimulationEntity simulationEntity = new SimulationEntity(
+                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
+                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                    x, y,
+                    Game.res().loadTile(imgId), imgId,
+                    failureRatio, Game.res().getTileSet().getType(imgId),
+                    0, 0,
+                    new int[]{0, 1, 2, 3}, new int[]{0, 1, 2, 3}, removable, failureDetectionRatio
+            );
+            addEntityToScene(simulationEntity);
+        } else if (Game.res().getTileSet().getType(imgId) == SimulationType.PLACEHOLDER) {
+            SimulationEntity simulationEntity = new SimulationEntity(
+                    "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
+                    X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,
+                    x, y,
+                    Game.res().loadTile(imgId), imgId,
+                    failureRatio, Game.res().getTileSet().getType(imgId),
+                    0, 0,
+                    new int[]{}, new int[]{}, removable, failureDetectionRatio
+            );
+            addEntityToScene(simulationEntity);
         }
     }
 
