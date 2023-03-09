@@ -328,31 +328,31 @@ public class GameScene extends BaseGameFieldScene {
      * @param entity: the entity which contains the tool tip
      */
     public void displayToolTip(Entity entity) {
-        ((TextObject) getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(
+        getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(
                 entity.getComponent(TooltipComponent.class).getTooltipText());
-        ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(entity.getComponent(TooltipComponent.class).getFailureRatio());
-        ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setColor(getSafetyReqColor(Double.parseDouble(entity.getComponent(TooltipComponent.class).getFailureRatio())));
-        ((TextObject) getCorrectSignalsTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(entity.getComponent(TooltipComponent.class).getCorrectInputSignals());
-        ((TextObject) getAcceptedOOCTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(entity.getComponent(TooltipComponent.class).getAcceptedOOCSignals());
-        ((TextObject) getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@54");
-        ((TextObject) getAcceptedOOCTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@55");
-        ((TextObject) getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("@53");
-        ((TextObject) getTipsEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(String.valueOf(entity.getComponent(TooltipComponent.class).getType()));
+        getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(entity.getComponent(TooltipComponent.class).getFailureRatio());
+        getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setColor(getSafetyReqColor(Double.parseDouble(entity.getComponent(TooltipComponent.class).getFailureRatio())));
+        getCorrectSignalsTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(entity.getComponent(TooltipComponent.class).getCorrectInputSignals());
+        getAcceptedOOCTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(entity.getComponent(TooltipComponent.class).getAcceptedOOCSignals());
+        getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@54");
+        getAcceptedOOCTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@55");
+        getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@53");
+        getTipsEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(String.valueOf(entity.getComponent(TooltipComponent.class).getType()));
     }
 
     /**
      * Remove the tool tip
      */
     public void displayEmptyToolTip() {
-        ((TextObject) getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setColor(Bit8.DARK_GREY);
-        ((TextObject) getCorrectSignalsTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) getAcceptedOOCTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) getAcceptedOOCTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
-        ((TextObject) getTipsEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText("");
+        getTipsText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+        getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+        getFailTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setColor(Bit8.DARK_GREY);
+        getCorrectSignalsTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+        getAcceptedOOCTipText().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+        getFailTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+        getAcceptedOOCTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+        getCorrectSignalsTipDesc().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+        getTipsEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
     }
 
     /**
