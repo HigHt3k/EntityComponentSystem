@@ -74,7 +74,7 @@ public class InputManager {
                 continue;
             }
 
-            for(Handler h : handlers) {
+            for(Handler h : (ArrayList<Handler>) handlers.clone()) {
                 if(h.getHandlerType() == HandlerType.EVENT)
                     h.handle(e);
             }
@@ -127,5 +127,9 @@ public class InputManager {
 
     public synchronized void queueEvent(InputAction e) {
         gamePadEvents.add(e);
+    }
+
+    public synchronized <T extends Handler> void removeHandler(Class<T> handlerClass) {
+        handlers.removeIf(h -> handlerClass.isAssignableFrom(h.getClass()));
     }
 }
