@@ -91,7 +91,6 @@ public class Main {
         Game.scene().addScene(new LevelMenuScene("level", -254));
         Game.scene().addScene(new BuildScene("build", -250));
         Game.scene().setCurrentScene(-255);
-        Game.scene().initScenes();
         Game.system().addSystem(new SimulationSystem());
         Game.system().addSystem(new ActionSystem());
         Game.input().addHandler(new CollisionDetectionSystem());

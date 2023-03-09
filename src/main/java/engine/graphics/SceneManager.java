@@ -67,6 +67,7 @@ public class SceneManager {
      */
     public void setCurrentScene(Scene currentScene) {
         this.currentScene = currentScene;
+        currentScene.init();
     }
 
     public int getSceneAmount() {
