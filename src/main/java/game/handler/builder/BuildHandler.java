@@ -25,6 +25,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -180,6 +181,9 @@ public class BuildHandler extends Handler {
 
         for (Entity entity : entities) {
             if (entity.getComponent(TooltipComponent.class) != null) {
+                if(Objects.equals(entity.getComponent(TooltipComponent.class).getType(), "PLACEHOLDER")) {
+                    continue;
+                }
                 if (Game.scene().current() instanceof GameScene gs && entity.getComponent(ColliderComponent.class) != null) {
                     if (entity.getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
                             .contains(Game.scale().upscalePoint(e.getPoint()))) {
@@ -1024,6 +1028,9 @@ public class BuildHandler extends Handler {
             if(e.getComponent(GridComponent.class) != null) {
                 if(e.getComponent(GridComponent.class).getGridLocation().getX() == p.getX()
                         && e.getComponent(GridComponent.class).getGridLocation().getY() == p.getY()) {
+                    if(e.getComponent(SimulationComponent.class) != null && e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.PLACEHOLDER) {
+                        continue;
+                    }
                     entitiesAtGridPosition.add(e);
                 }
             }

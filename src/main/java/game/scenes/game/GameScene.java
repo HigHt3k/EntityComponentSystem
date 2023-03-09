@@ -40,6 +40,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GameScene extends BaseGameFieldScene {
     private boolean unlocked = false;
