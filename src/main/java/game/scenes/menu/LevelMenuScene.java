@@ -2,8 +2,10 @@ package game.scenes.menu;
 
 import engine.Game;
 import engine.IdGenerator;
+import engine.ecs.Query;
 import engine.ecs.component.action.ActionComponent;
 import engine.ecs.component.action.StartAction;
+import engine.ecs.component.collision.ColliderComponent;
 import engine.ecs.component.graphics.RenderComponent;
 import engine.ecs.component.graphics.objects.Layer;
 import engine.ecs.component.graphics.objects.TextObject;
@@ -112,11 +114,6 @@ public class LevelMenuScene extends BaseMenuScene {
         makeConnections();
         unlockAll();
 
-        if(firstTimeOpened) {
-            tutorialDialogue();
-            firstTimeOpened = false;
-        }
-
         Entity levelInfoPanel = null;
         try {
             levelInfoPanel = new ImageEntity("level_info", IdGenerator.generateId(),
@@ -182,6 +179,11 @@ public class LevelMenuScene extends BaseMenuScene {
 
     @Override
     public void init() {
+        checkUnlocks();
+        if(firstTimeOpened) {
+            tutorialDialogue();
+            firstTimeOpened = false;
+        }
     }
 
     @Override
@@ -271,6 +273,7 @@ public class LevelMenuScene extends BaseMenuScene {
      */
     private void tutorialDialogue() {
         tutorialRunning = true;
+        deactivateMap();
         Game.input().addHandler(new TutorialHandler());
         // make background blurry
         Entity blur = new SimplePanel("blur", IdGenerator.generateId(),
@@ -340,6 +343,7 @@ public class LevelMenuScene extends BaseMenuScene {
      */
     public void showNextTutorialText() {
         if(tinaId == 809 && ingoId == 804) {
+            activateMap();
             removeTutorial();
             return;
         }
@@ -348,9 +352,20 @@ public class LevelMenuScene extends BaseMenuScene {
             getEntityByName("text2").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@" + tinaId);
             tinaId++;
             currentlyTalking = CharacterTalking.TINA;
+            if(ingoId == 803) {
+                removeEntityFromScene(getEntityByName("menu-marker"));
+            }
         } else if(currentlyTalking == CharacterTalking.TINA) {
+            if(ingoId == 802) {
+                Entity menuMarker = new SimplePanel("menu-marker", IdGenerator.generateId(),
+                        1498, 13,
+                        68, 68,
+                        null, Bit8.RED, null);
+                addEntityToScene(menuMarker);
+            }
             getEntityByName("text1").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@" + ingoId);
             getEntityByName("text2").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("");
+
             ingoId++;
             currentlyTalking = CharacterTalking.INGO;
         }
@@ -366,5 +381,44 @@ public class LevelMenuScene extends BaseMenuScene {
         removeEntityFromScene(getEntityByName("bubble2"));
         removeEntityFromScene(getEntityByName("ingo"));
         removeEntityFromScene(getEntityByName("tina"));
+    }
+
+    /**
+     * activate the map content
+     */
+    private void activateMap() {
+        for(Entity e : Query.getEntitiesWithComponent(RenderComponent.class)) {
+            e.getComponent(RenderComponent.class).showAllObjects();
+        }
+
+        for(Entity e : Query.getEntitiesWithComponent(ColliderComponent.class)) {
+            e.getComponent(ColliderComponent.class).activateAllObjects();
+        }
+    }
+
+    /**
+     * deactivate the map content
+     */
+    private void deactivateMap() {
+        for(Entity e : Query.getEntitiesWithComponent(RenderComponent.class)) {
+            if(e.getName().contains("lvl") || e.getName().equals("line_connector")) {
+                e.getComponent(RenderComponent.class).hideAllObjects();
+            }
+        }
+
+        for(Entity e : Query.getEntitiesWithComponent(ColliderComponent.class)) {
+            if(e.getName().contains("lvl") || e.getName().equals("line_connector")) {
+                e.getComponent(ColliderComponent.class).deactivateAllObjects();
+            }
+        }
+    }
+
+    /**
+     * only show the map, without activating buttons
+     */
+    private void showMap() {
+        for(Entity e : Query.getEntitiesWithComponent(RenderComponent.class)) {
+            e.getComponent(RenderComponent.class).showAllObjects();
+        }
     }
 }
