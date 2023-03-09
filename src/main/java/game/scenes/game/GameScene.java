@@ -147,10 +147,6 @@ public class GameScene extends BaseGameFieldScene {
         // Create the GUI including buttons going back to menu, exit etc.
         setupDescriptionPanel();
         //TODO: move cable to xml? so only the necessary choices are shown
-        addToBuildPanel(500, 1000, 0, 1, 0, 0f);
-        addToBuildPanel(501, 1000, 0, 1, 0, 0f);
-        addToBuildPanel(502, 1000, 0, 1, 0, 0f);
-        addToBuildPanel(503, 1000, 0, 1, 0, 0f);
     }
 
     @Override

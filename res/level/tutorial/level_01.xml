@@ -12,6 +12,7 @@
     <unlocks>
     </unlocks>
     <build>
+        <entity id="500" amount="2" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </build>
     <layer id="0" name="Tile Layer 1">
         <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
