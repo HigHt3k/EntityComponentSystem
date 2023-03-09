@@ -19,7 +19,7 @@ public class Query {
         if (Game.scene().current() == null) {
             return entities;
         }
-        for (Entity e : Game.scene().current().getEntities()) {
+        for (Entity e : (ArrayList<Entity>) Game.scene().current().getEntities().clone()) {
             if (e.getComponent(componentClass) != null) {
                 entities.add(e);
             }
