@@ -462,8 +462,8 @@ public class GameScene extends BaseGameFieldScene {
         createScale(probabilities);
         GenericButton back = new GenericButton(
                 "back", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
-                "TRY AGAIN", Game.res().loadFont("res/font/joystix monospace.ttf", 18f), new StartAction(null)
+                1920 / 2 - 150, 1080 / 2 + 200, 300, 40,
+                "@58", Game.res().loadFont("res/font/joystix monospace.ttf", 18f), new StartAction(null)
         );
         addEntityToScene(back);
     }
@@ -506,6 +506,26 @@ public class GameScene extends BaseGameFieldScene {
                     ImageIO.read(new File("res/menus/gui/scale.png")),
                     1920/2 - scaleWidth/2, 1080/2 - 16*2, scaleWidth, 16*4, Layer.UI);
             addEntityToScene(scale);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //  create marker for goal, current ooc and passive fails
+        try {
+            Entity goalMarker = new ImageEntity("goalMarker", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/marker.png")),
+                    1920/2 - scaleWidth/2 + positionGoal, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+            addEntityToScene(goalMarker);
+
+            Entity passiveMarker = new ImageEntity("passiveMarker", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/passiveMarker.png")),
+                    1920/2 - scaleWidth/2 + positionScorePassive, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+            addEntityToScene(passiveMarker);
+
+            Entity oocMarker = new ImageEntity("oocMarker", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/oocMarker.png")),
+                    1920/2 - scaleWidth/2 + positionScoreOOC, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+            addEntityToScene(oocMarker);
         } catch (IOException e) {
             e.printStackTrace();
         }
