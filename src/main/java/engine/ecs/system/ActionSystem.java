@@ -22,6 +22,9 @@ public class ActionSystem extends SystemHandle {
         recollectEntities();
         for (Entity e : entities) {
             if (e.getComponent(ColliderComponent.class).getCollisionObjects() != null) {
+                if(e.getComponent(ColliderComponent.class).getCollisionObjects().get(0).isDeactivated()) {
+                    continue;
+                }
                 for (CollisionObject c : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
                     if (c.getConnectedHoverObject() == null) {
                         continue;
