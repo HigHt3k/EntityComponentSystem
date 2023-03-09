@@ -388,19 +388,6 @@ public class GameScene extends BaseGameFieldScene {
             e.printStackTrace();
         }
 
-        GenericButton saveScore = new GenericButton(
-                "ScoreSaveButton", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 50, 300, 40,
-                "SAVE SCORE", FontCollection.bit8FontMedium, new SaveScoreAction()
-        );
-        addEntityToScene(saveScore);
-
-        addEntityToScene(new GenericButton(
-                "Back to Menu", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 - 50, 300, 40,
-                "BACK TO MENU", FontCollection.bit8FontMedium, new StartAction(-255)
-        ));
-
         try {
             Image img1 = new ImageIcon(new File("res/menus/gui/fireworks1.gif").toURL()).getImage();
             ImageEntity ex1 = new ImageEntity("ex1", IdGenerator.generateId(),
@@ -411,6 +398,21 @@ public class GameScene extends BaseGameFieldScene {
         }
 
         createScale(probabilities);
+
+        GenericButton saveScore = new GenericButton(
+                "ScoreSaveButton", IdGenerator.generateId(),
+                1920 / 2 - 150, 1080 / 2 + 100, 300, 40,
+                "@59", FontCollection.bit8FontLarge, new SaveScoreAction(),
+                null, Bit8.DARK_GREY, null
+        );
+        addEntityToScene(saveScore);
+
+        addEntityToScene(new GenericButton(
+                "Back to Menu", IdGenerator.generateId(),
+                1920 / 2 - 150, 1080 / 2 + 160, 300, 40,
+                "@60", FontCollection.bit8FontLarge, new StartAction(-255),
+                null, Bit8.DARK_GREY, null
+        ));
     }
 
     /**
@@ -462,8 +464,9 @@ public class GameScene extends BaseGameFieldScene {
         createScale(probabilities);
         GenericButton back = new GenericButton(
                 "back", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 200, 300, 40,
-                "@58", Game.res().loadFont("res/font/joystix monospace.ttf", 18f), new StartAction(null)
+                1920 / 2 - 150, 1080 / 2 + 100, 300, 40,
+                "@58", FontCollection.bit8FontLarge, new StartAction(null),
+                null, Bit8.DARK_GREY, null
         );
         addEntityToScene(back);
     }
