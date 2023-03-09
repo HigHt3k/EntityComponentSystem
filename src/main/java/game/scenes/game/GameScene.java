@@ -481,12 +481,12 @@ public class GameScene extends BaseGameFieldScene {
         if (goal <= 0.0) {
             positionGoal = scaleWidth;
         } else {
-            positionGoal = (int) (Math.abs(Math.log10(goal)) * scaleWidth / 11);
+            positionGoal = (int) (Math.abs(Math.log10(goal)) * scaleWidth / 10);
         }
         if (probabilities[0] <= 0.0) {
             positionScorePassive = scaleWidth;
         } else {
-            positionScorePassive = (int) (Math.abs(Math.log10(probabilities[0])) * scaleWidth / 11);
+            positionScorePassive = (int) (Math.abs(Math.log10(probabilities[0])) * scaleWidth / 10);
         }
         if (positionScorePassive > scaleWidth) {
             positionScorePassive = scaleWidth;
@@ -494,7 +494,7 @@ public class GameScene extends BaseGameFieldScene {
         if (probabilities[1] <= 0.0) {
             positionScoreOOC = scaleWidth;
         } else {
-            positionScoreOOC = (int) (Math.abs(Math.log10(probabilities[1])) * scaleWidth / 11);
+            positionScoreOOC = (int) (Math.abs(Math.log10(probabilities[1])) * scaleWidth / 10);
         }
         if (positionScoreOOC > scaleWidth) {
             positionScoreOOC = scaleWidth;
@@ -514,18 +514,22 @@ public class GameScene extends BaseGameFieldScene {
         try {
             Entity goalMarker = new ImageEntity("goalMarker", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/marker.png")),
-                    1920/2 - scaleWidth/2 + positionGoal, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+                    1920/2 - scaleWidth/2 + positionGoal - 32*2, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
             addEntityToScene(goalMarker);
 
             Entity passiveMarker = new ImageEntity("passiveMarker", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/passiveMarker.png")),
-                    1920/2 - scaleWidth/2 + positionScorePassive, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+                    1920/2 - scaleWidth/2 + positionScorePassive - 32*2, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
             addEntityToScene(passiveMarker);
 
             Entity oocMarker = new ImageEntity("oocMarker", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/oocMarker.png")),
-                    1920/2 - scaleWidth/2 + positionScoreOOC, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+                    1920/2 - scaleWidth/2 + positionScoreOOC - 32*2, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
             addEntityToScene(oocMarker);
+
+            System.out.println(positionGoal);
+            System.out.println(positionScorePassive);
+            System.out.println(positionScoreOOC);
         } catch (IOException e) {
             e.printStackTrace();
         }
