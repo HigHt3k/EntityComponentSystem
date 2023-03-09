@@ -303,7 +303,9 @@ public class SimulationSystem extends SystemHandle {
 
     private void updateGraphics() {
         for(Entity e : gatherRelevantEntities()) {
-            if (e.getComponent(SimulationComponent.class) == null || e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
+            if (e.getComponent(SimulationComponent.class) == null
+                    || e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE
+                    || e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.PLACEHOLDER) {
                 continue;
             }
 
