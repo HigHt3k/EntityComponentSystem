@@ -39,11 +39,11 @@ public class RenderComponent extends Component {
         return objects;
     }
 
-    public <T extends RenderObject> ArrayList<RenderObject> getRenderObjectsOfType(Class<T> objectClass) {
-        ArrayList<RenderObject> objects = new ArrayList<>();
+    public <T extends RenderObject> ArrayList<T> getRenderObjectsOfType(Class<T> objectClass) {
+        ArrayList<T> objects = new ArrayList<>();
         for (RenderObject renderObject : renderObjects) {
             if (renderObject.getClass() == objectClass) {
-                objects.add(renderObject);
+                objects.add(objectClass.cast(renderObject));
             }
         }
         return objects;
