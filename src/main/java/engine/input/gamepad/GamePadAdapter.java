@@ -81,7 +81,7 @@ public class GamePadAdapter {
             if (controllers.getState(0).isConnected) {
                 while (true) {
                     try {
-                        sleep((long) (75));
+                        sleep((long) (20));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
