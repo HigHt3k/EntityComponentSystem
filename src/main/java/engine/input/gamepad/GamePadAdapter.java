@@ -12,15 +12,24 @@ import java.util.Set;
 import static java.lang.Thread.sleep;
 
 public class GamePadAdapter {
+
     private boolean ltPressed = false;
     private boolean rtPressed = false;
-    private HashMap<InputAction, Boolean> buttonsPressed;
+    private boolean aPressed = false;
+    private boolean bPressed = false;
+    private boolean xPressed = false;
+    private boolean yPressed = false;
+    private boolean dpadUpPressed = false;
+    private boolean dpadDownPressed = false;
+    private boolean dpadRightPressed = false;
+    private boolean dpadLeftPressed = false;
+    private boolean rbPressed = false;
+    private boolean lbPressed = false;
 
     /**
      * Create a game pad adapter which uses jamepad library to find controllers and get their inputs
      */
     public GamePadAdapter() {
-        buttonsPressed = new HashMap<>();
         Thread controllerInputThread = new Thread(() -> {
             ControllerManager controllers = new ControllerManager();
             controllers.initSDLGamepad();
@@ -72,80 +81,110 @@ public class GamePadAdapter {
             if (controllers.getState(0).isConnected) {
                 while (true) {
                     try {
-                        sleep((long) (75));
+                        sleep((long) (20));
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
                     ControllerState currState = controllers.getState(0);
+
+                    // Handle A Button
                     if (currState.a) {
-                        if(buttonsPressed.get(InputAction.A) == null) {
-                            buttonsPressed.put(InputAction.A, true);
+                        if(!aPressed) {
+                            aPressed = true;
                             Game.input().queueEvent(InputAction.A);
                         }
+                    } else {
+                        aPressed = false;
                     }
+
+                    // Handle B Button
                     if(currState.b) {
-                        if(buttonsPressed.get(InputAction.B) == null) {
-                            buttonsPressed.put(InputAction.B, true);
+                        if(!bPressed) {
+                            bPressed = true;
                             Game.input().queueEvent(InputAction.B);
                         }
+                    } else {
+                        bPressed = false;
                     }
+
+                    // Handle LB
                     if(currState.lb) {
-                        if(buttonsPressed.get(InputAction.LB) == null) {
-                            buttonsPressed.put(InputAction.LB, true);
+                        if(!lbPressed) {
+                            lbPressed = true;
                             Game.input().queueEvent(InputAction.LB);
                         }
+                    } else {
+                        lbPressed = false;
                     }
+
+                    // Handle RB
                     if(currState.rb) {
-                        if(buttonsPressed.get(InputAction.RB) == null) {
-                            buttonsPressed.put(InputAction.RB, true);
+                        if(!rbPressed) {
+                            rbPressed = true;
                             Game.input().queueEvent(InputAction.RB);
                         }
+                    } else {
+                        rbPressed = false;
                     }
+
+                    // Handle dpad left
                     if(currState.dpadLeft) {
-                        if (buttonsPressed.get(InputAction.DPAD_LEFT) == null) {
-                            buttonsPressed.put(InputAction.DPAD_LEFT, true);
+                        if (!dpadLeftPressed) {
+                            dpadLeftPressed = true;
                             Game.input().queueEvent(InputAction.DPAD_LEFT);
                         }
+                    } else {
+                        dpadLeftPressed = false;
                     }
+
+                    // Handle dpad down
                     if(currState.dpadDown) {
-                        if (buttonsPressed.get(InputAction.DPAD_DOWN) == null) {
-                            buttonsPressed.put(InputAction.DPAD_DOWN, true);
+                        if (!dpadDownPressed) {
+                            dpadDownPressed = true;
                             Game.input().queueEvent(InputAction.DPAD_DOWN);
                         }
+                    } else {
+                        dpadDownPressed = false;
                     }
+
+                    // Handle dpad Up
                     if(currState.dpadUp) {
-                        if (buttonsPressed.get(InputAction.DPAD_UP) == null) {
-                            buttonsPressed.put(InputAction.DPAD_UP, true);
+                        if (!dpadUpPressed) {
+                            dpadUpPressed = true;
                             Game.input().queueEvent(InputAction.DPAD_UP);
                         }
+                    } else {
+                        dpadUpPressed = false;
                     }
+
+                    // handle dpad right
                     if(currState.dpadRight) {
-                        if (buttonsPressed.get(InputAction.DPAD_RIGHT) == null) {
-                            buttonsPressed.put(InputAction.DPAD_RIGHT, true);
+                        if (!dpadRightPressed) {
+                            dpadRightPressed = true;
                             Game.input().queueEvent(InputAction.DPAD_RIGHT);
                         }
+                    } else {
+                        dpadRightPressed = false;
                     }
+
+                    // Handle LT
                     if(currState.leftTrigger > 0.5f) {
-                        if (buttonsPressed.get(InputAction.LT) == null) {
-                            if (!ltPressed) {
-                                ltPressed = true;
-                                buttonsPressed.put(InputAction.LT, true);
-                                Game.input().queueEvent(InputAction.LT);
-                            } else {
-                                ltPressed = false;
-                            }
+                        if (!ltPressed) {
+                            ltPressed = true;
+                            Game.input().queueEvent(InputAction.LT);
                         }
+                    } else {
+                        ltPressed = false;
                     }
+
+                    // Handle RT
                     if(currState.rightTrigger > 0.5f) {
-                        if (buttonsPressed.get(InputAction.RT) == null) {
-                            if (!rtPressed) {
-                                rtPressed = true;
-                                buttonsPressed.put(InputAction.RT, true);
-                                Game.input().queueEvent(InputAction.RT);
-                            } else {
-                                rtPressed = false;
-                            }
+                        if (!rtPressed) {
+                            rtPressed = true;
+                            Game.input().queueEvent(InputAction.RT);
                         }
+                    } else {
+                        rtPressed = false;
                     }
                 }
             }
@@ -155,7 +194,4 @@ public class GamePadAdapter {
         controllerInputThreadButtons.start();
     }
 
-    public HashMap<InputAction, Boolean> getButtonsPressed() {
-        return buttonsPressed;
-    }
 }
