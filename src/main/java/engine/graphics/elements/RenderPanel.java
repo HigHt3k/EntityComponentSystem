@@ -11,7 +11,7 @@ public class RenderPanel extends JPanel {
 
     public RenderPanel(final Dimension size) {
         this.setSize(size);
-        this.setBackground(new Color(80, 80, 80));
+        this.setBackground(new Color(0, 0, 0));
         this.setPreferredSize(size);
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -74,6 +74,13 @@ public class RenderPanel extends JPanel {
                 Game.input().queueEvent(e);
             }
         });
+    }
+
+    public void setNewSize() {
+        Game.config().renderConfiguration().resize();
+
+        this.setSize(Game.config().renderConfiguration().getResolution());
+        this.setPreferredSize(Game.config().renderConfiguration().getResolution());
     }
 
 }

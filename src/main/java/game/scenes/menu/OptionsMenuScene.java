@@ -6,6 +6,7 @@ import engine.ecs.entity.GenericButton;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
 import engine.resource.lang.LanguageType;
+import game.action.ToggleFullScreenAction;
 import game.scenes.base.BaseMenuScene;
 
 import java.awt.*;
@@ -46,6 +47,15 @@ public class OptionsMenuScene extends BaseMenuScene {
                 Bit8.DARK_GREY, null, null
         );
         addEntityToScene(toggleLanguageGermanEasy);
+
+        GenericButton toggleFullScreen = new GenericButton(
+                "fullscreen", IdGenerator.generateId(),
+                1920/2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 3,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "@13", font, new ToggleFullScreenAction(),
+                Bit8.DARK_GREY, null, null
+        );
+        addEntityToScene(toggleFullScreen);
 
         //TODO: implement controller / mouse sensitivity
     }

@@ -8,6 +8,7 @@
     <string id="10">ENGLISH</string>
     <string id="11">GERMAN</string>
     <string id="12">GERMAN SIMPLE</string>
+    <string id="13">FULLSCREEN</string>
     <string id="20">This is a sensor component. It measures specified parameters from a system.</string>
     <string id="21">A computer processes the different sensor inputs it receives.</string>
     <string id="22">Actuator components execute a command on the aircraft.</string>

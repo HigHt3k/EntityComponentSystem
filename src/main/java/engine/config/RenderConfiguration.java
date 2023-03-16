@@ -13,20 +13,15 @@ public class RenderConfiguration {
     private final int DEFAULT_RESOLUTION_WIDTH = 1920;
     private final int DEFAULT_RESOLUTION_HEIGHT = 1080;
     private final float DEFAULT_SCREEN_RATIO = (float) DEFAULT_RESOLUTION_WIDTH/(float) DEFAULT_RESOLUTION_HEIGHT;
-    //TODO: remove GRID_PX and adapt it to the level and screen size
-    private final int DEFAULT_GRID_PX = 128;
-    private final Dimension resolution;
-    private final float screenRatio;
+    private Dimension resolution;
+    private float screenRatio;
     private float scaleWidth = 1.0f;
     private float scaleHeight = 1.0f;
-    private float scaleGrid = 1.0f;
     private float frameRate = 244.0f;
 
     private boolean fullscreenMode = false;
     private final Object aliasingText = RenderingHints.VALUE_TEXT_ANTIALIAS_ON;
     private final Object aliasing = RenderingHints.VALUE_ANTIALIAS_ON;
-
-    private int gridPx = DEFAULT_GRID_PX;
 
     public float getFrameRate() {
         return frameRate;
@@ -71,13 +66,6 @@ public class RenderConfiguration {
     private void scale() {
         scaleWidth = (float) resolution.width / DEFAULT_RESOLUTION_WIDTH;
         scaleHeight = (float) resolution.height / DEFAULT_RESOLUTION_HEIGHT;
-        if(scaleWidth > scaleHeight) {
-            scaleGrid = scaleHeight;
-        } else {
-            scaleGrid = scaleWidth;
-        }
-
-        gridPx = (int) (scaleGrid * DEFAULT_GRID_PX);
     }
 
     /**
@@ -124,5 +112,22 @@ public class RenderConfiguration {
      */
     public Object getAliasingText() {
         return aliasingText;
+    }
+
+    public void resize() {
+        int width = Game.frame().getWidth();
+        int height = Game.frame().getHeight();
+        this.resolution = new Dimension(width, height);
+
+        this.screenRatio = (float) resolution.width / (float) resolution.height;
+        if(screenRatio > DEFAULT_SCREEN_RATIO) {
+            this.resolution.width = (int) (this.resolution.height * DEFAULT_SCREEN_RATIO);
+        } else if(screenRatio < DEFAULT_SCREEN_RATIO) {
+            this.resolution.height = (int) (this.resolution.width /DEFAULT_SCREEN_RATIO);
+        }
+        scale();
+        Game.logger().info("Screen size: " + this.resolution);
+        Game.logger().info("Using scaling factors for width and height: "
+                + scaleWidth + ", " + scaleHeight);
     }
 }

@@ -9,8 +9,8 @@ import java.awt.geom.AffineTransform;
  * The ScalingEngine is used to flexibly adapt all rendered objects to the screen size.
  */
 public class ScalingEngine {
-    private static final float scaleW = Game.config().renderConfiguration().getScaleWidth();
-    private static final float scaleH = Game.config().renderConfiguration().getScaleHeight();
+    private static float scaleW = Game.config().renderConfiguration().getScaleWidth();
+    private static float scaleH = Game.config().renderConfiguration().getScaleHeight();
     AffineTransform af = new AffineTransform();
     AffineTransform upscaleAf = new AffineTransform();
 
@@ -119,5 +119,16 @@ public class ScalingEngine {
      */
     public Shape upscaleShape(Shape s) {
         return upscaleAf.createTransformedShape(s);
+    }
+
+    public void update() {
+        scaleW = Game.config().renderConfiguration().getScaleWidth();
+        scaleH = Game.config().renderConfiguration().getScaleHeight();
+
+        af  = new AffineTransform();
+        af.scale(scaleW, scaleH);
+
+        upscaleAf = new AffineTransform();
+        upscaleAf.scale(1/scaleW, 1/scaleH);
     }
 }
