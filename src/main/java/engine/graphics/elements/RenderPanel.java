@@ -76,6 +76,9 @@ public class RenderPanel extends JPanel {
         });
     }
 
+    /**
+     * Update size of the RenderPanel
+     */
     public void setNewSize() {
         Game.config().renderConfiguration().resize();
 

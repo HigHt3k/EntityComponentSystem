@@ -114,6 +114,9 @@ public class RenderConfiguration {
         return aliasingText;
     }
 
+    /**
+     * update dimension variable and scaling factors based on the current window size & fullscreen mode
+     */
     public void resize() {
         int width = Game.frame().getWidth();
         int height = Game.frame().getHeight();

@@ -121,6 +121,9 @@ public class ScalingEngine {
         return upscaleAf.createTransformedShape(s);
     }
 
+    /**
+     * Update scaling factors and affine transforms to correctly scale all positions and boundaries
+     */
     public void update() {
         scaleW = Game.config().renderConfiguration().getScaleWidth();
         scaleH = Game.config().renderConfiguration().getScaleHeight();

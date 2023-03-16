@@ -64,6 +64,9 @@ public class GameFrame extends JFrame {
         }
     }
 
+    /**
+     * Resize the GameFrame
+     */
     private void resize() {
         this.renderPanel.setNewSize();
         Game.scale().update();

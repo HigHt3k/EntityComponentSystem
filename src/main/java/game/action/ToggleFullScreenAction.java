@@ -3,6 +3,9 @@ package game.action;
 import engine.Game;
 import engine.ecs.component.action.Action;
 
+/**
+ * Switch to the opposite state fullscreen <-> window mode
+ */
 public class ToggleFullScreenAction extends Action {
 
     @Override
