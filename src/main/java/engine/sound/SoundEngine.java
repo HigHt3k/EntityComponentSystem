@@ -38,7 +38,7 @@ public class SoundEngine {
         try {
             clip = AudioSystem.getClip();
             clip.open(audioInputStream);
-            clip.start();
+            clip.loop(Integer.MAX_VALUE);
         } catch (Exception e) {
             e.printStackTrace();
         }
