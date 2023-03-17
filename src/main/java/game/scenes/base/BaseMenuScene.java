@@ -41,6 +41,14 @@ public class BaseMenuScene extends BaseScene {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
         }
 
+        try {
+            ImageEntity background = new ImageEntity("ils-logo", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/logos/ils-logo.png")), 1750, 950, 270/2, 140/2, Layer.UI);
+            addEntityToScene(background);
+        } catch (IOException e) {
+            Game.logger().severe("Couldn't load image.\n" + e.getMessage());
+        }
+
         TextBody playerName = new TextBody("profile name", IdGenerator.generateId(),
                 120, 970, 300, 64, FontCollection.bit8FontLarge, Bit8.DARK_GREY, Game.config().getProfile().profile
         );
