@@ -386,19 +386,19 @@ public class GameScene extends BaseGameFieldScene {
         createScale(probabilities);
 
         Entity scoreText = new TextBody("scoreText", IdGenerator.generateId(),
-                1920/2 - 200, 1080/2 - 150, 200, 50,
+                1920/2 - 400, 1080/2 - 150, 200, 50,
                 FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@61"
                 );
         addEntityToScene(scoreText);
         Entity scoreContent = new TextBody("scoreContent", IdGenerator.generateId(),
-                1920/2, 1080/2 - 150, 200, 50,
+                1920/2 - 200, 1080/2 - 150, 200, 50,
                 FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(score)
         );
         addEntityToScene(scoreContent);
 
         GenericButtonFront saveScore = new GenericButtonFront(
                 "ScoreSaveButton", IdGenerator.generateId(),
-                1920 / 2 - 300, 1080 / 2 + 100, 200, 40,
+                1920 / 2 - 300, 1080 / 2 + 150, 200, 40,
                 "@59", FontCollection.bit8FontLarge, new SaveScoreAction(),
                 Bit8.DARK_GREY, null, null
         );
@@ -406,7 +406,7 @@ public class GameScene extends BaseGameFieldScene {
 
         GenericButtonFront nextLevel = new GenericButtonFront(
                 "nextLevelButton", IdGenerator.generateId(),
-                1920 / 2 - 100, 1080 / 2 + 100, 200, 40,
+                1920 / 2 - 100, 1080 / 2 + 150, 200, 40,
                 "@62", FontCollection.bit8FontLarge, new NextLevelAction(),
                 Bit8.DARK_GREY, null, null
         );
@@ -414,7 +414,7 @@ public class GameScene extends BaseGameFieldScene {
 
         addEntityToScene(new GenericButtonFront(
                 "Back to Menu", IdGenerator.generateId(),
-                1920 / 2 + 100, 1080 / 2 + 100, 200, 40,
+                1920 / 2 + 100, 1080 / 2 + 150, 200, 40,
                 "@60", FontCollection.bit8FontLarge, new StartAction(-254),
                 Bit8.DARK_GREY, null, null
         ));
@@ -469,7 +469,7 @@ public class GameScene extends BaseGameFieldScene {
         createScale(probabilities);
         GenericButtonFront back = new GenericButtonFront(
                 "back", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 100, 300, 40,
+                1920 / 2 - 150, 1080 / 2 + 150, 300, 40,
                 "@58", FontCollection.bit8FontLarge, new StartAction(null),
                 Bit8.DARK_GREY, null, null
         );
@@ -512,7 +512,7 @@ public class GameScene extends BaseGameFieldScene {
         try {
             scale = new ImageEntity("scale", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/scale.png")),
-                    1920/2 - scaleWidth/2, 1080/2 - 16*2, scaleWidth, 16*4, Layer.UI);
+                    1920/2 - scaleWidth/2, 1080/2 - 16*2+ 50, scaleWidth, 16*4, Layer.UI);
             addEntityToScene(scale);
         } catch (IOException e) {
             e.printStackTrace();
@@ -522,22 +522,51 @@ public class GameScene extends BaseGameFieldScene {
         try {
             Entity goalMarker = new ImageEntity("goalMarker", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/marker.png")),
-                    1920/2 - scaleWidth/2 + positionGoal - 32*2, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+                    1920/2 - scaleWidth/2 + positionGoal - 32*2, 1080/2 - 16*2 - 8*4 + 50, 32*4, 32*4, Layer.UI);
             addEntityToScene(goalMarker);
 
             Entity passiveMarker = new ImageEntity("passiveMarker", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/passiveMarker.png")),
-                    1920/2 - scaleWidth/2 + positionScorePassive - 32*2, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+                    1920/2 - scaleWidth/2 + positionScorePassive - 32*2, 1080/2 - 16*2 - 8*4+ 50, 32*4, 32*4, Layer.UI);
             addEntityToScene(passiveMarker);
 
             Entity oocMarker = new ImageEntity("oocMarker", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/oocMarker.png")),
-                    1920/2 - scaleWidth/2 + positionScoreOOC - 32*2, 1080/2 - 16*2 - 8*4, 32*4, 32*4, Layer.UI);
+                    1920/2 - scaleWidth/2 + positionScoreOOC - 32*2, 1080/2 - 16*2 - 8*4+ 50, 32*4, 32*4, Layer.UI);
             addEntityToScene(oocMarker);
 
-            System.out.println(positionGoal);
-            System.out.println(positionScorePassive);
-            System.out.println(positionScoreOOC);
+            Entity goalMarkerDesc = new ImageEntity("goalMarkerDesc",IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/targetMarker2.png")),
+                    1920/2, 1080/2 - 180, 32, 32, Layer.UI
+            );
+            addEntityToScene(goalMarkerDesc);
+
+            Entity passiveMarkerDesc = new ImageEntity("passiveMarkerDesc",IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/passiveMarker2.png")),
+                    1920/2 , 1080/2 - 130, 32, 32, Layer.UI
+            );
+            addEntityToScene(passiveMarkerDesc);
+
+            Entity oocMarkerDesc = new ImageEntity("oocMarkerDesc",IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/oocMarker2.png")),
+                    1920/2, 1080/2 - 80, 32, 32, Layer.UI
+            );
+            addEntityToScene(oocMarkerDesc);
+
+            TextBody goalMarkerText = new TextBody("goalMarkerText", IdGenerator.generateId(),
+                    1920/2 + 35, 1080/2 - 180, 500, 50,
+                    FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@63");
+            addEntityToScene(goalMarkerText);
+
+            TextBody passiveMarkerText = new TextBody("passiveMarkerText", IdGenerator.generateId(),
+                    1920/2 + 35, 1080/2 - 130, 500, 50,
+                    FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@64");
+            addEntityToScene(passiveMarkerText);
+
+            TextBody oocMarkerText = new TextBody("oocMarkerText", IdGenerator.generateId(),
+                    1920/2 + 35, 1080/2 - 80, 500, 50,
+                    FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@65");
+            addEntityToScene(oocMarkerText);
         } catch (IOException e) {
             e.printStackTrace();
         }

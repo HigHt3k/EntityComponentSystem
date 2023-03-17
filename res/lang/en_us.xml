@@ -36,6 +36,9 @@
     <string id="60">BACK</string>
     <string id="61">SCORE</string>
     <string id="62">NEXT</string>
+    <string id="63">Goal</string>
+    <string id="64">Passive Failure</string>
+    <string id="65">Out of Control Failure</string>
     <string id="800">Hello Tina, I'm Ingo Engineer and I will walk you through the basic steps! I hope you enjoy working with us. :)</string>
     <string id="801">Ok, let's start with a map of our factory, I installed it on your tablet, so you know how to navigate when you don't know where to go!</string>
     <string id="802">Good question! You can open it by clicking this symbol...</string>
