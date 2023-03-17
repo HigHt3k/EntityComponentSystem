@@ -1,4 +1,4 @@
-package game.handler.simulation.markov;
+package de.unistuttgart.ils.skylogic.handler.simulation.markov;
 
 
 import org.junit.jupiter.api.Test;
