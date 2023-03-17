@@ -395,7 +395,6 @@ public class BuildHandler extends Handler {
                 // check if state is building cable refactored
                 else if (currentBuildState == BuilderState.BUILDING_CABLE) {
                     // try to place component
-                    System.out.println(placeCable(currentBuilding));
                     if (placeCable(currentBuilding)) {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
@@ -440,6 +439,8 @@ public class BuildHandler extends Handler {
                             }
                             currentBuildState = BuilderState.BUILDING_CABLE;
 
+                            break;
+                        } else {
                             break;
                         }
                     }
