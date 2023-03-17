@@ -2,11 +2,14 @@ package de.unistuttgart.ils.skylogic.scenes.game;
 
 import de.unistuttgart.ils.skyengine.Game;
 import de.unistuttgart.ils.skyengine.IdGenerator;
+import de.unistuttgart.ils.skyengine.ecs.component.graphics.RenderComponent;
 import de.unistuttgart.ils.skyengine.ecs.component.graphics.objects.Layer;
+import de.unistuttgart.ils.skyengine.ecs.component.graphics.objects.TextObject;
 import de.unistuttgart.ils.skyengine.ecs.entity.Entity;
 import de.unistuttgart.ils.skyengine.ecs.entity.ImageEntity;
 import de.unistuttgart.ils.skyengine.resource.colorpalettes.Bit8;
 import de.unistuttgart.ils.skyengine.resource.fonts.FontCollection;
+import de.unistuttgart.ils.skylogic.entities.ui.SimplePanel;
 import de.unistuttgart.ils.skylogic.entities.ui.TextBody;
 import de.unistuttgart.ils.skylogic.handler.tutorial.TutorialHandler;
 import de.unistuttgart.ils.skylogic.scenes.tutorial.Tutorial;
@@ -19,6 +22,8 @@ import java.io.IOException;
 public class TutorialScene extends GameScene implements Tutorial {
     private boolean firstTimeOpened = true;
     private boolean tutorialRunning = false;
+
+    private int currentDialogueId;
     /**
      * create a new Tutorial Scene object;
      *
@@ -48,6 +53,7 @@ public class TutorialScene extends GameScene implements Tutorial {
         switch(getId()) {
             case 1 -> {
                 // create character models
+                currentDialogueId = 900;
                 Entity tina = null;
                 try {
                     tina = new ImageEntity("tina", IdGenerator.generateId(),
@@ -67,11 +73,8 @@ public class TutorialScene extends GameScene implements Tutorial {
                 }
                 addEntityToScene(speechBubble2);
                 Entity textTina = new TextBody("text2", IdGenerator.generateId(),
-                        570, 560, 64*12-40, 32*6-20, FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@900");
+                        570, 560, 64*12-40, 32*6-20, FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@" + currentDialogueId);
                 addEntityToScene(textTina);
-            }
-            case 2 -> {
-
             }
         }
     }
@@ -88,8 +91,38 @@ public class TutorialScene extends GameScene implements Tutorial {
 
     @Override
     public void showNextTutorialText() {
+        currentDialogueId++;
         if (getId() == 1) {
-            removeTutorial();
+            switch(currentDialogueId) {
+                case 901 -> {
+                    removeEntityFromScene(getEntityByName("tina"));
+
+                    Entity ingo = null;
+                    try {
+                        ingo = new ImageEntity("ingo", IdGenerator.generateId(),
+                                ImageIO.read(new File("res/character/Ingo-Ingenieur.png")), 1100, 700, 19 * 8, 27 * 8, Layer.UI);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    addEntityToScene(ingo);
+
+                    getEntityByName("text2").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@" + currentDialogueId);
+                    Entity menuMarker = new SimplePanel("menu-marker", IdGenerator.generateId(),
+                            1800, 930, 64, 64,
+                            null, Bit8.RED, null);
+                    addEntityToScene(menuMarker);
+                }
+                case 902 -> {
+                    removeEntityFromScene(getEntityByName("menu-marker"));
+                    getEntityByName("text2").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@" + currentDialogueId);
+                }
+                case 903, 905, 906, 904, 907 -> {
+                    getEntityByName("text2").getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText("@" + currentDialogueId);
+                }
+                case 908 -> {
+                    removeTutorial();
+                }
+            }
         }
     }
 
@@ -99,5 +132,6 @@ public class TutorialScene extends GameScene implements Tutorial {
         removeEntityFromScene(getEntityByName("text2"));
         removeEntityFromScene(getEntityByName("bubble2"));
         removeEntityFromScene(getEntityByName("tina"));
+        removeEntityFromScene(getEntityByName("ingo"));
     }
 }

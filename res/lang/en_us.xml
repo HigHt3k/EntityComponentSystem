@@ -48,6 +48,13 @@
     <string id="807">Sounds good. Can I go everywhere?</string>
     <string id="808">Alright, let's get it!</string>
     <string id="900">There are some missing cables we need to fix, I think I could just take them from my build plan and set them up.</string>
+    <string id="901">Right, you got it, Tina! Once you are done setting up the cables, you can verify your system using this button on your phone.</string>
+    <string id="902">On your phone, you also have information regarding the system requirements. You can see the amount of actuators that need to be correctly working...</string>
+    <string id="903">... as well as the safety categorization. For more information on this topic, go to level 0!</string>
+    <string id="904">Generally, systems need to be set up in a way, that 2 types of failures only happen at a specified probability.</string>
+    <string id="905">The 2 types are: Passive errors - those are errors that are detected by the system...</string>
+    <string id="906">... and Out of Control errors, which are not detected and may lead to misbehaviour of components.</string>
+    <string id="907">Your goal should always be to mitigate both of these failure types. If you want information about anything, there is also an application for that on your phone.</string>
     <string id="1000">Example Duplex system with two sensors, two cpus and one actuator.</string>
     <string id="10000">Tutorial 1: Connecting Cables</string>
     <string id="10001">Welcome to the game. In this tutorial series you are going to learn all the basics you need to
