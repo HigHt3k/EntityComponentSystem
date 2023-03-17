@@ -17,7 +17,7 @@
 	       <configuration>
 	         <archive>
 	           <manifest>
-	             <mainClass>game.Main</mainClass>
+	             <mainClass>de.unistuttgart.ils.skylogic.Main</mainClass>
 	           </manifest>
 	         </archive>
 	       </configuration>
