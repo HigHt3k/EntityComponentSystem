@@ -12,15 +12,13 @@ import engine.ecs.component.graphics.objects.RenderObject;
 import engine.ecs.component.graphics.objects.TextObject;
 import engine.ecs.entity.Entity;
 import engine.ecs.entity.GenericButton;
+import engine.ecs.entity.GenericButtonFront;
 import engine.ecs.entity.ImageEntity;
 import engine.graphics.scene.Scene;
 import engine.resource.ResourceManager;
 import engine.resource.colorpalettes.Bit8;
 import engine.resource.fonts.FontCollection;
-import game.action.BuildPanelChange;
-import game.action.BuildPanelChangeAction;
-import game.action.SaveScoreAction;
-import game.action.ValidateAction;
+import game.action.*;
 import game.components.BuildComponent;
 import game.components.GridComponent;
 import game.components.TooltipComponent;
@@ -410,18 +408,26 @@ public class GameScene extends BaseGameFieldScene {
         );
         addEntityToScene(scoreContent);
 
-        GenericButton saveScore = new GenericButton(
+        GenericButtonFront saveScore = new GenericButtonFront(
                 "ScoreSaveButton", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 100, 300, 40,
+                1920 / 2 - 300, 1080 / 2 + 100, 200, 40,
                 "@59", FontCollection.bit8FontLarge, new SaveScoreAction(),
                 Bit8.DARK_GREY, null, null
         );
         addEntityToScene(saveScore);
 
-        addEntityToScene(new GenericButton(
+        GenericButtonFront nextLevel = new GenericButtonFront(
+                "nextLevelButton", IdGenerator.generateId(),
+                1920 / 2 - 100, 1080 / 2 + 100, 200, 40,
+                "@62", FontCollection.bit8FontLarge, new NextLevelAction(),
+                Bit8.DARK_GREY, null, null
+        );
+        addEntityToScene(nextLevel);
+
+        addEntityToScene(new GenericButtonFront(
                 "Back to Menu", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 160, 300, 40,
-                "@60", FontCollection.bit8FontLarge, new StartAction(-255),
+                1920 / 2 + 100, 1080 / 2 + 100, 200, 40,
+                "@60", FontCollection.bit8FontLarge, new StartAction(-254),
                 Bit8.DARK_GREY, null, null
         ));
     }
@@ -473,7 +479,7 @@ public class GameScene extends BaseGameFieldScene {
         }
 
         createScale(probabilities);
-        GenericButton back = new GenericButton(
+        GenericButtonFront back = new GenericButtonFront(
                 "back", IdGenerator.generateId(),
                 1920 / 2 - 150, 1080 / 2 + 100, 300, 40,
                 "@58", FontCollection.bit8FontLarge, new StartAction(null),
