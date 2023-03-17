@@ -13,7 +13,7 @@ public class InputManager {
     private final GamePadAdapter gamePadAdapter;
     private final ArrayList<KeyEvent> keyEvents;
     private final ArrayList<MouseEvent> mouseEvents;
-    private ArrayList<InputAction> gamePadEvents;
+    private final ArrayList<InputAction> gamePadEvents;
 
     private ArrayList<Handler> handlers;
 

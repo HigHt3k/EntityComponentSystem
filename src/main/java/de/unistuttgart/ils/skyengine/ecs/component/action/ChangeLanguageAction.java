@@ -4,7 +4,7 @@ import de.unistuttgart.ils.skyengine.Game;
 import de.unistuttgart.ils.skyengine.resource.lang.LanguageType;
 
 public class ChangeLanguageAction extends Action {
-    private LanguageType languageType;
+    private final LanguageType languageType;
 
     public ChangeLanguageAction(LanguageType languageType) {
         this.languageType = languageType;

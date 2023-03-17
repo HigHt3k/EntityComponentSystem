@@ -18,7 +18,6 @@ import de.unistuttgart.ils.skylogic.entities.simulation.SimulationEntity;
 import de.unistuttgart.ils.skylogic.handler.simulation.SimulationState;
 import de.unistuttgart.ils.skylogic.handler.simulation.SimulationType;
 import de.unistuttgart.ils.skylogic.scenes.game.BuildScene;
-import game.components.*;
 import de.unistuttgart.ils.skylogic.handler.simulation.markov.MarkovProcessor;
 import de.unistuttgart.ils.skylogic.scenes.game.GameScene;
 
@@ -86,7 +85,6 @@ public class BuildHandler extends Handler {
         }
         if (e.getKeyCode() == KeyEvent.VK_4) {
             currentCableLayer = 3;
-            return;
         }
     }
 
@@ -206,12 +204,12 @@ public class BuildHandler extends Handler {
             // check for click on a next/prev button
             if (entity instanceof BuildPanelEntity buildPanelEntity) {
                 if (buildPanelEntity.getComponent(BuildComponent.class).getAmount() < 100)
-                    ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
-                            .getRenderObjectsOfType(TextObject.class).get(0))
+                    buildPanelEntity.getComponent(RenderComponent.class)
+                            .getRenderObjectsOfType(TextObject.class).get(0)
                             .setText(String.valueOf(buildPanelEntity.getComponent(BuildComponent.class).getAmount()));
                 else
-                    ((TextObject) buildPanelEntity.getComponent(RenderComponent.class)
-                            .getRenderObjectsOfType(TextObject.class).get(0))
+                    buildPanelEntity.getComponent(RenderComponent.class)
+                            .getRenderObjectsOfType(TextObject.class).get(0)
                             .setText("");
             }
             // check the button clicked is left click
@@ -239,7 +237,7 @@ public class BuildHandler extends Handler {
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                            entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)
                                                     .getImage(),
                                             entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -257,7 +255,7 @@ public class BuildHandler extends Handler {
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                            entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)
                                                     .getImage(),
                                             entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -276,7 +274,7 @@ public class BuildHandler extends Handler {
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                            entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)
                                                     .getImage(),
                                             entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -294,7 +292,7 @@ public class BuildHandler extends Handler {
                                             cellSize,
                                             cellSize,
                                             -1, -1,
-                                            ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                            entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)
                                                     .getImage(),
                                             entity.getComponent(BuildComponent.class).getTileId(),
                                             entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -313,14 +311,14 @@ public class BuildHandler extends Handler {
                                 entity.getComponent(BuildComponent.class)
                                         .subtractFromAmount();
                                 if (entity.getComponent(BuildComponent.class).getAmount() > 100) {
-                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                    entity.getComponent(RenderComponent.class)
                                             .getRenderObjectsOfType(TextObject.class)
-                                            .get(0))
+                                            .get(0)
                                             .setText("");
                                 } else {
-                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                    entity.getComponent(RenderComponent.class)
                                             .getRenderObjectsOfType(TextObject.class)
-                                            .get(0))
+                                            .get(0)
                                             .setText(String.valueOf(entity.getComponent(BuildComponent.class)
                                                     .getAmount()
                                             ));
@@ -337,7 +335,7 @@ public class BuildHandler extends Handler {
                                         cellSize,
                                         cellSize,
                                         -1, -1,
-                                        ((ImageObject) entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                        entity.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)
                                                 .getImage(),
                                         entity.getComponent(BuildComponent.class).getTileId(),
                                         entity.getComponent(BuildComponent.class).getFailureRatio(),
@@ -354,14 +352,14 @@ public class BuildHandler extends Handler {
                                 entity.getComponent(BuildComponent.class)
                                         .subtractFromAmount();
                                 if (entity.getComponent(BuildComponent.class).getAmount() > 100) {
-                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                    entity.getComponent(RenderComponent.class)
                                             .getRenderObjectsOfType(TextObject.class)
-                                            .get(0))
+                                            .get(0)
                                             .setText("");
                                 } else {
-                                    ((TextObject) entity.getComponent(RenderComponent.class)
+                                    entity.getComponent(RenderComponent.class)
                                             .getRenderObjectsOfType(TextObject.class)
-                                            .get(0))
+                                            .get(0)
                                             .setText(String.valueOf(entity.getComponent(BuildComponent.class)
                                                     .getAmount()
                                             ));
@@ -411,7 +409,7 @@ public class BuildHandler extends Handler {
                                     cellSize,
                                     cellSize,
                                     -1, -1,
-                                    ((ImageObject) cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0))
+                                    cableBuildRepetitive.getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)
                                             .getImage(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getTileId(),
                                     cableBuildRepetitive.getComponent(BuildComponent.class).getFailureRatio(),
@@ -428,14 +426,14 @@ public class BuildHandler extends Handler {
                             cableBuildRepetitive.getComponent(BuildComponent.class)
                                     .subtractFromAmount();
                             if (cableBuildRepetitive.getComponent(BuildComponent.class).getAmount() > 100) {
-                                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
+                                cableBuildRepetitive.getComponent(RenderComponent.class)
                                         .getRenderObjectsOfType(TextObject.class)
-                                        .get(0))
+                                        .get(0)
                                         .setText("");
                             } else {
-                                ((TextObject) cableBuildRepetitive.getComponent(RenderComponent.class)
+                                cableBuildRepetitive.getComponent(RenderComponent.class)
                                         .getRenderObjectsOfType(TextObject.class)
-                                        .get(0))
+                                        .get(0)
                                         .setText(String.valueOf(cableBuildRepetitive.getComponent(BuildComponent.class)
                                                 .getAmount()
                                         ));
@@ -693,14 +691,14 @@ public class BuildHandler extends Handler {
                                 if (m1.group(0).equals(m2.group(0))) {
                                     build.getComponent(BuildComponent.class).addToAmount();
                                     if (build.getComponent(BuildComponent.class).getAmount() > 100) {
-                                        ((TextObject) build.getComponent(RenderComponent.class)
+                                        build.getComponent(RenderComponent.class)
                                                 .getRenderObjectsOfType(TextObject.class)
-                                                .get(0))
+                                                .get(0)
                                                 .setText("");
                                     } else {
-                                        ((TextObject) build.getComponent(RenderComponent.class)
+                                        build.getComponent(RenderComponent.class)
                                                 .getRenderObjectsOfType(TextObject.class)
-                                                .get(0))
+                                                .get(0)
                                                 .setText(String.valueOf(build.getComponent(BuildComponent.class)
                                                         .getAmount()
                                                 ));

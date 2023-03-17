@@ -19,8 +19,6 @@ import de.unistuttgart.ils.skylogic.entities.ui.TextBody;
 import de.unistuttgart.ils.skylogic.scenes.base.BaseGameFieldScene;
 import de.unistuttgart.ils.skylogic.scenes.util.BuildPanelPage;
 import de.unistuttgart.ils.skylogic.scenes.util.Difficulty;
-import game.action.*;
-import game.entities.ui.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -46,7 +44,7 @@ public class GameScene extends BaseGameFieldScene {
 
     private final int DESIGN_CELL_SIZE = 128;
     private String description;
-    private double goal = 10e-4;
+    private final double goal = 10e-4;
     private int score = 0;
     private int tries = 0;
 
@@ -276,7 +274,7 @@ public class GameScene extends BaseGameFieldScene {
         try {
             description = descriptions.get(currentlyDisplayedDescriptionPart + i);
             currentlyDisplayedDescriptionPart += i;
-            ((TextObject) descText.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(description);
+            descText.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(description);
         } catch(IndexOutOfBoundsException ex) {
             // This is okay here.
         }

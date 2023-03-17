@@ -23,7 +23,7 @@ public class OptionsMenuScene extends BaseMenuScene {
         int ITEM_HEIGHT = 60;
         GenericButton toggleLanguageEnglish = new GenericButton(
                 "English", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
+                1920 / 2 - ITEM_WIDTH / 2, 200 + 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@10", font, new ChangeLanguageAction(LanguageType.EN_US),
                 Bit8.DARK_GREY, null, null
@@ -32,7 +32,7 @@ public class OptionsMenuScene extends BaseMenuScene {
 
         GenericButton toggleLanguageGerman = new GenericButton(
                 "German", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
+                1920 / 2 - ITEM_WIDTH / 2, 200 + (ITEM_HEIGHT + ITEM_MARGIN),
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@11", font, new ChangeLanguageAction(LanguageType.DE_DE),
                 Bit8.DARK_GREY, null, null

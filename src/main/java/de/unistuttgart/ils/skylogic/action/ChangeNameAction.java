@@ -19,6 +19,6 @@ public class ChangeNameAction extends Action {
     public void handle() {
         String name = JOptionPane.showInputDialog("Enter name:");
         Game.config().getProfile().profile = name;
-        ((TextObject) playerProfile.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)).setText(name);
+        playerProfile.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(name);
     }
 }

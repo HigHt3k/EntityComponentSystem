@@ -12,8 +12,8 @@ public class GamePadAdapter {
     private boolean rtPressed = false;
     private boolean aPressed = false;
     private boolean bPressed = false;
-    private boolean xPressed = false;
-    private boolean yPressed = false;
+    private final boolean xPressed = false;
+    private final boolean yPressed = false;
     private boolean dpadUpPressed = false;
     private boolean dpadDownPressed = false;
     private boolean dpadRightPressed = false;
@@ -77,7 +77,7 @@ public class GamePadAdapter {
                 if (controllers.getState(0).isConnected) {
                     while (true) {
                         try {
-                            sleep((long) (20));
+                            sleep(20);
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }

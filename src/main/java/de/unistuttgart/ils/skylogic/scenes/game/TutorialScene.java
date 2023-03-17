@@ -88,10 +88,8 @@ public class TutorialScene extends GameScene implements Tutorial {
 
     @Override
     public void showNextTutorialText() {
-        switch(getId()) {
-            case 1 -> {
-                removeTutorial();
-            }
+        if (getId() == 1) {
+            removeTutorial();
         }
     }
 

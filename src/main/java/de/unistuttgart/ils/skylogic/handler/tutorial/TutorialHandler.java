@@ -32,7 +32,6 @@ public class TutorialHandler extends Handler {
                     ts.showNextTutorialText();
                 }
             } else {
-                return;
             }
         }
     }

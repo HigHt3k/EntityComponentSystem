@@ -3,7 +3,7 @@ package de.unistuttgart.ils.skyengine.resource.profile;
 import java.util.Random;
 
 public class NameCollection {
-    private static Random rand = new Random();
+    private static final Random rand = new Random();
 
     public static String[] names = new String[] {
             "Alligator",

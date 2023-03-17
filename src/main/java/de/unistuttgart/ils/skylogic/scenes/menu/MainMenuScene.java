@@ -47,7 +47,7 @@ public class MainMenuScene extends BaseMenuScene {
         int ITEM_WIDTH = 200;
         GenericButton playButton = new GenericButton(
                 "Play", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 500 + (ITEM_HEIGHT + ITEM_MARGIN) * 0,
+                1920 / 2 - ITEM_WIDTH / 2, 500 + 0,
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@0", font, new StartAction(-254),
                 Bit8.DARK_GREY, null, null
@@ -56,7 +56,7 @@ public class MainMenuScene extends BaseMenuScene {
 
         GenericButton buildButton = new GenericButton(
                 "Build", IdGenerator.generateId(),
-                1920 / 2 - ITEM_WIDTH / 2, 500 + (ITEM_HEIGHT + ITEM_MARGIN) * 1,
+                1920 / 2 - ITEM_WIDTH / 2, 500 + (ITEM_HEIGHT + ITEM_MARGIN),
                 ITEM_WIDTH, ITEM_HEIGHT,
                 "@1", font, new StartAction(-250),
                 Bit8.DARK_GREY, null, null

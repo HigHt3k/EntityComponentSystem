@@ -45,7 +45,7 @@ public class BaseGameFieldScene extends BaseScene {
     protected int cGoal;
     protected int X_MARGIN = 200;
     protected int Y_MARGIN = 300;
-    private boolean unlocked = false;
+    private final boolean unlocked = false;
     protected int nextNewPage = -1;
     protected int currentPageShown = 0;
     private String description;
@@ -272,19 +272,11 @@ public class BaseGameFieldScene extends BaseScene {
         for (BuildPanelPage page : pages) {
             for (Entity e : page.getEntitiesInPage()) {
                 for (RenderObject ro : e.getComponent(RenderComponent.class).getRenderObjects()) {
-                    if (page.getPageId() == currentPageShown) {
-                        ro.setHidden(false);
-                    } else {
-                        ro.setHidden(true);
-                    }
+                    ro.setHidden(page.getPageId() != currentPageShown);
                 }
 
                 for (CollisionObject co : e.getComponent(ColliderComponent.class).getCollisionObjects()) {
-                    if (page.getPageId() == currentPageShown) {
-                        co.setDeactivated(false);
-                    } else {
-                        co.setDeactivated(true);
-                    }
+                    co.setDeactivated(page.getPageId() != currentPageShown);
                 }
             }
         }

@@ -78,45 +78,17 @@ public class MarkovProcessor {
         line2.append("|");
         for(MarkovStateObject ms : currentSystemState.getMarkovStateObjects()) {
             switch(ms.getType()) {
-                case SimulationType.SENSOR -> line1.append("S|");
-                case SimulationType.CPU -> line1.append("C|");
-                case SimulationType.ACTUATOR -> line1.append("A|");
-                case SimulationType.CABLE -> line1.append("W|");
+                case SENSOR -> line1.append("S|");
+                case CPU -> line1.append("C|");
+                case ACTUATOR -> line1.append("A|");
+                case CABLE -> line1.append("W|");
             }
             switch(ms.getState()) {
-                case SimulationState.CORRECT -> line2.append("C|");
-                case SimulationState.FAIL -> line2.append("F|");
-                case SimulationState.PASSIVE -> line2.append("P|");
-                case SimulationState.INOPERATIVE -> line2.append("I|");
-                case SimulationState.OUT_OF_CONTROL -> line2.append("O|");
-            }
-        }
-        System.out.println(line1);
-        System.out.println(line2);
-    }
-
-    /**
-     * Debugging Method: Print a specific {@link MarkovState}
-     * @param state
-     */
-    public static void printMarkovSingle(MarkovState state) {
-        StringBuilder line1 = new StringBuilder();
-        line1.append("|");
-        StringBuilder line2 = new StringBuilder();
-        line2.append("|");
-        for(MarkovStateObject ms : state.getMarkovStateObjects()) {
-            switch(ms.getType()) {
-                case SimulationType.SENSOR -> line1.append("S|");
-                case SimulationType.CPU -> line1.append("C|");
-                case SimulationType.ACTUATOR -> line1.append("A|");
-                case SimulationType.CABLE -> line1.append("W|");
-            }
-            switch(ms.getState()) {
-                case SimulationState.CORRECT -> line2.append("C|");
-                case SimulationState.FAIL -> line2.append("F|");
-                case SimulationState.PASSIVE -> line2.append("P|");
-                case SimulationState.INOPERATIVE -> line2.append("I|");
-                case SimulationState.OUT_OF_CONTROL -> line2.append("O|");
+                case CORRECT -> line2.append("C|");
+                case FAIL -> line2.append("F|");
+                case PASSIVE -> line2.append("P|");
+                case INOPERATIVE -> line2.append("I|");
+                case OUT_OF_CONTROL -> line2.append("O|");
             }
         }
         System.out.println(line1);
@@ -157,19 +129,19 @@ public class MarkovProcessor {
         for(MarkovStateObject object : state.getMarkovStateObjects()) {
             if(object.getState() == SimulationState.CORRECT) {
                 switch(object.getType()) {
-                    case SimulationType.CPU -> currentCorrectCPUCount++;
-                    case SimulationType.ACTUATOR -> currentCorrectActuatorCount++;
-                    case SimulationType.CABLE -> {
+                    case CPU -> currentCorrectCPUCount++;
+                    case ACTUATOR -> currentCorrectActuatorCount++;
+                    case CABLE -> {
                     }
-                    case SimulationType.SENSOR -> currentCorrectSensorCount++;
+                    case SENSOR -> currentCorrectSensorCount++;
                 }
             } else if(object.getState() == SimulationState.OUT_OF_CONTROL) {
                 switch(object.getType()) {
-                    case SimulationType.CPU -> currentOOCCPUCount++;
-                    case SimulationType.ACTUATOR -> currentOOCActuatorCount++;
-                    case SimulationType.CABLE -> {
+                    case CPU -> currentOOCCPUCount++;
+                    case ACTUATOR -> currentOOCActuatorCount++;
+                    case CABLE -> {
                     }
-                    case SimulationType.SENSOR -> currentOOCSensorCount++;
+                    case SENSOR -> currentOOCSensorCount++;
                 }
             }
             // skip fail, because relevant is passive/ooc

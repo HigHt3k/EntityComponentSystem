@@ -17,7 +17,6 @@ import de.unistuttgart.ils.skylogic.handler.simulation.SimulationType;
 import de.unistuttgart.ils.skylogic.scenes.util.BuildPanelPage;
 import de.unistuttgart.ils.skylogic.scenes.util.GridSize;
 import de.unistuttgart.ils.skylogic.action.SaveAction;
-import game.entities.ui.*;
 import de.unistuttgart.ils.skylogic.scenes.base.BaseGameFieldScene;
 
 import javax.imageio.ImageIO;

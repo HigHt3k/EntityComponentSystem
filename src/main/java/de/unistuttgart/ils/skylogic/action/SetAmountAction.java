@@ -19,7 +19,7 @@ public class SetAmountAction extends Action {
     public void handle() {
         System.out.println("handling action");
         b.getComponent(BuildComponent.class).setAmount(b.getComponent(BuildComponent.class).getAmount() + amount);
-        ((TextObject) b.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0))
+        b.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0)
                 .setText(String.valueOf(b.getComponent(BuildComponent.class).getAmount()));
     }
 }

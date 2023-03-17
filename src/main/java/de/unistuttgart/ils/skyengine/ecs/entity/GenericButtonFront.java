@@ -6,7 +6,6 @@ import de.unistuttgart.ils.skyengine.ecs.component.collision.ColliderComponent;
 import de.unistuttgart.ils.skyengine.ecs.component.collision.CollisionObject;
 import de.unistuttgart.ils.skyengine.ecs.component.graphics.RenderComponent;
 import de.unistuttgart.ils.skyengine.ecs.component.graphics.objects.*;
-import engine.ecs.component.graphics.objects.*;
 import de.unistuttgart.ils.skyengine.resource.colorpalettes.Bit8;
 
 import java.awt.*;
@@ -25,7 +24,7 @@ public class GenericButtonFront extends Entity {
     private Color TEXT_COLOR = Bit8.DARK_GREY;
     private Color BOX_COLOR = Bit8.CHROME;
     private Color BOX_BORDER_COLOR = Bit8.GREY;
-    private Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
+    private final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
     protected TextObject text;
     protected ShapeObject button;
     protected HoverObject hover;

@@ -29,7 +29,7 @@ public class CablePortsComponent extends Component {
             CablePortPosition out = getCablePort(outIds[0], CablePortType.OUT).getPosition();
             int imgToLoad = baseId*100 + CablePortPosition.valueOf(in) * 10 + CablePortPosition.valueOf(out);
 
-            ((ImageObject) this.getEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0)).setImage(Game.res().getTileSet().getTile(imgToLoad));
+            this.getEntity().getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class).get(0).setImage(Game.res().getTileSet().getTile(imgToLoad));
         }
     }
 

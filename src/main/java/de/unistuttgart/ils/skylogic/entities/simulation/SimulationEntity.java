@@ -15,7 +15,6 @@ import de.unistuttgart.ils.skylogic.entities.cable.CablePort;
 import de.unistuttgart.ils.skylogic.entities.cable.CablePortPosition;
 import de.unistuttgart.ils.skylogic.handler.simulation.SimulationState;
 import de.unistuttgart.ils.skylogic.handler.simulation.SimulationType;
-import game.components.*;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

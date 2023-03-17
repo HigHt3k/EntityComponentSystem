@@ -16,7 +16,7 @@ public class RenderConfiguration {
     private float screenRatio;
     private float scaleWidth = 1.0f;
     private float scaleHeight = 1.0f;
-    private float frameRate = 244.0f;
+    private final float frameRate = 244.0f;
 
     private boolean fullscreenMode = false;
     private final Object aliasingText = RenderingHints.VALUE_TEXT_ANTIALIAS_ON;

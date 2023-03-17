@@ -22,7 +22,7 @@ public class SimulationComponent extends Component {
     // stuff for markov simulation chain
     private int correctSignalsNeeded = 1;
     private int outOfControlSignalsAccepted = 0;
-    private int totalSignalsNeeded = 1;
+    private final int totalSignalsNeeded = 1;
 
     @Override
     public void update() {

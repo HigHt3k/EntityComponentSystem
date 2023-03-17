@@ -4,7 +4,6 @@ import de.unistuttgart.ils.skyengine.ecs.component.graphics.RenderComponent;
 import de.unistuttgart.ils.skyengine.ecs.component.graphics.objects.*;
 import de.unistuttgart.ils.skyengine.Game;
 import de.unistuttgart.ils.skyengine.ecs.Query;
-import engine.ecs.component.graphics.objects.*;
 import de.unistuttgart.ils.skyengine.ecs.entity.Entity;
 
 import java.awt.*;
@@ -25,7 +24,7 @@ public class RenderingEngine {
 
     private ArrayList<Entity> renderEntities;
 
-    private Random randomizer = new Random();
+    private final Random randomizer = new Random();
 
     private Graphics2D g;
 
