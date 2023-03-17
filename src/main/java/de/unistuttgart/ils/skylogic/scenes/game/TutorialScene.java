@@ -35,6 +35,9 @@ public class TutorialScene extends GameScene implements Tutorial {
         super(name, id, difficulty);
     }
 
+    /**
+     * Initialize the scene: check if the scene was already opened or if this is the first time opening it. If first time, play the tutorial
+     */
     @Override
     public void init() {
         super.init();
@@ -44,6 +47,10 @@ public class TutorialScene extends GameScene implements Tutorial {
         }
     }
 
+    /**
+     * Show a tutorial dialogue and set up basic text, bubbles and characters which is then adapted on click with other methods.
+     * Only applicable, if level id is specified in switch case
+     */
     @Override
     public void tutorialDialogue() {
         tutorialRunning = true;
@@ -84,11 +91,18 @@ public class TutorialScene extends GameScene implements Tutorial {
 
     }
 
+    /**
+     * Check if the tutorial is currently running
+     * @return true if running
+     */
     @Override
     public boolean isTutorialRunning() {
         return tutorialRunning;
     }
 
+    /**
+     * Show the next part of a tutorial if a tutorial is specified in the switch case for the current scenario
+     */
     @Override
     public void showNextTutorialText() {
         currentDialogueId++;
