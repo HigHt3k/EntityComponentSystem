@@ -20,7 +20,7 @@ import java.util.logging.Level;
 public class Main {
 
     public static void main(String[] args) {
-        Game.info().setTitle("SkyLogic");
+        Game.info().setTitle("Aircraft Systems Architect");
         Game.info().setAuthor("ILS - Institute for Aircraft Systems University of Stuttgart - Johann Töpfer");
         Game.info().setVersion("v1.0.0");
         Game.info().setDescription("Educational game to show the concept of redundancy in aircraft system engineering.");
@@ -29,7 +29,7 @@ public class Main {
         Game.init();
 
         Game.logger().setLevel(Level.ALL);
-        Game.frame().setIcon("res/logos/skylogic-logo-icon.png");
+        Game.frame().setIcon("res/logos/asa-logo.png");
         Game.res().loadTileSet("res/base_tiles.xml");
         Game.res().language().parseLanguageFile("res/lang/de_de.xml");
         Game.res().language().parseLanguageFile("res/lang/de_simple.xml");

@@ -35,7 +35,7 @@ public class MainMenuScene extends BaseMenuScene {
 
         try {
             ImageEntity logo = new ImageEntity("skylogic-logo", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/logos/skylogic-logo.png")), (int) (1920/2 - (515*1.5)/2), 100, (int) (515 * 1.5), 300, Layer.UI);
+                    ImageIO.read(new File("res/logos/aircraft-systems-architect-logo.png")), (int) (1920/2 - (515*1.5)/2), 100, (int) (515 * 1.5), 300, Layer.UI);
             addEntityToScene(logo);
         } catch (IOException e) {
             Game.logger().severe("Couldn't load image.\n" + e.getMessage());
