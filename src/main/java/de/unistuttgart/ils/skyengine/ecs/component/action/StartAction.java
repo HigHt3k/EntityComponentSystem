@@ -3,6 +3,7 @@ package de.unistuttgart.ils.skyengine.ecs.component.action;
 import de.unistuttgart.ils.skyengine.Game;
 import de.unistuttgart.ils.skyengine.graphics.scene.Scene;
 import de.unistuttgart.ils.skylogic.scenes.game.GameScene;
+import de.unistuttgart.ils.skylogic.scenes.menu.LevelMenuScene;
 
 public class StartAction extends Action {
     private Scene scene;
@@ -30,6 +31,9 @@ public class StartAction extends Action {
             }
 
         } else if (id != -1) {
+            if(id == -254) {
+                ((LevelMenuScene) Game.scene().getScene(id)).checkUnlocks();
+            }
             Game.scene().setCurrentScene(id);
         }
     }

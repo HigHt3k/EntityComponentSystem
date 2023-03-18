@@ -193,7 +193,7 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
-    private void checkUnlocks() {
+    public void checkUnlocks() {
         for(Scene s : Game.scene().getScenes()) {
             if(s instanceof GameScene gs) {
                 ArrayList<Integer> unlocksNeeded = gs.getUnlocksNeeded();
