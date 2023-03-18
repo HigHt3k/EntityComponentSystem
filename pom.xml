@@ -17,7 +17,7 @@
 	       <configuration>
 	         <archive>
 	           <manifest>
-	             <mainClass>de.unistuttgart.ils.skylogic.Main</mainClass>
+	             <mainClass>de.unistuttgart.ils.aircraftsystemsarchitect.game.Main</mainClass>
 	           </manifest>
 	         </archive>
 	       </configuration>
