@@ -46,19 +46,42 @@ There are some standard entities and components available.
 \subsection{UML Diagram}\label{subsec:uml-diagram}
 
 \subsection{Entities}\label{subsec:entities}
-\textbf{Entity}:
-- GenericButton
-- ImageEntity
-- TextBody
-- NumberSelectorEntity
-\todo{add rest}
+Entities are classes constructed of different components.
+The implementation aims to generify often used objects.
+Therefore, a variety of different entities has been implemented, which will be explained in this chapter.
+
+\textbf{GUI Entities:} \\
+Although somewhat precise, every user interface element was implemented as an entity, given that the game is two-dimensional and doesn't require a differentiation between 2D and 3D rendering.
+As a result, UI elements can utilize the existing graphical components without the necessity of adjusting any rendering or component techniques.
+\\ \\
+\textbf{Simulation Entities:} \\
+All elements that are placed on the game grid are considered so-called Simulation Entities.
+These entities are built of components to describe the cable port distribution, parameters such as failure ratio and failure detection ratio and grid components, which contain the
+entities position as a coordinate in the games' grid-like game field.
+
 
 \subsection{Components}\label{subsec:components}
-\textbf{Component}:
-- CollisionComponent
-- GraphicsComponent
-- CursorComponent
-- IntentComponent (deprecated)
+All entities are built of a subset of the available components, uniquely attached to each.
+The different components will be explained in detail in the following chapter.
+\textbf{Render Component:} \\
+The \textit{RenderComponent} class stores a list of different graphical objects that are then rendered to the scene.\\
+Graphical object classes include subclasses for text, images, animations, hovering, lines and shapes.
+These classes contain parameters specifying the appearance, such as location and bounds, colors, images or animations and text.
+Each object can be added to the render component multiple times.
+The reason for this approach is, that an entity should only contain each component uniquely, however there was the requirement to render multiple graphical
+objects per entity, such as having and image which needs to be hovered at times. \\
+The render component also implements some methods that can be used to specifically attain a list of graphical object instances of a specified class, similar to the Query
+implementation of the entity component system.\\ \\
+
+\textbf{ColliderComponent:} \\
+Similar to the \textit{RenderComponent}, the \textit{ColliderComponent} also stores a list of collision objects, which are described by location and bounds.
+Each of these collision objects is checked by the \textit{CollisionDetectionSystem} and handled accordingly, e.g.\
+hovering and object at the same location as the collision object. \\ \\
+
+\textbf{Sound Component:} \\
+The \textit{SoundComponent} class can be attached to any entity that needs to have a sound played at times.
+It implements methods to set the state of the sound sample to play, pause or stop and contains the actual sound sample to be used by the \textit{SoundEngine}. \\ \\
+
 \subsection{System}\label{subsec:system}
 In comparison to handlers, systems are time-based and triggered with every update loop of the game.
 They contain methods for different calculations, game logic or time-based events and actions.
@@ -93,6 +116,12 @@ A rendering cycle looks as follows:
 - query relevant entities (entities containing the GraphicsComponent)
 - determine the available data per entity
 - send the data to the according renderer
+\\ \\
+There are different layers to be considered by the rendering engine.
+The layers include background layers, multiple game layers and UI layers, both including a separate layer for hovering.
+The rendering engine renders objects starting from the background layer, going all the way to the front-most layer - UI hovering, as seen in figure
+\todo{add figure}.
+
 \subsubsection{Sound Engine}\label{subsubsec:sound-engine}
 
 \subsection{Input Handling}\label{subsec:input-handling}
