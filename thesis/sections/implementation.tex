@@ -128,12 +128,45 @@ The rendering engine renders objects starting from the background layer, going a
 
 \subsection{Game Loop}
 The game loop
-\subsection{Data Storage \& Data Parsing}
+\subsection{Data Storage \& Data Parsing}\label{subsec:data-storage-&-data-parsing}
+It was chosen to save and load resources from XML files, due to the benefits of this file format.
+XML stands for eXtensible Markup Language, and it is a markup language that is used for encoding documents in a format that is both human-readable and machine-readable.
+It was designed to be flexible and extensible, allowing developers to create their own markup tags and structure data in a way that is specific to their needs.
+\\
+XML documents are made up of elements, which are enclosed in opening and closing tags, and attributes, which provide additional information about the element.
+The structure of an XML document is defined by a Document Type Definition (DTD) or an XML Schema, which specifies the elements and attributes that are allowed in the document and the relationships between them.
+\\
+One of the main benefits of XML is its ability to store and transfer data in a standardized format that can be easily parsed by different software applications, regardless of the platform, and there are
+already multiple implementations available to successfully do this, including JAVA's built-in library for DOM parsing.
+\\
+The structure of the different XML files for levels, tilesets, scores and language used in this project will be explained in the next chapters.
+\subsubsection{Tileset}\label{subsubsec:tileset}
+A tileset file contains a list of multiple tile nodes, which each have an id and a type attribute.
+A tile always contains exactly one image node, which has at least width, height and a resource path to an image assigned to it.
+Optionally, there can also be a description attribute which can be used to set a tooltip that will be rendered to the games tooltip panel, if available.
+\\ \\
+\subsubsection{Level Files}\label{subsubsec:level-files}
+The root node of a level structure is the map node, which always contains attributes to assign an id, a name, a difficulty (tutorial, easy, medium, hard or custom) and a
+grid width and height for the games grid.
+The map node contains one sub node for descriptions (and description parts, if the text for a description should be split up into multiple displayable parts),
+one sub node for available elements to build from the build panel and one sub node that defines the already available objects on the grid.
+Additionally, the goal and goal definition sub nodes contain information on how to pass a level (i.e.\ safety requirement, minimum components that should be working correctly and
+maximum ouf of control components).
+Furthermore, the tileset used by this map needs to be defined in the tileset sub node and unlocks (i.e.\ which level ids are unlocked after passing this level) can be defined.
+\\ \\
+\subsubsection{Language Files}\label{subsubsec:language-files}
+
+\subsubsection{Score Files}\label{subsubsec:score-files}
+
+\subsubsection{Parsing}\label{subsubsec:parsing}
+
 \subsubsection{Level}
 \subsubsection{Profile}
 \subsection{External Device Inputs}\label{subsec:external-device-inputs}
 \subsubsection{Mouse \& Keyboard}\label{subsubsec:mouse-&-keyboard}
+The standard input device for the game are mouse and keyboard.
 \subsubsection{Gamepad Integration}\label{subsubsec:gamepad-integration}
+The game was designed for was keyboard and mouse, however due to the easy accessibility requirement, it was chosen to also implement gamepad integration.
 For gamepad integration, the open source library \textit{Jamepad} is used.
 It automatically detects most USB controller devices and has an inbuilt button mapping which can be used in the implementation.
 A separate thread with a capture rate for controls which is equal and synchronized to the games' FPS is implemented to queue all controller
@@ -145,7 +178,7 @@ This reduces maintenance and new implementation of buttons and actions, while be
 \subsection{Simulation}
 \subsection{Programming Language}\label{subsec:programming-language}
 The programming language that was chosen up front is \textit{JAVA}.
-This decision was made based on the fact that it makes sense to have a) and object-oriented programming language in order to
+This decision was made based on the fact that it makes sense to have a) an object-oriented programming language in order to
 handle entities easily and b) because it is possible to run the program on almost every system due to \textit{JAVA} running
 in a virtual machine.
 
