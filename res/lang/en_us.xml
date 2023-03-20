@@ -98,4 +98,8 @@
     <string id="80001">In this scenario, you are given two sensors and one actuator. Computers and Actuators are
         failsafe, meaning they only fail when provided with too many failed signals.
     </string>
+    <string id="90000">Triplex System</string>
+    <string id="90001">You are given a sensor which needs at least to correct inputs to correctly work. Find a solution that solves this problem!</string>
+    <string id="100000">Duplex Sensors</string>
+    <string id="100001">You have multiple possibilities to solve this level. Try to find the most efficient one, which will provide you with the highest score!</string>
 </strings>

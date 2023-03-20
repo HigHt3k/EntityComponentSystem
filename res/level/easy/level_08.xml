@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- level created -->
 <map id="8" name="@80000" width="5" height="3" difficulty="EASY">
     <description>
         <part>@80001</part>
@@ -13,7 +14,6 @@
         <entity id="500" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
         <entity id="501" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
         <entity id="502" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity id="503" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
         <entity id="203" amount="2" safety="0" failureDetectionRatio="1" correctSignalsNeeded="1"
                 outOfControlSignalsAccepted="0"/>
     </build>
