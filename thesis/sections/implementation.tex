@@ -33,6 +33,74 @@ in a virtual machine.
 The game engine implements a variety of methods and classes which are used for handling the general program execution, independent of the actual game implementation.
 In this chapter, these classes will be explained in detail and the general concept of the engine is reviewed.
 
+\subsubsection{Game Loop}\label{subsubsec:game-loop}
+The game loop acts as the main thread of the game as soon as initialized and started.
+It packs all the different systems and handlers used in the game and executes them in a given order at every time step
+$t_{i} = t_{i-1} + \delta t$, where $\delta t$ is the execution rate defined for the game.
+An exception to this order is the input recording, which is handled in a separate, synchronized thread, as described in chapter~\ref{subsubsec:input-recording}.
+In this implementation, $\delta t$ is defined as $\delta t = 1000 / 240 ms = 4.1667 ms$, which equals 240 calculated frames per second that may be shown and rendered
+to the screen, if available.
+\\ \\
+The following execution order is defined in the Game Loop thread:
+\begin{enumerate}
+    \item Input Handling
+    \item System Handling
+    \item Scene Update \& Repaint
+    \item Play Sounds
+\end{enumerate}
+
+\subsubsection{Input Recording}\label{subsubsec:input-recording}
+Input recording is executed in a separate thread and handles inputs at a rate of $\delta t_{inputs} = 20 ms$, since inputs in between two frames
+would otherwise not be received by the games' input handling system.
+$20 ms$ is a delta time at which most input devices send button inputs, according to manufacturer specifications, therefore it is suitable for this application as well. \todo{add note}
+\\
+Generally, a button press needs to be differentiated from a button click.
+While a button press is a continuous event, a button click is a one time event defined as the state change from button is not pressed to button is pressed.
+Each recorded event, either from ActionListeners implemented directly on the rendering panel or from the GamePadAdapter are queued to the engines input handling system~\ref{subsubsec:input-handling}.
+\\
+The game pad integration will be explained in a later chapter~\ref{subsubsec:gamepad-integration}.
+\subsubsection{Input Handling}\label{subsubsec:input-handling}
+The InputManager contains a list of all Handlers available to the game, implements methods to add and remove objects of the Handler class and methods to queue events
+to a list of events per type - Mouse Event, Key Event and Input Action (controller inputs).
+\\
+Each handler connected to the InputManager will receive all the events available in the respective event queues at the given time step and execute their handling methods, which
+then execute the actual actions on the game and its entities.
+The handler class is an abstract class that can be inherited to implement a variety of handlers, depending on the game requirements.
+One specific handler class, the CollisionDetectionHandler is implemented by default and allows for an easy implementation of hovering and clicking entities with a ColliderComponent.
+It checks the current mouse position (given in the latest mouse event) and handles a potential collision with an Entity.
+
+\subsubsection{System Handling}\label{subsubsec:system-handling}
+Systems are time-based and triggered with every update loop of the game.
+Systems do not have specific handling methods for input types, they operate solely time-based and execute a pre-defined logic.
+They contain methods for different calculations, game logic or time-based events and actions.
+Again, the System class is an abstract class that can be inherited from to implemented system classes according to the game requirements.
+An ActionSystem is already implemented, which is used to handle different types of actions that can be triggered e.g.\ by pressing a button entity, which starts
+another scene.
+The reason for this system being time based instead of event based is, that the CollisionDetectionHandler already sets the state of the Components,
+however possible ActionComponents need to be handled as well.
+If a CollisionObject is clicked or hovered, the ActionSystem will check for possible actions to execute available from the ActionComponent.
+
+\subsubsection{Scene Update \& Repaint}\label{subsubsec:scene-update-&-repaint}
+The next step in the game loop is a generic update of the currently active scene, which may be removing any unnecessary entities based on different conditions or
+checking for a state change after an input or action has been handled.
+After the update, the active scene is repainted by the RenderingEngine~\ref{subsubsec:graphics-engine}.
+
+\subsubsection{Rendering Engine}\label{subsubsec:graphics-engine}
+The Rendering Engine is the main part of all graphical components.
+It implements different engines for each graphical object (shape, image, text, line) that are called depending on the available data within the
+context.
+All content is rendered to a JPanel object by using the Graphics2D instance available by default.
+There are several options and parameters for rendering quality and display sizes that are considered during rendering.
+A rendering cycle looks as follows:
+- query relevant entities (entities containing the GraphicsComponent)
+- determine the available data per entity
+- send the data to the according renderer
+\\ \\
+There are different layers to be considered by the rendering engine.
+The layers include background layers, multiple game layers and UI layers, both including a separate layer for hovering.
+The rendering engine renders objects starting from the background layer, going all the way to the front-most layer - UI hovering, as seen in figure
+\todo{add figure}.
+
 \subsection{Game Implementation}\label{subsec:game-implementation}
 
 \subsection{Entity-Component-System}\label{subsec:entity-component-system}
@@ -102,10 +170,6 @@ joysticks of game pads or keyboard buttons.
 It simply indicates the position, where new mouse events are generated, when the actual mouse is not used. \\ \\
 
 \subsection{System}\label{subsec:system}
-Systems are time-based and triggered with every update loop of the game.
-They contain methods for different calculations, game logic or time-based events and actions.
-They operate at the same rate as the frame rate of e.g.\ the rendering engine, which is defined by the Game Loops rate.
-Systems do not have specific handling methods for input types, they operate solely time-based.
 
 \subsubsection{Query}\label{subsubsec:query2}
 The query system is set up as a static class that can be accessed from anywhere.
@@ -128,9 +192,6 @@ In the following chapter, some examples for Markov chains that reflect the level
 MarkovProcessor will be explained by using these graphs.
 
 \subsection{Handler}\label{subsec:handler}
-In comparison to systems, handlers may act differently based on the current input events in queue.
-The Input Manager contains a list of handlers, which is iterated during each game loop step for each event currently the in the games' input event queue.
-Handlers implement methods for handling Key Events, Mouse Events and Input Actions (i.e.\ Gamepad Events) differently, since they may need different processing.
 
 \subsubsection{Build Handler}\label{subsubsec:build-handler}
 
@@ -147,45 +208,13 @@ Generally, all systems access the scene manager to only process the currently ac
 \\
 
 Scenes are implemented in a hierarchy which is shown in figure \todo{add figure}.
-\subsection{Input Handling}\label{subsec:input-handling}
-
-\subsection{Game Loop}\label{subsec:game-loop}
-The game loop packs all the different systems and handlers used in the game and executes them in a given order at every time stamp
-$t_{i} = t_{i-1} + \delta t$, where $\delta t$ is the execution rate defined for the game.
-In this implementation, $\delta t$ is defined as $\delta t = 1000 / 240 ms = 4.1667 ms$, which equals 240 frames per second.
-\\
-Input handling is executed in a separate thread and handles inputs at a rate of $\delta t_{inputs} = 20 ms$, since inputs in between two frames
-would otherwise not be received by the games' input handling system.
-\\ \\
-The following execution order is defined in the game loop:
-
-\begin{enumerate}
-    \item Input Handling
-    \item System Handling
-    \item Scene Update \& Repaint
-    \item Play Sounds
-\end{enumerate}
 
 \subsection{Engines \& Managers}\label{subsec:engines}
 Engines and managers are components used for handling different aspects of the game, such as graphics rendering, playing audio streams
 or switching scenes.
 In this chapter, the engines and managers used in the implementation will be reviewed in detail.
 
-\subsubsection{Rendering Engine}\label{subsubsec:graphics-engine}
-The Rendering Engine is the main part of all graphical components.
-It implements different engines for each graphical object (shape, image, text, line) that are called depending on the available data within the
-context.
-All content is rendered to a JPanel object by using the Graphics2D instance available by default.
-There are several options and parameters for rendering quality and display sizes that are considered during rendering.
-A rendering cycle looks as follows:
-- query relevant entities (entities containing the GraphicsComponent)
-- determine the available data per entity
-- send the data to the according renderer
-\\ \\
-There are different layers to be considered by the rendering engine.
-The layers include background layers, multiple game layers and UI layers, both including a separate layer for hovering.
-The rendering engine renders objects starting from the background layer, going all the way to the front-most layer - UI hovering, as seen in figure
-\todo{add figure}.
+
 
 \subsubsection{Sound Engine}\label{subsubsec:sound-engine}
 
