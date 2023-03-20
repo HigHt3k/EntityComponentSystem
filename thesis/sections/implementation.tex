@@ -18,32 +18,12 @@ There exist multiple scenes of different classes, such as scenes for the game vi
 inheriting the base scene class.
 Scenes can be added to the game by using the Scene Manager, which is also used to swap between available scenes.
 Each scene contains a list of entities, that could be referred to as a database of all available objects.
-Entities represent a combination of different data containers, so-called components.
-Components are unique to each entity object.
-There are some standard entities and components available.
-
-\begin{center}
-    \begin{tikzpicture}
-        [->, >=stealth', auto, semithick, node distance=3cm]
-        \tikzstyle{every node}=[scale=0.7]
-        \node (A) {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (C)[below of=A] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (B)[left of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (D)[right of=C] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (E)[below left of=B] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (F)[right of=E] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (G)[right of=F] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (H)[right of=G] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (I)[right of=H] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \node (J)[right of=I] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
-        \path
-    (A) edge (B)
-    (A) edge (C)
-        (A) edge (D)
-    \end{tikzpicture}
-\end{center}
+Entities represent a combination of different data containers, so-called components, which can be uniquely attached to each entity.
+There are some standard entities and components available directly via the engine, however there may be the need for more components and entities while implementing the actual game.
 
 \subsection{UML Diagram}\label{subsec:uml-diagram}
+The following figure shows the structure of the entity component system implemented in this solution.
+\todo{add uml}
 
 \subsection{Entities}\label{subsec:entities}
 Entities are classes constructed of different components.
@@ -58,7 +38,12 @@ As a result, UI elements can utilize the existing graphical components without t
 All elements that are placed on the game grid are considered so-called Simulation Entities.
 These entities are built of components to describe the cable port distribution, parameters such as failure ratio and failure detection ratio and grid components, which contain the
 entities position as a coordinate in the games' grid-like game field.
-
+Furthermore, graphics and colliders are available to simulation entity objects.
+\\ \\
+\textbf{Build Panel Entities:} \\
+Build Panel Entities are entities which are available in the players' inventory and can be used for building objects on the game grid.
+They include components for graphics description, build information - e.g.\ the failure ratio, failure detection ratio and amount in inventory,
+and colliders.
 
 \subsection{Components}\label{subsec:components}
 All entities are built of a subset of the available components, uniquely attached to each.
@@ -81,6 +66,15 @@ hovering and object at the same location as the collision object. \\ \\
 \textbf{Sound Component:} \\
 The \textit{SoundComponent} class can be attached to any entity that needs to have a sound played at times.
 It implements methods to set the state of the sound sample to play, pause or stop and contains the actual sound sample to be used by the \textit{SoundEngine}. \\ \\
+
+\textbf{Action Component:} \\
+Action Components are used for storing a mapping of input to action within an entity, e.g.\ clicking a button which opens another scene.
+Each Action Component is processed by the ActionSystem. \\ \\
+
+\textbf{Cursor Component:} \\
+The cursor component is a component used for handling game pad inputs and acts as a virtual mouse cursor, which can be moved by using
+joysticks of game pads or keyboard buttons.
+It simply indicates the position, where new mouse events are generated, when the actual mouse is not used. \\ \\
 
 \subsection{System}\label{subsec:system}
 In comparison to handlers, systems are time-based and triggered with every update loop of the game.
@@ -124,10 +118,37 @@ The rendering engine renders objects starting from the background layer, going a
 
 \subsubsection{Sound Engine}\label{subsubsec:sound-engine}
 
+\subsection{Scene}\label{subsec:scenes}
+A scene is a collection of entities that together form an aspect of the game, e.g.\ a menu or a level.
+The \textit{Scene} class is an abstract class implementing methods for adding and removing entities from itself.
+The scenes in this implementation can be categorized in two general sets: menu scenes and game scenes.
+
+\\
+To add a scene to the game, a scene object needs to be instantiated and added to the games' \textit{SceneManager}, where all
+scenes are stored and the currently active scene can be set.
+Generally, all systems access the scene manager to only process the currently active scene.
+\\
+
+Scenes are implemented in a hierarchy which is shown in figure \todo{add figure}.
 \subsection{Input Handling}\label{subsec:input-handling}
 
-\subsection{Game Loop}
-The game loop
+\subsection{Game Loop}\label{subsec:game-loop}
+The game loop packs all the different systems and handlers used in the game and executes them in a given order at every time stamp
+$t_{i} = t_{i-1} + \delta t$, where $\delta t$ is the execution rate defined for the game.
+In this implementation, $\delta t$ is defined as $\delta t = 1000 / 240 ms = 4.1667 ms$, which equals 240 frames per second.
+\\
+Input handling is executed in a separate thread and handles inputs at a rate of $\delta t_{inputs} = 20 ms$, since inputs in between two frames
+would otherwise not be received by the games' input handling system.
+\\ \\
+The following execution order is defined in the game loop:
+
+\begin{enumerate}
+    \item Input Handling
+    \item System Handling
+    \item Scene Update \& Repaint
+    \item Play Sounds
+\end{enumerate}
+
 \subsection{Data Storage \& Data Parsing}\label{subsec:data-storage-&-data-parsing}
 It was chosen to save and load resources from XML files, due to the benefits of this file format.
 XML stands for eXtensible Markup Language, and it is a markup language that is used for encoding documents in a format that is both human-readable and machine-readable.
@@ -144,7 +165,17 @@ The structure of the different XML files for levels, tilesets, scores and langua
 A tileset file contains a list of multiple tile nodes, which each have an id and a type attribute.
 A tile always contains exactly one image node, which has at least width, height and a resource path to an image assigned to it.
 Optionally, there can also be a description attribute which can be used to set a tooltip that will be rendered to the games tooltip panel, if available.
+\\
+The following example shows a tileset with a single tile of the type CPU, including its description and image parameters.
 \\ \\
+\begin{lstlisting}[language=XML,label={lst:tileset-xml}]
+    <?xml version="1.0" encoding="UTF-8"?>
+    <tileset name="tiles">
+        <tile id="200" type="CPU">
+            <image width="32" height="32" source="res/avionics/default.png" description="Default CPU Component"/>
+        </tile>
+    </tileset>
+\end{lstlisting}
 \subsubsection{Level Files}\label{subsubsec:level-files}
 The root node of a level structure is the map node, which always contains attributes to assign an id, a name, a difficulty (tutorial, easy, medium, hard or custom) and a
 grid width and height for the games grid.
@@ -153,10 +184,69 @@ one sub node for available elements to build from the build panel and one sub no
 Additionally, the goal and goal definition sub nodes contain information on how to pass a level (i.e.\ safety requirement, minimum components that should be working correctly and
 maximum ouf of control components).
 Furthermore, the tileset used by this map needs to be defined in the tileset sub node and unlocks (i.e.\ which level ids are unlocked after passing this level) can be defined.
-\\ \\
+\\
+The below code shows an example on the structure of the level xml files, which describes a 5 by 3 game grid with one actuator
+at position $x = 4$ and $y = 1$, and two sensors at positions $x = 0$ and $y = [0, 2]$.
+\\
+Note, that the width and height attributes represent the actual size of the map, similar to the length of an array in Java, while
+the positions show the position in the grid starting at 0, similar to indexes in Java arrays.
+\\
+\\
+\begin{lstlisting}[language=XML,label={lst:level-xml}]
+    <?xml version="1.0" encoding="UTF-8"?>
+    <map id="0" name="@0" width="5" height="3" difficulty="EASY">
+        <description>
+            <part>@1</part>
+        </description>
+        <goal>1e-7</goal>
+        <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
+        <tileset source="base_tiles.xml"/>
+        <unlocks>
+            <unlock>6</unlock>
+        </unlocks>
+        <build>
+            <entity id="500" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+            <entity id="501" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+            <entity id="502" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+            <entity id="203" amount="2" safety="0" failureDetectionRatio="1" correctSignalsNeeded="1"
+                    outOfControlSignalsAccepted="0"/>
+        </build>
+        <layer id="0" name="Tile Layer 1">
+            <entity x="0" y="0" id="201" interactable="false" safety="1e-4" failureDetectionRatio="1"
+                    correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+            <entity x="0" y="2" id="201" interactable="false" safety="1e-4" failureDetectionRatio="1"
+                    correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+            <entity x="4" y="1" id="205" interactable="false" safety="0" failureDetectionRatio="1" correctSignalsNeeded="2"
+                    outOfControlSignalsAccepted="0"/>
+        </layer>
+    </map>
+\end{lstlisting}
 \subsubsection{Language Files}\label{subsubsec:language-files}
+A language file contains all text content used in the game for a specified language.
+In the root node, the language type can be given according to the IETF language tag \todo{add source}, if supported by the game (i.e.\ implemented in the language manager).
+Within this root node, string nodes are created which contain the id of a string as an attribute and the actual content as text.
+Each of the ids has to be unique, otherwise only the first specified id will be considered in the implementation.
+\\
+\\
+\begin{lstlisting}[language=XML,label={lst:lang-xml}]
+    <strings language="">
+        <string id="1">Sample Text</string>
+    </strings>
+\end{lstlisting}
 
 \subsubsection{Score Files}\label{subsubsec:score-files}
+Highscores for each level are saved in a separate xml file containing information about the profile name, score and level id.
+The following structure is used for this file, saving the score 91 for a user who played level id one.
+\\ \\
+\begin{lstlisting}[language=XML,label={lst:score-xml}]
+    <scores>
+      <scoreItem>
+        <name>User</name>
+        <score>91</score>
+        <level>1</level>
+      </scoreItem>
+    </scores>
+\end{lstlisting}
 
 \subsubsection{Parsing}\label{subsubsec:parsing}
 
@@ -175,7 +265,9 @@ Button handling is mostly implemented in a way that a button press creates a new
 systems' mouse event handling method.
 This reduces maintenance and new implementation of buttons and actions, while being guaranteed to work correctly with all devices.
 
-\subsection{Simulation}
+\subsection{Simulation}\label{subsec:simulation}
+
+
 \subsection{Programming Language}\label{subsec:programming-language}
 The programming language that was chosen up front is \textit{JAVA}.
 This decision was made based on the fact that it makes sense to have a) an object-oriented programming language in order to
