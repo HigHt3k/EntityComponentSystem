@@ -9,6 +9,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.Simu
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * a generic markov chain processor class that can be called from anywhere
@@ -209,24 +210,25 @@ public class MarkovProcessor {
      * @param start: node to calculate from; at the beginning this is supposed to be the root node.
      */
     public static void markovStart(MarkovState start) {
-        if (Game.config().isDebug()) {
-            String state = start.selfToText();
-            System.out.println(state);
-        }
+        Stack<MarkovState> stateStack = new Stack<>();
+        stateStack.push(start);
 
-        if (start.isFailed()) {
-            handleFailedState(start);
-        } else {
-            handleNonFailedState(start);
-        }
+        while (!stateStack.isEmpty()) {
+            MarkovState currentState = stateStack.pop();
 
-        for (MarkovState markovState : start.getNext()) {
-            try {
-                markovStart(markovState);
-            } catch (StackOverflowError ex) {
-                ex.printStackTrace();
-                printChainStructure(currentSystemState);
-                System.exit(1);
+            if (Game.config().isDebug()) {
+                String state = currentState.selfToText();
+                System.out.println(state);
+            }
+
+            if (currentState.isFailed()) {
+                handleFailedState(currentState);
+            } else {
+                handleNonFailedState(currentState);
+            }
+
+            for (MarkovState nextState : currentState.getNext()) {
+                stateStack.push(nextState);
             }
         }
     }
