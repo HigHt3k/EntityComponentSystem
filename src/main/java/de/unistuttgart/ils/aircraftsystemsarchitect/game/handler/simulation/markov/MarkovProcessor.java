@@ -6,6 +6,9 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.SimulationCo
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.SimulationState;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.SimulationType;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
 import java.util.*;
 
 /**
@@ -35,6 +38,7 @@ public class MarkovProcessor {
      * generate the root node for the markov chain by using the current system layout as input
      */
     public static void generateCurrentSystemState() {
+        memoizedResults.clear();
         ArrayList<MarkovStateObject> markovStateObjects = new ArrayList<>();
 
         for(Entity e : entities) {
@@ -101,8 +105,19 @@ public class MarkovProcessor {
      * Print the markov chain
      */
     public static void printMarkov() {
+        //Instantiating the PrintStream class
+        File file = new File("markovlog.txt");
+        PrintStream fileStream = null;
+        try {
+            fileStream = new PrintStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("From now on "+file.getAbsolutePath()+" will be your console");
+        System.setOut(fileStream);
         System.out.println("--------Markov Debugging --------");
         printChainStructure(currentSystemState);
+        System.setOut(System.out);
     }
 
 
@@ -160,11 +175,9 @@ public class MarkovProcessor {
                             || currentCorrectSensorCount <= correctSensorCount - 1
                             || currentCorrectCPUCount <= correctCPUCount - 1)
             ) {
-                System.out.println("Adding passive probability of state: " + state.selfToText() + " : " + state.getStateProbability());
                 probabilityPassive += state.getStateProbability();
                 state.getNext().clear();
             } else if (currentOOCActuatorCount > OOCActuatorCount || currentOOCCPUCount > OOCCPUCount || currentOOCSensorCount > OOCSensorCount) {
-                System.out.println("Adding ooc probability of state: " + state.selfToText() + " : " + state.getStateProbability());
                 probabilityOOC += state.getStateProbability();
                 state.getNext().clear();
             }
