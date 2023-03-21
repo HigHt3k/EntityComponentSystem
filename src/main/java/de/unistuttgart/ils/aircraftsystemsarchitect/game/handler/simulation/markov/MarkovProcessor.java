@@ -6,10 +6,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.SimulationCo
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.SimulationState;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.SimulationType;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * a generic markov chain processor class that can be called from anywhere
@@ -21,6 +18,7 @@ public class MarkovProcessor {
     public static MarkovState currentSystemState;
     private static final ArrayList<MarkovState> allStates = new ArrayList<>();
     private static int debugVariable = 0;
+    private static Map<String, List<MarkovState>> memoizedResults = new HashMap<>();
 
     /*
 
@@ -221,10 +219,17 @@ public class MarkovProcessor {
                 System.out.println(state);
             }
 
-            if (currentState.isFailed()) {
-                handleFailedState(currentState);
+            String stateKey = currentState.selfToText(); // Implement a method to create a unique key for the current state.
+
+            if (memoizedResults.containsKey(stateKey)) {
+                currentState.setNext((ArrayList<MarkovState>) memoizedResults.get(stateKey));
             } else {
-                handleNonFailedState(currentState);
+                if (currentState.isFailed()) {
+                    handleFailedState(currentState);
+                } else {
+                    handleNonFailedState(currentState);
+                }
+                memoizedResults.put(stateKey, currentState.getNext());
             }
 
             for (MarkovState nextState : currentState.getNext()) {
