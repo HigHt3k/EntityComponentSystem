@@ -111,4 +111,9 @@
     <string id="120003">This kind of failure could be handled, by adding a separated line, which is outside the hydraulic oil pipes.</string>
     <string id="130000">3 Actuators</string>
     <string id="130001">In this scenario, you are given 3 actuators, of which at least one needs to correctly work for the given circumstances.</string>
+    <string id="140000">Out Of Control</string>
+    <string id="140001">Out of Control Failures are failures which stay undetected and affect other components due to that behaviour.</string>
+    <string id="140002">Usually, components have a built-in failure recognition, however this may not be 100% accurate at all times.</string>
+    <string id="140003">You can see the failure recognition ratio of the components in the tooltip app down below. This indicates how well each component can detect failures on a scale from 0 to 1.</string>
+    <string id="140004">Try to implement the same system as before, however this time soem out of control failures need to be prevented.</string>
 </strings>
