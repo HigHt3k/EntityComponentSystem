@@ -264,14 +264,22 @@ public class MarkovProcessor {
             objectsOutOfControl.add(outOfControl);
         }
 
-        updateInputStates(objectsPassive);
-        updateInputStates(objectsOutOfControl);
-        updateStateBasedOnInputs(objectsPassive);
-        updateStateBasedOnInputs(objectsOutOfControl);
+        boolean updated;
+        do {
+            updated = false;
+            if (updateInputStates(objectsPassive) || updateInputStates(objectsOutOfControl)) {
+                updated = true;
+            }
+            if (updateStateBasedOnInputs(objectsPassive) || updateStateBasedOnInputs(objectsOutOfControl)) {
+                updated = true;
+            }
+        } while (updated);
 
         start.addNext(new MarkovState(start, objectsPassive, start.getStateProbability() * objectsPassive.get(failedIndex).getFailureRecognitionProbability()));
         start.addNext(new MarkovState(start, objectsOutOfControl, start.getStateProbability() * (1 - objectsOutOfControl.get(failedIndex).getFailureRecognitionProbability())));
     }
+
+
 
     private static void handleNonFailedState(MarkovState start) {
         ArrayList<MarkovStateObject> stateObjects = start.getMarkovStateObjects();
@@ -297,7 +305,9 @@ public class MarkovProcessor {
         }
     }
 
-    private static void updateInputStates(List<MarkovStateObject> objects) {
+    private static boolean updateInputStates(List<MarkovStateObject> objects) {
+        boolean updated = false;
+
         for (MarkovStateObject mso : objects) {
             ArrayList<SimulationState> inputStates = new ArrayList<>();
             for (MarkovStateObject msoOther : objects) {
@@ -316,10 +326,18 @@ public class MarkovProcessor {
                 }
             }
             mso.setInputStates(inputStates);
+
+            ArrayList<SimulationState> newInputStates = new ArrayList<>(inputStates);
+            if (!mso.getInputStates().equals(newInputStates)) {
+                mso.setInputStates(newInputStates);
+                updated = true;
+            }
         }
+        return updated;
     }
 
-    private static void updateStateBasedOnInputs(List<MarkovStateObject> objects) {
+    private static boolean updateStateBasedOnInputs(List<MarkovStateObject> objects) {
+        boolean updated = false;
         for (MarkovStateObject mso : objects) {
             if (mso.getType() == SimulationType.SENSOR) {
                 continue;
@@ -328,6 +346,8 @@ public class MarkovProcessor {
                 continue;
             }
 
+            SimulationState newState = null;
+
             if(mso.getType() == SimulationType.VOTE) {
                 int inputCount = mso.getInputStates().size();
                 ArrayList<SimulationState> states = mso.getInputStates();
@@ -335,30 +355,31 @@ public class MarkovProcessor {
                     case 0:
                         continue;
                     case 1:
-                        mso.setState(states.get(0));
+                        newState = states.get(0);
                         break;
                     case 2:
                         if(states.get(0) == states.get(1)) {
-                            mso.setState(states.get(0));
+                            newState = states.get(0);
                         } else {
-                            mso.setState(SimulationState.PASSIVE);
+                            newState = SimulationState.PASSIVE;
                         }
                         break;
                     case 3:
                         if(Collections.frequency(states, SimulationState.CORRECT) >= 2) {
-                            mso.setState(SimulationState.CORRECT);
+                            newState = SimulationState.CORRECT;
                         } else {
-                            mso.setState(SimulationState.PASSIVE);
+                            newState = SimulationState.PASSIVE;
                         }
                         break;
                     case 4:
                         if(Collections.frequency(states, SimulationState.CORRECT) >= 3) {
                             mso.setState(SimulationState.CORRECT);
+                            newState = SimulationState.CORRECT;
                         } else if(Collections.frequency(states, SimulationState.CORRECT) == 2 &&
                                 Collections.frequency(states, SimulationState.PASSIVE) >= 1) {
-                            mso.setState(SimulationState.CORRECT);
+                            newState = SimulationState.CORRECT;
                         } else {
-                            mso.setState(SimulationState.PASSIVE);
+                            newState = SimulationState.PASSIVE;
                         }
                 }
             } else {
@@ -366,19 +387,25 @@ public class MarkovProcessor {
                         >= mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()
                         && Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL)
                         <= mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted()) {
-                    mso.setState(SimulationState.CORRECT);
+                    newState = SimulationState.CORRECT;
                 } else if (Collections.frequency(mso.getInputStates(), SimulationState.CORRECT)
                         < mso.getEntity().getComponent(SimulationComponent.class).getCorrectSignalsNeeded()
                         && Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL) <=
                         mso.getEntity().getComponent(SimulationComponent.class).getOutOfControlSignalsAccepted() &&
                         Collections.frequency(mso.getInputStates(), SimulationState.OUT_OF_CONTROL) <
                                 Collections.frequency(mso.getInputStates(), SimulationState.PASSIVE)) {
-                    mso.setState(SimulationState.PASSIVE);
+                    newState = SimulationState.PASSIVE;
                 } else {
-                    mso.setState(SimulationState.OUT_OF_CONTROL);
+                    newState = SimulationState.OUT_OF_CONTROL;
                 }
             }
+
+            if (newState != null && mso.getState() != newState) {
+                mso.setState(newState);
+                updated = true;
+            }
         }
+        return updated;
     }
 
     private static ArrayList<MarkovStateObject> cloneMarkovStateObjectList(List<MarkovStateObject> originalList) {

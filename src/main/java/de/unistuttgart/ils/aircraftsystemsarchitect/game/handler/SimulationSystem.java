@@ -322,10 +322,10 @@ public class SimulationSystem extends SystemHandle {
         }
     }
 
-    private ArrayList<Entity> getSensors() {
+    private synchronized ArrayList<Entity> getSensors() {
         ArrayList<Entity> relevantEntities = new ArrayList<>();
 
-        for(Entity e : Game.scene().current().getEntities()) {
+        for(Entity e : (ArrayList<Entity>) Game.scene().current().getEntities().clone()) {
             if(e.getComponent(SimulationComponent.class) != null
                     && e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.SENSOR) {
                 relevantEntities.add(e);

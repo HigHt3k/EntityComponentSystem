@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class MarkovState {
     private boolean handled = false;
-    private boolean failed = false;
+    private boolean failed;
     private MarkovState previous;
     private ArrayList<MarkovState> next;
     private double stateProbability;
@@ -17,6 +17,7 @@ public class MarkovState {
         this.markovStateObjects = new ArrayList<>(markovStateObjects);
         this.stateProbability = stateProbability;
         this.next = new ArrayList<>();
+        this.failed = false;
     }
 
     public boolean isFailed() {
