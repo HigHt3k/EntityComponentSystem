@@ -102,4 +102,13 @@
     <string id="90001">You are given a sensor which needs at least to correct inputs to correctly work. Find a solution that solves this problem!</string>
     <string id="100000">Duplex Sensors</string>
     <string id="100001">You have multiple possibilities to solve this level. Try to find the most efficient one, which will provide you with the highest score!</string>
+    <string id="110000">Wrong Sensors</string>
+    <string id="110001">A pilot reported to you, that some sensors are having a strange behaviour, while still showing the same values. You already removed all the cables, now you may want to check the sensor itself.</string>
+    <string id="110002">It can sometimes happen, that sensors of the same design have the same failure, independently, this is a so called Common-Mode Failure (CMF).</string>
+    <string id="120000">Hydraulic Leakage</string>
+    <string id="120001">Due to a hydraulic leakage, some components have been in the oil for quite a while.</string>
+    <string id="120002">Similar components with a failure due to the same cause, in this case the oil which destroyed the components, have a so-called Common-Cause Failure (CCF).</string>
+    <string id="120003">This kind of failure could be handled, by adding a separated line, which is outside the hydraulic oil pipes.</string>
+    <string id="130000">3 Actuators</string>
+    <string id="130001">In this scenario, you are given 3 actuators, of which at least one needs to correctly work for the given circumstances.</string>
 </strings>

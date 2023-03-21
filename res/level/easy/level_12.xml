@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="12" name="@120000" width="5" height="3" difficulty="EASY">
+<!-- level created -->
+<map id="12" name="@120000" width="5" height="7" difficulty="EASY">
     <description>
         <part>@120001</part>
+        <part>@120002</part>
     </description>
-    <goal>1e-5</goal>
+    <goal>1e-4</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <unlocks>
@@ -14,12 +16,26 @@
         <entity id="501" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
         <entity id="502" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
         <entity id="503" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity id="201" amount="1" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
-        <entity id="203" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="201" amount="3" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity id="203" amount="2" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </build>
     <layer id="0" name="Tile Layer 1">
-        <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
-        <entity x="2" y="0" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity x="4" y="1" id="205" interactable="false" safety="1e-7" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="0" id="201" interactable="false" safety="1" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="1" id="498" interactable="false"/>
+        <entity x="1" y="1" id="498" interactable="false"/>
+        <entity x="1" y="2" id="498" interactable="false"/>
+        <entity x="3" y="0" id="498" interactable="false"/>
+        <entity x="2" y="1" id="498" interactable="false"/>
+        <entity x="0" y="2" id="201" interactable="false" safety="1" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="2" y="0" id="203" interactable="false" safety="1" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="4" y="3" id="205" interactable="false" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="1" y="0" id="50002" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="1" y="2" id="50101" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="1" y="1" id="50113" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="1" y="0" id="50132" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="3" y="0" id="50003" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="3" y="1" id="50013" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="3" y="2" id="50013" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="3" y="3" id="50012" interactable="false" safety="0" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
     </layer>
 </map>
