@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="15" name="@150000" width="5" height="3" difficulty="MEDIUM">
+<!-- level created -->
+<map id="15" name="@150000" width="7" height="5" difficulty="MEDIUM">
     <description>
         <part>@150001</part>
     </description>
-    <goal>1e-5</goal>
+    <goal>5e-7</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <unlocks>
@@ -13,13 +14,14 @@
         <entity id="500" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
         <entity id="501" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
         <entity id="502" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity id="503" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity id="201" amount="1" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
-        <entity id="203" amount="1" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="203" amount="4" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity id="206" amount="1" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </build>
     <layer id="0" name="Tile Layer 1">
-        <entity x="0" y="0" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
-        <entity x="2" y="0" id="203" interactable="false" safety="1e-4" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
-        <entity x="4" y="1" id="205" interactable="false" safety="1e-7" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="1" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="2" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="0" y="3" id="201" interactable="false" safety="1e-4" correctSignalsNeeded="0" outOfControlSignalsAccepted="0"/>
+        <entity x="6" y="1" id="205" interactable="false" safety="1e-5" failureDetectionRatio="1" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
+        <entity x="6" y="3" id="205" interactable="false" safety="1e-5" failureDetectionRatio="1" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>
     </layer>
 </map>

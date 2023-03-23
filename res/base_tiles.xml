@@ -41,6 +41,18 @@
  <tile id="1000">
   <image width="32" height="32" source="res/tiles/air.png"/>
  </tile>
+ <tile id="494" type="PLACEHOLDER">
+  <image width="32" height="32" source="res/tiles/cable-placeholder2-bottom-right.png"/>
+ </tile>
+ <tile id="495" type="PLACEHOLDER">
+  <image width="32" height="32" source="res/tiles/cable-placeholder2-left-top.png"/>
+ </tile>
+ <tile id="496" type="PLACEHOLDER">
+  <image width="32" height="32" source="res/tiles/cable-placeholder-left-bottom.png"/>
+ </tile>
+ <tile id="497" type="PLACEHOLDER">
+  <image width="32" height="32" source="res/tiles/cable-placeholder-top-right.png"/>
+ </tile>
  <tile id="498" type="PLACEHOLDER">
   <image width="32" height="32" source="res/tiles/oil.png"/>
  </tile>

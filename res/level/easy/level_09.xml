@@ -8,7 +8,7 @@
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <unlocks>
-        <unlock>7</unlock>
+        <unlock>17</unlock>
     </unlocks>
     <build>
         <entity id="500" amount="1000" safety="0" correctSignalsNeeded="1" outOfControlSignalsAccepted="0"/>

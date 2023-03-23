@@ -71,7 +71,7 @@
     <string id="30000">Tutorial 3: Connecting Cables</string>
     <string id="30001">It is also possible to connect different components to a single other component. Try using the
         red and blue cables to connect both sensors to the computer. You can switch the cable color that is being
-        rotated by using the keyboard buttons 1-4. Advice: 1: red, 2: blue, 3: green, 4: yellow
+        rotated by using the keyboard buttons 1-4 or the LB and RB buttons on the controller. Hint: 1: red, 2: blue, 3: green, 4: yellow
     </string>
     <string id="40000">Tutorial 4: Placing Components</string>
     <string id="40001">Not only cables can be used to build or enhance your systems - you can also use new components!
@@ -116,4 +116,10 @@
     <string id="140002">Usually, components have a built-in failure recognition, however this may not be 100% accurate at all times.</string>
     <string id="140003">You can see the failure recognition ratio of the components in the tooltip app down below. This indicates how well each component can detect failures on a scale from 0 to 1.</string>
     <string id="140004">Try to implement the same system as before, however this time soem out of control failures need to be prevented.</string>
+    <string id="150000">Voting Triplex</string>
+    <string id="150001">Here, you may need to implement voting to the system. 3 Sensors need to be connected to 2 Actuators. Find a way to meet the requirements.</string>
+    <string id="160000">Quadruplex</string>
+    <string id="160001">This is the final level. With all the knowledge you have now, try to build a system that connects all the 4 sensors to the 4 actuators.</string>
+    <string id="170000">Duplex System 3</string>
+    <string id="170001">In a similar manner to the previous levels, try to meet the requirements, which have been increased. Both Actuators need to be correctly working.</string>
 </strings>

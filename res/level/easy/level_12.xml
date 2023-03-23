@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- level created -->
-<map id="12" name="@120000" width="5" height="7" difficulty="EASY">
+<map id="12" name="@120000" width="5" height="7" difficulty="MEDIUM">
     <description>
         <part>@120001</part>
         <part>@120002</part>
