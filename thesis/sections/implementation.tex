@@ -33,12 +33,101 @@ in a virtual machine.
 The game engine implements a variety of methods and classes which are used for handling the general program execution, independent of the actual game implementation.
 In this chapter, these classes will be explained in detail and the general concept of the engine is reviewed.
 
+\subsubsection{Entity Component System}\label{subsubsec:entity-component-system-implementation}
+The entity component system setup can be approached from a top-down point of view.
+A scene is the basic class that contains all information about the currently displayed entities and the handlers and systems to be used
+in the background.
+There exist multiple scenes of different classes, such as scenes for the game view, menu scenes etc., which can be created by
+inheriting the base scene class.
+Scenes can be added to the game by using the Scene Manager, which is also used to swap between available scenes.
+Each scene contains a list of entities, that could be referred to as a database of all available objects.
+Entities represent a combination of different data containers, so-called components, which can be uniquely attached to each entity.
+There are some standard entities and components available directly via the engine, however there may be the need for more components and entities while implementing the actual game.
+The design approach of this entity component system is similar to the Unity implementation, however a few tweaks and simplifications were made in order to keep the code
+simple and maintainable, while providing the changeability and flexibility of a general approach.
+\paragraph{UML Diagram}
+The following UML class diagram shows the connection between the different classes implemented in the entity component system.
+Each class will be explained in the following chapters.
+\todo{add uml, remove unity one}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\textwidth]{res/implementation/flow charts/ECSBlockDiagram}
+    \caption{UML Diagram of the Entity Component System}
+    \label{fig:ecs-block-diagram}
+\end{figure}
+
+\paragraph{Entities}
+Entities are classes constructed of different components, which could be referred to as containers storing different parameters.
+Entities can not directly interact with each other, as any modification to data is strictly handled by the game engines' systems and handlers.
+The Entity class implements functions to add, remove and get Components of a class type.
+\\
+As there are usually lots of different types of entities in a game which may contain the same components, it makes sense to inherit from the Entity class and
+build generic entities which can be reused.
+For GUI elements, the game engine already provides some pre-designed entities, such as buttons, text bodies, panels and image entities.
+During the implementation, it was chosen to handle GUI elements as entities as well, as the game engine is purely working in 2 dimensions and therefore
+rendering methods for the game itself and the GUI do not differ.
+This approach was the easy choice, as having a separate class to implement UI elements would most likely end up with a lot of duplicated
+code fragments, which are already implemented in the RenderingComponent, as described in the next chapter.
+
+\paragraph{Components}\label{par:components}
+All entities are built of a subset of the available components, uniquely attached to each.
+The different components will be explained in detail in the following chapter.
+\\
+\textbf{Render Component:} \\
+The \textit{RenderComponent} class is designed to manage and store a diverse set of graphical objects that are utilized for rendering various elements within a scene.
+These graphical objects are categorized into subclasses, such as text, images, animations, hovering, lines, and shapes.
+Each subclass is defined by a set of parameters that dictate its appearance, including aspects like location, bounds, colors, images or animations, and text content.
+\\
+To address the need for rendering multiple graphical objects per entity while still adhering to the unique component-per-entity constraint, the RenderComponent class allows for the addition of each graphical object multiple times.
+For example, an image that requires occasional hovering may have one object to render the image itself, and another object to render the hovering shape.
+\\
+Furthermore, the RenderComponent class incorporates methods that enable the retrieval of specific lists of graphical object instances based on their corresponding class.
+This functionality resembles the Query implementation found in the entity component system, providing a streamlined and efficient way to access the desired graphical objects.
+
+\textbf{ColliderComponent:} \\
+Similar to the \textit{RenderComponent}, the \textit{ColliderComponent} also stores a list of collision objects, which are described by location and bounds.
+Each of these collision objects is checked by the \textit{CollisionDetectionSystem} and handled accordingly, e.g.\
+hovering and object at the same location as the collision object. \\ \\
+
+\textbf{Sound Component:} \\
+The \textit{SoundComponent} class can be attached to any entity that needs to have a sound played at times.
+It implements methods to set the state of the sound sample to play, pause or stop and contains the actual sound sample to be used by the \textit{SoundEngine}. \\ \\
+
+\textbf{Action Component:} \\
+Action Components are used for storing a mapping of input to action within an entity, e.g.\ clicking a button which opens another scene.
+Each Action Component is processed by the ActionSystem. \\ \\
+
+\textbf{Cursor Component:} \\
+The cursor component is a component used for handling game pad inputs and acts as a virtual mouse cursor, which can be moved by using
+joysticks of game pads or keyboard buttons.
+It simply indicates the position, where new mouse events are generated, when the actual mouse is not used. \\ \\
+
+\paragraph{Systems}
+Systems are the third main part of the ECS implementation and handle any modification to the Components.
+They are used for a variety of different applications and can be split into multiple sub systems, which each serve their own purpose.
+The ECS implementation aims and encourages to split each function or feature into modular systems, which can then be added to the game where they are handled within the GameLoop~\ref{subsubsec:game-loop}.
+A variety of systems is already available per default, including rendering, collision and input systems, which will be explained in the following chapters.
+\\
+Each system queries through the available entities / components and only processes the relevant ones.
+The query system is set up as a static class that can be accessed from anywhere.
+It implements methods that can be used to search for all entities of a class or entities that have a specified component
+attached to it within the currently displayed scene.
+The set of entities can be seen as a database that is filtered by the query system to obtain only a subset with the specified component or class type, which may be used
+for other systems. \todo{add graphic with database of ecs}
+An overview of the default systems is given below.
+
+\textbf{Action System}
+Handlers are input listeners, which are event based.
+They can be implemented for different purposes, such as keyboard, mouse or controller inputs in general, but also to direct inputs by the user
+to a category, such as inputs for levels that trigger methods within the level itself, inputs to buttons or hovering over entities.
+They provide user inputs to manipulate the systems. \todo{rewrite}
+
 \subsubsection{Game Loop}\label{subsubsec:game-loop}
 The game loop acts as the main thread of the game as soon as initialized and started.
 It packs all the different systems and handlers used in the game and executes them in a given order at every time step
-$t_{i} = t_{i-1} + \delta t$, where $\delta t$ is the execution rate defined for the game.
+$t_{i} = t_{i-1} + \Delta t$, where $\Delta t$ is the execution rate defined for the game.
 An exception to this order is the input recording, which is handled in a separate, synchronized thread, as described in chapter~\ref{subsubsec:input-recording}.
-In this implementation, $\delta t$ is defined as $\delta t = 1000 / 240 ms = 4.1667 ms$, which equals 240 calculated frames per second that may be shown and rendered
+In this implementation, $\Delta t$ is defined as $\Delta t = 1000 / 240 ms = 4.1667 ms$, which equals 240 calculated frames per second that may be shown and rendered
 to the screen, if available.
 \\ \\
 The following execution order is defined in the Game Loop thread:
@@ -86,110 +175,194 @@ checking for a state change after an input or action has been handled.
 After the update, the active scene is repainted by the RenderingEngine~\ref{subsubsec:graphics-engine}.
 
 \subsubsection{Rendering Engine}\label{subsubsec:graphics-engine}
-The Rendering Engine is the main part of all graphical components.
-It implements different engines for each graphical object (shape, image, text, line) that are called depending on the available data within the
-context.
-All content is rendered to a JPanel object by using the Graphics2D instance available by default.
-There are several options and parameters for rendering quality and display sizes that are considered during rendering.
-A rendering cycle looks as follows:
-- query relevant entities (entities containing the GraphicsComponent)
-- determine the available data per entity
-- send the data to the according renderer
-\\ \\
-There are different layers to be considered by the rendering engine.
-The layers include background layers, multiple game layers and UI layers, both including a separate layer for hovering.
-The rendering engine renders objects starting from the background layer, going all the way to the front-most layer - UI hovering, as seen in figure
-\todo{add figure}.
+The RenderingEngine is a static class implemented within the game engine to handle all visible objects, screen rendering and scaling.
+All content is rendered to a JPanel object by using the Graphics2D instance available by default, this is called the RenderingPanel.
+\\
+The RenderingEngine receives scaling factors for width and length from the ScalingEngine and the RenderConfiguration classes, which handle resizing the frame,
+fullscreen mode and different screen resolutions as well as antialiasing options.
+During the rendering cycle, every location and boundary of the RenderObjects is scaled and only afterwards it is rendered, however the original design position
+is always present in the RenderObject parameters.
+This is necessary to correctly handle rescaling.
+\\
+A rendering cycle executes a few different methods which are all called by the overwritten repaint method from the RenderingPanel.
+First, all entities with a RenderComponent are queried by the Query system of the game engine and added to the rendering stack.
+This stack is then split up into multiple stacks of RenderObjects, which are the objects saved to the component that describe the actual graphical visualization, based
+on their rendering layer.
+Each layer is rendered one after another by using specific rendering classes for different objects such as images, text or shapes.
+Layering allows for stacking of multiple graphical entities above each other and allows for a better design of GUIs and the game itself.
+The following layers are rendered in this order:
+\begin{enumerate}
+    \item Background
+    \item Game Layer 1
+    \item Game Layer 2
+    \item Game Layer 3
+    \item Game Hover Layer
+    \item UI Layer 1
+    \item UI Layer 2
+    \item UI Hover Layer
+\end{enumerate}
+For example, if a simple composition of background image, game entity and UI should be rendered at the same position, the UI will always be in front of the game entity located at any of the game layers,
+while the game entity will always overwrite the background at that position.
+The reason for multiple UI and Game layers is simply to allow for a greater variety and range of possibilities when it comes to designing the game scenes.
+\\
+For better visualization, the full rendering cycle is shown in figure x~\todo{add figure}.
+
+\subsubsection{Sound Engine}\label{subsubsec:sound-engine}
+A SoundEngine is implemented in the Game Engine, which handles playing, pausing and stopping any audio stream available.
+During each cycle, the SoundEngine collects all entities with a SoundComponent available, and checks if they are already playing and if not, if they should be playing.
+The Java built-in library \textit{Clip} is used to play audio streams and loop them if necessary.
+This allows for an easy handling of any sound that should be played during a game, e.g.\ background music or button click sounds.
+
+\subsubsection{Utility Classes}\label{subsubsec:utility-classes}
+Apart from the Game Loop, there are also multiple other configuration classes, managers, systems and utility classes, which will be explained in depth in this chapter.
+\paragraph{Game Configuration}
+The GameConfiguration class by default implements a random profile name chosen of a variety of different names at game start, which is then used for saving high-scores
+or may also be used in other parts of the game.
+It also contains parameters for the currently active language, rendering configuration and sound configuration.
+
+\paragraph{Game Information}
+In the GameInformation class, some generic variables for a title of the game, authors, version and description can be set, which are then used for instance as the games frame
+title.
+
+\paragraph{Scene Manager}
+The SceneManager is the main storage of all scenes, which may be menu scenes such as main menus or level scenes, i.e.\ game maps.
+It can be called from anywhere within the game to switch a scene to another loaded scene or add a new scene.
+
+\paragraph{Resource Manager}
+The ResourceManager is used for loading any kind of resource from outside the Java classes, e.g.\ audio files, images or xml data and processes
+these resources accordingly.
+There are multiple implementations which are used by the ResourceManager for loading of different XML files, such as high-scores (HighScoreManager) or languages (LanguageManager),
+however the basic implementation of the ResourceManager equals their implementation and therefore the XML parsing and processing is going to be described only for the ResourceManager.
+The following resource can be loaded by the resource manager and its sub manager classes:
+\begin{itemize}
+    \item Images, using the method \textit{loadImage()}
+    \item Fonts, using the method \textit{loadFont()}
+    \item
+\end{itemize}
+\paragraph{Logging}
+The Java logging tool is available and easily accessible from any class by simply using the static function implemented in the Game class and adding information to
+the logger, which needs a specified log level and message to log.
+
+\paragraph{Styling \& Design}
+A basic color scheme and font collection is already directly implemented to the game and can be used from scratch, without loading other fonts or having to think about
+color schemes.
+This allows for a quick and easy design of graphical components.
 
 \subsection{Game Implementation}\label{subsec:game-implementation}
-
-\subsection{Entity-Component-System}\label{subsec:entity-component-system}
-The entity component system setup can be approached from a top-down point of view.
-A scene is the basic class that contains all information about the currently displayed entities and the handlers and systems to be used
-in the background.
-There exist multiple scenes of different classes, such as scenes for the game view, menu scenes etc., which can be created by
-inheriting the base scene class.
-Scenes can be added to the game by using the Scene Manager, which is also used to swap between available scenes.
-Each scene contains a list of entities, that could be referred to as a database of all available objects.
-Entities represent a combination of different data containers, so-called components, which can be uniquely attached to each entity.
-There are some standard entities and components available directly via the engine, however there may be the need for more components and entities while implementing the actual game.
-
-\subsection{UML Diagram}\label{subsec:uml-diagram}
-The following figure shows the structure of the entity component system implemented in this solution.
-\todo{add uml}
-
-\subsection{Entities}\label{subsec:entities}
-Entities are classes constructed of different components.
-The implementation aims to generify often used objects.
-Therefore, a variety of different entities has been implemented, which will be explained in this chapter.
-
-\textbf{GUI Entities:} \\
-Although somewhat precise, every user interface element was implemented as an entity, given that the game is two-dimensional and doesn't require a differentiation between 2D and 3D rendering.
-As a result, UI elements can utilize the existing graphical components without the necessity of adjusting any rendering or component techniques.
-\\ \\
-\textbf{Simulation Entities:} \\
-All elements that are placed on the game grid are considered so-called Simulation Entities.
-These entities are built of components to describe the cable port distribution, parameters such as failure ratio and failure detection ratio and grid components, which contain the
-entities position as a coordinate in the games' grid-like game field.
-Furthermore, graphics and colliders are available to simulation entity objects.
-\\ \\
-\textbf{Build Panel Entities:} \\
-Build Panel Entities are entities which are available in the players' inventory and can be used for building objects on the game grid.
-They include components for graphics description, build information - e.g.\ the failure ratio, failure detection ratio and amount in inventory,
-and colliders.
-
-\subsection{Components}\label{subsec:components}
-All entities are built of a subset of the available components, uniquely attached to each.
-The different components will be explained in detail in the following chapter.
-\textbf{Render Component:} \\
-The \textit{RenderComponent} class stores a list of different graphical objects that are then rendered to the scene.\\
-Graphical object classes include subclasses for text, images, animations, hovering, lines and shapes.
-These classes contain parameters specifying the appearance, such as location and bounds, colors, images or animations and text.
-Each object can be added to the render component multiple times.
-The reason for this approach is, that an entity should only contain each component uniquely, however there was the requirement to render multiple graphical
-objects per entity, such as having and image which needs to be hovered at times. \\
-The render component also implements some methods that can be used to specifically attain a list of graphical object instances of a specified class, similar to the Query
-implementation of the entity component system.\\ \\
-
-\textbf{ColliderComponent:} \\
-Similar to the \textit{RenderComponent}, the \textit{ColliderComponent} also stores a list of collision objects, which are described by location and bounds.
-Each of these collision objects is checked by the \textit{CollisionDetectionSystem} and handled accordingly, e.g.\
-hovering and object at the same location as the collision object. \\ \\
-
-\textbf{Sound Component:} \\
-The \textit{SoundComponent} class can be attached to any entity that needs to have a sound played at times.
-It implements methods to set the state of the sound sample to play, pause or stop and contains the actual sound sample to be used by the \textit{SoundEngine}. \\ \\
-
-\textbf{Action Component:} \\
-Action Components are used for storing a mapping of input to action within an entity, e.g.\ clicking a button which opens another scene.
-Each Action Component is processed by the ActionSystem. \\ \\
-
-\textbf{Cursor Component:} \\
-The cursor component is a component used for handling game pad inputs and acts as a virtual mouse cursor, which can be moved by using
-joysticks of game pads or keyboard buttons.
-It simply indicates the position, where new mouse events are generated, when the actual mouse is not used. \\ \\
+This chapter focuses on the actual implementation of the game, while explaining where the generic game engine is used and why.
 
 \subsection{System}\label{subsec:system}
-
-\subsubsection{Query}\label{subsubsec:query2}
-The query system is set up as a static class that can be accessed from anywhere.
-It implements methods that can be used to search for all entities of a class or entities that have a specified component
-attached to it within the currently displayed scene.
-The volume of entities can be seen as a database that is filtered by the query system to obtain only the needed components / entities
-for other systems. \todo{add graphic with database of ecs}
-
-\subsubsection{Action System}\label{subsubsec:action-system}
-Handlers are input listeners, which are event based.
-They can be implemented for different purposes, such as keyboard, mouse or controller inputs in general, but also to direct inputs by the user
-to a category, such as inputs for levels that trigger methods within the level itself, inputs to buttons or hovering over entities.
-They provide user inputs to manipulate the systems. \todo{rewrite}
-
-
 \subsubsection{Simulation System}\label{subsubsec:simulation-system}
 
 \subsubsection{Markov Processor}\label{subsubsec:example-markov-chains}
-In the following chapter, some examples for Markov chains that reflect the level designs will be shown and the implementation of the
+In the following chapter, some examples for Markov chains that represent the level designs will be shown and the implementation of the
 MarkovProcessor will be explained by using these graphs.
+
+\\ \\
+
+The Markov Processor generates a markov chain, based on the given entities and available groups and inputs provided from the SimulationSystem.
+First, a starting state, including all the relevant Entities is generated.
+Each state is represented as a MarkovState, which contains the probability of the state occurrence and a list of MarkovStateObjects, that represent the different entities available after validating
+the current level.
+This step is needed in order to generate all the different MarkovStates without actually modifying the game grid.
+\\ \\
+For demonstration purpose, a simple system state with a single sensor, computer and actuator is used.
+Whenever a failure state is update to passive or out of control, all other components will also be updated accordingly, which can also be seen in the graph~\ref{fig:markov-simplex}.
+The indices used are as follows: S = Sensor, C = Computer, A = Actuator.
+The failure probabilities of each component are:
+\begin{equation}
+    \lambda_{f,S} = 1\text{e-}4
+    \label{eq:markov-1}
+\end{equation}
+\begin{equation}
+    \lambda_{f,C} = 1\text{e-}4
+    \label{eq:markov-2}
+\end{equation}
+\begin{equation}
+    \lambda_{f,A} = 0
+    \label{eq:markov-3}
+\end{equation}
+For the failure detection ratio, the following values are used:
+\begin{equation}
+    C_{S} = 0.9
+    \label{eq:markov-4}
+\end{equation}
+\begin{equation}
+    C_{C} = 0.9
+    \label{eq:markov-5}
+\end{equation}
+\begin{equation}
+    C_{A} = 1
+    \label{eq:markov-6}
+\end{equation}
+
+\begin{figure}
+\begin{center}
+    \scalebox{0.33}{
+        \begin{tikzpicture}[->, >=stealth', semithick, node distance=7cm, auto]
+        \tikzset{rectangle/.append style={draw=black, thick, fill=white}}
+        \node    (A)[font=\fontsize{20}{0}\selectfont]  {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node    (B)[font=\fontsize{20}{0}\selectfont,below of=A]   {\TBox[fill=white]{C}\TBox[fill=white]{F}\TBox[fill=white]{C}};
+        \node       (C)[font=\fontsize{20}{0}\selectfont,left of=B] {\TBox[fill=white]{F}\TBox[fill=white]{C}\TBox[fill=white]{C}};
+        \node (D)[font=\fontsize{20}{0}\selectfont,right of=B] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=white]{F}};
+        \node (G)[font=\fontsize{20}{0}\selectfont,below left of=B] {\TBox[fill=white]{C}\TBox[fill=blue!30]{P}\TBox[fill=blue!30]{P}};
+        \node (H)[font=\fontsize{20}{0}\selectfont,below right of=B] {\TBox[fill=white]{C}\TBox[fill=red!30]{O}\TBox[fill=red!30]{O}};
+        \node (F)[font=\fontsize{20}{0}\selectfont,left of=G] {\TBox[fill=red!30]{O}\TBox[fill=red!30]{O}\TBox[fill=red!30]{O}};
+        \node (E)[font=\fontsize{20}{0}\selectfont,left of=F] {\TBox[fill=blue!30]{P}\TBox[fill=blue!30]{P}\TBox[fill=blue!30]{P}};
+        \node (I)[font=\fontsize{20}{0}\selectfont,right of=H] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=blue!30]{P}};
+        \node (J)[font=\fontsize{20}{0}\selectfont,right of=I] {\TBox[fill=white]{C}\TBox[fill=white]{C}\TBox[fill=red!30]{P}};
+        \path
+    (A) edge[font=\fontsize{20}{0}\selectfont,left,pos=0.8]     node{$\dot{p_2}=\lambda_{f,C} \cdot p_1$}     (B)
+        edge[font=\fontsize{20}{0}\selectfont,above left,pos=0.2]    node{$\dot{p_3}=\lambda_{f,S} \cdot p_1$}      (C)
+        edge[font=\fontsize{20}{0}\selectfont,above right,pos=0.2]    node{$\dot{p_4}=\lambda_{f,A} \cdot p_1$}      (D)
+        (C) edge[font=\fontsize{20}{0}\selectfont,above left,pos=0.5] node{$p_5=\dot{p_3} \cdot C_S$} (E)
+        edge[font=\fontsize{20}{0}\selectfont,below right,pos=0.6] node{$p_6=\dot{p_3} \cdot (1-C_S)$} (F)
+        (B) edge[font=\fontsize{20}{0}\selectfont,above left,pos=0.4] node{$p_7=\dot{p_2} \cdot C_C$} (G)
+        edge[font=\fontsize{20}{0}\selectfont,above right,pos=0.4] node{$p_8=\dot{p_2} \cdot (1-C_C)$} (H)
+        (D) edge[font=\fontsize{20}{0}\selectfont,below left,pos=0.8] node{$p_9=\dot{p_4} \cdot C_A$} (I)
+        edge[font=\fontsize{20}{0}\selectfont,above right,pos=0.5] node{$p_{10}=\dot{p_4} \cdot (1-C_A)$} (J)
+        \end{tikzpicture}
+    }
+\end{center}\label{fig:markov-simplex}
+
+\end{figure}
+The markov chain for these parameters can be seen in figure \todo{add fig}.
+\\
+The implementation starts by generating a starting node, where all states are set to correct for the available components.
+This state has a set probability of 1.
+For each new state, the transition probability to this state from the previous state is calculated by multiplying the previous state probability with the
+failure probability of the current failed component.
+From there, each branch splits into two branches, one taking into consideration the failure detection ratio to calculate the passive failure state, the other for calculating the
+out of control failure state.
+\\
+The approach of the implementation always sets the previous and the next states from a current state accordingly, so the tree-like
+graph can be searched for specific states and state transitions.
+Eventually, to receive the failure probability for a given state or a given set of states (e.g. all states that lead to a system failure), there is an algorithm
+that finds exactly these states and calculates the sum of their probabilities.
+Here, the failure probability for a time step of $t = 1 \text{h}$ is used, which results in a simplification of the general equations that removes all the integrations.
+Therefore, only the state transition probabilities have to be summed up to calculate the actual probability for a specific set of states that can or cannot occur.
+For larger or smaller time steps, instead of directly adding up the state transition probabilities, one would need to integrate the probability n times, based on the amount of nodes
+/ states that are previous to each state.
+\\
+\\
+A during the implementation was the performance optimization for markov chains with increasing amount of system components.
+There were two different approaches to the implementation, which are described below.
+\paragraph{Recursive Markov Chain Generation}
+New MarkovStates are generated recursively, by calling the method from within the method directly after creating and adding a new state to the next state list of a Markov State.
+This is calculated, until the break criteria is reached, which is, when a branch of the train is calculated until its very end, where all MarkovStateObjects are in
+one of the two failed states, either OOC or PASSIVE\@.
+\paragraph{Iterative Markov Chain Generation}
+In the same way that states are calculated recursively, the same method was also implemented in an iterative manner,
+after performance issues occurred with the recursion.
+This is implemented via a stack, which is iterated through until it is empty.
+With each iteration, new MarkovStates are added to the stack, until each branch is finished, i.e.\ all MarkovStateObjects are in a failed state.
+\paragraph{Memoization}
+To further optimize the algorithm, memoization was implemented.
+Memoization is a programming technique used to optimize the execution time of computationally expensive functions by caching their results for a given set of input parameters.
+When a memoized function is called with the same input parameters as a previous call, the cached result is returned instead of re-computing the function.
+In the implementation, a HashMap is used, that stores each MarkovState as a key-value pair by using a hash code calculated from the current MarkovStateObjects states.
+Whenever another state change would require the MarkovProcessor to calculate a state already available in this map, the MarkovState is instead cloned from there instead,
+as the same MarkovState means, that the exact same components have failed.
 
 \subsection{Handler}\label{subsec:handler}
 
@@ -209,14 +382,21 @@ Generally, all systems access the scene manager to only process the currently ac
 
 Scenes are implemented in a hierarchy which is shown in figure \todo{add figure}.
 
+\textbf{Simulation Entities:} \\
+All elements that are placed on the game grid are considered so-called Simulation Entities.
+These entities are built of components to describe the cable port distribution, parameters such as failure ratio and failure detection ratio and grid components, which contain the
+entities position as a coordinate in the games' grid-like game field.
+Furthermore, graphics and colliders are available to simulation entity objects.
+\\ \\
+\textbf{Build Panel Entities:} \\
+Build Panel Entities are entities which are available in the players' inventory and can be used for building objects on the game grid.
+They include components for graphics description, build information - e.g.\ the failure ratio, failure detection ratio and amount in inventory,
+and colliders.
+
 \subsection{Engines \& Managers}\label{subsec:engines}
 Engines and managers are components used for handling different aspects of the game, such as graphics rendering, playing audio streams
 or switching scenes.
 In this chapter, the engines and managers used in the implementation will be reviewed in detail.
-
-
-
-\subsubsection{Sound Engine}\label{subsubsec:sound-engine}
 
 \subsection{Data Storage \& Data Parsing}\label{subsec:data-storage-&-data-parsing}
 It was chosen to save and load resources from XML files, due to the benefits of this file format.
@@ -318,10 +498,17 @@ The following structure is used for this file, saving the score 91 for a user wh
 \end{lstlisting}
 
 \subsubsection{Parsing}\label{subsubsec:parsing}
+For data parsing, a standard DOM parser library provided by Java is used.
+It handles all possible exception types, such as input exceptions or malformed xml documents by default and allows for a quick setup of parsing
+the necessary nodes, attributes and text contents from the given input files.
+As each type of file handled by default for this game has a different structure, the ResourceManager and its sub managers implement methods to handle
+each file structure: loading a level, loading a tileset, loading scores, loading language data and loading fonts.
 
-\subsubsection{Level}
-\subsubsection{Profile}
 \subsection{External Device Inputs}\label{subsec:external-device-inputs}
+As the game developed in this work will mostly be played by a younger age group, an additional requirement was to play this game not only by mouse and keyboard,
+but also by gamepads.
+The reason being, that with a gamepad, there will be more of a game-like environment provided to the users.
+The integration of gamepads such as game controllers is explained in this chapter.
 \subsubsection{Mouse \& Keyboard}\label{subsubsec:mouse-&-keyboard}
 The standard input device for the game are mouse and keyboard.
 \subsubsection{Gamepad Integration}\label{subsubsec:gamepad-integration}

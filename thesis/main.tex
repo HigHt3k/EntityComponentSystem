@@ -13,6 +13,7 @@
 \usepackage{rotating}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{float}
 \usepackage[hidelinks]{hyperref}
 \usepackage[% Seitenlayout anzeigen
     left=4cm,
@@ -23,6 +24,7 @@
 ]{geometry}
 \usepackage{tikz}
 \usepackage{titlesec}
+\usepackage{showframe}
 
 \hypersetup{
     colorlinks=false, %set true if you want colored links
@@ -35,7 +37,6 @@
 {\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
 \titlespacing*{\paragraph}
 {0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
-\usetikzlibrary{automata,arrows,positioning,calc}
 
 \newcommand\TBox[2][]{%
     \tikz\node[draw,ultra thin,#1] {#2};}
@@ -77,6 +78,7 @@
     \include{sections/conception}
     \include{sections/implementation}
     \include{sections/results}
+    \include{sections/Conclusion}
     \bibliographystyle{ieeetr} % We choose the "plain" reference style
     \bibliography{bibliography}
 \end{document}
