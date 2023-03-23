@@ -91,18 +91,18 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         addLevel(6, 675, 300, green);
         addLevel(8, 675, 230, green);
         addLevel(7, 650, 160, green);
-        addLevel(9, 625, 90, green);
-        addLevel(10, 750, 104, green);
-        addLevel(11, 750, 275, green);
-        addLevel(12, 725, 400, green);
-        addLevel(13, 700, 500, green);
+        addLevel(17, 625, 90, green);
+        addLevel(9, 750, 104, green);
+        addLevel(10, 750, 275, yellow);
+        addLevel(11, 725, 400, yellow);
+        addLevel(12, 700, 500, yellow);
 
-        addLevel(14, 675, 600, yellow);
-        addLevel(15, 645, 670, yellow);
-        addLevel(16, 605, 740, yellow);
-        addLevel(17, 570, 810, yellow);
-        addLevel(18, 530, 880, yellow);
-        addLevel(19,760,550, yellow);
+        addLevel(13, 675, 600, yellow);
+        addLevel(14, 645, 670, yellow);
+        addLevel(15, 605, 740, yellow);
+        addLevel(16, 570, 810, red);
+        addLevel(18, 530, 880, red);
+        addLevel(19,760,550, red);
 
         addLevel(20, 800, 425, red);
         addLevel(21, 860, 375, red);

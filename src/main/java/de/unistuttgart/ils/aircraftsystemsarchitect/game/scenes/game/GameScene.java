@@ -137,7 +137,7 @@ public class GameScene extends BaseGameFieldScene {
 
     @Override
     public void update() {
-        for(Entity e : getEntities()) {
+        for(Entity e : (ArrayList<Entity>) getEntities().clone()) {
             e.update();
         }
     }
