@@ -52,7 +52,7 @@
     <string id="900">Es fehlen einige Kabel, die wir reparieren müssen. Ich denke, ich könnte sie einfach aus meinem Bauplan nehmen und aufstellen.</string>
     <string id="901">Richtig, du hast es verstanden, Tina! Sobald du die Kabel eingerichtet hast, kannst du dein System mit dieser Schaltfläche auf deinem Telefon überprüfen.</string>
     <string id="902">Auf deinem Telefon findest du auch Informationen zu den Systemanforderungen. Du kannst die Anzahl der Aktuatoren sehen, die korrekt funktionieren müssen...</string>
-    <string id="903">... sowie die Sicherheitskategorisierung. Für weitere Informationen zu diesem Thema gehe zu Level 0!</string>
+    <string id="903">... sowie die Sicherheitskategorisierung.</string>
     <string id="904">Im Allgemeinen müssen Systeme so eingerichtet werden, dass 2 Arten von Fehlern nur mit einer bestimmten Wahrscheinlichkeit auftreten.</string>
     <string id="905">Die 2 Typen sind: Passive Fehler - das sind Fehler, die vom System erkannt werden...</string>
     <string id="906">... und Out of Control Fehler, die nicht erkannt werden und zu Fehlfunktionen von Komponenten führen können.</string>

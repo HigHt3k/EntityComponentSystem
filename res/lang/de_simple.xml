@@ -51,7 +51,7 @@
     <string id="900">Fehlende Kabel müssen</string>
     <string id="901">Richtig, Tina! Verbinde die Kabel und überprüfe das System mit deinem Telefon.</string>
     <string id="902">Auf deinem Telefon findest du Informationen zu Systemanforderungen und Aktuatoren.</string>
-    <string id="903">Für weitere Informationen gehe zu Level 0!</string>
+    <string id="903">...</string>
     <string id="904">Systeme müssen so aufgebaut sein, dass zwei Fehlerarten nur mit bestimmter Wahrscheinlichkeit auftreten.</string>
     <string id="905">Die zwei Fehlerarten sind: Erkannte Fehler - die vom System erkannt werden...</string>
     <string id="906">... und Unerkannte Fehler, die bösartig sind und andere Komponenten negativ beeinflussen können.</string>
