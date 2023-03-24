@@ -21,7 +21,19 @@ public class TooltipComponent extends Component {
     }
 
     public void setType(String type) {
-        this.type = type;
+        if (type.equals("SENSOR")) {
+            this.type = "@66";
+        } else if(type.equals("ACTUATOR")) {
+            this.type = "@67";
+        } else if(type.equals("COMPUTER")) {
+            this.type = "@68";
+        } else if(type.equals("VOTE")) {
+            this.type = "@69";
+        } else if(type.equals("CABLE")) {
+            this.type = "@70";
+        } else {
+            this.type = type;
+        }
     }
 
     public String getFailureRatio() {

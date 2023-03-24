@@ -35,6 +35,11 @@
     <string id="63">Ziel</string>
     <string id="64">Passiver Fehler</string>
     <string id="65">Außer Kontrolle geratener Fehler</string>
+    <string id="66">SENSOR</string>
+    <string id="67">AKTUATOR</string>
+    <string id="68">COMPUTER</string>
+    <string id="69">VOTER</string>
+    <string id="70">KABEL</string>
     <string id="800">Hallo Tina, ich bin Ingo Ingenieur und werde dich durch die grundlegenden Schritte führen! Ich hoffe, du hast Spaß bei der Arbeit mit uns. :)</string>
     <string id="801">Ok, beginnen wir mit einer Karte unserer Fabrik, die ich auf deinem Tablet installiert</string>
     <string id="801">Ok, lass uns mit einer Karte unserer Fabrik beginnen, die ich auf deinem Tablet installiert habe, damit du weißt, wie du navigieren kannst, wenn du nicht weißt, wohin du gehen sollst!</string>
