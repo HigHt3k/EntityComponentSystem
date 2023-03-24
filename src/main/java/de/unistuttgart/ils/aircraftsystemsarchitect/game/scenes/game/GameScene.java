@@ -210,7 +210,7 @@ public class GameScene extends BaseGameFieldScene {
 
         try {
             validate = new GenericButton("validate", IdGenerator.generateId(),
-                    1800, 930, 64, 64, new ValidateAction(),
+                    1800 - 156, 930, 220, 64, new ValidateAction(),
                     ImageIO.read(new File("res/menus/gui/buttons/play_button.png")));
             addEntityToScene(validate);
         } catch (IOException e) {
