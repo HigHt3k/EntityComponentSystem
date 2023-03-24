@@ -33,8 +33,8 @@
     <string id="61">PUNKTE</string>
     <string id="62">WEITER</string>
     <string id="63">Ziel</string>
-    <string id="64">Passiver Fehler</string>
-    <string id="65">Kontrollverlust-Fehler</string>
+    <string id="64">Erkannter Fehler</string>
+    <string id="65">Unerkannter Fehler</string>
     <string id="66">SENSOR</string>
     <string id="67">AKTUATOR</string>
     <string id="68">COMPUTER</string>
@@ -53,8 +53,8 @@
     <string id="902">Auf deinem Telefon findest du Informationen zu Systemanforderungen und Aktuatoren.</string>
     <string id="903">Für weitere Informationen gehe zu Level 0!</string>
     <string id="904">Systeme müssen so aufgebaut sein, dass zwei Fehlerarten nur mit bestimmter Wahrscheinlichkeit auftreten.</string>
-    <string id="905">Die zwei Fehlerarten sind: Passive Fehler - die vom System erkannt werden...</string>
-    <string id="906">... und Kontrollverlust-Fehler, die nicht erkannt werden und Komponenten beeinflussen können.</string>
+    <string id="905">Die zwei Fehlerarten sind: Erkannte Fehler - die vom System erkannt werden...</string>
+    <string id="906">... und Unerkannte Fehler, die bösartig sind und andere Komponenten negativ beeinflussen können.</string>
     <string id="907">Dein Ziel sollte immer sein, beide Fehlerarten zu vermindern. Informationen findest du auf deinem Telefon.</string>
     <string id="1000">Beispiel-Duplex-System mit zwei Sensoren, zwei CPUs und einem Aktuator.</string>
     <string id="10000">Tutorial 1: Kabel verbinden</string>
@@ -92,7 +92,7 @@
     <string id="130000">3 Aktuatoren</string>
     <string id="130001">In diesem Szenario hast du 3 Aktuatoren, von denen mindestens einer unter den gegebenen Umständen korrekt funktionieren muss.</string>
     <string id="140000">Außer Kontrolle</string>
-    <string id="140001">Ausfälle, die außer Kontrolle geraten, sind solche, die unentdeckt bleiben und aufgrund dieses Verhaltens andere Komponenten beeinflussen.</string>
+    <string id="140001">Ausfälle, die unerkannt bleiben können andere Komponenten negativ beeinflussen.</string>
     <string id="140002">Normalerweise haben Komponenten eine integrierte Fehlererkennung, diese ist jedoch möglicherweise nicht immer 100% genau.</string>
     <string id="140003">Du kannst das Fehlererkennungsverhältnis der Komponenten in der Tooltip-App unten sehen. Dies zeigt, wie gut jede Komponente Fehler auf einer Skala von 0 bis 1 erkennen kann.</string>
     <string id="140004">Versuche, dasselbe System wie zuvor zu implementieren, jedoch müssen dieses Mal einige außer Kontrolle geratene Fehler verhindert werden.</string>
