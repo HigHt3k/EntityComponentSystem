@@ -235,7 +235,7 @@ public class BuildHandler extends Handler {
                                     && entity.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
                                 SimulationEntity newEntity = null;
 
-                                if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.CPU) {
+                                if (entity.getComponent(BuildComponent.class).getSimulationType() == SimulationType.COMPUTER) {
                                     newEntity = new SimulationEntity(
                                             entity.getName() + "_simulation", IdGenerator.generateId(),
                                             entity.getComponent(RenderComponent.class).getRenderObjects().get(0).getLocation().x,

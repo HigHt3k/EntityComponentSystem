@@ -192,7 +192,7 @@ public class SimulationSystem extends SystemHandle {
         boolean hasSensor = false;
         boolean hasActuator = false;
         for(Entity e : group) {
-            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CPU) {
+            if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.COMPUTER) {
                 hasCPU = true;
             } else if(e.getComponent(SimulationComponent.class).getSimulationType() == SimulationType.SENSOR) {
                 hasSensor = true;

@@ -11,7 +11,7 @@
  <tile id="2">
   <image width="16" height="16" source="res/tiles/wall.png"/>
  </tile>
- <tile id="200" type="CPU">
+ <tile id="200" type="COMPUTER">
   <image width="32" height="32" source="res/avionics/default.png"/>
  </tile>
  <tile id="201" type="SENSOR">
@@ -20,10 +20,10 @@
  <tile id="202" type="SENSOR">
   <image width="32" height="32" source="res/avionics/sensor.png" description="@25" minNonPassive="1"/>
  </tile>
- <tile id="203" type="CPU">
+ <tile id="203" type="COMPUTER">
   <image width="32" height="32" source="res/avionics/crdc.png" description="@21" minNonPassive="1"/>
  </tile>
- <tile id="204" type="CPU">
+ <tile id="204" type="COMPUTER">
   <image width="32" height="32" source="res/avionics/crdc.png" description="@26" minNonPassive="1"/>
  </tile>
  <tile id="205" type="ACTUATOR">

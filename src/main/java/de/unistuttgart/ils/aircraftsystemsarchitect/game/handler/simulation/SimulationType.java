@@ -1,7 +1,7 @@
 package de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation;
 
 public enum SimulationType {
-    CPU,
+    COMPUTER,
     ACTUATOR,
     CABLE,
     SENSOR,

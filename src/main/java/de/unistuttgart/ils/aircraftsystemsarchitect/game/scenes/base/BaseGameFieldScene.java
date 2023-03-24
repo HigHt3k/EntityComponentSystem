@@ -96,7 +96,7 @@ public class BaseGameFieldScene extends BaseScene {
      */
     public void addSimulationElement(int x, int y, int imgId, float failureRatio,
                                      int correctSignalsNeeded, int outOfControlSignalsAccepted, boolean removable, float failureDetectionRatio) {
-        if (Game.res().getTileSet().getType(imgId) == SimulationType.CPU) {
+        if (Game.res().getTileSet().getType(imgId) == SimulationType.COMPUTER) {
             SimulationEntity simulationEntity = new SimulationEntity(
                     "simulation_element_" + imgId + ":" + x + ":" + y, IdGenerator.generateId(),
                     X_MARGIN + CELL_SIZE * x, Y_MARGIN + CELL_SIZE * y, CELL_SIZE, CELL_SIZE,

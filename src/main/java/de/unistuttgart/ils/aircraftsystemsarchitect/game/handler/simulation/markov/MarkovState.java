@@ -48,7 +48,7 @@ public class MarkovState {
             }
             switch(object.getType()) {
 
-                case CPU -> {
+                case COMPUTER -> {
                     out.append("C|");
                 }
                 case ACTUATOR -> {

@@ -85,7 +85,7 @@ public class MarkovProcessor {
         for(MarkovStateObject ms : currentSystemState.getMarkovStateObjects()) {
             switch(ms.getType()) {
                 case SENSOR -> line1.append("S|");
-                case CPU -> line1.append("C|");
+                case COMPUTER -> line1.append("C|");
                 case ACTUATOR -> line1.append("A|");
                 case CABLE -> line1.append("W|");
             }
@@ -146,7 +146,7 @@ public class MarkovProcessor {
         for(MarkovStateObject object : state.getMarkovStateObjects()) {
             if(object.getState() == SimulationState.CORRECT) {
                 switch(object.getType()) {
-                    case CPU -> currentCorrectCPUCount++;
+                    case COMPUTER -> currentCorrectCPUCount++;
                     case ACTUATOR -> currentCorrectActuatorCount++;
                     case CABLE -> {
                     }
@@ -154,7 +154,7 @@ public class MarkovProcessor {
                 }
             } else if(object.getState() == SimulationState.OUT_OF_CONTROL) {
                 switch(object.getType()) {
-                    case CPU -> currentOOCCPUCount++;
+                    case COMPUTER -> currentOOCCPUCount++;
                     case ACTUATOR -> currentOOCActuatorCount++;
                     case CABLE -> {
                     }
