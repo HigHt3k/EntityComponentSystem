@@ -16,4 +16,13 @@ public class LineEntity extends Entity {
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
     }
+
+    public LineEntity(String name, int id, Point p1, Point p2, int thickness, Color color, Layer layer) {
+        super(name, id);
+
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new LineObject(p1, null, layer, p1, p2, color, thickness));
+        renderComponent.setEntity(this);
+        this.addComponent(renderComponent);
+    }
 }

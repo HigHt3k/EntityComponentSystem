@@ -14,6 +14,7 @@ public class Bit8 extends ColorPalette {
     public static final Color DARK_GREY = new Color(31, 29, 30);
     public static final Color ZAMBEZI = new Color(100, 92, 90);
     public static final Color HEATHERED_GREY = new Color(150, 145, 140);
+    public static final Color MED_GREY = new Color(100, 100, 100);
     public static final Color CHROME = new Color(200, 200, 181);
     public static final Color JAM = new Color(172, 10, 72);
     public static final Color VIOLET_RED = new Color(215, 25, 140);

@@ -19,6 +19,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.BuildCompone
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.GridComponent;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.simulation.BuildPanelEntity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.simulation.GridEntity;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.ui.LineEntity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.SimulationType;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.util.BuildPanelPage;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.simulation.SimulationEntity;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
  * this class can be used to inherit from to create the Build & GameScene.
  */
 public class BaseGameFieldScene extends BaseScene {
+    private boolean isGridVisible = true;
     protected final int ITEM_MARGIN = 80;
     protected final int DESIGN_CELL_SIZE = 128;
     protected final ArrayList<BuildPanelPage> pages = new ArrayList<>();
@@ -365,6 +367,34 @@ public class BaseGameFieldScene extends BaseScene {
         yMax = y;
         updateGridSize();
         updateEntitySize();
+        updateGrid();
+    }
+
+    public void setGridVisible(boolean isGridVisible) {
+        this.isGridVisible = isGridVisible;
+        updateGrid();
+    }
+
+    private void updateGrid() {
+        while(getEntityByName("grid") != null) {
+            removeEntityFromScene(getEntityByName("grid"));
+        }
+        if(isGridVisible) {
+            // create all grid entities
+            for(int x = 1; x < xMax; x++) {
+                Entity line = new LineEntity("grid", IdGenerator.generateId(),
+                        new Point(X_MARGIN + CELL_SIZE * x, Y_MARGIN), new Point(X_MARGIN + x * CELL_SIZE, Y_MARGIN + yMax * CELL_SIZE),
+                        1, Bit8.MED_GREY, Layer.GAMELAYER2);
+                addEntityToScene(line);
+            }
+
+            for(int y = 1; y < yMax; y++) {
+                Entity line = new LineEntity("grid", IdGenerator.generateId(),
+                        new Point(X_MARGIN, Y_MARGIN + y * CELL_SIZE), new Point(X_MARGIN + xMax * CELL_SIZE, Y_MARGIN + y * CELL_SIZE),
+                        1, Bit8.MED_GREY, Layer.GAMELAYER2);
+                addEntityToScene(line);
+            }
+        }
     }
 
     public int getxMax() {
