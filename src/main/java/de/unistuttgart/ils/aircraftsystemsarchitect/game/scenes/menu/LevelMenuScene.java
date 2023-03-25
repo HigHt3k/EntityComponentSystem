@@ -133,7 +133,7 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         addEntityToScene(levelInfoDesc);
 
         Entity highscoreHead= new TextBody("highscoreHead", IdGenerator.generateId(),
-                1515, 420, 320, 50, fontBig, Bit8.DARK_GREY, "Highscores");
+                1515, 420, 320, 50, fontBig, Bit8.DARK_GREY, "@71");
         addEntityToScene(highscoreHead);
 
         playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
@@ -278,7 +278,7 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         Game.input().addHandler(new TutorialHandler());
         // make background blurry
         Entity blur = new SimplePanel("blur", IdGenerator.generateId(),
-                0, 0, 1920, 1080, Bit8.setAlpha(Bit8.WHITE, 170), null, null);
+                0, 0, 1920, 1080, Bit8.setAlpha(Bit8.WHITE, 170), null, null, Layer.UI_FRONT);
         addEntityToScene(blur);
 
         // create character models

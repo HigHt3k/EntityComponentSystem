@@ -21,4 +21,18 @@ public class SimplePanel extends Entity {
         renderComponent.setEntity(this);
         this.addComponent(renderComponent);
     }
+
+    public SimplePanel(String name, int id,
+                       int x, int y, int width, int height,
+                       Color background, Color border, Color textColor,
+                       Layer layer) {
+        super(name, id);
+
+        Rectangle r = new Rectangle(x, y, width, height); // Position
+
+        RenderComponent renderComponent = new RenderComponent();
+        renderComponent.addRenderObject(new ShapeObject(new Point(x, y), r, layer, background, border, 5));
+        renderComponent.setEntity(this);
+        this.addComponent(renderComponent);
+    }
 }
