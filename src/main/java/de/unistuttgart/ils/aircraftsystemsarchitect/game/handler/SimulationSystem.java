@@ -26,15 +26,20 @@ public class SimulationSystem extends SystemHandle {
     private final double eps = 0.00000001; //delta because double has rounding errors
     int frameCount = 0;
 
-    public int calculateScore() {
+    public int[] calculateScore() {
         //Base score for finishing the level
-        int score = 100;
+        int totalScore = 0;
+        int baseScore = 100;
+        int accuracyScore = 0;
+        int componentScore = 0;
+
+        totalScore += baseScore;
 
         GameScene scene;
         if (Game.scene().current() instanceof GameScene gameScene) {
             scene = gameScene;
         } else {
-            return -1;
+            return null;
         }
         double[] probabilities = MarkovProcessor
                 .getProbabilityForStatesWith(
@@ -43,16 +48,18 @@ public class SimulationSystem extends SystemHandle {
                 );
 
         if (Game.scene().current() instanceof GameScene gs) {
-            score -= Math.abs(Math.abs(Math.log10(probabilities[0])) - Math.abs(Math.log10(gs.getGoal()))) * 10;
+            accuracyScore = (int) (Math.abs(Math.abs(Math.log10(probabilities[0])) - Math.abs(Math.log10(gs.getGoal()))) * 10);
+            totalScore -= accuracyScore;
 
             for (Entity e : gs.getEntities()) {
-                if(e.getComponent(BuildComponent.class) != null && e.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
-                    score += 10 * e.getComponent(BuildComponent.class).getAmount();
+                if (e.getComponent(BuildComponent.class) != null && e.getComponent(BuildComponent.class).getSimulationType() != SimulationType.CABLE) {
+                    componentScore += 10 * e.getComponent(BuildComponent.class).getAmount();
                 }
             }
+            totalScore += componentScore;
         }
 
-        return score;
+        return new int[] {baseScore, accuracyScore, componentScore, totalScore};
     }
 
     @Override
@@ -78,7 +85,7 @@ public class SimulationSystem extends SystemHandle {
                     if (validateGoal()) {
                         if (!gs.isLevelPassed()) {
                             gs.setLevelPassed(true);
-                            int score = calculateScore();
+                            int[] score = calculateScore();
                             gs.displayLevelFinished(score, probabilities);
                         }
                     } else {
