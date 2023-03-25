@@ -83,8 +83,12 @@ public class RenderingEngine {
         }
         if (text.contains("@")) {
             String temp = text;
-            int id = Integer.parseInt(temp.replace("@", ""));
-            text = Game.res().language().getStringValue(id, Game.config().getLanguage());
+            try {
+                int id = Integer.parseInt(temp.replace("@", ""));
+                text = Game.res().language().getStringValue(id, Game.config().getLanguage());
+            } catch(NumberFormatException ex) {
+                Game.logger().severe("Cannot parse id: " + temp);
+            }
         }
 
         if (text.contains("\n")) {
