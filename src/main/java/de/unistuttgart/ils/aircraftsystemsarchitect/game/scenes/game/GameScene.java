@@ -45,7 +45,10 @@ public class GameScene extends BaseGameFieldScene {
     private final int DESIGN_CELL_SIZE = 128;
     private String description;
     private final double goal = 10e-4;
-    private int score = 0;
+    private int totalScore = 0;
+    private int baseScore = 0;
+    private int accuracyScore = 0;
+    private int componentScore = 0;
     private int tries = 0;
 
     private Entity previous;
@@ -347,7 +350,7 @@ public class GameScene extends BaseGameFieldScene {
      * @return the score
      */
     public int getScore() {
-        return score;
+        return totalScore;
     }
 
     public void playSky() {
@@ -361,14 +364,16 @@ public class GameScene extends BaseGameFieldScene {
         }
     }
 
-    public void displayLevelFinished(int score, double[] probabilities) {
-        this.score = (int) (score * Math.pow(0.98f, tries));
-        tries++;
+    public void displayLevelFinished(int[] score, double[] probabilities) {
+        this.baseScore = score[0];
+        this.accuracyScore = score[1];
+        this.componentScore = score[2];
+        this.totalScore = score[3];
 
         try {
             Entity scoreBox = new ImageEntity("scorebox", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/hud_element_7.png")),
-                    1920/2 - 131*3 - 40, 1080/2 - 62*3 - 20, 131 * 6 + 80, 62 * 6 + 40, Layer.UI);
+                    1920/2 - 131*4 - 40, 1080/2 - 62*4 - 20, 131 * 8 + 80, 62 * 8 + 40, Layer.UI);
             addEntityToScene(scoreBox);
         } catch (IOException e) {
             e.printStackTrace();
@@ -385,16 +390,66 @@ public class GameScene extends BaseGameFieldScene {
 
         createScale(probabilities);
 
-        Entity scoreText = new TextBody("scoreText", IdGenerator.generateId(),
+        /*Entity scoreText = new TextBody("scoreText", IdGenerator.generateId(),
                 1920/2 - 400, 1080/2 - 150, 200, 50,
                 FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@61"
                 );
         addEntityToScene(scoreText);
         Entity scoreContent = new TextBody("scoreContent", IdGenerator.generateId(),
                 1920/2 - 200, 1080/2 - 150, 200, 50,
-                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(score)
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(totalScore)
         );
         addEntityToScene(scoreContent);
+        */
+        // create the score table
+        Entity baseScore = new TextBody("baseScore", IdGenerator.generateId(),
+                1920/2 - 500, 1080/2 - 200, 300, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@72"
+        );
+        addEntityToScene(baseScore);
+
+        Entity accuracyScore = new TextBody("accuracyScore", IdGenerator.generateId(),
+                1920/2 - 500, 1080/2 - 150, 300, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@73"
+        );
+        addEntityToScene(accuracyScore);
+
+        Entity componentScore = new TextBody("componentScore", IdGenerator.generateId(),
+                1920/2 - 500, 1080/2 - 100, 300, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@74"
+        );
+        addEntityToScene(componentScore);
+
+        Entity totalScore = new TextBody("totalScore", IdGenerator.generateId(),
+                1920/2 - 500, 1080/2 - 50, 300, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@75"
+        );
+        addEntityToScene(totalScore);
+
+        // contents
+        Entity baseScoreContent = new TextBody("baseScoreContent", IdGenerator.generateId(),
+                1920/2 - 200, 1080/2 - 200, 200, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(this.baseScore)
+        );
+        addEntityToScene(baseScoreContent);
+
+        Entity accuracyScoreContent = new TextBody("accuracyScoreContent", IdGenerator.generateId(),
+                1920/2 - 200, 1080/2 - 150, 200, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(this.accuracyScore)
+        );
+        addEntityToScene(accuracyScoreContent);
+
+        Entity componentScoreContent = new TextBody("componentScoreContent", IdGenerator.generateId(),
+                1920/2 - 200, 1080/2 - 100, 200, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(this.componentScore)
+        );
+        addEntityToScene(componentScoreContent);
+
+        Entity totalScoreContent = new TextBody("totalScoreContent", IdGenerator.generateId(),
+                1920/2 - 200, 1080/2 - 50, 200, 50,
+                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(this.totalScore)
+        );
+        addEntityToScene(totalScoreContent);
 
         GenericButtonFront saveScore = new GenericButtonFront(
                 "ScoreSaveButton", IdGenerator.generateId(),
@@ -426,8 +481,6 @@ public class GameScene extends BaseGameFieldScene {
      * @param probabilities: the probabilities needed to calculate the scale
      */
     public void displayLevelNotFinished(double[] probabilities) {
-        tries++;
-
         try {
             Entity scoreBox = new ImageEntity("scorebox", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/hud_element_7.png")),
@@ -537,34 +590,34 @@ public class GameScene extends BaseGameFieldScene {
 
             Entity goalMarkerDesc = new ImageEntity("goalMarkerDesc",IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/targetMarker2.png")),
-                    1920/2, 1080/2 - 180, 32, 32, Layer.UI
+                    1920/2, 1080/2 - 200, 32, 32, Layer.UI
             );
             addEntityToScene(goalMarkerDesc);
 
             Entity passiveMarkerDesc = new ImageEntity("passiveMarkerDesc",IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/passiveMarker2.png")),
-                    1920/2 , 1080/2 - 130, 32, 32, Layer.UI
+                    1920/2 , 1080/2 - 150, 32, 32, Layer.UI
             );
             addEntityToScene(passiveMarkerDesc);
 
             Entity oocMarkerDesc = new ImageEntity("oocMarkerDesc",IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/oocMarker2.png")),
-                    1920/2, 1080/2 - 80, 32, 32, Layer.UI
+                    1920/2, 1080/2 - 100, 32, 32, Layer.UI
             );
             addEntityToScene(oocMarkerDesc);
 
             TextBody goalMarkerText = new TextBody("goalMarkerText", IdGenerator.generateId(),
-                    1920/2 + 35, 1080/2 - 180, 500, 50,
+                    1920/2 + 35, 1080/2 - 200, 500, 50,
                     FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@63");
             addEntityToScene(goalMarkerText);
 
             TextBody passiveMarkerText = new TextBody("passiveMarkerText", IdGenerator.generateId(),
-                    1920/2 + 35, 1080/2 - 130, 500, 50,
+                    1920/2 + 35, 1080/2 - 150, 500, 50,
                     FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@64");
             addEntityToScene(passiveMarkerText);
 
             TextBody oocMarkerText = new TextBody("oocMarkerText", IdGenerator.generateId(),
-                    1920/2 + 35, 1080/2 - 80, 500, 50,
+                    1920/2 + 35, 1080/2 - 100, 500, 50,
                     FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@65");
             addEntityToScene(oocMarkerText);
         } catch (IOException e) {

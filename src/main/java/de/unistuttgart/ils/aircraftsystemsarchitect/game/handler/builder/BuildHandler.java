@@ -172,8 +172,14 @@ public class BuildHandler extends Handler {
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarker"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarker"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarker"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scoreText"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scoreContent"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("baseScore"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("accuracyScore"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("componentScore"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("totalScore"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("baseScoreContent"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("accuracyScoreContent"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("componentScoreContent"));
+                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("totalScoreContent"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarkerDesc"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarkerDesc"));
                         Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarkerDesc"));
