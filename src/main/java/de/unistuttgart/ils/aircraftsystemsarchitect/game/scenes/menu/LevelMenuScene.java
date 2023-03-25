@@ -278,7 +278,7 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         Game.input().addHandler(new TutorialHandler());
         // make background blurry
         Entity blur = new SimplePanel("blur", IdGenerator.generateId(),
-                0, 0, 1920, 1080, Bit8.setAlpha(Bit8.WHITE, 170), null, null, Layer.UI_FRONT);
+                0, 0, 1920, 1080, Bit8.setAlpha(Bit8.WHITE, 170), null, null, Layer.UI);
         addEntityToScene(blur);
 
         // create character models
