@@ -1,0 +1,169 @@
+%% ============================================================
+%%  ***  Page layout
+%% ============================================================
+\geometry{% 									
+left = 2.5cm, 
+right=2.5cm, 
+top=1.4cm, 
+bottom=1.1cm,
+includeheadfoot,								
+headsep = \dimexpr2\baselineskip-3mm\relax,		% Abstand der Kopfzeile zum Kontext
+footskip = \dimexpr2\baselineskip+4mm\relax,	% Abstand der Fußzeile zum Kontext
+bindingoffset=1.5mm, 							% max. halb so groß wie der Buchrücken
+%showframe										% Rahmen einblenden
+}
+\KOMAoptions{parskip=yes}						% keine Einrückungen
+
+%% ============================================================
+
+% korrekter Zeilenabstand - \MSonehalfspacing oder \MSdoublespacing wählbar
+% anstatt \singlespacing oder \doublespacing
+\makeatletter
+\newcommand{\MSonehalfspacing}{%
+	\setstretch{1.44}%  default
+	\ifcase \@ptsize \relax % 10pt
+	\setstretch {1.448}%
+	\or % 11pt
+	\setstretch {1.399}%
+	\or % 12pt
+	\setstretch {1.433}%
+	\fi
+}
+\newcommand{\MSdoublespacing}{%
+	\setstretch {1.92}%  default
+	\ifcase \@ptsize \relax % 10pt
+	\setstretch {1.936}%
+	\or % 11pt
+	\setstretch {1.866}%
+	\or % 12pt
+	\setstretch {1.902}%
+	\fi
+}
+\makeatother
+%\MSonehalfspacing	%Gewählte Option
+
+%% ============================================================
+
+% Workaround für römische Zahlen im Inhaltsverzeichen
+% Besonder für große Zahlen die viel Platz einnehmen
+\makeatletter% --> De-TeX-FAQ
+\renewcommand*{\@pnumwidth}{3em}
+\makeatother% --> \makeatletter
+
+
+%% ============================================================
+%%  ***  Header & Footer Layout
+%% ============================================================
+
+\KOMAoptions{headsepline=true,	% header line
+	footsepline=false,			% footer line
+	cleardoublepage=plain,	% set empty pages to style 'plain'
+	plainheadsepline=false,	% activate header line for plain pages
+	plainfootsepline=false}	% activate footer line for plain pages
+
+
+\pagestyle{scrheadings}
+\clearscrheadfoot
+
+% The following checks whether \headmark has the width of 0pt, and if so, changes the color of the headsepline to white:
+\newcommand*{\specialheadmark}{%
+	\setbox0\hbox{\headmark}%
+	\ifdim\wd0=0pt\relax%
+	\global\setkomafont{headsepline}{\color{white}}%
+	\else%
+	\global\setkomafont{headsepline}{\color{black}}%
+	\fi%
+	\unhbox0%
+}
+
+% Setzt Textstill im Footer auf normal - kein Kursiv mehr!
+\renewcommand*{\footfont}{\normalfont}
+
+\lehead{\specialheadmark}
+\rohead{\specialheadmark}
+\ofoot*{\pagemark}
+
+
+% Redeclare Chapter/Sections/... spacing
+\RedeclareSectionCommand[beforeskip=1sp, afterskip=10pt]{chapter}
+\RedeclareSectionCommands[beforeskip=1sp, afterskip=1sp]{section,subsection,subsubsection}
+
+\renewcommand{\dateseparator}{.}	% Replace Seperator / by .
+
+%% ============================================================
+%%  ***  Reference style
+%% ============================================================
+\captionsetup{tablewithin=chapter}	% Change 'Table 12' to 'Table 2.3' format - as requested by ILS
+\captionsetup{figurewithin=chapter}	% Change 'Figure 12' to 'Figure 2.3' format - as requested by ILS
+
+\setcounter{secnumdepth}{3} % Adjust section numbering here
+\setcounter{tocdepth}{4}	% Adjust table of contents depth here
+
+
+
+%% ============================================================
+%%  ***  Glossary Erstellung
+%% ============================================================
+%Ein eigenes Symbolverzeichnis erstellen
+\newglossary[slg]{symbolslist}{syi}{syg}{Symbolverzeichnis}
+% Zusätzliches Feld - Einheit - für das Symbolverzeichnis 
+\glsaddkey{unit}{\glsentrytext{\glslabel}}{\glsentryunit}{\GLsentryunit}{\glsunit}{\Glsunit}{\GLSunit}
+% Option um SI befehle zu nutzen
+\glssetnoexpandfield{unit}
+%Den Punkt am Ende jeder Beschreibung deaktivieren
+\renewcommand*{\glspostdescription}{}
+%Glossar-Befehle anschalten
+\makeglossaries
+
+% Neuer Style für das Symbolverzeichnis auf Basis des "long3col" Style
+%% ============================================================
+\newglossarystyle{symbunitlong}{%
+	\setglossarystyle{long3col}% base this style on the list style
+	\renewenvironment{theglossary}{% Change the table type --> 3 columns
+		\begin{longtable}{@{}l l p{0.8\glsdescwidth} @{}c}}%
+		{\end{longtable}}%
+	%
+	\renewcommand*{\glossaryheader}{%  Change the table header
+		\bfseries Symbol & \bfseries Beschreibung & & \bfseries Einheit \\
+		\hline
+		\endhead}
+	\renewcommand*{\glossentry}[2]{%  Change the displayed items
+		\glstarget{##1}{\glossentryname{##1}} %
+		& \glossentrydesc{##1}% Description
+		&
+		& \glsunit{##1}  \tabularnewline
+	}
+}
+%% ============================================================
+%Ende des neuen Styles
+
+
+%% ============================================================
+%%  ***  Custom Item Erstellung für Requirements and Deliverables
+%% ===========================================================
+% eigener Zähler für Requirements
+% Ausgabe mit \requirement und \subrequirement
+\newcounter{req}
+\newcounter{subreq}[req]
+
+\renewcommand\thesubreq{\thereq.\arabic{subreq}}
+
+\newcommand{\requirement}[1]{%
+	REQ~\refstepcounter{req}\thereq~#1}
+
+\newcommand{\subrequirement}[1]{%
+	REQ~\refstepcounter{subreq}\thesubreq~#1}
+
+
+% eigener Zähler für Deliverables
+% Ausgabe mit \deliverable und \subdeliverable
+\newcounter{del}
+\newcounter{subdel}[del]
+
+\renewcommand\thesubdel{\thedel.\arabic{subdel}}
+
+\newcommand{\deliverable}[1]{%
+	DEL~\refstepcounter{del}\thedel~#1}
+
+\newcommand{\subdeliverable}[1]{%
+	DEL~\refstepcounter{subdel}\thesubdel~#1}

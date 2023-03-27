@@ -1,0 +1,147 @@
+%% ============================================================
+%% Vorlage für ILS Abschlussarbeit
+%% ============================================================
+%% Datum: 03.07.2019
+%% Autor: Johannes Kuhnert Roca
+%% Email: johannes.kuhnert-roca@ils.uni-stuttgart.de
+%% ============================================================
+%%  ***  HINWEIS
+%% ============================================================
+%% Voraussetzung:
+%% MiKTeX, ActivePerl und ein Latex-Editor, wie z.B. TeXStudio, TeXMaker, TexPad, VS Code, etc.
+%%
+%% Konfiguration des Latex-Editor:
+%%		Kompilierungsschritte bei Erzeugung des PDFs: 1. pdflatex 2. makeglossaries 4. pdflatex
+%%		Standard-Bibliographie: Bibtex
+%%
+%% Getestet auf TeXstudio und TexPad 
+%% ============================================================
+
+% Koma - Script Version 3.21
+\documentclass[a4paper, 11pt, twoside, numbers=noenddot, openright,version=3.21]{scrbook}
+
+
+%Input Daten
+\input{./Layout_Settings/Packages}
+\input{./Layout_Settings/Layout}
+\input{./Layout_Settings/Usersettings}
+\input{./Glossary/GlossaryandAcronym}
+
+
+
+\title{Development of a gamified simulation of security relevant system architectures}
+\author{Johann Töpfer}
+\date{21.04.2023}
+
+%% ============================================================
+%%  ***  HYPERLINKS for pdfTeX /
+%% ============================================================
+\hypersetup{
+	pdftitle    = {\thetitle},
+	pdfsubject  = {Development of a gamified simulation of security relevant system architectures},
+	pdfauthor   = {\theauthor},
+	pdfkeywords = {keyword1, keyword2, keyword3, keywordN},
+	pdfborder   = 0 0 0,
+	plainpages  = false,
+	bookmarksnumbered = true,
+}
+
+\begin{document}
+
+
+%% ============================================================
+%%  ***  Cover
+%% ============================================================
+\hypersetup{pageanchor=false}
+\pagenumbering{gobble}
+\includepdf[pages={1}]{./Cover/CoverILS.pdf}
+\cleardoublepage
+\hypersetup{pageanchor=true}
+
+%% ============================================================
+%%  ***  Preamble
+%% ============================================================
+
+\pagenumbering{Roman}
+
+% Sperrvermerk
+\include{./Preamble/Sperrvermerk}
+\cleardoublepage
+
+% Aufgabenstellung
+\includepdf[pages={1-2}]{./Preamble/Aufgabenstellung.pdf}
+
+% Erklärung zur selbständigen Arbeit
+\include{./Preamble/Erklaerung_Selbstaendigkeit} %
+\cleardoublepage
+
+% Kurzzusammenfassung/Abstract - (1/2 Seite Deutsch, 1/2 Seite Englisch)
+\include{./Preamble/Kurzzusammenfassung}
+\cleardoublepage
+\include{./Preamble/Abstract}
+\cleardoublepage
+
+% Danksagung
+\include{./Preamble/Danksagung}
+\cleardoublepage
+
+
+%% ============================================================
+%%  ***  Contents and Lists
+%% ============================================================
+\phantomsection
+
+% Contents
+\tableofcontents
+
+% Figures
+\listoffigures
+
+% Tables
+\listoftables
+\cleardoublepage
+
+%Glossar
+\printglossary[style=super,title=Glossar]
+\cleardoublepage
+
+% Abbrevations
+\printglossary[type=\acronymtype,title=Abkürzungsverzeichnis]
+\cleardoublepage
+
+% Symbols and Units
+\printglossary[type=symbolslist,style=symbunitlong,title={Symbolverzeichnis und Einheiten}]
+\cleardoublepage
+
+
+%% ============================================================
+%%  ***  Chapters
+%% ============================================================
+\pagenumbering{arabic}
+\include{./Chapters/introduction}
+\include{./Chapters/basics}
+\include{./Chapters/conception}
+\include{./Chapters/implementation}
+\include{./Chapters/results}
+\include{./Chapters/Conclusion}
+
+%% ============================================================
+%%  ***  Bibliography
+%% ============================================================
+\normalem	% Entfernt Unterstrich des Titels
+\printbibliography[heading=bibintoc,title=Literaturverzeichnis] %Literaturverzeichnisse ausgeben
+
+
+
+%% ============================================================
+%%  ***  Appendix
+%% ============================================================
+\appendix
+% Seitennummerierung wird geändert
+\pretocmd{\chapter}{%
+	\cleardoublepage
+	\pagenumbering{arabic}%
+	\renewcommand*{\thepage}{\thechapter\arabic{page}}%
+}{}{}
+\include{./Appendix/Appendix_A}
+\end{document}

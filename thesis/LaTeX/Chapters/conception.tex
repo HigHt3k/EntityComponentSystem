@@ -1,16 +1,16 @@
-\section{Conceptualization}\label{sec:design}
-\subsection{Background}\label{subsec:background}
-\subsection{Genre}\label{subsec:genre}
+\chapter{Conceptualization}\label{ch:design}
+\section{Background}\label{sec:background}
+\section{Genre}\label{sec:genre}
 The \textit{Puzzle} genre is chosen for the graphical user interface and interaction, while the major calculations for the
 games' content may be categorized as \textit{Simulation}.
 
-\subsection{Intended Gameplay}\label{subsec:intended-gameplay}
+\section{Intended Gameplay}\label{sec:intended-gameplay}
 The gameplay is described for a singular level, however the basic concept is the same for each level.
 A level usually describes an aircraft system, the goal of the game is to finish or repair a given system.
 In order to do that, the user needs to choose from a variety of given components to build the system in a way, that the
 required safety level will be reached.
 This can be done in different ways, however the efficiency (i.e.\ how many components were used in the building process) determine
-the rating (1 star, 2 stars, 3 stars) upon passing a level.
+the rating upon passing a level.
 Upon starting a level, the user will face a grid-based puzzle with some set components such as sensors, computers, actuators
 or cables.
 The user may add new components by choosing them from a limited stack of given components.
@@ -31,12 +31,12 @@ Upon passing a level, further levels are unlocked, which provides a certain amou
 It is also possible to create new levels in a sandbox style environment, where the user can choose different pre-defined components and
 safety requirements to create a custom level.
 
-\subsection{Game Mechanics}\label{subsec:game-mechanics}
+\section{Game Mechanics}\label{sec:game-mechanics}
 
-\subsection{Graphic Design}\label{subsec:graphic-design}
-For graphics design, the graphic programs \textit{Krita} \cite{foundation_2020} and \textit{Gimp} \cite{gimp} are used.
+\section{Graphic Design}\label{sec:graphic-design}
+For graphics design, the graphic programs \textit{Krita}~\cite{foundation_2020} and \textit{Gimp}~\cite{gimp} are used.
 
-\subsubsection{List of components}
+\subsection{List of components}\label{subsec:list-of-components}
 The following components need to be designed:
 \begin{itemize}
     \item Screen backgrounds
@@ -46,10 +46,10 @@ The following components need to be designed:
     \item Requirement panel
 \end{itemize}
 
-\subsection{Sound Design}\label{subsec:sound-design}
-Sound design is conducted with the DAW (digital audio workstation) software \textit{FL Studio 12} \cite{imageline}.
+\section{Sound Design}\label{sec:sound-design}
+To give some atmosphere and create an 8 bit-styled experience, open source music will be used in the game.
 
-\subsection{Language}\label{subsec:language}
+\section{Language}\label{sec:language}
 As the game is supposed to be used by a broad audience, especially in Germany and at the University Day of the University of Stuttgart, there should be an option
 to change the language.
 Since the audience is most likely to include young adults, teenagers and children, there are going to be multiple options even for a single language:
@@ -59,7 +59,7 @@ A language management system will be implemented which is based on using IDs (ta
 A processor is going to parse all available language files in XML format and a look-up table that maps each ID to the corresponding text string will be created.
 Within the Rendering Engine, each text is going to be rendered in the language the game is set to.
 
-\subsection{Level Design}\label{subsec:level-design}
+\section{Level Design}\label{sec:level-design}
 The level design is a main part of this work, as the progression through the game and the process of explaining different concepts
 within aircraft system design is heavily influenced by this.
 Therefore, levels were conceptualized before the implementation, to have a guideline for the actual implementation.

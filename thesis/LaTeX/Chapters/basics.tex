@@ -1,11 +1,11 @@
-\section{Fundamentals}\label{sec:fundamentals}
+\chapter{Fundamentals}\label{ch:fundamentals}
 In this chapter, some basic knowledge in order to understand the context and classify this work as a whole will be provided.
 The definitions of the most common terms used for aircraft system architecture and the formulas for calculating the relevant
 parameters are shown.~\ref{subsec:system-design}
 Since this work aims to implement a game, some basic understanding of games and the game development process is described in
-section~\ref{subsec:game-design}.
+section~\ref{sec:game-design}.
 
-\subsection{Problem}\label{subsec:problem}
+\section{Problem}\label{sec:problem}
 The subject of aircraft system design, particularly the concepts of redundancy, can be quite challenging to present and visualize
 in an accessible and comprehensive way.
 To address this, it is proposed that a gamified simulation be designed, developed, and implemented to make the material
@@ -24,7 +24,7 @@ The ultimate objective is to provide an enjoyable, interactive visual representa
 while offering direct feedback to facilitate learning.
 Players should be able to progress through the levels, experiencing a gradual learning curve that helps them grasp and
 retain the concepts presented.
-\subsection{State of the Art}\label{subsec:state-of-the-art}
+\section{State of the Art}\label{sec:state-of-the-art}
 In the 21st century, e-learning has seen increasing implementation and adoption across various educational levels.
 This includes the use of educational games and the integration of game-based learning methods not only in
 high schools and universities but also in middle and elementary schools.
@@ -48,14 +48,71 @@ educational games, as these tools can help improve their attention span and over
 This presents an opportunity for the proposed work, which is specifically designed for younger age groups, to make the highly
 technical subject of system engineering and redundancy concepts more accessible and engaging through a visual and interactive format.
 
-\subsection{Science Day - University of Stuttgart}\label{subsec:science-day---university-of-stuttgart}
-The 'Tag der Wissenschaft' (Science Day) is an open-door day, where the University of Stuttgart can be experienced by everyone.
+\section{Science Day - University of Stuttgart}\label{sec:science-day---university-of-stuttgart}
+The ``Tag der Wissenschaft'' (Science Day) is an open-door day, where the University of Stuttgart can be experienced by everyone.
 Exhibits, research environments and results, laboratories and more can be seen, tested and used by everyone, including families, younger children,
 high-school students, etc.
 It is supposed to show recent research topics and provide insight into the actual work done at a university, while also providing insights
 into different studies for interested people who may want to start their studies at the University of Stuttgart ~\cite{tag-der-wissenschaft}.
 
-\subsubsection{Game Engines}\label{subsubsec:game-engines}
+\section{Game Design}\label{sec:game-design}
+Game design is the conceptional process taking place at the very beginning of game development.
+Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
+reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
+
+\subsection{Game Definition}\label{subsec:game-definition}
+Games can be defined in very different ways, depending on the perspective.
+Typically, it is referred to as a ``[\ldots] type of play activity, conducted in the context of a pretended reality, in which the participant(s)
+try to achieve at least one arbitrary, nontrivial goal by acting in accordance with rules.''~\cite{10.5555/2544002}
+\\
+\\
+The main elements of a game are, according to the definition of Adams: play, pretending, goal and rules.
+\\
+\textbf{Play}, even though sometimes, as for example in the scope of this thesis, having a serious background, is the act of
+self-entertainment.
+In comparison to books or movies, which are presented to the user, games are instead interacted with directly by the user.
+The main difference being, that movies and books are static, while a game may change depending on actions of the user.
+\\
+\textbf{Pretending} reality means creating an immersive experience which does not necessarily be in sync with the real world.
+There may be impossible things or actions, which can be done by the player in a game.
+Some activities or games may seem like there is no real immersive experience that needs to be pretended, however almost always there are certain
+aspects, that do require some sort of pretending.
+An example for this being a flight simulator, which is technically also referred to as a game, which is a very physical activity that could also be done
+in real life.
+However, someone may not have the possibilities to fly an aircraft themselves or travel the world so simply, which is where pretending comes into play.
+The player is pretending to be a pilot. \todo{does that make sense? find better example maybe}
+The pretending aspect of games is often referred to as the ``Magic Circle'', as seen in figure~\ref{fig:magic-circle}, where the magic circle represents sort of a
+playground that is agreed on by all players which is outside the real world and may be defined by imaginary objects or rules.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{./Pictures/res/fundamentals/magic-circle}
+    \caption{Magic Circle \cite{10.5555/2544002}}
+    \label{fig:magic-circle}
+\end{figure}
+\\
+\textbf{Goals} need to be set in order to correctly design and implement a game.
+During the play-through, there always have to be objectives to the user.
+Even though a game may seem very goalless, there may be some unseen goals such as acts of creativity / creation, which may also be
+referred to as a goal.
+\\
+\textbf{Rules} instruct the player through the game and give a boundary or limit to the game.
+They are used to describe allowed actions during the gameplay, define progression and - if applicable - give a condition to
+end the game.
+\\ \\
+Generally, the definition of a game is very broad and there are different opinions on the definition, however most of them
+do not refer to the games' purpose: it may be purely for entertainment, but can also be for studying, training or attracting interest
+for a topic, which is especially the case in the scope of this work.
+
+\subsection{Educational Games}\label{subsec:educational-games}
+Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
+specifically intended to be educational.
+However, there exist also games with the specified purpose of education, this may include simulations, persuasive games,
+games for studying and games that support health and growth.
+Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
+while maintaining a factor of entertainment.
+Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
+
+\subsection{Game Engines}\label{subsec:game-engines}
 Game engines are software frameworks that game developers use to create video games more efficiently.
 They provide a set of tools and features that allow developers to create games without needing to build everything from scratch.
 Game engines typically provide a range of features, including graphics rendering, physics simulation, audio processing, animation, scripting, and networking.
@@ -67,23 +124,9 @@ Game engines can help reduce the time and cost of game development by providing 
 Additionally, game engines can make it easier to create games that run on multiple platforms, such as desktop computers, mobile devices, and gaming consoles, by providing cross-platform support.
 \\
 Game engines have become an essential part of the game development process, and have helped democratize game development by making it more accessible to independent developers and small studios.
-\subsection{Game Design}\label{subsec:game-design}
-Game design is the conceptional process taking place at the very beginning of game development.
-Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
-reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
 
-\subsubsection{Intention}\label{subsubsec:intention}
-The purpose of this thesis is to provide a game that can be used as a demonstrator at different events of the Institute for Aircraft
-Systems at the University of Stuttgart, such as the `Unitag'.
-\subsubsection{Educational Games}\label{subsubsec:educational-games}
-Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
-specifically intended to be educational.
-However, there exist also games with the specified purpose of education, this may include simulations, persuasive games,
-games for studying and games that support health and growth.
-Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
-while maintaining a factor of entertainment.
-Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
-\subsubsection{Entity Component System}\label{subsubsec:entity-component-system}
+
+\subsection{Entity Component System}\label{subsec:entity-component-system}
 For the game engine, a generic entity component system (ECS) design pattern is used.
 The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
 Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
@@ -97,7 +140,7 @@ using the data that is stored within the respective graphics components.
 \\
 There are different approaches on the implementation of Entity Component Systems, and they may be combined with other programming
 patterns.
-\subsection{System Design}\label{subsec:system-design}
+\section{System Design}\label{sec:system-design}
 The process of aircraft system design involves multiple stages, starting with requirements gathering.
 During this stage, the design team gathers information about the intended use of the aircraft, the desired performance goals, and any relevant safety and environmental regulations.
 This information is used to define the design requirements for the aircraft system.
@@ -121,26 +164,26 @@ The manufacturing process may involve multiple rounds of testing and quality con
 Finally, the aircraft system is tested and evaluated during the flight test stage.
 Flight testing is critical to validating the performance of the aircraft system in real-world conditions and identifying any issues that need to be addressed before the aircraft is certified for operation.
 Once the flight testing is complete, the aircraft system is ready for use in commercial or military applications.
-\subsubsection{Failure Probability}\label{subsubsec:failure-probability}
+\subsection{Failure Probability}\label{subsec:failure-probability}
 The probability of a failure of a system during a specified point in time is defined as~\cite{lfs2}:
 \begin{equation}
     \label{eq:failure-probability}
     P_f(t) \in [0,1]
 \end{equation}
-\subsubsection{Reliability}\label{subsubsec:reliability}
+\subsection{Reliability}\label{subsec:reliability}
 Reliability defines the probability of a working system at a specified point in time,
 therefore it is the inverse of the failure probability~\cite{lfs2}:
 \begin{equation}
     \label{eq:reliability}
     P_k(t) = 1 - P_f(t) \in [0,1]
 \end{equation}
-\subsubsection{Integrity}\label{subsubsec:integrity}
+\subsection{Integrity}\label{subsec:integrity}
 The detection probability of an error in a system is defined as integrity~\cite{lfs2}:
 \begin{equation}
     \label{eq:integrity}
     C \in [0,1]
 \end{equation}
-\subsubsection{Safety Effect}\label{subsubsec:safety-effect}
+\subsection{Safety Effect}\label{subsec:safety-effect}
 There exist different categories of safety effects in the CS-25 for aircraft certification that define the requirements to different systems.
 A mapping of safety effect to minimum failure probability has to be achieved in order to successfully certify aircraft systems.
 The below table~\ref{tab:safety-effect} displays the different categories.
@@ -158,7 +201,7 @@ The below table~\ref{tab:safety-effect} displays the different categories.
     \caption{Definition of safety effect categories}
     \label{tab:safety-effect}
 \end{table}
-\subsection{Redundancy Concepts}\label{subsec:redundancy-concepts}
+\section{Redundancy Concepts}\label{sec:redundancy-concepts}
 By default, the failure probability of integrated components is defined as $10e-4$, which means, that with only a single component
 safety effect requirements of categories higher than \textit{Major} are out of scope.
 Therefore, different redundancy concepts have been developed and are being used in system architectures.
@@ -176,9 +219,9 @@ It negatively affects the failure probability, but the integrity, meaning that t
 to noticing it.
 A number of different concepts is shown in the figures below, which also serves as a guideline to the level design of the game,
 since the presentation and understanding of exactly these concepts is the core of the game.
-\subsubsection{Safety Analysis}\label{subsubsec:safety-analysis}
+\subsection{Safety Analysis}\label{subsec:safety-analysis}
 
-\subsection{Markov Process}\label{subsec:markov-process}
+\section{Markov Process}\label{sec:markov-process}
 The aircraft design process generally has to comply with the requirements that are stated in regulatory files such as the FAR 25
 in order to qualify for the aircraft certification documents.
 There are different guidelines for the conduction of the safety assessment process for aircraft systems, which include the
@@ -190,7 +233,7 @@ A Markov process, also called Markov chain, is a mathematical model describing a
 Future states of the model are determined only by its current state and by the transition probability, not taking into account
 the former states. \todo{add source}
 
-\subsubsection{States}\label{subsubsec:states}
+\subsection{States}\label{subsec:states}
 Possible states for the system design Markov model include the correct state and different failure states, such as out of control
 or passive failures.
 Each failure can also be of a different kind, e.g.\ a mechanical failure has a different probability than a loss of electrical power.

@@ -1,0 +1,58 @@
+% Input für Glossar, Abkürzungsverzeichnis und Symbolverzeichnis
+
+%% ============================================================
+% Symbolverzeichnis und Einheit
+%% ============================================================
+\newglossaryentry{symb:Pi}{
+name=$\pi$,
+description={Die Kreiszahl.},
+unit = {-},
+sort=symbolpi, type=symbolslist
+}
+\newglossaryentry{symb:Phi}{
+name=$\varphi$,
+description={Ein beliebiger Winkel.},
+unit = {-},
+sort=symbolphi, type=symbolslist
+}
+\newglossaryentry{symb:Lambda}{
+name=$\lambda$,
+description={Wellenlänge},
+unit = {-},
+sort=symbollambda, type=symbolslist
+}
+\newglossaryentry{symb:alpha}{
+name=$\alpha$,
+description={Winkel},
+unit = {\si{\degree}},
+sort=symbolalpha, type=symbolslist
+}
+\newglossaryentry{symb:beta}{
+name=$\beta$,
+description={Winkel},
+unit = {\si{\degree}},
+sort=symbolbeta, type=symbolslist
+}
+%% ============================================================
+%Abkürzungsverzeichnis
+%% ============================================================
+\newacronym{MS}{MS}{\textbf{M}icro\textbf{s}oft}
+\newacronym{CD}{CD}{\textbf{C}ompact \textbf{D}isc}
+\newacronym{VW}{VW}{\textbf{V}olks\textbf{w}agen}
+\newacronym{VWW}{VWW}{\textbf{V}olks\textbf{w}agen\textbf{w}are}
+\newacronym{DVD}{DVD}{DVD}
+%Eine Abkürzung mit Glossareintrag
+\newacronym{AD}{AD}{\textbf{A}ctive \textbf{D}irectory\protect\glsadd{glos:AD}}
+
+%% ============================================================
+%Glossareintrag
+%% ============================================================%
+\newglossaryentry{glos:AD}{
+	name=Active Directory,
+	description={Active Directory ist in einem Windows 2000 Windows
+		Server 2003-Netzwerk}
+}
+\newglossaryentry{glos:AntwD}{name=Antwortdatei, description={Informationen zum
+		Installieren einer Anwendung oder des Betriebssystems.}}
+%Ausgabe aller Symbole	
+\glsaddall[types=symbolslist]

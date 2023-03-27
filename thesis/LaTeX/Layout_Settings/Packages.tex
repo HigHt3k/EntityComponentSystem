@@ -1,0 +1,87 @@
+%% ============================================================
+%%  ***  LaTeX packages
+%% ============================================================
+
+% Page layout
+\usepackage{geometry}					% set page layout
+\usepackage{setspace}					% set line spacing
+\usepackage[automark]{scrlayer-scrpage}	% Koma header and footer package
+
+% Language, coding and font
+\usepackage{lmodern}					% Font - as requested by ILS
+\usepackage[ngerman]{babel} 			% Language setting (last defined is standard)
+\usepackage[T1]{fontenc}				% Hyphenation for words with Umlaute
+\usepackage[utf8]{inputenc} 			% Coding for correct display of Umlaute
+\usepackage[ngerman]{translator}		% Übersetzer
+\usepackage{longtable}					% Tables with page break
+\usepackage{tabu}
+\usepackage{datetime}
+
+
+% Graphics and colors
+\usepackage[pdftex]{graphicx}					% Include graphics
+\usepackage{epstopdf}							% Include eps graphics
+\usepackage{color}								% Colors
+\usepackage[svgnames,table,hyperref]{xcolor}	% Advanced colors
+
+% Math
+\usepackage{amsmath,amsthm}				% Math environment
+
+% Floats
+\usepackage[section]{placeins}			% Control float placement, \FloatBarrier command
+% Other
+\usepackage[hyphens]{url}				% URL
+\usepackage{hyperref}					% Settings for PDF document
+\usepackage{caption}					% for modification caption format
+\usepackage{csquotes}					% Recommended
+\usepackage{pdfpages}					% include PDF pages
+\usepackage{lipsum}						% lorem ipsum blindtext
+\usepackage{siunitx}					% si einheiten
+\usepackage{microtype}					% underfull und overfull box problem minimierung
+\usepackage{etoolbox}					% Appendix Buchstabenseitenzahl
+\usepackage{float}						% In der Lage figures explixit an einer Stelle im Text zu fixieren
+\usepackage[nottoc]{tocbibind}			% Abküzrungsverzeichnis, Tabellenverzeichnis
+\usepackage{ulem}						% Underline text
+\usepackage{paralist}					% Modifikation von Listen
+\usepackage{titling}					% \theauthor macro
+
+% Anpassbare Enumerates/Itemizes
+\usepackage{enumitem}					% Bsp.: Option "style=nextline" für eine gleichmäßige Einrückung aller Zeilen
+
+
+% Tabellen
+\usepackage{lscape}				% mehrseitige Tabellen
+\usepackage{booktabs}			% \toprule \midrule \bottomrule
+\usepackage{colortbl}			% farbige Tabellen / Tabellen einfärben
+\usepackage{multirow}			% mehrere Zeilen verbinden
+\usepackage{array}				% Hilfsmittel zum Setzen von Tabellen und geordneten Texten im Mathematischem Modus
+
+% Literatur
+\usepackage
+[backend=bibtex,						% Backends Bibtex
+style=ieee,								% Bibliogragrafiestil IEEE
+natbib=true]							% Kompatibilitätsmodul natbib
+{biblatex} 								%
+\addbibresource{Bibliography/BiB.bib}	% Dateipfad zur Bib Datei
+
+% Glossaries
+\usepackage[
+xindy,
+nonumberlist, 						%keine Seitenzahlen anzeigen
+nopostdot,							%keine Punkte
+style=super,						% Style
+acronym,     						%ein Abkkürzungsverzeichnis erstellen
+toc,          						%Einträge im Inhaltsverzeichnis
+section=chapter]      				%im Inhaltsverzeichnis auf section-Ebene erscheinen
+{glossaries}
+
+%custom packages + commands
+% Packages
+\usepackage{todonotes}
+\usepackage{tabularx}
+\usepackage{listliketab}
+\usepackage{rotating}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage{titlesec}
+\usepackage{showframe}

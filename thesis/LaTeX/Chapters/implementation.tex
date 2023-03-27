@@ -1,16 +1,16 @@
-\section{Game Design \& Development}\label{sec:implementation}
+\chapter{Game Design \& Development}\label{ch:implementation}
 In this chapter, the implementation of the game engine including the basic framework, graphic rendering and input handling is described.
 The implementation of the features of the game itself are shown and the connections between different components is described by using a
 UML class diagram.
 
-\subsection{General Approach}\label{subsec:general-approach}
+\section{General Approach}\label{sec:general-approach}
 The game engine was implemented as a separate, independent, enhanceable framework, which may also be used to design other
 games.
 It provides basic functionality for all features needed to design a game, such as input and system handling, rendering, configuration
 classes and managers.
 The implementation uses a basic entity-component-system as foundation and enhances this with further features.
 
-\subsubsection{Programming Language}\label{subsubsec:programming-language}
+\section{Programming Language}\label{sec:programming-language}
 The programming language that was chosen for this implementation is \textit{JAVA} \\
 
 Java is a high-level, object-oriented programming language that was originally developed by Sun Microsystems (now owned by Oracle Corporation) in the mid-1990s.
@@ -29,11 +29,11 @@ The decision to use Java was made based on the fact that it makes sense to have 
 handle entities easily and b) because it is possible to run the program on almost every system due to \textit{JAVA} running
 in a virtual machine.
 
-\subsection{Game Engine}\label{subsec:game}
+\section{Game Engine}\label{sec:game}
 The game engine implements a variety of methods and classes which are used for handling the general program execution, independent of the actual game implementation.
 In this chapter, these classes will be explained in detail and the general concept of the engine is reviewed.
 
-\subsubsection{Entity Component System}\label{subsubsec:entity-component-system-implementation}
+\subsection{Entity Component System}\label{subsec:entity-component-system-implementation}
 The entity component system setup can be approached from a top-down point of view.
 A scene is the basic class that contains all information about the currently displayed entities and the handlers and systems to be used
 in the background.
@@ -45,18 +45,18 @@ Entities represent a combination of different data containers, so-called compone
 There are some standard entities and components available directly via the engine, however there may be the need for more components and entities while implementing the actual game.
 The design approach of this entity component system is similar to the Unity implementation, however a few tweaks and simplifications were made in order to keep the code
 simple and maintainable, while providing the changeability and flexibility of a general approach.
-\paragraph{UML Diagram}
+\subsubsection{UML Diagram}\label{subsubsec:uml-diagram}
 The following UML class diagram shows the connection between the different classes implemented in the entity component system.
 Each class will be explained in the following chapters.
 \todo{add uml, remove unity one}
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{res/implementation/flow charts/ECSBlockDiagram}
+    \includegraphics[width=0.9\textwidth]{./Pictures/res/implementation/flow charts/ECSBlockDiagram}
     \caption{UML Diagram of the Entity Component System}
     \label{fig:ecs-block-diagram}
 \end{figure}
 
-\paragraph{Entities}
+\subsubsection{Entities}\label{subsubsec:entities}
 Entities are classes constructed of different components, which could be referred to as containers storing different parameters.
 Entities can not directly interact with each other, as any modification to data is strictly handled by the game engines' systems and handlers.
 The Entity class implements functions to add, remove and get Components of a class type.
@@ -69,7 +69,7 @@ rendering methods for the game itself and the GUI do not differ.
 This approach was the easy choice, as having a separate class to implement UI elements would most likely end up with a lot of duplicated
 code fragments, which are already implemented in the RenderingComponent, as described in the next chapter.
 
-\paragraph{Components}\label{par:components}
+\subsubsection{Components}\label{subsubsec:components}
 All entities are built of a subset of the available components, uniquely attached to each.
 The different components will be explained in detail in the following chapter.
 \\
@@ -102,10 +102,10 @@ The cursor component is a component used for handling game pad inputs and acts a
 joysticks of game pads or keyboard buttons.
 It simply indicates the position, where new mouse events are generated, when the actual mouse is not used. \\ \\
 
-\paragraph{Systems}
+\subsubsection{Systems}\label{subsubsec:systems}
 Systems are the third main part of the ECS implementation and handle any modification to the Components.
 They are used for a variety of different applications and can be split into multiple sub systems, which each serve their own purpose.
-The ECS implementation aims and encourages to split each function or feature into modular systems, which can then be added to the game where they are handled within the GameLoop~\ref{subsubsec:game-loop}.
+The ECS implementation aims and encourages to split each function or feature into modular systems, which can then be added to the game where they are handled within the GameLoop~\ref{subsec:game-loop}.
 A variety of systems is already available per default, including rendering, collision and input systems, which will be explained in the following chapters.
 \\
 Each system queries through the available entities / components and only processes the relevant ones.
@@ -122,11 +122,11 @@ They can be implemented for different purposes, such as keyboard, mouse or contr
 to a category, such as inputs for levels that trigger methods within the level itself, inputs to buttons or hovering over entities.
 They provide user inputs to manipulate the systems. \todo{rewrite}
 
-\subsubsection{Game Loop}\label{subsubsec:game-loop}
+\subsection{Game Loop}\label{subsec:game-loop}
 The game loop acts as the main thread of the game as soon as initialized and started.
 It packs all the different systems and handlers used in the game and executes them in a given order at every time step
 $t_{i} = t_{i-1} + \Delta t$, where $\Delta t$ is the execution rate defined for the game.
-An exception to this order is the input recording, which is handled in a separate, synchronized thread, as described in chapter~\ref{subsubsec:input-recording}.
+An exception to this order is the input recording, which is handled in a separate, synchronized thread, as described in chapter~\ref{subsec:input-recording}.
 In this implementation, $\Delta t$ is defined as $\Delta t = 1000 / 240 ms = 4.1667 ms$, which equals 240 calculated frames per second that may be shown and rendered
 to the screen, if available.
 \\ \\
@@ -138,17 +138,17 @@ The following execution order is defined in the Game Loop thread:
     \item Play Sounds
 \end{enumerate}
 
-\subsubsection{Input Recording}\label{subsubsec:input-recording}
+\subsection{Input Recording}\label{subsec:input-recording}
 Input recording is executed in a separate thread and handles inputs at a rate of $\delta t_{inputs} = 20 ms$, since inputs in between two frames
 would otherwise not be received by the games' input handling system.
 $20 ms$ is a delta time at which most input devices send button inputs, according to manufacturer specifications, therefore it is suitable for this application as well. \todo{add note}
 \\
 Generally, a button press needs to be differentiated from a button click.
 While a button press is a continuous event, a button click is a one time event defined as the state change from button is not pressed to button is pressed.
-Each recorded event, either from ActionListeners implemented directly on the rendering panel or from the GamePadAdapter are queued to the engines input handling system~\ref{subsubsec:input-handling}.
+Each recorded event, either from ActionListeners implemented directly on the rendering panel or from the GamePadAdapter are queued to the engines input handling system~\ref{subsec:input-handling}.
 \\
-The game pad integration will be explained in a later chapter~\ref{subsubsec:gamepad-integration}.
-\subsubsection{Input Handling}\label{subsubsec:input-handling}
+The game pad integration will be explained in a later chapter~\ref{subsec:gamepad-integration}.
+\subsection{Input Handling}\label{subsec:input-handling}
 The InputManager contains a list of all Handlers available to the game, implements methods to add and remove objects of the Handler class and methods to queue events
 to a list of events per type - Mouse Event, Key Event and Input Action (controller inputs).
 \\
@@ -158,7 +158,7 @@ The handler class is an abstract class that can be inherited to implement a vari
 One specific handler class, the CollisionDetectionHandler is implemented by default and allows for an easy implementation of hovering and clicking entities with a ColliderComponent.
 It checks the current mouse position (given in the latest mouse event) and handles a potential collision with an Entity.
 
-\subsubsection{System Handling}\label{subsubsec:system-handling}
+\subsection{System Handling}\label{subsec:system-handling}
 Systems are time-based and triggered with every update loop of the game.
 Systems do not have specific handling methods for input types, they operate solely time-based and execute a pre-defined logic.
 They contain methods for different calculations, game logic or time-based events and actions.
@@ -169,12 +169,12 @@ The reason for this system being time based instead of event based is, that the 
 however possible ActionComponents need to be handled as well.
 If a CollisionObject is clicked or hovered, the ActionSystem will check for possible actions to execute available from the ActionComponent.
 
-\subsubsection{Scene Update \& Repaint}\label{subsubsec:scene-update-&-repaint}
+\subsection{Scene Update \& Repaint}\label{subsec:scene-update-&-repaint}
 The next step in the game loop is a generic update of the currently active scene, which may be removing any unnecessary entities based on different conditions or
 checking for a state change after an input or action has been handled.
-After the update, the active scene is repainted by the RenderingEngine~\ref{subsubsec:graphics-engine}.
+After the update, the active scene is repainted by the RenderingEngine~\ref{subsec:graphics-engine}.
 
-\subsubsection{Rendering Engine}\label{subsubsec:graphics-engine}
+\subsection{Rendering Engine}\label{subsec:graphics-engine}
 The RenderingEngine is a static class implemented within the game engine to handle all visible objects, screen rendering and scaling.
 All content is rendered to a JPanel object by using the Graphics2D instance available by default, this is called the RenderingPanel.
 \\
@@ -207,28 +207,28 @@ The reason for multiple UI and Game layers is simply to allow for a greater vari
 \\
 For better visualization, the full rendering cycle is shown in figure x~\todo{add figure}.
 
-\subsubsection{Sound Engine}\label{subsubsec:sound-engine}
+\subsection{Sound Engine}\label{subsec:sound-engine}
 A SoundEngine is implemented in the Game Engine, which handles playing, pausing and stopping any audio stream available.
 During each cycle, the SoundEngine collects all entities with a SoundComponent available, and checks if they are already playing and if not, if they should be playing.
 The Java built-in library \textit{Clip} is used to play audio streams and loop them if necessary.
 This allows for an easy handling of any sound that should be played during a game, e.g.\ background music or button click sounds.
 
-\subsubsection{Utility Classes}\label{subsubsec:utility-classes}
+\subsection{Utility Classes}\label{subsec:utility-classes}
 Apart from the Game Loop, there are also multiple other configuration classes, managers, systems and utility classes, which will be explained in depth in this chapter.
-\paragraph{Game Configuration}
+\subsubsection{Game Configuration}\label{subsubsec:game-configuration}
 The GameConfiguration class by default implements a random profile name chosen of a variety of different names at game start, which is then used for saving high-scores
 or may also be used in other parts of the game.
 It also contains parameters for the currently active language, rendering configuration and sound configuration.
 
-\paragraph{Game Information}
+\subsubsection{Game Information}\label{subsubsec:game-information}
 In the GameInformation class, some generic variables for a title of the game, authors, version and description can be set, which are then used for instance as the games frame
 title.
 
-\paragraph{Scene Manager}
+\subsubsection{Scene Manager}\label{subsubsec:scene-manager}
 The SceneManager is the main storage of all scenes, which may be menu scenes such as main menus or level scenes, i.e.\ game maps.
 It can be called from anywhere within the game to switch a scene to another loaded scene or add a new scene.
 
-\paragraph{Resource Manager}
+\subsubsection{Resource Manager}\label{subsubsec:resource-manager}
 The ResourceManager is used for loading any kind of resource from outside the Java classes, e.g.\ audio files, images or xml data and processes
 these resources accordingly.
 There are multiple implementations which are used by the ResourceManager for loading of different XML files, such as high-scores (HighScoreManager) or languages (LanguageManager),
@@ -239,21 +239,94 @@ The following resource can be loaded by the resource manager and its sub manager
     \item Fonts, using the method \textit{loadFont()}
     \item
 \end{itemize}
-\paragraph{Logging}
+\subsubsection{Logging}\label{subsubsec:logging}
 The Java logging tool is available and easily accessible from any class by simply using the static function implemented in the Game class and adding information to
 the logger, which needs a specified log level and message to log.
 
-\paragraph{Styling \& Design}
+\subsubsection{Styling \& Design}\label{subsubsec:styling-&-design}
 A basic color scheme and font collection is already directly implemented to the game and can be used from scratch, without loading other fonts or having to think about
 color schemes.
 This allows for a quick and easy design of graphical components.
 
-\subsection{Game Implementation}\label{subsec:game-implementation}
+\section{Game Implementation}\label{sec:game-implementation}
 This chapter focuses on the actual implementation of the game, while explaining where the generic game engine is used and why.
+The different systems implemented for calculating the game mechanics are detailed.
+\subsection{Handler}\label{subsec:handler}
+Handlers, as already pointed out, are used to handle user inputs and trigger certain things within the game.
+The implemented handlers for the game will be explained in this chapter.
+\subsubsection{Build Handler}\label{subsubsec:build-handler}
+The BuildHandler is used to handle the placement, replacement, removal and connection of components to the game grid.
+There are different SimulationTypes, which are handled differently.
+For the component and cable placement, the following constraints apply:
+On each game grid tile, there may only be exactly one component of type ACTUATOR, SENSOR, COMPUTER or VOTER.
+If any of the above-mentioned components exists on a tile, no cable may be placed at this position.
+CABLE type components are handled differently, as there may be cables of different types (red, blue, green, yellow) on the same tile, to enable
+cross strapping of different components.
+Cables can be rotated at both ends to correctly connect components as wanted.
+Whenever a cable or component is placed or rotated, the connections are updated.
+To display this connection, cable ports are used.
+Each cable port can be used to connect a single other entity to the cable port.
+Sensors have 4 cable ports with the type output, respectively actuators have 4 cable ports with type input.
+Computers and voters have in and out puts, whereas cables only have a single in and output.
+When replacing or removing a component, the removed component will be put back to the build panel.
+
+\subsubsection{CursorSelectorHandler}\label{subsubsec:cursorselectorhandler}
+For handling game pad and keyboard inputs, the cursor selector handler was implemented.
+It creates a globally available entity (meaning, it is available in every scene), which displays a virtual cursor that can be
+moved around by using the keyboard arrows or the joysticks of a gamepad.
+It handles all input actions coming from gamepads and key events coming from the keyboard, and converts them to their according mouse events.
+In this way, all other handler implementations only need to handle mouse events, which are virtually queued from the cursor selector handler.
 
 \subsection{System}\label{subsec:system}
 \subsubsection{Simulation System}\label{subsubsec:simulation-system}
-
+The simulation system handles updates of the current components on the game field, as well as starting the game goal
+validation by using the MarkovProcessor~\ref{subsubsec:example-markov-chains}.
+\\
+Each cycle of the simulation systems executes four different methods.
+At first, the group ids of each simulation entity are updated, as well their input ids.
+This is needed in order for every entity to know to which other entities they are connected, which is necessary to correctly
+update their states, both during the building mode and during the Markov simulation, where these connections are copied.
+After updating the state, the graphical representation of each state is changed, depending on the actual state.
+This shows, if an entity is correctly connected and working, or if it is currently not connected.
+\\
+The markov chain calculation is always run in a separate thread, which allows for correctly rendering the animations that occur during the calculation, i.e.\ the aircraft movement through the sky.
+When the calculation of the markov chain is finished, all states that lead to a system failure taking into consideration the level
+goal and requirements (minimum correctly working components, system failure probability, maximum out of control components) are
+searched for and added up to calculate the system failure probability.
+For both, the out of control failure and passive failure, this probability is calculated separately.
+Afterwards, if the probabilities meet the level target and the validation is successful,
+from the probabilities, the leftover components in the build panel and a base level score, the total score reached is calculated using the following equations.
+Each level has a set base score when finishing the level.
+\begin{equation}
+    s_{base} = 100
+    \label{eq:base-score}
+\end{equation}
+The probabilities of the current state calculated are compared to the target requirement failure probability by comparing the number of exponentials of 10 to each other.
+\begin{equation}
+    s_{accuracy} = 10 \cdot \lvert \log_{10} p(state) - \log_{10} p(goal)\rvert
+    \label{eq:accuracy-score}
+\end{equation}
+The component score is defined as the sum of all components that are still available to the player in the build panel (excluding cables).
+\begin{equation}
+    s_{component} = \sum_{i = 1}^{components} 10
+    \label{eq:component-score}
+\end{equation}
+The total score is the sum of the 3 previously calculated scores.
+\begin{equation}
+    s_{total} = s_{base} + s_{accuracy} + s_{components}
+    \label{eq:total-score}
+\end{equation}
+Each score is shown separately in the score overview, with an additional indication of the accuracy of the probabilities to the target.
+The user can see, where he or she may improve the system in order to get closer to the target.
+This scale is also shown, when the validation of the target requirements is not passed by the currently built system, to indicate
+a hint on what could be improved by the user.
+\\
+To correctly validate the goal, the actual probability calculated is summed up with an epsilon value of $\epsilon = 1e-7$,
+to prevent incorrect validations due to rounding errors in double values.
+The double precision floating point error occurs due to the internal representation, which can only represent a specified range of
+values.
+Therefore, especially when working with very small or very large numbers, rounding errors (i.e.\ the next representable value by the internal structure which can be stored
+in the binary format) occur.
 \subsubsection{Markov Processor}\label{subsubsec:example-markov-chains}
 In the following chapter, some examples for Markov chains that represent the level designs will be shown and the implementation of the
 MarkovProcessor will be explained by using these graphs.
@@ -297,6 +370,24 @@ For the failure detection ratio, the following values are used:
 \end{equation}
 
 \begin{figure}
+    \begin{center}
+        \scalebox{0.33}{
+            \begin{tikzpicture}[->, >=stealth', semithick, node distance=7cm, auto]
+            \tikzset{rectangle/.append style={draw=black, thick, fill=white}}
+            \node    (S)[font=\fontsize{24}{0}\selectfont]  {\TBox[fill=white]{Sensor}};
+            \node    (C)[font=\fontsize{24}{0}\selectfont, right of=S]  {\TBox[fill=white]{Computer}};
+            \node    (A)[font=\fontsize{24}{0}\selectfont, right of=C]  {\TBox[fill=white]{Actuator}};
+            \path
+    (S) edge (C)
+    (C) edge (A)
+            \end{tikzpicture}
+        }
+    \end{center}\caption{Example System System}
+    \label{fig:simplex}
+\end{figure}
+
+
+\begin{figure}
 \begin{center}
     \scalebox{0.33}{
         \begin{tikzpicture}[->, >=stealth', semithick, node distance=7cm, auto]
@@ -323,7 +414,9 @@ For the failure detection ratio, the following values are used:
         edge[font=\fontsize{20}{0}\selectfont,above right,pos=0.5] node{$p_{10}=\dot{p_4} \cdot (1-C_A)$} (J)
         \end{tikzpicture}
     }
-\end{center}\label{fig:markov-simplex}
+\end{center}
+\caption{Markov Chain Simplex System}
+\label{fig:markov-simplex}
 
 \end{figure}
 The markov chain for these parameters can be seen in figure \todo{add fig}.
@@ -337,7 +430,7 @@ out of control failure state.
 \\
 The approach of the implementation always sets the previous and the next states from a current state accordingly, so the tree-like
 graph can be searched for specific states and state transitions.
-Eventually, to receive the failure probability for a given state or a given set of states (e.g. all states that lead to a system failure), there is an algorithm
+Eventually, to receive the failure probability for a given state or a given set of states (e.g.\ all states that lead to a system failure), there is an algorithm
 that finds exactly these states and calculates the sum of their probabilities.
 Here, the failure probability for a time step of $t = 1 \text{h}$ is used, which results in a simplification of the general equations that removes all the integrations.
 Therefore, only the state transition probabilities have to be summed up to calculate the actual probability for a specific set of states that can or cannot occur.
@@ -363,10 +456,6 @@ When a memoized function is called with the same input parameters as a previous 
 In the implementation, a HashMap is used, that stores each MarkovState as a key-value pair by using a hash code calculated from the current MarkovStateObjects states.
 Whenever another state change would require the MarkovProcessor to calculate a state already available in this map, the MarkovState is instead cloned from there instead,
 as the same MarkovState means, that the exact same components have failed.
-
-\subsection{Handler}\label{subsec:handler}
-
-\subsubsection{Build Handler}\label{subsubsec:build-handler}
 
 
 \subsection{Scene}\label{subsec:scenes}
@@ -398,7 +487,7 @@ Engines and managers are components used for handling different aspects of the g
 or switching scenes.
 In this chapter, the engines and managers used in the implementation will be reviewed in detail.
 
-\subsection{Data Storage \& Data Parsing}\label{subsec:data-storage-&-data-parsing}
+\section{Data Storage \& Data Parsing}\label{sec:data-storage-&-data-parsing}
 It was chosen to save and load resources from XML files, due to the benefits of this file format.
 XML stands for eXtensible Markup Language, and it is a markup language that is used for encoding documents in a format that is both human-readable and machine-readable.
 It was designed to be flexible and extensible, allowing developers to create their own markup tags and structure data in a way that is specific to their needs.
@@ -410,7 +499,7 @@ One of the main benefits of XML is its ability to store and transfer data in a s
 already multiple implementations available to successfully do this, including JAVA's built-in library for DOM parsing.
 \\
 The structure of the different XML files for levels, tilesets, scores and language used in this project will be explained in the next chapters.
-\subsubsection{Tileset}\label{subsubsec:tileset}
+\subsection{Tileset}\label{subsec:tileset}
 A tileset file contains a list of multiple tile nodes, which each have an id and a type attribute.
 A tile always contains exactly one image node, which has at least width, height and a resource path to an image assigned to it.
 Optionally, there can also be a description attribute which can be used to set a tooltip that will be rendered to the games tooltip panel, if available.
@@ -425,7 +514,7 @@ The following example shows a tileset with a single tile of the type CPU, includ
         </tile>
     </tileset>
 \end{lstlisting}
-\subsubsection{Level Files}\label{subsubsec:level-files}
+\subsection{Level Files}\label{subsec:level-files}
 The root node of a level structure is the map node, which always contains attributes to assign an id, a name, a difficulty (tutorial, easy, medium, hard or custom) and a
 grid width and height for the games grid.
 The map node contains one sub node for descriptions (and description parts, if the text for a description should be split up into multiple displayable parts),
@@ -470,7 +559,7 @@ the positions show the position in the grid starting at 0, similar to indexes in
         </layer>
     </map>
 \end{lstlisting}
-\subsubsection{Language Files}\label{subsubsec:language-files}
+\subsection{Language Files}\label{subsec:language-files}
 A language file contains all text content used in the game for a specified language.
 In the root node, the language type can be given according to the IETF language tag \todo{add source}, if supported by the game (i.e.\ implemented in the language manager).
 Within this root node, string nodes are created which contain the id of a string as an attribute and the actual content as text.
@@ -483,7 +572,7 @@ Each of the ids has to be unique, otherwise only the first specified id will be 
     </strings>
 \end{lstlisting}
 
-\subsubsection{Score Files}\label{subsubsec:score-files}
+\subsection{Score Files}\label{subsec:score-files}
 Highscores for each level are saved in a separate xml file containing information about the profile name, score and level id.
 The following structure is used for this file, saving the score 91 for a user who played level id one.
 \\ \\
@@ -497,21 +586,21 @@ The following structure is used for this file, saving the score 91 for a user wh
     </scores>
 \end{lstlisting}
 
-\subsubsection{Parsing}\label{subsubsec:parsing}
+\subsection{Parsing}\label{subsec:parsing}
 For data parsing, a standard DOM parser library provided by Java is used.
 It handles all possible exception types, such as input exceptions or malformed xml documents by default and allows for a quick setup of parsing
 the necessary nodes, attributes and text contents from the given input files.
 As each type of file handled by default for this game has a different structure, the ResourceManager and its sub managers implement methods to handle
 each file structure: loading a level, loading a tileset, loading scores, loading language data and loading fonts.
 
-\subsection{External Device Inputs}\label{subsec:external-device-inputs}
+\section{External Device Inputs}\label{sec:external-device-inputs}
 As the game developed in this work will mostly be played by a younger age group, an additional requirement was to play this game not only by mouse and keyboard,
 but also by gamepads.
 The reason being, that with a gamepad, there will be more of a game-like environment provided to the users.
 The integration of gamepads such as game controllers is explained in this chapter.
-\subsubsection{Mouse \& Keyboard}\label{subsubsec:mouse-&-keyboard}
+\subsection{Mouse \& Keyboard}\label{subsec:mouse-&-keyboard}
 The standard input device for the game are mouse and keyboard.
-\subsubsection{Gamepad Integration}\label{subsubsec:gamepad-integration}
+\subsection{Gamepad Integration}\label{subsec:gamepad-integration}
 The game was designed for was keyboard and mouse, however due to the easy accessibility requirement, it was chosen to also implement gamepad integration.
 For gamepad integration, the open source library \textit{Jamepad} is used.
 It automatically detects most USB controller devices and has an inbuilt button mapping which can be used in the implementation.
