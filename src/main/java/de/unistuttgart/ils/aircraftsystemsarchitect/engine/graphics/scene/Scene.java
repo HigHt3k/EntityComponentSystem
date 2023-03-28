@@ -28,17 +28,9 @@ public abstract class Scene {
 
     public abstract void init();
 
-    public void start() {
-        for(Entity e : entities) {
-            e.start();
-        }
-    }
 
     public void addEntityToScene(Entity e) {
         entities.add(e);
-        if(isRunning) {
-            e.start();
-        }
     }
 
     public void removeEntityFromScene(Entity e) {
@@ -48,8 +40,6 @@ public abstract class Scene {
     public ArrayList<Entity> getEntities() {
         return entities;
     }
-
-    public abstract void update();
 
     public String getName() {
         return name;

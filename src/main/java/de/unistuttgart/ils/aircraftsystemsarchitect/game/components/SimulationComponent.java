@@ -24,11 +24,6 @@ public class SimulationComponent extends Component {
     private int outOfControlSignalsAccepted = 0;
     private final int totalSignalsNeeded = 1;
 
-    @Override
-    public void update() {
-
-    }
-
     public void setTileId(int tileId) {
         this.tileId = tileId;
     }

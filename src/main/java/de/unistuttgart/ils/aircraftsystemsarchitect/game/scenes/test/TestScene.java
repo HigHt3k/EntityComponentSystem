@@ -32,9 +32,4 @@ public class TestScene extends Scene {
     public void init() {
 
     }
-
-    @Override
-    public void update() {
-
-    }
 }

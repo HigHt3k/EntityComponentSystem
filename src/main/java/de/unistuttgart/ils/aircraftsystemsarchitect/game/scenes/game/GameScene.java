@@ -138,13 +138,6 @@ public class GameScene extends BaseGameFieldScene {
         //TODO: move cable to xml? so only the necessary choices are shown
     }
 
-    @Override
-    public void update() {
-        for(Entity e : (ArrayList<Entity>) getEntities().clone()) {
-            e.update();
-        }
-    }
-
     /**
      * set up method for the right side description and info panel
      */

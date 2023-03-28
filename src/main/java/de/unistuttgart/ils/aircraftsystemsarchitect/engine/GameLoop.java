@@ -33,7 +33,7 @@ public class GameLoop extends Thread {
             // handle systems
             Game.system().handle();
             // update the scene
-            Game.scene().current().update();
+            Game.scene().current();
             // render entities
             Game.frame().getRenderPanel().repaint();
             // play sounds

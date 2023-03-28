@@ -16,11 +16,6 @@ public class CablePortsComponent extends Component {
     private int[] inIds;
     private int[] outIds;
 
-    @Override
-    public void update() {
-
-    }
-
     public void updateImage() {
         if(this.getEntity().getComponent(SimulationComponent.class).getSimulationType() == SimulationType.CABLE) {
             int baseId = inIds[0] + 500;

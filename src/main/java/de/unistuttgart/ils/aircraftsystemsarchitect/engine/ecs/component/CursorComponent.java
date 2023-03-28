@@ -10,11 +10,6 @@ public class CursorComponent extends Component {
     private Point _CURSORPOSITION;
     private Entity selected;
 
-    @Override
-    public void update() {
-
-    }
-
     public Entity getSelected() {
         return selected;
     }

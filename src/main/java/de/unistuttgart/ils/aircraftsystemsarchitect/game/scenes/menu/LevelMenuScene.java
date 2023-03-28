@@ -186,13 +186,6 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
-    @Override
-    public void update() {
-        for(Entity e : getEntities()) {
-            e.update();
-        }
-    }
-
     public void checkUnlocks() {
         for(Scene s : Game.scene().getScenes()) {
             if(s instanceof GameScene gs) {

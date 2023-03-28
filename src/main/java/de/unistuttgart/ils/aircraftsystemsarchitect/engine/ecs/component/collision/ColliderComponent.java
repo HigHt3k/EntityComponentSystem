@@ -11,11 +11,6 @@ public class ColliderComponent extends Component {
         this.collisionObjects = new ArrayList<>();
     }
 
-    @Override
-    public void update() {
-
-    }
-
     public ArrayList<CollisionObject> getCollisionObjects() {
         return collisionObjects;
     }

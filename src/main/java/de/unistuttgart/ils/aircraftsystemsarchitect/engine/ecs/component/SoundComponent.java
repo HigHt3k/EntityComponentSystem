@@ -6,11 +6,6 @@ public class SoundComponent extends Component {
     private AudioInputStream audioInputStream;
     private boolean isPlaying = false;
 
-    @Override
-    public void update() {
-
-    }
-
     public void setAudioInputStream(AudioInputStream audioInputStream) {
         this.audioInputStream = audioInputStream;
     }

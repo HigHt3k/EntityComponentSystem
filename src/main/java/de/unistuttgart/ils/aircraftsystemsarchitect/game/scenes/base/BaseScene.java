@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * This class is used to inherit from to create all menu scenes in an equal layout (background, generic buttons for sound, options etc., ...)
  */
-public class BaseScene extends Scene {
+public abstract class BaseScene extends Scene {
     public BaseScene(String name, int id) {
         super(name, id);
 
@@ -79,12 +79,5 @@ public class BaseScene extends Scene {
     @Override
     public void init() {
 
-    }
-
-    @Override
-    public void update() {
-        for (Entity e : getEntities()) {
-            e.update();
-        }
     }
 }

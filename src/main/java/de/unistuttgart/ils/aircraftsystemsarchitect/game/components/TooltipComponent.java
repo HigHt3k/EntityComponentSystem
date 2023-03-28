@@ -11,11 +11,6 @@ public class TooltipComponent extends Component {
 
     private String type;
 
-    @Override
-    public void update() {
-
-    }
-
     public String getType() {
         return type;
     }

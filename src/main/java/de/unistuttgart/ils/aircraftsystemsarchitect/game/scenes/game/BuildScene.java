@@ -62,12 +62,6 @@ public class BuildScene extends BaseGameFieldScene {
         updateGridSize(1);
     }
 
-    @Override
-    public void update() {
-        for(Entity e : getEntities()) {
-            e.update();
-        }
-    }
 
     /**
      * add an Entity to the buildpanel

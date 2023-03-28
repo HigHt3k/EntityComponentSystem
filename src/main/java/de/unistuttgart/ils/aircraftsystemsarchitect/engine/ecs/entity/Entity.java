@@ -59,18 +59,6 @@ public class Entity implements Cloneable {
         c.setEntity(this);
     }
 
-    public void update() {
-        for(int i = 0; i < components.size(); i++) {
-            components.get(i).update();
-        }
-    }
-
-    public void start() {
-        for(int i = 0; i < components.size(); i++) {
-            components.get(i).start();
-        }
-    }
-
     public String getName() {
         return name;
     }

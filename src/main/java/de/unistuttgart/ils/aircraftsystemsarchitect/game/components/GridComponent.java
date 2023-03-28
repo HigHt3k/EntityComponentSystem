@@ -11,11 +11,6 @@ import java.awt.geom.Point2D;
 public class GridComponent extends Component {
     private Point2D gridLocation;
 
-    @Override
-    public void update() {
-
-    }
-
     public void setGridLocation(Point gridLocation) {
         this.gridLocation = gridLocation;
     }

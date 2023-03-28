@@ -13,11 +13,6 @@ public class BuildComponent extends Component {
     private int tileId;
     private float failureDetectionRatio = 0.9f;
 
-    @Override
-    public void update() {
-
-    }
-
     public float getFailureDetectionRatio() {
         return failureDetectionRatio;
     }

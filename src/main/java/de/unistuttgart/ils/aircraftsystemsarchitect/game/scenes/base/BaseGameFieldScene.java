@@ -35,7 +35,7 @@ import java.util.ArrayList;
 /**
  * this class can be used to inherit from to create the Build & GameScene.
  */
-public class BaseGameFieldScene extends BaseScene {
+public abstract class BaseGameFieldScene extends BaseScene {
     private boolean isGridVisible = true;
     protected final int ITEM_MARGIN = 80;
     protected final int DESIGN_CELL_SIZE = 128;

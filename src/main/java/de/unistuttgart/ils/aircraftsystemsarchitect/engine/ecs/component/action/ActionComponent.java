@@ -11,11 +11,6 @@ public class ActionComponent extends Component {
         actions = new HashMap<>();
     }
 
-    @Override
-    public void update() {
-
-    }
-
     public HashMap<Integer, Action> getActions() {
         return actions;
     }

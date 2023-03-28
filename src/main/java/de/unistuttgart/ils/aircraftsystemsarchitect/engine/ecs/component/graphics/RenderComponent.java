@@ -16,11 +16,6 @@ public class RenderComponent extends Component {
         Game.graphics().recollectEntities();
     }
 
-    @Override
-    public void update() {
-
-    }
-
     public ArrayList<RenderObject> getRenderObjects() {
         return renderObjects;
     }

@@ -9,12 +9,5 @@ public abstract class Component {
         this.entity = entity;
     }
 
-    public abstract void update();
-
-    public void start() {
-
-    }
-
     public Entity getEntity() {return entity;}
-
 }
