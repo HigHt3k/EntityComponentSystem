@@ -26,7 +26,7 @@ public class GameLoop extends Thread {
     /**
      * processes all the updates that need to be done at each tick
      */
-    protected void process() {
+    private void process() {
         if(started) {
             // handle inputs
             Game.input().handle();

@@ -8,4 +8,9 @@ public class CustomLevelMenuScene extends BaseMenuScene {
 
         //TODO: implement custom menu scene
     }
+
+    @Override
+    public void init() {
+
+    }
 }

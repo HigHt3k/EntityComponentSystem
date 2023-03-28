@@ -8,7 +8,6 @@ public abstract class Scene {
     private final String name;
     private final int id;
     private final ArrayList<Entity> entities;
-    private final boolean isRunning = false;
 
     public Scene(String name, int id) {
         this.name = name;

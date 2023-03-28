@@ -59,4 +59,9 @@ public class OptionsMenuScene extends BaseMenuScene {
 
         //TODO: implement controller / mouse sensitivity
     }
+
+    @Override
+    public void init() {
+
+    }
 }

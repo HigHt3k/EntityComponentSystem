@@ -63,4 +63,9 @@ public class MainMenuScene extends BaseMenuScene {
         );
         addEntityToScene(buildButton);
     }
+
+    @Override
+    public void init() {
+
+    }
 }

@@ -75,9 +75,4 @@ public abstract class BaseScene extends Scene {
         }
         this.addEntityToScene(mainMenuButton);
     }
-
-    @Override
-    public void init() {
-
-    }
 }
