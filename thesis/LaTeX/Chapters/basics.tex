@@ -1,146 +1,17 @@
+% Relevant Safety Standards / Regulations / Markov / ...
+% Aircraft System Architectures
+% Gamification Concepts / Principles of Game Design
+% Review of existing Game Engines / Simulations
+% Existing work / state of the art
+
 \chapter{Fundamentals}\label{ch:fundamentals}
 In this chapter, some basic knowledge in order to understand the context and classify this work as a whole will be provided.
 The definitions of the most common terms used for aircraft system architecture and the formulas for calculating the relevant
-parameters are shown.~\ref{subsec:system-design}
+parameters are shown.~\ref{sec:system-architecture}
 Since this work aims to implement a game, some basic understanding of games and the game development process is described in
 section~\ref{sec:game-design}.
 
-\section{Problem}\label{sec:problem}
-The subject of aircraft system design, particularly the concepts of redundancy, can be quite challenging to present and visualize
-in an accessible and comprehensive way.
-To address this, it is proposed that a gamified simulation be designed, developed, and implemented to make the material
-more engaging and approachable.
-\\
-This interactive game is primarily aimed at young children, as well as primary and secondary school students.
-It is intended to serve as an educational tool that can be employed during open-house events or as a means of
-introducing the subject to individuals with little or no prior knowledge of the topic.
-\\
-Given that the game is designed to be playable at events such as industry fairs or open-house days,
-it should be compatible with external gamepads, including game controllers.
-The implementation should involve the use of a game engine to handle the calculations of logic and inputs.
-Additionally, a variety of levels should be developed to effectively explain key concepts such as redundancy, common mode failures, and common cause failures.
-\\
-The ultimate objective is to provide an enjoyable, interactive visual representation of aircraft system engineering concepts,
-while offering direct feedback to facilitate learning.
-Players should be able to progress through the levels, experiencing a gradual learning curve that helps them grasp and
-retain the concepts presented.
-\section{State of the Art}\label{sec:state-of-the-art}
-In the 21st century, e-learning has seen increasing implementation and adoption across various educational levels.
-This includes the use of educational games and the integration of game-based learning methods not only in
-high schools and universities but also in middle and elementary schools.
-One major advantage of using games for educational purposes is that they enable students to experiment,
-develop problem-solving skills, and gain a deeper understanding of decision-making processes,
-all while receiving immediate visual or auditory feedback~\cite{application-of-education-games-to-enhance-student-learning}.
-This is in contrast to traditional learning methods, such as writing essays or submitting homework,
-which typically involve delayed feedback~\cite{more-than-just-fun-and-games}.
-\\
-Furthermore, learning through games can enhance motivation, attention, and retention while offering a flexible learning environment
-in terms of both time and location.
-However, it is worth noting that students often gravitate towards casual gaming over educational games.
-This highlights the need to create engaging and interactive games that are both entertaining and educational to
-effectively serve their intended purpose~\cite{WHITTON}.
-
-According to Cheung and Ng~\cite{application-of-education-games-to-enhance-student-learning}, multiple studies in high schools and primary or secondary schools have found that educational
-games are more likely to be integrated into the classroom by teachers of higher grades.
-Younger learners, who are often more prone to inattention, can particularly benefit from
-educational games, as these tools can help improve their attention span and overall learning experience.
-\\
-This presents an opportunity for the proposed work, which is specifically designed for younger age groups, to make the highly
-technical subject of system engineering and redundancy concepts more accessible and engaging through a visual and interactive format.
-
-\section{Science Day - University of Stuttgart}\label{sec:science-day---university-of-stuttgart}
-The ``Tag der Wissenschaft'' (Science Day) is an open-door day, where the University of Stuttgart can be experienced by everyone.
-Exhibits, research environments and results, laboratories and more can be seen, tested and used by everyone, including families, younger children,
-high-school students, etc.
-It is supposed to show recent research topics and provide insight into the actual work done at a university, while also providing insights
-into different studies for interested people who may want to start their studies at the University of Stuttgart ~\cite{tag-der-wissenschaft}.
-
-\section{Game Design}\label{sec:game-design}
-Game design is the conceptional process taking place at the very beginning of game development.
-Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
-reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
-
-\subsection{Game Definition}\label{subsec:game-definition}
-Games can be defined in very different ways, depending on the perspective.
-Typically, it is referred to as a ``[\ldots] type of play activity, conducted in the context of a pretended reality, in which the participant(s)
-try to achieve at least one arbitrary, nontrivial goal by acting in accordance with rules.''~\cite{10.5555/2544002}
-\\
-\\
-The main elements of a game are, according to the definition of Adams: play, pretending, goal and rules.
-\\
-\textbf{Play}, even though sometimes, as for example in the scope of this thesis, having a serious background, is the act of
-self-entertainment.
-In comparison to books or movies, which are presented to the user, games are instead interacted with directly by the user.
-The main difference being, that movies and books are static, while a game may change depending on actions of the user.
-\\
-\textbf{Pretending} reality means creating an immersive experience which does not necessarily be in sync with the real world.
-There may be impossible things or actions, which can be done by the player in a game.
-Some activities or games may seem like there is no real immersive experience that needs to be pretended, however almost always there are certain
-aspects, that do require some sort of pretending.
-An example for this being a flight simulator, which is technically also referred to as a game, which is a very physical activity that could also be done
-in real life.
-However, someone may not have the possibilities to fly an aircraft themselves or travel the world so simply, which is where pretending comes into play.
-The player is pretending to be a pilot. \todo{does that make sense? find better example maybe}
-The pretending aspect of games is often referred to as the ``Magic Circle'', as seen in figure~\ref{fig:magic-circle}, where the magic circle represents sort of a
-playground that is agreed on by all players which is outside the real world and may be defined by imaginary objects or rules.
-\begin{figure}
-    \centering
-    \includegraphics[width=\textwidth]{./Pictures/res/fundamentals/magic-circle}
-    \caption{Magic Circle \cite{10.5555/2544002}}
-    \label{fig:magic-circle}
-\end{figure}
-\\
-\textbf{Goals} need to be set in order to correctly design and implement a game.
-During the play-through, there always have to be objectives to the user.
-Even though a game may seem very goalless, there may be some unseen goals such as acts of creativity / creation, which may also be
-referred to as a goal.
-\\
-\textbf{Rules} instruct the player through the game and give a boundary or limit to the game.
-They are used to describe allowed actions during the gameplay, define progression and - if applicable - give a condition to
-end the game.
-\\ \\
-Generally, the definition of a game is very broad and there are different opinions on the definition, however most of them
-do not refer to the games' purpose: it may be purely for entertainment, but can also be for studying, training or attracting interest
-for a topic, which is especially the case in the scope of this work.
-
-\subsection{Educational Games}\label{subsec:educational-games}
-Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
-specifically intended to be educational.
-However, there exist also games with the specified purpose of education, this may include simulations, persuasive games,
-games for studying and games that support health and growth.
-Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
-while maintaining a factor of entertainment.
-Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
-
-\subsection{Game Engines}\label{subsec:game-engines}
-Game engines are software frameworks that game developers use to create video games more efficiently.
-They provide a set of tools and features that allow developers to create games without needing to build everything from scratch.
-Game engines typically provide a range of features, including graphics rendering, physics simulation, audio processing, animation, scripting, and networking.
-\\
-Game engines come in various forms, from open-source engines that can be freely used and modified by anyone, to commercial engines that require a license fee to use.
-Some examples of popular game engines include Unity, Unreal Engine, CryEngine, and GameMaker Studio.
-\\
-Game engines can help reduce the time and cost of game development by providing pre-built components and tools, allowing developers to focus on creating the game's content and gameplay mechanics instead of building the underlying technology.
-Additionally, game engines can make it easier to create games that run on multiple platforms, such as desktop computers, mobile devices, and gaming consoles, by providing cross-platform support.
-\\
-Game engines have become an essential part of the game development process, and have helped democratize game development by making it more accessible to independent developers and small studios.
-
-
-\subsection{Entity Component System}\label{subsec:entity-component-system}
-For the game engine, a generic entity component system (ECS) design pattern is used.
-The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
-Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
-Entities consist of a variety of components, while each entity can have different components based on the needs.
-A purely graphical entity which shows an image may only consist of a single graphics component, however another entity may contain
-a component for graphics, one for sound and another one that holds collision information.
-It is important to note, that components never change an entities' behavior, but only contain data that describes the entity.
-Systems are responsible for collecting all relevant entities (i.e.\ entities that contain specific components) and processing them.
-An example for a system is a rendering engine, which collects all graphical entities \& components and renders them to the screen by
-using the data that is stored within the respective graphics components.
-\\
-There are different approaches on the implementation of Entity Component Systems, and they may be combined with other programming
-patterns.
-\section{System Design}\label{sec:system-design}
+\section{System Architecture}\label{sec:system-architecture}
 The process of aircraft system design involves multiple stages, starting with requirements gathering.
 During this stage, the design team gathers information about the intended use of the aircraft, the desired performance goals, and any relevant safety and environmental regulations.
 This information is used to define the design requirements for the aircraft system.
@@ -164,6 +35,8 @@ The manufacturing process may involve multiple rounds of testing and quality con
 Finally, the aircraft system is tested and evaluated during the flight test stage.
 Flight testing is critical to validating the performance of the aircraft system in real-world conditions and identifying any issues that need to be addressed before the aircraft is certified for operation.
 Once the flight testing is complete, the aircraft system is ready for use in commercial or military applications.
+\subsection{Components}\label{subsec:components}
+
 \subsection{Failure Probability}\label{subsec:failure-probability}
 The probability of a failure of a system during a specified point in time is defined as~\cite{lfs2}:
 \begin{equation}
@@ -201,7 +74,7 @@ The below table~\ref{tab:safety-effect} displays the different categories.
     \caption{Definition of safety effect categories}
     \label{tab:safety-effect}
 \end{table}
-\section{Redundancy Concepts}\label{sec:redundancy-concepts}
+\subsection{Redundancy Concepts}\label{subsec:redundancy-concepts}
 By default, the failure probability of integrated components is defined as $10e-4$, which means, that with only a single component
 safety effect requirements of categories higher than \textit{Major} are out of scope.
 Therefore, different redundancy concepts have been developed and are being used in system architectures.
@@ -215,13 +88,76 @@ The voting component generally is the bottleneck of aircraft systems and needs t
 due to being the most critical component in the chain, since all further movement is based on its decision.
 Actuators can also have a monitoring component, which ensures the correct movement of itself.
 This is called a \textbf{Com-Mon} - Command \& Monitoring - system.
-It negatively affects the failure probability, but the integrity, meaning that the system is able to react to a possible failure due
+It negatively affects the failure probability, but increases the integrity, meaning that the system is able to react to a possible failure due
 to noticing it.
 A number of different concepts is shown in the figures below, which also serves as a guideline to the level design of the game,
 since the presentation and understanding of exactly these concepts is the core of the game.
-\subsection{Safety Analysis}\label{subsec:safety-analysis}
+\\
+\begin{figure}
+    \begin{center}
+        \scalebox{0.33}{
+            \begin{tikzpicture}[->, >=', semithick, node distance=7cm, auto]
+            \tikzset{rectangle/.append style={draw=black, thick, fill=white}}
+            \node    (S)[font=\fontsize{24}{0}\selectfont]  {\TBox[fill=white]{Sensor}};
+            \node    (C)[font=\fontsize{24}{0}\selectfont, right of=S]  {\TBox[fill=white]{Computer}};
+            \node    (A)[font=\fontsize{24}{0}\selectfont, right of=C]  {\TBox[fill=white]{Actuator}};
+            \path
+        (S) edge (C)
+        (C) edge (A);
+            \end{tikzpicture}
+        }
+    \end{center}
+    \caption{Simplex System}
+    \label{fig:simplex-example}
+\end{figure}
+\begin{figure}
+    \begin{center}
+        \scalebox{0.33}{
+            \begin{tikzpicture}[->, >=, semithick, node distance=5cm, auto]
+            \tikzset{rectangle/.append style={draw=black, thick, fill=white}}
+            \node    (S1)[font=\fontsize{24}{0}\selectfont]  {\TBox[fill=white]{Sensor}};
+            \node    (S2)[font=\fontsize{24}{0}\selectfont, below of=S1]  {\TBox[fill=white]{Sensor}};
+            \node    (C1)[font=\fontsize{24}{0}\selectfont, right of=S1]  {\TBox[fill=white]{Computer}};
+            \node            (C2)[font=\fontsize{24}{0}\selectfont, right of=S2]  {\TBox[fill=white]{Computer}};
+            \node    (A)[font=\fontsize{24}{0}\selectfont, right of=C1, yshift=-2.5cm]  {\TBox[fill=white]{Actuator}};
+            \path
+    (S1) edge (C1)
+    (C1) edge (A)
+            (S2) edge (C2)
+            (C2) edge (A);
+            \end{tikzpicture}
+        }
+    \end{center}
+    \caption{Duplex System}
+    \label{fig:duplex-example}
+\end{figure}
+\begin{figure}
+    \begin{center}
+        \scalebox{0.33}{
+            \begin{tikzpicture}[->, >=, semithick, node distance=5cm, auto]
+            \tikzset{rectangle/.append style={draw=black, thick, fill=white}}
+            \node    (S1)[font=\fontsize{24}{0}\selectfont]  {\TBox[fill=white]{Sensor}};
+            \node    (S2)[font=\fontsize{24}{0}\selectfont, below of=S1]  {\TBox[fill=white]{Sensor}};
+            \node    (C1)[font=\fontsize{24}{0}\selectfont, right of=S1]  {\TBox[fill=white]{Computer}};
+            \node            (C2)[font=\fontsize{24}{0}\selectfont, right of=S2]  {\TBox[fill=white]{Computer}};
+            \node    (A)[font=\fontsize{24}{0}\selectfont, right of=C1, yshift=-2.5cm]  {\TBox[fill=white]{Actuator}};
+            \path
+    (S1) edge (C1)
+    (S1) edge (C2)
+            (C1) edge (A)
+            (S2) edge (C2)
+            (S2) edge (C1)
+            (C2) edge (A);
+            \end{tikzpicture}
+        }
+    \end{center}
+    \caption{Cross-Strapped Duplex System}
+    \label{fig:duplex-cross-strapped-example}
+\end{figure}
 
-\section{Markov Process}\label{sec:markov-process}
+
+
+\subsection{Markov Process}\label{subsec:markov-process}
 The aircraft design process generally has to comply with the requirements that are stated in regulatory files such as the FAR 25
 in order to qualify for the aircraft certification documents.
 There are different guidelines for the conduction of the safety assessment process for aircraft systems, which include the
@@ -233,8 +169,267 @@ A Markov process, also called Markov chain, is a mathematical model describing a
 Future states of the model are determined only by its current state and by the transition probability, not taking into account
 the former states. \todo{add source}
 
-\subsection{States}\label{subsec:states}
+\subsubsection{States}\label{subsubsec:states}
 Possible states for the system design Markov model include the correct state and different failure states, such as out of control
 or passive failures.
 Each failure can also be of a different kind, e.g.\ a mechanical failure has a different probability than a loss of electrical power.
 
+\section{Game Design}\label{sec:game-design}
+Game design is the conceptional process taking place at the very beginning of game development.
+Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
+reiterating those during the development are part of a game designers' field of exercise~\cite{10.5555/2544002}.
+
+\subsection{Game Definition}\label{subsec:game-definition}
+Games can be defined in very different ways, depending on the perspective.
+Typically, it is referred to as a ``[\ldots] type of play activity, conducted in the context of a pretended reality, in which the participant(s)
+try to achieve at least one arbitrary, nontrivial goal by acting in accordance with rules.''~\cite{10.5555/2544002}
+\\
+\\
+The main elements of a game are, according to the definition of Adams: play, pretending, goal and rules.
+\\
+\textbf{Play}, even though sometimes, as for example in the scope of this thesis, having a serious background, is the act of
+self-entertainment.
+In comparison to books or movies, which are presented to the user, games are instead interacted with directly by the user.
+The main difference being, that movies and books are static, while a game may change depending on actions of the user.
+\\
+\textbf{Pretending} reality means creating an immersive experience which does not necessarily be in sync with the real world.
+There may be impossible things or actions, which can be done by the player in a game.
+Some activities or games may seem like there is no real immersive experience that needs to be pretended, however almost always there are certain
+aspects, that do require some sort of pretending.
+An example for this being a flight simulator, which is technically also referred to as a game, which is a very physical activity that could also be done
+in real life.
+However, someone may not have the possibilities to fly an aircraft themselves or travel the world so simply, which is where pretending comes into play.
+The player is pretending to be a pilot. \todo{does that make sense? find better example maybe}
+The pretending aspect of games is often referred to as the ``Magic Circle'', as seen in figure~\ref{fig:magic-circle}, where the magic circle represents sort of a
+playground that is agreed on by all players which is outside the real world and may be defined by imaginary objects or rules.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{./Pictures/res/fundamentals/magic-circle}
+    \caption{Magic Circle~\cite{10.5555/2544002}}
+    \label{fig:magic-circle}
+\end{figure}
+\\
+\textbf{Goals} need to be set in order to correctly design and implement a game.
+During the play-through, there always have to be objectives to the user.
+Even though a game may seem very goalless, there may be some unseen goals such as acts of creativity / creation, which may also be
+referred to as a goal.
+\\
+\textbf{Rules} instruct the player through the game and give a boundary or limit to the game.
+They are used to describe allowed actions during the gameplay, define progression and - if applicable - give a condition to
+end the game.
+\\ \\
+Generally, the definition of a game is very broad and there are different opinions on the definition, however most of them
+do not refer to the games' purpose: it may be purely for entertainment, but can also be for studying, training or attracting interest
+for a topic, which is especially the case in the scope of this work.
+
+\subsection{Educational Games}\label{subsec:educational-games}
+Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
+specifically intended to be educational.
+However, there exist also games with the specified purpose of education, this may include simulations, persuasive games,
+games for studying and games that support health and growth.
+Educational games are a sub-genre of the \textit{Serious Games}-genre and aim to present or solve real world problems,
+while maintaining a factor of entertainment.
+Different ways of presentation may be used for educational games~\cite[p.43]{10.5555/2544002}.
+While this work mainly aims to attract interest for the topic of aircraft system engineering in a fun and entertaining way, it is still
+referred to as an education game in this context, as a definitive, wanted and positive side effect of playing the game is
+to introduce the user to basic concepts of system design.
+This can be seen as the underlying educational problem and challenge, since the borderline of serious games and games solely
+for entertainment purposes is relatively non-restrictive.
+
+\subsection{Game Development Stages}\label{subsec:game-design-stages}
+There is no unanimous definition of the game development process, however most approaches and perspectives are similar and the different
+stages can be categorized as three main stages~\cite{cg:game-design-stages}:
+\begin{enumerate}
+    \item Pre-production~\ref{subsubsec:pre-production}
+    \item Production~\ref{subsubsec:production}
+    \item Post-production~\ref{subsubsec:post-production}
+\end{enumerate}
+During these stages, different tasks and goals have to be accomplished and reiterated, which will be broken down in detail in the chapters below.
+By using the digital educational game life cycle~\ref{fig:deglc} by Aslan and Balci, each of the three stages will be placed in context of
+educational games specifically.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/fundamentals/deglc}
+    \caption{Digital educational game life cycle~\cite{GAMED}}
+    \label{fig:deglc}
+\end{figure}
+
+\subsubsection{Pre-production}\label{subsubsec:pre-production}
+Pre-production is the development stage where only few code is written and the focus lies mostly on defining
+problems, laying out ideas and prototyping.
+Some important questions have to be answered during the pre-production stage, which are necessary to
+head into production and development of the game.
+The asked questions focus on the game subject, audience, resources needed and an estimated timespan, as well as
+defining the four major elements of a game, as described in~\ref{subsec:game-definition}.
+Sketches and concept art is designed and often, a prototype is developed.
+At this stage, when the project team notices flaws or generally bad ideas, game development is either discontinued or the idea and concepts are
+reiterated.
+The process of pre-production can range in a timespan of a week to multiple months, depending on the size of the project and
+the team~\cite{cg:game-design-stages}.
+\\
+As seen in~\ref{fig:deglc}, the first stages in the cycle of educational game development represent the idea of a pre-production stage fairly well,
+as the main focus is to define the educational problem or subject that has to be solved or taught and why it would be more effective
+to do so using a game approach.
+Furthermore, requirements to the game and possible approaches to architecture and software design are defined and reiterated.
+Note, that even during the next stages, there may be reiterations going back to a previous phase or stage.\ref{GAMED}.
+\\
+The notable products of the pre-production stage are concepts, ideas, design choices and in the case of educational games an approach to solving and identifying
+an existing problem;
+and a possible prototype of the idea.
+
+\subsubsection{Production}\label{subsubsec:production}
+Going into production, the defined idea is developed and code is produced.
+Programming best practices are advised to be implemented during the coding process, as it improves maintainability.
+Among these are well-named variables, classes and methods according to the programming language standards, code documentation (e.g.\ javadoc) and code formatting.
+The game framework, engine and components to successfully set up the game are programmed.
+Professional game productions include different milestones during this phase.
+Past prototyping, the first milestone is the first playable game, which should give a better idea of the gameplay and graphic design.
+Placeholders should be replaced by actual graphics.
+After that, a pitch-able project is finished, which is fully payable and provides some better insight.
+This is called a vertical slice.
+The actual generation of content, e.g. levels, characters, etc.\ are integrated into the game during
+pre-alpha.
+While in pre-alpha the game features are still developed, in the alpha stage of the game it is finished in a sense, that is fully playable from the beginning
+until the end.
+At this point, the major objective is testing and bugfixing.
+During the beta, content creation is completely finished and no new features are added - the focus is on optimizing what is available instead of
+changing or adding new things.
+The final state of the game, which should also be the end of production stage, is a finished game, which is fully playable and can be
+released and used to and by the public~\cite{cg:game-design-stages}.
+\\
+At the end of the production stage, the framework is clearly laid out and well documented, as well as the game itself is finished for publication~\cite{GAMED}.
+
+\subsubsection{Post-production}\label{subsubsec:post-production}
+The post-production stage mainly focuses on maintenance, patches and bug fixes to the finished game, as there are more people playing and therefore more bugs
+are found.
+Feedback is given to the developers, which may be implemented in future projects.
+Usually, this ends the game development process, as there are no new added features (except DLCs - downloadable content, or other add-ons) to the game anymore~\cite{cg:game-design-stages}.
+In the case of learning focused or educational games, there may be more iterations of the process, which take the feedback and results of the project into
+consideration and develop a new, revised version of the application~\cite{GAMED}.
+
+\subsection{Game Engines}\label{subsec:game-engines}
+Game engines are software frameworks that game developers use to create video games more efficiently.
+They provide a set of tools and features that allow developers to create games without needing to build everything from scratch.
+Game engines typically provide a range of features, including graphics rendering, physics simulation, audio processing, animation, scripting, and networking.
+\\
+Game engines come in various forms, from open-source engines that can be freely used and modified by anyone, to commercial engines that require a license fee to use.
+Some examples of popular game engines include Unity, Unreal Engine and CryEngine.
+\\
+Game engines can help reduce the time and cost of game development by providing pre-built components and tools, allowing developers to focus on creating the game's content and gameplay mechanics instead of building the underlying technology.
+Additionally, game engines can make it easier to create games that run on multiple platforms, such as desktop computers, mobile devices, and gaming consoles, by providing cross-platform support.
+\\
+Game engines have become an essential part of the game development process, and have helped democratize game development by making it more accessible to independent developers and small studios.
+\\
+The above-mentioned game engines use different approaches and concepts, which are pointed out here to give an overview over the generally possible approaches to
+designing and developing game engines.
+Generally, game engines are developed in high level languages, e.g.~C\#, Java or C++, the reason being object-oriented programming,
+which allows general concepts such as inheritance, polymorphism, encapsulation and abstraction to create reusable, maintainable and modular code.
+\\
+\subsubsection{Unity}\label{subsubsec:entity-component-system}
+For the unity engine, a generic entity component system (ECS) design pattern is used, as seen in figure~\ref{fig:ecs-unity}.
+The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
+Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
+Entities consist of a variety of components, while each entity can have different components based on the needs.
+A purely graphical entity which shows an image may only consist of a single graphics component, however another entity may contain
+a component for graphics, one for sound and another one that holds collision information.
+It is important to note, that components never change an entities' behavior, but only contain data that describes the entity.
+Systems are responsible for collecting all relevant entities (i.e.\ entities that contain specific components) and processing them.
+An example for a system is a rendering engine, which collects all graphical entities \& components and renders them to the screen by
+using the data that is stored within the respective graphics components.
+\\
+Entity-Component-System approaches may also be used paired with other approaches of game design and are generally very broadly customizable and adaptable
+to specific needs of the developer.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/fundamentals/ECSBlockDiagram-unity}
+    \caption{ECS System used by the Unity Engine \todo{add cite}}
+    \label{fig:ecs-unity}
+\end{figure}
+\subsubsection{Unreal}\label{subsubsec:unreal:-component-based-architecture}
+Unreal Engine does not use an Entity Component System (ECS) in the same way Unity does with its Data-Oriented Technology Stack (DOTS) and ECS implementation.
+However, Unreal Engine does use a component-based architecture, which shares some similarities with an ECS.
+\\
+In Unreal Engine, as seen in figure~\ref{fig:unreal-concept}, game objects are represented as Actors, which can have
+various components attached to them to define their behavior and appearance.
+This approach allows for modularity and reusability of code, which is one of the primary goals of an ECS.
+\\
+While Unreal Engine's component-based architecture has some similarities with an ECS, it does not follow the strict separation of
+data and logic that characterizes an ECS. In an ECS, entities are simple identifiers, components hold only data, and systems
+handle the processing of component data.
+This separation of concerns allows for better performance and scalability, particularly on modern hardware with multiple cores, due to the possibility
+of separating different systems into multiple threads.
+\\
+Unreal Engine's component-based architecture, though not a pure ECS implementation, provides a powerful
+and flexible way to create game objects and manage their behavior.
+This is done by a method which constantly updates each component by using their built-in methods, instead of having different systems accessing and changing data within components.
+Developers can still achieve good performance and scalability by carefully designing their code and taking
+advantage of Unreal Engine's built-in multi-threading and optimization features.
+\\
+Furthermore, Unreal Engine has a built-in visual scripting system called Blueprints, which allows developers to create game logic without writing code.
+This system enables artists, designers, and programmers to collaborate more efficiently and helps those with little programming experience to contribute
+to game development.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/fundamentals/unreal-framework}
+    \caption{Unreal Architecture~\cite{UNREAL:Framework}}
+    \label{fig:unreal-concept}
+\end{figure}
+\subsubsection{CryEngine}\label{subsubsec:cryengine}
+While CryEngine mainly features the same patterns and approaches as Unreal does, one major standout is the very high fidelity graphical rendering
+ability.
+Particularly real-time rendering and physical based rendering underline this major benefit of using CryEngine, as it enables
+creators and designers to create highly realistic environments, for example seen in games like Far Cry, made by Crytek using their own
+engine.
+
+
+\section{Problem}\label{sec:problem}
+\todo{move to introduction?}
+The subject of aircraft system design, particularly the concepts of redundancy, can be quite challenging to present and visualize
+in an accessible and comprehensive way.
+To address this, it is proposed that a gamified simulation be designed, developed, and implemented to make the material
+more engaging and approachable.
+\\
+This interactive game is primarily aimed at young children, as well as primary and secondary school students.
+It is intended to serve as an educational tool that can be employed during open-house events or as a means of
+introducing the subject to individuals with little or no prior knowledge of the topic.
+\\
+Given that the game is designed to be playable at events such as industry fairs or open-house days,
+it should be compatible with external gamepads, including game controllers.
+The implementation should involve the use of a game engine to handle the calculations of logic and inputs.
+Additionally, a variety of levels should be developed to effectively explain key concepts such as redundancy, common mode failures, and common cause failures.
+\\
+The ultimate objective is to provide an enjoyable, interactive visual representation of aircraft system engineering concepts,
+while offering direct feedback to facilitate learning.
+Players should be able to progress through the levels, experiencing a gradual learning curve that helps them grasp and
+retain the concepts presented.
+
+\section{State of the Art}\label{sec:state-of-the-art}
+In the 21st century, e-learning has seen increasing implementation and adoption across various educational levels.
+This includes the use of educational games and the integration of game-based learning methods not only in
+high schools and universities but also in middle and elementary schools.
+One major advantage of using games for educational purposes is that they enable students to experiment,
+develop problem-solving skills, and gain a deeper understanding of decision-making processes,
+all while receiving immediate visual or auditory feedback~\cite{application-of-education-games-to-enhance-student-learning}.
+This is in contrast to traditional learning methods, such as writing essays or submitting homework,
+which typically involve delayed feedback~\cite{more-than-just-fun-and-games}.
+\\
+Furthermore, learning through games can enhance motivation, attention, and retention while offering a flexible learning environment
+in terms of both time and location.
+However, it is worth noting that students often gravitate towards casual gaming over educational games.
+This highlights the need to create engaging and interactive games that are both entertaining and educational to
+effectively serve their intended purpose~\cite{WHITTON}.
+
+According to Cheung and Ng~\cite{application-of-education-games-to-enhance-student-learning}, multiple studies in high schools and primary or secondary schools have found that educational
+games are more likely to be integrated into the classroom by teachers of higher grades.
+Younger learners, who are often more prone to inattention, can particularly benefit from
+educational games, as these tools can help improve their attention span and overall learning experience.
+\\
+This presents an opportunity for the proposed work, which is specifically designed for younger age groups, to make the highly
+technical subject of system engineering and redundancy concepts more accessible and engaging through a visual and interactive format.
+
+\section{Science Day - University of Stuttgart}\label{sec:science-day---university-of-stuttgart}
+The ``Tag der Wissenschaft'' (Science Day) is an open-door day, where the University of Stuttgart can be experienced by everyone.
+Exhibits, research environments and results, laboratories and more can be seen, tested and used by everyone, including families, younger children,
+high-school students, etc.
+It is supposed to show recent research topics and provide insight into the actual work done at a university, while also providing insights
+into different studies for interested people who may want to start their studies at the University of Stuttgart ~\cite{tag-der-wissenschaft}.

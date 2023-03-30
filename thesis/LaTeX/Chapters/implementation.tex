@@ -1,4 +1,9 @@
-\chapter{Game Design \& Development}\label{ch:implementation}
+% Development of game engine - core components & functonalities
+% development of game using the game engine, including level/scene design (asset creation, scene scripting & interaction, development in general)
+% UI / XP Design
+% Testing & Debugging (Test cases / scenarios), (Logging, Debugger, Code Analysis), Performance Testing (-> memoization, ...), playtesting?
+
+\chapter{Development \& Implementation}\label{ch:implementation}
 In this chapter, the implementation of the game engine including the basic framework, graphic rendering and input handling is described.
 The implementation of the features of the game itself are shown and the connections between different components is described by using a
 UML class diagram.
@@ -34,7 +39,7 @@ The game engine implements a variety of methods and classes which are used for h
 In this chapter, these classes will be explained in detail and the general concept of the engine is reviewed.
 
 \subsection{Entity Component System}\label{subsec:entity-component-system-implementation}
-The entity component system setup can be approached from a top-down point of view.
+The entity component system setup used in this implementation can be approached from a top-down point of view, visualized in figure \ref{fig:ecs}.
 A scene is the basic class that contains all information about the currently displayed entities and the handlers and systems to be used
 in the background.
 There exist multiple scenes of different classes, such as scenes for the game view, menu scenes etc., which can be created by
@@ -45,14 +50,19 @@ Entities represent a combination of different data containers, so-called compone
 There are some standard entities and components available directly via the engine, however there may be the need for more components and entities while implementing the actual game.
 The design approach of this entity component system is similar to the Unity implementation, however a few tweaks and simplifications were made in order to keep the code
 simple and maintainable, while providing the changeability and flexibility of a general approach.
-\subsubsection{UML Diagram}\label{subsubsec:uml-diagram}
-The following UML class diagram shows the connection between the different classes implemented in the entity component system.
-Each class will be explained in the following chapters.
-\todo{add uml, remove unity one}
 \begin{figure}
     \centering
-    \includegraphics[width=0.9\textwidth]{./Pictures/res/implementation/flow charts/ECSBlockDiagram}
-    \caption{UML Diagram of the Entity Component System}
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/ecs-database}
+    \caption{ECS Database}
+    \label{fig:ecs}
+\end{figure}
+\subsubsection{UML Diagram}\label{subsubsec:uml-diagram}
+The following UML shows a simplified structure of the engine implementation, which is going to be used to explain the mechanisms
+and the framework of the implementation.
+\begin{figure}
+    \centering
+    \includegraphics[width=1.0\textwidth]{./Pictures/res/implementation/ecs-uml}
+    \caption{Simplified UML diagram of the engine implementation}
     \label{fig:ecs-block-diagram}
 \end{figure}
 
@@ -102,6 +112,20 @@ The cursor component is a component used for handling game pad inputs and acts a
 joysticks of game pads or keyboard buttons.
 It simply indicates the position, where new mouse events are generated, when the actual mouse is not used. \\ \\
 
+\subsubsection{Scene}\label{subsubsec:scene}
+A scene is a collection of entities that together form an aspect of the game, e.g.\ a menu or a level.
+The \textit{Scene} class is an abstract class implementing methods for adding and removing entities from itself.
+The scenes in this implementation can be categorized in two general sets: menu scenes and game scenes.
+
+\\
+To add a scene to the game, a scene object needs to be instantiated and added to the games' \textit{SceneManager}, where all
+scenes are stored and the currently active scene can be set.
+Generally, all systems access the scene manager to only process the currently active scene, or if needed handle entities in other scenes or add / remove them.
+\\
+
+Scenes are implemented in a hierarchy which is shown in figure \todo{add figure}.
+
+
 \subsubsection{Systems}\label{subsubsec:systems}
 Systems are the third main part of the ECS implementation and handle any modification to the Components.
 They are used for a variety of different applications and can be split into multiple sub systems, which each serve their own purpose.
@@ -113,7 +137,14 @@ The query system is set up as a static class that can be accessed from anywhere.
 It implements methods that can be used to search for all entities of a class or entities that have a specified component
 attached to it within the currently displayed scene.
 The set of entities can be seen as a database that is filtered by the query system to obtain only a subset with the specified component or class type, which may be used
-for other systems. \todo{add graphic with database of ecs}
+for other systems.
+System processing is shown in figure~\ref{fig:ecs-system-processing}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/ecs-system-processing}
+    \caption{System processing activity diagram}
+    \label{fig:ecs-system-processing}
+\end{figure}
 An overview of the default systems is given below.
 
 \textbf{Action System}
@@ -130,13 +161,13 @@ An exception to this order is the input recording, which is handled in a separat
 In this implementation, $\Delta t$ is defined as $\Delta t = 1000 / 240 ms = 4.1667 ms$, which equals 240 calculated frames per second that may be shown and rendered
 to the screen, if available.
 \\ \\
-The following execution order is defined in the Game Loop thread:
-\begin{enumerate}
-    \item Input Handling
-    \item System Handling
-    \item Scene Update \& Repaint
-    \item Play Sounds
-\end{enumerate}
+The execution order of the game loop can be seen in figure~\ref{fig:gameloop-process}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/gameloop-process}
+    \caption{Game loop execution order}
+    \label{fig:gameloop-process}
+\end{figure}
 
 \subsection{Input Recording}\label{subsec:input-recording}
 Input recording is executed in a separate thread and handles inputs at a rate of $\delta t_{inputs} = 20 ms$, since inputs in between two frames
@@ -459,17 +490,21 @@ as the same MarkovState means, that the exact same components have failed.
 
 
 \subsection{Scene}\label{subsec:scenes}
-A scene is a collection of entities that together form an aspect of the game, e.g.\ a menu or a level.
-The \textit{Scene} class is an abstract class implementing methods for adding and removing entities from itself.
-The scenes in this implementation can be categorized in two general sets: menu scenes and game scenes.
+A hierarchical scene structure was implemented to the game, which can be seen in figure \ref{fig:scenes-hierachry}.
+The base scene contains elements of the game that are visible in every scene, and therefore can be inherited to all other scene classes.
+This includes the games background image and generic option buttons for settings, sound, back to menu and exit.
+From this base scene, a base menu scene and a base game scene are inherited, which are used to display different menu screens and contain
+the basic elements necessary to play the game or build maps in the build mode.
+These scenes inherit multiple other scenes, which show different menus (main menu, level map, settings menu) and game scenes (main game scene, build mode scene, tutorial scene).
+Specifically for tutorials, an interface which implements methods to display tutorials has been added to the game, which describes classes as tutorial classes.
+Whenever a tutorial dialogue needs to be handled, this interface has to be implemented.
+In the following chapters, an overview over the level map, game scene and build mode scene and the methods necessary to handle these scenes is given.
 
-\\
-To add a scene to the game, a scene object needs to be instantiated and added to the games' \textit{SceneManager}, where all
-scenes are stored and the currently active scene can be set.
-Generally, all systems access the scene manager to only process the currently active scene.
-\\
-
-Scenes are implemented in a hierarchy which is shown in figure \todo{add figure}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes-hierarchy}
+    \label{fig:scenes-hierachry}
+\end{figure}
 
 \textbf{Simulation Entities:} \\
 All elements that are placed on the game grid are considered so-called Simulation Entities.
