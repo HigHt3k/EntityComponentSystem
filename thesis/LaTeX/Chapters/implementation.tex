@@ -125,7 +125,6 @@ Generally, all systems access the scene manager to only process the currently ac
 
 Scenes are implemented in a hierarchy which is shown in figure \todo{add figure}.
 
-
 \subsubsection{Systems}\label{subsubsec:systems}
 Systems are the third main part of the ECS implementation and handle any modification to the Components.
 They are used for a variety of different applications and can be split into multiple sub systems, which each serve their own purpose.
@@ -488,7 +487,6 @@ In the implementation, a HashMap is used, that stores each MarkovState as a key-
 Whenever another state change would require the MarkovProcessor to calculate a state already available in this map, the MarkovState is instead cloned from there instead,
 as the same MarkovState means, that the exact same components have failed.
 
-
 \subsection{Scene}\label{subsec:scenes}
 A hierarchical scene structure was implemented to the game, which can be seen in figure \ref{fig:scenes-hierachry}.
 The base scene contains elements of the game that are visible in every scene, and therefore can be inherited to all other scene classes.
@@ -498,12 +496,49 @@ the basic elements necessary to play the game or build maps in the build mode.
 These scenes inherit multiple other scenes, which show different menus (main menu, level map, settings menu) and game scenes (main game scene, build mode scene, tutorial scene).
 Specifically for tutorials, an interface which implements methods to display tutorials has been added to the game, which describes classes as tutorial classes.
 Whenever a tutorial dialogue needs to be handled, this interface has to be implemented.
-In the following chapters, an overview over the level map, game scene and build mode scene and the methods necessary to handle these scenes is given.
 
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes-hierarchy}
+    \caption{Scene hierarchy}
     \label{fig:scenes-hierachry}
+\end{figure}
+
+The basic layout of the scenes was already described in~\ref{subsec:graphic-design}, the finished implementation of these
+layouts is visualized in figures~\ref{fig:game-scene} and~\ref{fig:level-scene}.
+Furthermore, the menu scene implementation is displayed in figure~\ref{fig:menu-scene}.
+\todo{figures wirklich so?}
+\begin{figure}
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{
+        \includegraphics[width=0.9\textwidth]{Pictures/res/implementation/scenes/game-scene}
+    }
+    \caption{Game Scene}
+    \label{fig:game-scene}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{
+        \includegraphics[width=0.9\textwidth]{Pictures/res/implementation/scenes/level-map}
+    }
+    \caption{Level Map Scene}
+    \label{fig:level-scene}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \setlength{\fboxsep}{1pt}
+    \setlength{\fboxrule}{1pt}
+    \fbox{
+        \includegraphics[width=0.9\textwidth]{Pictures/res/implementation/scenes/main-menu}
+    }
+    \caption{Menu Scene}
+    \label{fig:menu-scene}
 \end{figure}
 
 \textbf{Simulation Entities:} \\
@@ -521,6 +556,44 @@ and colliders.
 Engines and managers are components used for handling different aspects of the game, such as graphics rendering, playing audio streams
 or switching scenes.
 In this chapter, the engines and managers used in the implementation will be reviewed in detail.
+
+\subsection{Level Implementation}\label{subsec:level-implementation}
+Each level is created as a new GameScene object with the content of a level file that is read and parsed by the resource
+manager~\ref{sec:data-storage-&-data-parsing}.
+The GameScene object stores all relevant data, including the level requirements / goal, the grid size, available entities and, if applicable through the
+tutorial interface implementation, possible dialogues and character models that form the tutorial scene.
+Following examples for different levels are provided in this chapter:
+\begin{itemize}
+    \item Tutorial Scene explaining the basics of the gameplay~\ref{fig:basic-gameplay-tutorial}
+    \item Duplex System~\ref{fig:duplex-system}
+    \item Common-Mode Scenario, with different types of sensors and computers~\ref{fig:common-mode-scene}
+    \item Oil leakage scenario, emulating a common-cause failures~\ref{fig:common-cause-scene}
+\end{itemize}
+\todo{add scene pictures}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes/tutorial-game-scene}
+    \caption{Tutorial Scene with dialogue to explain basic gameplay}
+    \label{fig:basic-gameplay-tutorial}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes/duplex-scene}
+    \caption{Scenario to set up a duplex system}
+    \label{fig:duplex-system}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes/cmf}
+    \caption{Multiple useable sensors to visualize common mode failures}
+    \label{fig:common-mode-scene}
+\end{figure}
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes/oil-leak}
+    \caption{A scene with an oil leakage on one side of the system to visualize common cause failures}
+    \label{fig:common-cause-scene}
+\end{figure}
 
 \section{Data Storage \& Data Parsing}\label{sec:data-storage-&-data-parsing}
 It was chosen to save and load resources from XML files, due to the benefits of this file format.

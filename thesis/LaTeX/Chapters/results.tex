@@ -1,2 +1,42 @@
 \chapter{Results}\label{ch:results}
 \section{Educational Achievements}\label{sec:educational-achievements}
+\section{Limitations}\label{sec:limitations}
+The field of aircraft system engineering is large and complex, and as this work aims to simplify this complex topic,
+it is narrowed down by a margin.
+Different failure types (such as mechanical or electrical failures, \ldots) are only taken into consideration as a
+generalized failure of any type.
+However, different failures may also lead to different system behaviors, which of course has to be analysed in reality.
+As this may be a feature that could be implemented in the future, it would significantly slow down the current approach of
+the markov generation as explained in~\ref{subsubsec:example-markov-chains}, since the implementation is based
+on generating markov chains, that already increase in size with an increasing amount of components added to the system.
+Adding multiple different failure types would further increase the complexity of the markov chain, which would result in
+approximately $m^n$ more states, where $m$ is the amount of different failure states and $n$ the amount of components.
+\todo{check if that is true, adapt equations}
+
+\section{Challenges}\label{sec:challenges}
+During the implementation process, some major challenges - not only negative, also in a positive way - occurred, which will be described in this chapter, to give an
+overview and a guideline on what may be done differently during the next iteration of the project or during the development of other
+applications and what may be done in a similar way, as it worked well.
+\subsection{Game Engine Development}\label{subsec:entity-component-system-challenges}
+One major part of this work was the implementation of a game engine, using the entity-component system approach in a similar way
+Unity handles its GameObjects.
+This resulted in a very structured and extendable framework, which servers as a good baseline and enables the development of the actual game.
+As much as this provides flexibility, it is also a lot of work that went into a part of the implementation, that to the user
+does not provide any obvious benefits, as there is nothing which is actually visible from this implementation approach.
+However, the new implementation of a game engine was ultimately chosen due to the overwhelming amount of features and complexity
+already existing game engines provide, where only a very small subset would be used for developing the actual game, and other problems
+may have occurred due to the relatively specific use case of this work.
+Eventually, finishing the work with a game engine that can be used for any further developments of the game without having to worry
+about the implementation of the engine is a great achievement.
+
+\subsection{Programming Language}\label{subsec:programming-language}
+Another challenge was the usage of Java itself, as this was mainly chosen due to already existing coding knowledge with this
+language and a great availability of already existing libraries, such as rendering libraries.
+Furthermore, Java is a very understandable and readable language and applications can easily be used on most devices, which are great benefits.
+However, other languages such as C++ or C\# may be more suitable for game development in general, which is not only shown by
+the usage of languages in the modern gaming industry (e.g. Minecraft was originally created in Java, but is now also switching to C++), but
+also by the general performance of methods.
+Due to Java being interpreted, most methods, in this work this is especially mentionable for the simulation part of the game, are being slowed down
+by a margin compared to other languages like C++.
+To correctly assess this, these methods would also need to be implemented in other languages, however the above-mentioned would
+be the expected result.
