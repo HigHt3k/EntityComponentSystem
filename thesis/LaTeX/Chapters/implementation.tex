@@ -30,9 +30,11 @@ This makes it possible to write a single Java program that can run on multiple p
 Java also has a large standard library of classes and functions, which makes it easier to write complex programs without needing to reinvent the wheel.
 Additionally, Java is known for its strong emphasis on security, which makes it a popular choice for building applications that need to be highly secure and resistant to cyber attacks.
 \\
-The decision to use Java was made based on the fact that it makes sense to have a) an object-oriented programming language in order to
-handle entities easily and b) because it is possible to run the program on almost every system due to \textit{JAVA} running
-in a virtual machine.
+Java was chosen because of the wide variety of standard libraries and resources available, the very object-oriented programming approach which enables for
+extending and inheriting of classes to adapt objects to the games and game engines needs.
+Due to garbage collection, Java enables developing without having to consider memory allocations.
+Furthermore, a great benefit of using Java is the multi-platform support due to Java being an interpreted language which works
+independent of operating systems or processor architectures.
 
 \section{Game Engine}\label{sec:game}
 The game engine implements a variety of methods and classes which are used for handling the general program execution, independent of the actual game implementation.
@@ -541,21 +543,71 @@ Furthermore, the menu scene implementation is displayed in figure~\ref{fig:menu-
     \label{fig:menu-scene}
 \end{figure}
 
+\subsubsection{Entities}
+\textbf{Grid Entities:} \\
+Grid entities describe each tile of the grid, containing a grid position as $(x,y)$ coordinates and a customizable grid tile,
+which is usually the regular concrete background, but may be changed any time for specific scenarios.
+
 \textbf{Simulation Entities:} \\
 All elements that are placed on the game grid are considered so-called Simulation Entities.
 These entities are built of components to describe the cable port distribution, parameters such as failure ratio and failure detection ratio and grid components, which contain the
 entities position as a coordinate in the games' grid-like game field.
+Each entity that should have a description on the right side tool box also has a TooltipComponent attached, which indicates, that
+a tooltip should be shown when hovering the entity.
 Furthermore, graphics and colliders are available to simulation entity objects.
-\\ \\
+\\
 \textbf{Build Panel Entities:} \\
 Build Panel Entities are entities which are available in the players' inventory and can be used for building objects on the game grid.
 They include components for graphics description, build information - e.g.\ the failure ratio, failure detection ratio and amount in inventory,
 and colliders.
+Similar to the simulation entity, a tooltip component is also available to the build panel entities to indicate tooltip descriptions.
+\\
 
-\subsection{Engines \& Managers}\label{subsec:engines}
-Engines and managers are components used for handling different aspects of the game, such as graphics rendering, playing audio streams
-or switching scenes.
-In this chapter, the engines and managers used in the implementation will be reviewed in detail.
+\subsubsection{Components}
+The above-mentioned entities implement different components to store the according data and to identify which component
+should implement certain behaviors such as being able to be built to the grid or adding them to the simulation.
+The following components were developed and implemented during the game development process.
+\\
+\textbf{GridComponent:} \\
+The GridComponent stores the grid position as $(x,y)$ coordinates of an entity, where $x=0, y=0$ is the top left of the game grid.
+\\
+\textbf{SimulationComponent:} \\
+Data regarding the simulation run by the MarkovProcessor is stored in the SimulationComponent.
+The simulation type (i.e. Actuator, Sensor, Computer, \ldots), as well as the current state (i.e. inoperative, correct by default, ...), failure
+ratio and failure detection ratio are stored.
+Furthermore, the component contains parameters to store the entity ids of entities connected as inputs to this component / entity, which is
+not necessary, however enables easier maintainable code and performant look-ups for some systems.
+\\
+\textbf{BuildComponent:} \\
+The BuildComponent is used to tell the systems operating the game, that an entity should be buildable.
+Therefore, it contains similar information as the simulation component, as the parameters from the build component are used
+to create new simulation entities with simulation components attached when placing a component on the grid.
+Furthermore, the build component also stores the amount of components on the stack.
+As this number would go below 0, no new component can be built.
+
+\\
+\textbf{CablePortsComponent:} \\
+CablePortsComponents contain data regarding the connection of entities to each other.
+Each CablePortComponent can have multiple in- or outgoing cable ports.
+Cable ports are used to store another entity object, which describes the entity connect to another entity.
+When updating a connection, both sides of the connection have to be considered.
+A cable ports' connected entity parameter may be null, when there is currently no connection to the port.
+
+\\
+\textbf{ToolTipComponent:} \\
+The tooltip component may be used for entities that should display a tooltip upon hovering over the object with the cursor.
+Information such as failure ratio, simulation type and description of the object are stored as text strings (as ids, which are read
+from the language file, or as converted numbers to strings) in this component, so they may be directly used to render them to
+the screen.
+\subsubsection{Entity UML}
+A comprehensive overview of the different entity structures is given in~\ref{fig:entities}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/entities-uml}
+    \caption{UML Diagrams of the different entities}
+    \label{fig:entities}
+\end{figure}
+\todo{create uml}
 
 \subsection{Level Implementation}\label{subsec:level-implementation}
 Each level is created as a new GameScene object with the content of a level file that is read and parsed by the resource
@@ -593,6 +645,29 @@ Following examples for different levels are provided in this chapter:
     \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes/oil-leak}
     \caption{A scene with an oil leakage on one side of the system to visualize common cause failures}
     \label{fig:common-cause-scene}
+\end{figure}
+
+For the game grid, tile sets as explained in \ref{subsec:tileset} are used, which consist of different images for different components.
+Figure~\ref{fig:tileset} shows all tiles that are currently available to the game implementation.
+This is easily extendable by adding more tiles to the set, which may be used for backgrounds, placeholders or new simulation entities.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/tileset}
+    \caption{Tileset}
+    \label{fig:tileset}
+\end{figure}
+
+\subsubsection{Tutorial Scenes}\label{subsubsec:tutorial-scenes}
+In order to explain the gameplay, tutorial dialogues were implemented to some scenes of the game.
+To make the dialogues interesting and appealing, characters were designed to make the tutorials engaging and interactive.
+In figure~\ref{fig:character-models} the character models used in the implementation are shown.
+This is easily extendable and more characters may be added to the game to create more tutorials or other dialogues and maybe even create
+a story in the future, that uses the character designs.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/character-models}
+    \caption{Character Models (left to right): Tina Technician, Ingo Engineer, Pete Pilot}
+    \label{fig:character-models}
 \end{figure}
 
 \section{Data Storage \& Data Parsing}\label{sec:data-storage-&-data-parsing}

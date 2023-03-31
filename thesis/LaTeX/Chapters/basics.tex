@@ -34,8 +34,28 @@ The manufacturing process may involve multiple rounds of testing and quality con
 \\
 Finally, the aircraft system is tested and evaluated during the flight test stage.
 Flight testing is critical to validating the performance of the aircraft system in real-world conditions and identifying any issues that need to be addressed before the aircraft is certified for operation.
-Once the flight testing is complete, the aircraft system is ready for use in commercial or military applications.
+Once the flight testing is complete, the aircraft system is ready for use in commercial or military applications~\cite{lfs1}.
+
 \subsection{Components}\label{subsec:components}
+There are different components with different purpose in an aircraft system.
+Digital aircraft systems usually consist of sensors, actuators, data transmission busses and controlling and monitoring methods, implemented
+as aviation-suitable digital computers (avionics).
+\\
+Sensors are used to measure different parameters such as angle of attack, temperature, pressure or density.
+They may output either analogue or discrete signals, meaning a signal can adopt any value on a scale or only a range of defined values,
+such as 1 or 0.
+Usually, analogue signals are converted to discrete signals before processing, as computers generally may only work with digital
+values.
+\\
+This signal is passed via a data bus to the computer, which processes the signal by applying control laws and other methods to the
+input signals from one (simplex) or more (duplex, triplex, \ldots) sensors.
+\\
+The output signal from a computer may also either be analogue - for example a valve position in percent - or discrete - for
+example a state of a valve, closed or open.
+The output signal, again has to be possibly converted from a discrete to an analogue value.
+This signal is passed to the actuator, again via a data bus, which then executes the given command based on the input signal, e.g.
+rotating a control surface.
+
 
 \subsection{Failure Probability}\label{subsec:failure-probability}
 The probability of a failure of a system during a specified point in time is defined as~\cite{lfs2}:
