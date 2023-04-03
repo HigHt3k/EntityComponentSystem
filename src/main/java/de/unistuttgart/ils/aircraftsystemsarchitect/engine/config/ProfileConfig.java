@@ -9,6 +9,9 @@ public class ProfileConfig {
 
     public String profile;
 
+    /**
+     * generate a new profile, with a random name from a collection of given names
+     */
     public ProfileConfig() {
         profile = NameCollection.buildName();
         // TODO: No 2 same names!
