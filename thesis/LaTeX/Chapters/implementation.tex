@@ -509,6 +509,14 @@ Whenever a tutorial dialogue needs to be handled, this interface has to be imple
 The basic layout of the scenes was already described in~\ref{subsec:graphic-design}, the finished implementation of these
 layouts is visualized in figures~\ref{fig:game-scene} and~\ref{fig:level-scene}.
 Furthermore, the menu scene implementation is displayed in figure~\ref{fig:menu-scene}.
+\\
+During scene design, a bright color palette was chosen to make the game environment appealing and playful.
+For some elements, the color scheme of the Institute of Aircraft Systems was used (aircraft background, logo design).
+The font used for the textual parts of the game is \textit{joystix monospace}~\cite{joystix}, which is a "[\ldots] pixel-style
+typeface inspired by 1980s arcade video games.
+It's a timeless style that began with Atari in 1976 and extended to a slew of manufacturers throughout the 1980s.
+It became the de facto font choice anytime a designer wanted to express classic videogame iconography in the twenty-first century."~\cite{joystix}
+As the main goal was to design an 8-bit styled, retro-like game, the font choice here is relatively obvious to make.
 \todo{figures wirklich so?}
 \begin{figure}
     \centering
@@ -543,7 +551,7 @@ Furthermore, the menu scene implementation is displayed in figure~\ref{fig:menu-
     \label{fig:menu-scene}
 \end{figure}
 
-\subsubsection{Entities}
+\subsubsection{Entities}\label{subsubsec:entities2}
 \textbf{Grid Entities:} \\
 Grid entities describe each tile of the grid, containing a grid position as $(x,y)$ coordinates and a customizable grid tile,
 which is usually the regular concrete background, but may be changed any time for specific scenarios.
@@ -563,7 +571,7 @@ and colliders.
 Similar to the simulation entity, a tooltip component is also available to the build panel entities to indicate tooltip descriptions.
 \\
 
-\subsubsection{Components}
+\subsubsection{Components}\label{subsubsec:components2}
 The above-mentioned entities implement different components to store the according data and to identify which component
 should implement certain behaviors such as being able to be built to the grid or adding them to the simulation.
 The following components were developed and implemented during the game development process.
@@ -599,11 +607,11 @@ The tooltip component may be used for entities that should display a tooltip upo
 Information such as failure ratio, simulation type and description of the object are stored as text strings (as ids, which are read
 from the language file, or as converted numbers to strings) in this component, so they may be directly used to render them to
 the screen.
-\subsubsection{Entity UML}
+\subsubsection{Entity UML}\label{subsubsec:entity-uml}
 A comprehensive overview of the different entity structures is given in~\ref{fig:entities}.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Pictures/res/implementation/entities-uml}
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/entities}
     \caption{UML Diagrams of the different entities}
     \label{fig:entities}
 \end{figure}

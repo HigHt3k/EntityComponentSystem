@@ -80,7 +80,6 @@ The detection probability of an error in a system is defined as integrity~\cite{
 There exist different categories of safety effects in the CS-25 for aircraft certification that define the requirements to different systems.
 A mapping of safety effect to minimum failure probability has to be achieved in order to successfully certify aircraft systems.
 The below table~\ref{tab:safety-effect} displays the different categories.
-
 \begin{table}[!htb]
     \centering
     \begin{tabular}{l|l|l}
@@ -91,9 +90,20 @@ The below table~\ref{tab:safety-effect} displays the different categories.
         Minor            & MIN                 & $P_f(1h) <= 10e-3$           \\
         No Safety Effect & NSE                 & $P_f(1h) < 1$
     \end{tabular}
-    \caption{Definition of safety effect categories}
+    \caption{Definition of safety effect categories~\cite{lfs1}}
     \label{tab:safety-effect}
 \end{table}
+\subsection{Common Cause Failure}\label{subsec:common-cause-failure}
+Common cause failure (CCF) is a term that describes the failure of multiple components at the same time due to the same cause.
+The cause for the failure of one component is not a consequence of a failure of another component, but rather the failure reason is from and
+external source, such as a lightning strike~\cite{ccf,cmf}.
+
+\subsection{Common Mode Failure}\label{subsec:common-mode-failure}
+Compared to common cause failures, common mode failures (CMF) are failures, where multiple components fail equally, where the reason
+for failure may be different for each component.
+Common mode failures occur due to design defects, maintenance or installation errors and errors during the development process
+of the system~\cite{lfs2,cmf}.
+
 \subsection{Redundancy Concepts}\label{subsec:redundancy-concepts}
 By default, the failure probability of integrated components is defined as $10e-4$, which means, that with only a single component
 safety effect requirements of categories higher than \textit{Major} are out of scope.
@@ -175,8 +185,6 @@ since the presentation and understanding of exactly these concepts is the core o
     \label{fig:duplex-cross-strapped-example}
 \end{figure}
 
-
-
 \subsection{Markov Process}\label{subsec:markov-process}
 The aircraft design process generally has to comply with the requirements that are stated in regulatory files such as the FAR 25
 in order to qualify for the aircraft certification documents.
@@ -184,16 +192,62 @@ There are different guidelines for the conduction of the safety assessment proce
 recommendation of quantitative analysis methods such as Fault Tree Analysis, Dependence Diagrams and Markov Analysis.
 While the most widely used method today is the Fault Tree Analysis~\cite{7447967}, the Markov Analysis is used for the backend
 part of this work and will therefore be explained in detail.
+\\
+A Markov process, named after the Russian mathematician Andrey Markov, is a stochastic process that possesses the Markov property,
+which is the principle of memorylessness.
+This means that the future state of the process depends solely on the present state and is independent of its past states.
+In simpler terms, a Markov process is a random process where the probability of transitioning to a new state is determined
+only by the current state and not by any prior history~\cite{markov-processes}.
+\\
+Markov processes can be categorized into two main types:
+discrete-time Markov chains (DTMC) and continuous-time Markov chains (CTMC).
+In a discrete-time Markov chain, the state transitions occur at discrete time steps (e.g., every second or every day),
+while in a continuous-time Markov chain, the transitions can happen at any point in continuous time~\cite{markov-processes, VANKAMPEN200773}.
+\\
+To define a Markov process, two main components are required:
+\begin{enumerate}
+    \item State space: The set of all possible states that the process can be in. The state space can be either finite or countably infinite.
+    \item Transition probabilities: The probabilities of transitioning from one state to another state. For a discrete-time Markov chain, the transition probabilities are given by a matrix called the transition matrix, with each element representing the probability of moving from one state to another. For a continuous-time Markov chain, the transition probabilities are given by a matrix called the transition rate matrix, with each element representing the rate at which the process transitions from one state to another.
+\end{enumerate}
+Outside of aircraft system engineering, Markov processes have a wide range of applications in various fields such as economics, finance, biology, linguistics,
+and computer science.
+They are used for modeling random phenomena where the memoryless property holds,
+including stock price movements, DNA sequences, and speech recognition~\cite{markov-usage}.
 
-A Markov process, also called Markov chain, is a mathematical model describing a system that changes over time.
-Future states of the model are determined only by its current state and by the transition probability, not taking into account
-the former states. \todo{add source}
+\subsubsection{State Space}\label{subsubsec:state-space}
+The state space for the markov process in aircraft system design is a finite state space, which only depends on the amount of components
+a system consists of and the amount of different types of failures.
+Failure types may include mechanical failures, electrical failures or software failures, which can each be categorized as either
+passive or out-of-control failures, depending on if the failure was detected or not.
+As a result, the markov state space consisting of the possible states of the system items, which in the scope of
+this work are the four different states: correct, failed, passivated, out-of-control.
 
-\subsubsection{States}\label{subsubsec:states}
-Possible states for the system design Markov model include the correct state and different failure states, such as out of control
-or passive failures.
-Each failure can also be of a different kind, e.g.\ a mechanical failure has a different probability than a loss of electrical power.
-
+\subsubsection{Transition Probability}\label{subsubsec:transition-probability}
+The transition probability describes the change of one state to another, which in case of aircraft systems is a type of tree
+process, as any ``failed'' state may not be recovered to a correct state.
+Therefore, the resulting graph of transitions is one directional.
+A singular state transition from state $A$ to state $B$ is therefore defined as the failure probability~\ref{eq:failure-probability}
+of the component that changes its state
+from correct to failed.
+From the failed state, as seen in figure~\ref{fig:state-change}, there are two possibilities, a stange change from $B$ to $C$ shows the failure detection ratio, also known as \ref{eq:integrity}
+and a state change from $B$ to $C$ describes the transition to an undetected (out-of-control) failure.
+\begin{figure}
+    \begin{center}
+        \begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+        \tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+        \node[state]    (A)                     {$A$};
+        \node[state]    (B)[below of=A]   {$B$};
+        \node[state]    (C)[below left of=B]   {$C$};
+        \node[state]    (D)[below right of=B]   {$D$};
+        \path
+    (A) edge     node{$p_f$}     (B)
+    (B) edge                node{$C$}           (C)
+        edge                node{$(1-C)$}           (D);
+        \end{tikzpicture}
+    \end{center}
+    \caption{State transitions for a failure in an aircraft system, example}
+    \label{fig:state-change}
+\end{figure}
 \section{Game Design}\label{sec:game-design}
 Game design is the conceptional process taking place at the very beginning of game development.
 Tasks such as defining a basic game idea and laying out the game mechanics, describing the different components of the game and
@@ -307,7 +361,7 @@ Past prototyping, the first milestone is the first playable game, which should g
 Placeholders should be replaced by actual graphics.
 After that, a pitch-able project is finished, which is fully payable and provides some better insight.
 This is called a vertical slice.
-The actual generation of content, e.g. levels, characters, etc.\ are integrated into the game during
+The actual generation of content, e.g.\ levels, characters, etc.\ are integrated into the game during
 pre-alpha.
 While in pre-alpha the game features are still developed, in the alpha stage of the game it is finished in a sense, that is fully playable from the beginning
 until the end.
