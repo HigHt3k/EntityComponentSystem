@@ -1,16 +1,15 @@
 \chapter{Results}\label{ch:results}
 \section{Educational Achievements}\label{sec:educational-achievements}
 \section{Limitations}\label{sec:limitations}
-The field of aircraft system engineering is large and complex, and as this work aims to simplify this complex topic,
-it is narrowed down by a margin.
-Different failure types (such as mechanical or electrical failures, \ldots) are only taken into consideration as a
-generalized failure of any type.
-However, different failures may also lead to different system behaviors, which of course has to be analysed in reality.
-As this may be a feature that could be implemented in the future, it would significantly slow down the current approach of
-the markov generation as explained in~\ref{subsubsec:example-markov-chains}, since the implementation is based
-on generating markov chains, that already increase in size with an increasing amount of components added to the system.
-Adding multiple different failure types would further increase the complexity of the markov chain, which would result in
-approximately $m^n$ more states, where $m$ is the amount of different failure states and $n$ the amount of components.
+The field of aircraft system engineering is vast and intricate, and this work aims to simplify this complex subject by narrowing its scope.
+Various failure types (such as mechanical or electrical failures) are considered only as a generalized failure of any type.
+However, different failures may result in diverse system behaviors, which must be analyzed in real-life situations.
+\\
+While incorporating multiple failure types could be a potential future feature, it would considerably slow down the current
+approach of Markov generation, as explained in~\ref{subsubsec:example-markov-chains}.
+The implementation is based on generating Markov chains that grow in size as the number of components in the system increases.
+Introducing multiple failure types would further raise the complexity of the Markov chain, resulting in approximately $m^n$ more states,
+where $m$ represents the number of distinct failure states and $n$ the number of components.
 \todo{check if that is true, adapt equations}
 
 \section{Challenges}\label{sec:challenges}
@@ -27,7 +26,7 @@ However, the new implementation of a game engine was ultimately chosen due to th
 already existing game engines provide, where only a very small subset would be used for developing the actual game, and other problems
 may have occurred due to the relatively specific use case of this work.
 Eventually, finishing the work with a game engine that can be used for any further developments of the game without having to worry
-about the implementation of the engine is a great achievement.
+about the implementation of the engine is a benefit especially for further development and feature implementations.
 
 \subsection{Programming Language}\label{subsec:programming-language}
 Another challenge was the usage of Java itself, as this was mainly chosen due to already existing coding knowledge with this
