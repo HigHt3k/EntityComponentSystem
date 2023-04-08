@@ -10,13 +10,24 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/**
+ * The ActionSystem is a system to handle actions depending available input to action mappings of ActionComponents.
+ */
 public class ActionSystem extends SystemHandle {
     private final ArrayList<Entity> entities;
 
+    /**
+     * Instantiate new ActionSystem
+     */
     public ActionSystem() {
         entities = new ArrayList<>();
     }
 
+    /**
+     * handle actions on collision objects.
+     * handles hovering and actions mapped to either "NOBUTTON" or BUTTON1.
+     * Checks the state of the component, i.e. if it is already clicked or not
+     */
     @Override
     public void handle() {
         recollectEntities();
@@ -50,6 +61,9 @@ public class ActionSystem extends SystemHandle {
         }
     }
 
+    /**
+     * recollect all entities that contain collider components, by using the Query class.
+     */
     public void recollectEntities() {
         entities.clear();
         ArrayList<Entity> temp = Query.getEntitiesWithComponent(ColliderComponent.class);
