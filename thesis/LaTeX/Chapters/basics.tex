@@ -15,6 +15,8 @@ section~\ref{sec:game-design}.
 \section{System Architecture}\label{sec:system-architecture}
 The process of aircraft system design involves multiple stages, starting with requirements gathering.
 During this stage, the design team gathers information about the intended use of the aircraft, the desired performance goals, and any relevant safety and environmental regulations.
+The process is also known as the V-model, which is shown in figure~\ref{fig:v-model}, and includes various steps and phases to
+assure the system qualifies to meet the target requirements.
 This information is used to define the design requirements for the aircraft system.
 \\
 Once the requirements are defined, the design team moves on to the conceptual design stage.
@@ -29,14 +31,18 @@ Once the preliminary design is complete, the detailed design stage begins.
 During this stage, the team creates detailed designs for each component of the aircraft system, such as the propulsion system, avionics, and control systems.
 These detailed designs must meet the requirements defined in the first stage and be compatible with the other components of the system.
 \\
-After the detailed design stage, the manufacturing stage begins.
-During this stage, the aircraft system components are manufactured and assembled into the final aircraft.
+After the detailed design stage, the manufacturing stages begin, where the system is manufactured, assembled and integrated into the final aircraft.
 The manufacturing process may involve multiple rounds of testing and quality control to ensure that the aircraft system is safe, reliable, and meets the design requirements.
 \\
 Finally, the aircraft system is tested and evaluated during the flight test stage.
 Flight testing is critical to validating the performance of the aircraft system in real-world conditions and identifying any issues that need to be addressed before the aircraft is certified for operation.
-Once the flight testing is complete, the aircraft system is ready for use in commercial or military applications~\cite{lfs1}.
-
+Once the flight testing is complete, the aircraft system is ready for use in commercial or military applications~\cite{lfs1,doi:10.1177/09544100211024787}.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/fundamentals/v-modell}
+    \caption{V-Model of the system development process~\cite{doi:10.1177/09544100211024787}}
+    \label{fig:v-model}
+\end{figure}
 \subsection{Components}\label{subsec:components}
 Various elements within an aircraft system serve distinct functions.
 Typically, digital aircraft systems comprise sensors, actuators, data transmission buses,
@@ -81,7 +87,7 @@ The detection probability of an error in a system is defined as integrity~\cite{
 \subsection{Safety Effect}\label{subsec:safety-effect}
 There exist different categories of safety effects in the CS-25 for aircraft certification that define the requirements of aircraft systems.
 In order to achieve successful certification for an aircraft, each system must adhere to the specified requirements, which are determined by the safety effect category.
-Table~\ref{tab:safety-effect} shows the different safety categories.
+Table~\ref{tab:safety-effect} shows the different safety categories~\cite{cs25}.
 \begin{table}[!htb]
     \centering
     \begin{tabular}{l|l|l}
@@ -92,7 +98,7 @@ Table~\ref{tab:safety-effect} shows the different safety categories.
         Minor            & MIN                 & $P_f(1h) <= 1e-3$           \\
         No Safety Effect & NSE                 & $P_f(1h) < 1$
     \end{tabular}
-    \caption{Definition of safety effect categories~\cite{lfs1}}
+    \caption{Definition of safety effect categories~\cite{lfs1,cs25}}
     \label{tab:safety-effect}
 \end{table}
 \subsection{Common Cause Failure}\label{subsec:common-cause-failure}
@@ -114,17 +120,17 @@ These include duplex, triplex and quadruplex systems - meaning, a component is r
 One needs to divide between replicated computers, also called \textbf{channels}, and replicated components (e.g.\ CPU) within a computer,
 namely \textbf{lanes}.
 It is important to note, that each lane or channel is merged right before an actuator and signals in general always join together
-at sensors and actuators.
+at sensors and actuators~\cite{lfs1}.
 \\
 The decision on how the actuator needs to move is done by a \textbf{voting} component, which can have different methods of voting
 for the correct output to unify multiple signals into a singular signal: mean value, median value, democratic decision.
 The voting component generally is the bottleneck of aircraft systems and needs to guarantee a low probability of failure
-due to being the most critical component in the chain, since all further movement is based on its decision.
+due to being the most critical component in the chain, since all further movement is based on its decision~\cite{lfs1}.
 \\
 Actuators can also have a monitoring component, which ensures the correct movement of itself.
 This is called a \textbf{Com-Mon} - Command \& Monitoring - system.
 It decreases the failure probability, but increases the integrity, meaning that the system is able to react to a possible failure due
-to noticing it more reliably.
+to noticing it more reliably~\cite{lfs1}.
 \\
 A number of different concepts is shown in the figures below, which also serves as a guideline to the level design of the game,
 since the presentation and understanding of exactly these concepts is the core of the game.
@@ -200,14 +206,14 @@ While the most widely used method today is the Fault Tree Analysis~\cite{7447967
 part of this work, as it provides a good baseline to calculate failure states of aircraft systems in continuous state space due to the memorylessness behavior
 and will therefore be explained in detail.
 \\
-A Markov process, named after the Russian mathematician Andrey Markov, is a stochastic process that possesses the Markov property,
+A Markov process, developed and described by the mathematician Andrey Markov, is a stochastic process that possesses the Markov property,
 which is the principle of memorylessness.
-This means that the future state of the process depends solely on the present state and is independent of its past states.
+This means that the future state of the process depends solely on the present state and is independent of its past states~[p.~1-253]\cite{markov-chanis-theory-to-impl}.
 In simpler terms, a Markov process is a random process where the probability of transitioning to a new state is determined
 only by the current state and not by any prior history~\cite{markov-processes}.
 \\
 Markov processes can be categorized into two main types:
-discrete-time Markov chains (DTMC) and continuous-time Markov chains (CTMC).
+discrete-time Markov chains (\gls{DTMC}) and continuous-time Markov chains (\gls{CTMC}).
 In a discrete-time Markov chain, the state transitions occur at discrete time steps (e.g., every second or every day),
 while in a continuous-time Markov chain, the transitions can happen at any point in continuous time~\cite{markov-processes, VANKAMPEN200773}.
 In the scope of this work, a continuous time markov chain model is used.
@@ -228,16 +234,15 @@ a system consists of and the amount of different types of failures.
 Failure types may include mechanical failures, electrical failures or software failures, which can each be categorized as either
 passive or out-of-control failures, depending on if the failure was detected or not.
 As a result, the markov state space consisting of the possible states of the system items, which in the scope of
-this work are the four different states: \textit{correct}, \textit{failed}, \textit{passivated}, \textit{out-of-control}.
+this work are the four different states: \textit{correct}, \textit{failed}, \textit{passivated}, \textit{out-of-control}~\cite{markov-processes}.
 
 \subsubsection{Transition Probability}\label{subsubsec:transition-probability}
 The transition probability describes the change of one state to another, which in case of aircraft systems is a type of tree
 process, as any ``failed'' state may not be recovered to a correct state, as it is assumed the component is in a defect state until
-maintenance or re-installation.
+maintenance or re-installation~\cite{markov-processes}.
 Therefore, the resulting graph of transitions is one directional.
 A singular state transition from state $A$ to state $B$ is therefore defined as the failure probability~\ref{eq:failure-probability}
-of the component that changes its state
-from correct to failed.
+of the component that changes its state from correct to failed.
 Going on from the failed state, as seen in figure~\ref{fig:state-change}, there are two possibilities,
 a stange change from $B$ to $C$ shows the failure detection ratio, also known as integrity~\ref{eq:integrity}
 and a state change from $B$ to $C$ describes the transition to an undetected (out-of-control) failure.
@@ -266,7 +271,7 @@ reiterating those during the development are part of a game designers' field of 
 \subsection{Game Definition}\label{subsec:game-definition}
 Games can be defined in very different ways, depending on the perspective.
 Typically, it is referred to as a ``\[\ldots\] type of play activity, conducted in the context of a pretended reality, in which the participant(s)
-try to achieve at least one arbitrary, nontrivial goal by acting in accordance with rules.''~\cite{10.5555/2544002}
+try to achieve at least one arbitrary, nontrivial goal by acting in accordance with rules''~\cite[p.~3]{10.5555/2544002}.
 \\
 \\
 The main elements of a game are, according to the definition of Adams: play, pretending, goal and rules.
@@ -274,7 +279,7 @@ The main elements of a game are, according to the definition of Adams: play, pre
 \\
 Engaging in \textbf{play}, which can be an act of self-amusement, occasionally takes on a serious undertone, as seen within the context of this thesis.
 In comparison to books or movies, which are presented to the user, games are instead interacted with directly by the user.
-The main difference being, that movies and books are static, while a game may change depending on actions of the user.
+The main difference being, that movies and books are static, while a game may change depending on actions of the user~\cite[p.~4-9]{10.5555/2544002}.
 \\
 \\
 \textbf{Pretending} reality means creating an immersive experience which does not necessarily be in sync with the real world.
@@ -283,30 +288,30 @@ Some activities or games may seem like there is no real immersive experience tha
 aspects, that do require some sort of pretending.
 A flight simulator serves as an example of this concept, as it is technically considered a game but involves a highly physical activity that can also be performed in reality.
 However, someone may not have the possibilities to fly an aircraft themselves or travel the world so simply, which is where pretending comes into play.
-The player is pretending to be a pilot. \todo{does that make sense? find better example maybe}
+The player is pretending to be a pilot.
 The pretending aspect of games is often referred to as the ``Magic Circle'', as seen in figure~\ref{fig:magic-circle}, where the magic circle represents sort of a
-playground that is agreed on by all players which is outside the real world and may be defined by imaginary objects or rules.
+playground that is agreed on by all players which is outside the real world and may be defined by imaginary objects or rules~\cite[p.~4-9]{10.5555/2544002}.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{./Pictures/res/fundamentals/magic-circle}
-    \caption{Magic Circle~\cite{10.5555/2544002}}
+    \caption{Magic Circle~\cite[p.~5]{10.5555/2544002}}
     \label{fig:magic-circle}
 \end{figure}
 \\
 \\
 \textbf{Goals} need to be set in order to correctly design and implement a game.
 During the play-through, there always have to be objectives to the user.
-Even though a game may seem very goalless, there may be some unseen goals such as acts of creation.
+Even though a game may seem very goalless, there may be some unseen goals such as acts of creation~\cite[p.~4-9]{10.5555/2544002}.
 \\
 \\
 \textbf{Rules} instruct the player through the game and give a boundary or limit to the game.
 They are used to describe allowed actions during the gameplay, define progression and - if applicable - give a condition to
-end the game.
+end the game~\cite[p.~4-9]{10.5555/2544002}.
 \\
 \\
 Generally, the definition of a game is very broad and there are different opinions on the definition, however most of them
 do not refer to the games' purpose: it may be purely for entertainment, but can also be for studying, training or attracting interest
-for a topic, which is especially the case in the scope of this work.
+for a topic, which is especially the case in the scope of this work~\cite[p.~11]{10.5555/2544002}.
 
 \subsection{Educational Games}\label{subsec:educational-games}
 Most games have a certain factor of education, so called \textit{stealth-education} involved, even though not
@@ -401,10 +406,10 @@ consideration and develop a new, revised version of the application to create it
 \subsection{Game Engines}\label{subsec:game-engines}
 Game engines are software frameworks that game developers use to create video games more efficiently.
 They provide a set of tools and features that allow developers to create games without needing to build everything from scratch.
-Game engines typically provide a range of features, including graphics rendering, physics simulation, audio processing, animation, scripting, and networking.
+Game engines typically provide a range of features, including graphics rendering, physics simulation, audio processing, animation, scripting, and networking~\cite{technologies-and-innovation,unity-game-development-terms}.
 \\
 Game engines come in various forms, from open-source engines that can be freely used and modified by anyone, to commercial engines that require a license fee to use.
-Some examples of popular game engines include Unity, Unreal Engine and CryEngine.
+Some examples of popular game engines include \textit{Unity}, \textit{Unreal Engine} and \textit{CryEngine}.
 \\
 Game engines can help reduce the time and cost of game development by providing pre-built components and tools, allowing developers to focus on creating the game's content and gameplay mechanics instead of building the underlying technology.
 Additionally, game engines can make it easier to create games that run on multiple platforms, such as desktop computers, mobile devices, and gaming consoles, by providing cross-platform support.
@@ -414,7 +419,7 @@ Game engines have become an essential part of the game development process, and 
 The above-mentioned game engines use different approaches and concepts, which are pointed out here to give an overview over the generally possible approaches to
 designing and developing game engines.
 Generally, game engines are developed in high level languages, e.g.~C\#, Java or C++, the reason being object-oriented programming,
-which allows general concepts such as inheritance, polymorphism, encapsulation and abstraction to create reusable, maintainable and modular code.
+which allows general concepts such as inheritance, polymorphism, encapsulation and abstraction to create reusable, maintainable and modular code~\cite{oop}.
 \\
 Developing a custom game engine can offer several benefits, such as tailoring functionality and performance for the unique aspects of the project, while
 retaining full control and flexibility over new features and the architecture.
@@ -425,10 +430,10 @@ licensing fees or revenue sharing agreements.
 DOTS (Data-Oriented-Technology Stack) is a framework developed by Unity Technologies for high-performance game development.
 It aims to help developers create projects that can efficiently utilize modern hardware and run smoothly on various platforms,
 including consoles, PCs, and mobile devices.
-DOTS is built on three core pillars: Entity Component System, C\# Job System and Burst Compiler~\ref{dots}.
+DOTS is built on three core pillars: Entity Component System, C\# Job System and Burst Compiler~\cite{dots}.
 \\
-For the unity engine architecture, a generic entity component system (ECS) design pattern is used, as seen in figure~\ref{fig:ecs-unity}.
-The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
+For the unity engine architecture, a generic entity component system (\gls{ECS}) design pattern is used, as seen in figure~\ref{fig:ecs-unity}.
+The basic idea behind using an \gls{ECS} is to separate object data and behavior into components, respectively systems.
 Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
 Entities consist of a variety of components, while each entity can have different components based on the needs.
 A purely graphical entity which shows an image may only consist of a single graphics component, however another entity may contain
@@ -436,18 +441,18 @@ a component for graphics, one for sound and another one that holds collision inf
 It is important to note, that components never change an entities' behavior, but only contain data that describes the entity.
 Systems are responsible for collecting all relevant entities (i.e.\ entities that contain specific components) and processing them.
 An example for a system is a rendering engine, which collects all graphical entities \& components and renders them to the screen by
-using the data that is stored within the respective graphics components~\ref{dots}.
+using the data that is stored within the respective graphics components~\cite{dots}.
 \\
 Entity-Component-System approaches may also be used paired with other approaches of game design and are generally very broadly customizable and adaptable
 to specific needs of the developer.
 \\
 The C\# Job System is a multithreading framework that enables developers to write safe, high-performance multithreaded code.
 It helps to utilize the full power of multicore processors by executing tasks in parallel.
-This results in improved performance and responsiveness, especially for CPU-bound tasks like physics simulations, AI calculations, and procedural generation~\ref{dots}.
+This results in improved performance and responsiveness, especially for CPU-bound tasks like physics simulations, AI calculations, and procedural generation~\cite{dots}.
 \\
 The Burst Compiler is a math-aware, LLVM-based compiler developed by Unity to optimize C\# code for high-performance execution.
 It takes advantage of vectorization, cache optimization, and other low-level optimizations to produce highly efficient native code.
-By working together with the C\# Job System, the Burst Compiler helps achieve even greater performance gains~\ref{dots}.
+By working together with the C\# Job System, the Burst Compiler helps achieve even greater performance gains~\cite{dots}.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/res/fundamentals/ECSBlockDiagram-unity}
@@ -455,28 +460,28 @@ By working together with the C\# Job System, the Burst Compiler helps achieve ev
     \label{fig:ecs-unity}
 \end{figure}
 \subsubsection{Unreal}\label{subsubsec:unreal:-component-based-architecture}
-Unreal Engine does not use an Entity Component System (ECS) in the same way Unity does with its Data-Oriented Technology Stack (DOTS) and ECS implementation.
-However, Unreal Engine does use a component-based architecture, which shares some similarities with an ECS.
+\textit{Unreal Engine} does not use an Entity Component System (\gls{ECS}) in the same way \textit{Unity} does with its Data-Oriented Technology Stack (\gls{DOTS}) and \gls{ECS} implementation.
+However, \textit{Unreal Engine} does use a component-based architecture, which shares some similarities with an \gls{ECS}~\cite{UNREAL:Framework}.
 \\
-In Unreal Engine, as seen in figure~\ref{fig:unreal-concept}, game objects are represented as Actors, which can have
+In \textit{Unreal Engine}, as seen in figure~\ref{fig:unreal-concept}, game objects are represented as Actors, which can have
 various components attached to them to define their behavior and appearance.
-This approach allows for modularity and reusability of code, which is one of the primary goals of an ECS.
+This approach allows for modularity and reusability of code, which is one of the primary goals of an \gls{ECS}~\cite{UNREAL:Framework}.
 \\
-While Unreal Engine's component-based architecture has some similarities with an ECS, it does not follow the strict separation of
+While \textit{Unreal Engine's} component-based architecture has some similarities with an ECS, it does not follow the strict separation of
 data and logic that characterizes an ECS. In an ECS, entities are simple identifiers, components hold only data, and systems
 handle the processing of component data.
 This separation of concerns allows for better performance and scalability, particularly on modern hardware with multiple cores, due to the possibility
-of separating different systems into multiple threads.
+of separating different systems into multiple threads~\cite{UNREAL:Framework}.
 \\
-Unreal Engine's component-based architecture, though not a pure ECS implementation, provides a powerful
+\textit{Unreal Engine's} component-based architecture, though not a pure \gls{ECS} implementation, provides a powerful
 and flexible way to create game objects and manage their behavior.
 This is done by a method which constantly updates each component by using their built-in methods, instead of having different systems accessing and changing data within components.
 Developers can still achieve good performance and scalability by carefully designing their code and taking
 advantage of Unreal Engine's built-in multi-threading and optimization features.
 \\
-Furthermore, Unreal Engine has a built-in visual scripting system called Blueprints, which allows developers to create game logic without writing code.
+Furthermore, \textit{Unreal Engine} has a built-in visual scripting system called \textit{Blueprints}, which allows developers to create game logic without writing code.
 This system enables artists, designers, and programmers to collaborate more efficiently and helps those with little programming experience to contribute
-to game development.
+to game development~\cite{UNREAL:Framework}.
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/res/fundamentals/unreal-framework}
@@ -484,12 +489,11 @@ to game development.
     \label{fig:unreal-concept}
 \end{figure}
 \subsubsection{CryEngine}\label{subsubsec:cryengine}
-While CryEngine mainly features the same patterns and approaches as Unreal does, one major standout is the very high fidelity graphical rendering
-ability.
-Particularly real-time rendering and physical based rendering underline this major benefit of using CryEngine, as it enables
-creators and designers to create highly realistic environments, for example seen in games like Far Cry, made by Crytek using their own
-engine.
-
+While \textit{CryEngine} mainly features the same patterns and approaches as Unreal does, one major standout is the very high fidelity graphical rendering
+ability~\cite{cryengine-docu}.
+Particularly real-time rendering and physical based rendering underline this major benefit of using \textit{CryEngine}, as it enables
+creators and designers to create highly realistic environments, for example seen in games like \textit{Far Cry}, made by \textit{Crytek} using their own
+engine~\cite{cryengine}.
 
 \section{Background}\label{sec:background}
 In this section, the background to the scope of this work is provided and existing solutions regarding the specified problem and

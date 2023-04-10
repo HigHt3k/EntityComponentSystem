@@ -1,0 +1,30 @@
+;; This logfile was generated automatically by `xindy'
+;; at 10.04.2023  15:28:44
+;; Indexstyle: "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\zYSaKgEayi", Rawindex: "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\NbRy55eWOE", Output: "Abschlussarbeit.syi"
+
+
+Building indexentry-tree:
+Hierdepth of index is :TREE
+
+
+Forming letter-groups:
+
+Reading raw-index "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\NbRy55eWOE"...WARNING: location-reference "{}{}" did not match any location-class! (ignored)
+WARNING: location-reference "{}{}" did not match any location-class! (ignored)
+WARNING: location-reference "{}{}" did not match any location-class! (ignored)
+WARNING: location-reference "{}{}" did not match any location-class! (ignored)
+WARNING: location-reference "{}{}" did not match any location-class! (ignored)
+
+makeglossaries diagnostic messages:
+
+You may have forgotten to add a location 
+class with \GlsAddXdyLocation or you may have 
+the format incorrect or you may need 
+the package option esclocations=true.
+
+makeglossaries messages:
+
+Cannot locate xindy module for language nil in codepage utf8.
+Retrying using default codepage.
+Cannot locate xindy module for language nil.
+Retrying with -L general

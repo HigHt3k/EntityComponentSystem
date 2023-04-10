@@ -1,0 +1,20 @@
+;; This logfile was generated automatically by `xindy'
+;; at 10.04.2023  15:28:47
+;; Indexstyle: "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\Vfeh7toI3v", Rawindex: "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\OEFbmaZ93T", Output: "Abschlussarbeit.gls"
+
+
+Building indexentry-tree:
+Hierdepth of index is :TREE
+
+sort-indexentries: (FORWARD BACKWARD FORWARD FORWARD)
+
+Forming letter-groups:
+sort-indexentries: (FORWARD BACKWARD FORWARD FORWARD)
+Letter-group: "€†Ú¨å— ¨Ë—†ÚÃËí" -> "A"
+
+makeglossaries messages:
+
+Cannot locate xindy module for language nil in codepage utf8.
+Retrying using default codepage.
+Cannot locate xindy module for language nil.
+Retrying with -L general
