@@ -18,8 +18,18 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * The Main Menu of the Game.
+ * Shows button to start different scenes, such as level map, options etc.
+ * Also options to change name, mute the sound and exit the game
+ */
 public class MainMenuScene extends BaseMenuScene {
 
+    /**
+     * Create a new Main Menu for the game
+     * @param name: name of the scene
+     * @param id: id of the scene
+     */
     public MainMenuScene(String name, int id) {
         super(name, id);
 
@@ -64,6 +74,9 @@ public class MainMenuScene extends BaseMenuScene {
         addEntityToScene(buildButton);
     }
 
+    /**
+     * Initialize the scene
+     */
     @Override
     public void init() {
 
