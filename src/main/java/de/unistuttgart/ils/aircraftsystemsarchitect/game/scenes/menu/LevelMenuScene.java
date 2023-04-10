@@ -41,8 +41,6 @@ import java.util.Objects;
  * Shows basic level information and highscores
  */
 public class LevelMenuScene extends BaseMenuScene implements Tutorial {
-    private static final int ITEM_WIDTH = 350;
-    private static final int ITEM_HEIGHT = 60;
     protected int X_MARGIN = 200;
     protected int Y_MARGIN = 300;
     private final Entity highscoreView;
@@ -466,15 +464,6 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
             if(e.getName().contains("lvl") || e.getName().equals("line_connector")) {
                 e.getComponent(ColliderComponent.class).deactivateAllObjects();
             }
-        }
-    }
-
-    /**
-     * only show the map, without activating buttons
-     */
-    private void showMap() {
-        for(Entity e : Query.getEntitiesWithComponent(RenderComponent.class)) {
-            e.getComponent(RenderComponent.class).showAllObjects();
         }
     }
 }
