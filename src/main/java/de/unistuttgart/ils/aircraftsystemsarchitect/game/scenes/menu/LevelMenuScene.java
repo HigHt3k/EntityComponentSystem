@@ -72,12 +72,14 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         BufferedImage red = null;
         BufferedImage green = null;
         BufferedImage yellow = null;
+        BufferedImage grey = null;
 
         try {
             blue = ImageIO.read(new File("res/menus/gui/processor_blue.png"));
             red = ImageIO.read(new File("res/menus/gui/processor_red.png"));
             yellow = ImageIO.read(new File("res/menus/gui/processor_yellow.png"));
             green = ImageIO.read(new File("res/menus/gui/processor_green.png"));
+            grey = ImageIO.read(new File("res/menus/gui/processor_grey.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -101,15 +103,15 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         addLevel(14, 645, 670, yellow);
         addLevel(15, 605, 740, yellow);
         addLevel(16, 570, 810, red);
-        addLevel(18, 530, 880, red);
-        addLevel(19,760,550, red);
+        addLevel(18, 530, 880, grey);
+        addLevel(19,760,550, grey);
 
-        addLevel(20, 800, 425, red);
-        addLevel(21, 860, 375, red);
-        addLevel(22, 940, 425, red);
-        addLevel(23, 1000, 375, red);
-        addLevel(24, 1060, 425, red);
-        addLevel(25, 1120, 400, red);
+        addLevel(20, 800, 425, grey);
+        addLevel(21, 860, 375, grey);
+        addLevel(22, 940, 425, grey);
+        addLevel(23, 1000, 375, grey);
+        addLevel(24, 1060, 425, grey);
+        addLevel(25, 1120, 400, grey);
 
         makeConnections();
         unlockAll();

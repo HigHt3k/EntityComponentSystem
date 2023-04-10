@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map id="23" name="@230000" width="5" height="3" difficulty="HARD">
+<map id="23" name="@100" width="5" height="3" difficulty="HARD">
     <description>
-        <part>@230001</part>
+        <part>@100</part>
     </description>
     <goal>1e-5</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
