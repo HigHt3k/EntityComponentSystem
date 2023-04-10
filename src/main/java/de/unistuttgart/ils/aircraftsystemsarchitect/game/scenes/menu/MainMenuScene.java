@@ -44,7 +44,7 @@ public class MainMenuScene extends BaseMenuScene {
         Font font = FontCollection.scaleFont(FontCollection.bit8Font, 40f);
         int ITEM_MARGIN = 20;
         int ITEM_HEIGHT = 60;
-        int ITEM_WIDTH = 200;
+        int ITEM_WIDTH = 300;
         GenericButton playButton = new GenericButton(
                 "Play", IdGenerator.generateId(),
                 1920 / 2 - ITEM_WIDTH / 2, 500 + 0,
