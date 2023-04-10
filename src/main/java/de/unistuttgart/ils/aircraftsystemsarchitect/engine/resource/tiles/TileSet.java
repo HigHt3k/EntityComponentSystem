@@ -21,7 +21,6 @@ public class TileSet {
         this.descriptions = new HashMap<>();
         this.types = new HashMap<>();
         this.minNonPassives = new HashMap<>();
-        Game.logger().info("Tileset loaded.");
     }
 
     public HashMap<Integer, BufferedImage> getTiles() {

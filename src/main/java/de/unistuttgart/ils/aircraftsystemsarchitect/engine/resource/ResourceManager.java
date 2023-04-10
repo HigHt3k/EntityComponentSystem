@@ -100,7 +100,13 @@ public class ResourceManager {
                         minNonPassive = "1";
                     }
 
-                    BufferedImage img = ImageIO.read(new File(imagePath));
+                    BufferedImage img = null;
+                    System.out.println(imagePath);
+                    try {
+                        img = ImageIO.read(new File(imagePath));
+                    } catch (IOException e) {
+                        Game.logger().severe("Couldn't load tile: " + id + " - " + e.getMessage());
+                    }
 
                     t.getTiles().put(Integer.parseInt(id), img);
                     t.getDescriptions().put(Integer.parseInt(id), description);
@@ -112,6 +118,8 @@ public class ResourceManager {
         }
 
         tileSet = t;
+
+        Game.logger().info("Tileset loaded.");
     }
 
     /**
