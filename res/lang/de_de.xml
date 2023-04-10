@@ -55,7 +55,7 @@
     <string id="806">Okay, aber wie öffne ich die Karte?</string>
     <string id="807">Klingt gut. Kann ich überall hingehen?</string>
     <string id="808">In Ordnung, legen wir los!</string>
-    <string id="900">Es fehlen einige Kabel, die wir reparieren müssen. Ich denke, ich könnte sie einfach aus meinem Bauplan nehmen und aufstellen.</string>
+    <string id="900">Es fehlen einige Kabel, die wir reparieren müssen. Ich denke, ich könnte sie einfach aus meinem Inventar nehmen und platzieren.</string>
     <string id="901">Richtig, du hast es verstanden, Tina! Sobald du die Kabel eingerichtet hast, kannst du dein System mit dieser Schaltfläche auf deinem Telefon überprüfen.</string>
     <string id="902">Auf deinem Telefon findest du auch Informationen zu den Systemanforderungen. Du kannst die Anzahl der Aktuatoren sehen, die korrekt funktionieren müssen...</string>
     <string id="903">... sowie die Sicherheitskategorisierung.</string>
@@ -111,14 +111,14 @@
     <string id="120000">Hydraulikleck</string>
     <string id="120001">Aufgrund eines Hydrauliklecks waren einige Komponenten längere Zeit im Öl.</string>
     <string id="120002">Ähnliche Komponenten, die aufgrund derselben Ursache, in diesem Fall das Öl, das die Komponenten zerstört hat, ausfallen, haben einen sogenannten Common-Cause Failure (CCF).</string>
-    <string id="120003">Diese Art von Ausfall kann behoben werden, indem eine separate Leitung hinzugefügt wird, die außerhalb der Hydraulikölleitungen verläuft.</string>
+    <string id="120003">Diese Art von Ausfall kann behoben werden, indem eine separate Leitung hinzugefügt wird, die ausserhalb der Hydraulikölleitungen verläuft.</string>
     <string id="130000">3 Aktuatoren</string>
     <string id="130001">In diesem Szenario hast du 3 Aktuatoren, von denen mindestens einer unter den gegebenen Umständen korrekt arbeiten muss.</string>
-    <string id="140000">Außer Kontrolle</string>
+    <string id="140000">Ausser Kontrolle</string>
     <string id="140001">Out of Control Fehler sind Systemfehler, die unerkannt bleiben und aufgrund dieses Verhaltens andere Komponenten beeinflussen.</string>
     <string id="140002">Normalerweise haben Komponenten eine integrierte Fehlererkennung, diese ist jedoch nicht immer zu 100% genau.</string>
     <string id="140003">Du kannst die Fehlererkennungsrate der Komponenten in der Tooltip-App unten sehen. Dies zeigt, wie gut jede Komponente Fehler auf einer Skala von 0 bis 1 erkennen kann.</string>
-    <string id="140004">Versuche, das gleiche System wie zuvor zu implementieren, diesmal müssen jedoch einige Außer-Kontrolle-Ausfälle verhindert werden.</string>
+    <string id="140004">Versuche, das gleiche System wie zuvor zu implementieren, diesmal müssen jedoch einige Ausser-Kontrolle-Ausfälle verhindert werden.</string>
     <string id="150000">Voting-Triplex</string>
     <string id="150001">Hier musst du möglicherweise das System abstimmen. Verbinde 3 Sensoren mit 2 Aktuatoren. Finde einen Weg, um die Anforderungen zu erfüllen.</string>
     <string id="160000">Quadruplex</string>
