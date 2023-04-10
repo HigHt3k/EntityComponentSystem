@@ -35,6 +35,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * The Level Menu (Map) Scene of the game.
+ * Shows the different levels that can be played, as well as a progress path (displayed via an aircraft that is handled as a game "map").
+ * Shows basic level information and highscores
+ */
 public class LevelMenuScene extends BaseMenuScene implements Tutorial {
     private static final int ITEM_WIDTH = 350;
     private static final int ITEM_HEIGHT = 60;
@@ -50,6 +55,11 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
     private int ingoId = 800;
     private CharacterTalking currentlyTalking;
 
+    /**
+     * Create a new Level Menu
+     * @param name: name of the scene
+     * @param id: id of the scene
+     */
     public LevelMenuScene(String name, int id) {
         super(name, id);
 
@@ -147,6 +157,10 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         addEntityToScene(highscoreView);
     }
 
+    /**
+     * Unlock a level based on the id the level (scene) uses
+     * @param id: level / scene id
+     */
     public void unlockLevel(int id) {
         for(Entity e : getEntities()) {
             if (e instanceof LevelImageButton lb) {
@@ -157,6 +171,9 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
+    /**
+     * Unlock all levels available
+     */
     private void unlockAll() {
         for (Entity e : getEntities()) {
             if (e instanceof LevelImageButton lb) {
@@ -170,6 +187,13 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
+    /**
+     * Add a level to the map
+     * @param id: id of the level/scene
+     * @param x: x position on screen
+     * @param y: y position on screen
+     * @param image: the image to use for level
+     */
     private void addLevel(int id, int x, int y, BufferedImage image) {
         LevelImageButton lvl = new LevelImageButton("lvl" + id, IdGenerator.generateId(),
                 x, y, 50, 50, "", FontCollection.bit8Font,
@@ -179,6 +203,9 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         addEntityToScene(lvl);
     }
 
+    /**
+     * Initialize the scene
+     */
     @Override
     public void init() {
         checkUnlocks();
@@ -188,6 +215,9 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
+    /**
+     * check if requirements are met to unlock levels
+     */
     public void checkUnlocks() {
         for(Scene s : Game.scene().getScenes()) {
             if(s instanceof GameScene gs) {
@@ -210,6 +240,9 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
+    /**
+     * create the connections between level icons to show the progression path.
+     */
     private void makeConnections() {
         ArrayList<Entity> entities = (ArrayList<Entity>) getEntities().clone();
         for(Entity e : entities) {
@@ -237,12 +270,21 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
+    /**
+     * Create a line entity between two points
+     * @param p1: beginning
+     * @param p2: end
+     */
     private void makeConnection(Point p1, Point p2) {
         Entity line = new LineEntity("line_connector", IdGenerator.generateId(),
                 new Point(p1.x + 25, p1.y + 25), new Point(p2.x + 25, p2.y + 25), 4, Bit8.GREY);
         addEntityToScene(line);
     }
 
+    /**
+     * Add a highscore to the highscore view
+     * @param levelId: level id to lookup highscores for
+     */
     public void addHighscores(int levelId) {
         StringBuilder players = new StringBuilder();
         StringBuilder highscores = new StringBuilder();
@@ -256,6 +298,10 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         highscoreView.getComponent(RenderComponent.class).getRenderObjectsOfType(TextObject.class).get(0).setText(highscores.toString());
     }
 
+    /**
+     * Show the level information
+     * @param levelId: id of level to show info for
+     */
     public void showLevelInfo(int levelId) {
         GameScene s = (GameScene) Game.scene().getScene(levelId);
 
@@ -335,6 +381,9 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         return tutorialRunning;
     }
 
+    /**
+     * Set the tutorial dialogue running
+     */
     @Override
     public void setTutorialRunning() {
 
@@ -374,6 +423,9 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         }
     }
 
+    /**
+     * Remove the tutorial entities
+     */
     @Override
     public void removeTutorial() {
         tutorialRunning = false;
