@@ -1,15 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset name="tiles" tilewidth="16" tileheight="16" tilecount="3" columns="0">
  <grid width="1" height="1"/>
- <tile id="0">
-  <image width="16" height="16" source="res/tiles/cable.png"
-         description="Cables can be used to connect components with each other."/>
- </tile>
  <tile id="1">
   <image width="16" height="16" source="res/tiles/concrete.png"/>
- </tile>
- <tile id="2">
-  <image width="16" height="16" source="res/tiles/wall.png"/>
  </tile>
  <tile id="200" type="COMPUTER">
   <image width="32" height="32" source="res/avionics/default.png"/>
@@ -37,9 +30,6 @@
  </tile>
  <tile id="208" type="ACTUATOR">
   <image width="32" height="32" source="res/avionics/actuator.png" description="@27" minNonPassive="1"/>
- </tile>
- <tile id="1000">
-  <image width="32" height="32" source="res/tiles/air.png"/>
  </tile>
  <tile id="494" type="PLACEHOLDER">
   <image width="32" height="32" source="res/tiles/cable-placeholder2-bottom-right.png"/>
