@@ -20,7 +20,8 @@ The implementation uses a basic entity-component-system as foundation and enhanc
 \section{Programming Language}\label{sec:programming-language}
 The programming language that was chosen for this implementation is \textit{JAVA}.
 Java is a high-level, object-oriented programming language that was originally developed by Sun Microsystems (now owned by Oracle Corporation) in the mid-1990s.
-It is designed to be portable, meaning that it can be run on a wide variety of platforms, including Windows, macOS, Linux, and many others, without needing to be recompiled for each platform.
+It is designed to be portable, meaning that it can be run on a wide variety of platforms, including Windows, macOS,
+Linux, and many others, without needing to be recompiled for each platform.
 \\
 Java is widely used for developing both desktop and web-based applications, as well as mobile applications for Android devices.
 It is also used extensively in server-side programming and for building enterprise applications.
@@ -29,13 +30,14 @@ One of the key features of Java is its virtual machine (VM), which allows Java p
 This makes it possible to write a single Java program that can run on multiple platforms, without needing to be modified for each one.
 \\
 Java also has a large standard library of classes and functions, which makes it easier to write complex programs without needing to reinvent the wheel.
-Additionally, Java is known for its strong emphasis on security, which makes it a popular choice for building applications that need to be highly secure and resistant to cyber attacks.
+Additionally, Java is known for its strong emphasis on security, which makes it a popular choice for building applications that need to be highly secure
+and resistant to cyber attacks.
 \\
 Java was chosen because of the wide variety of standard libraries and resources available, the very object-oriented programming approach which enables for
 extending and inheriting of classes to adapt objects to the games and game engines needs.
 Due to garbage collection, Java enables developing without having to consider memory allocations.
 Furthermore, a great benefit of using Java is the multi-platform support due to Java being an interpreted language which works
-independent of operating systems or processor architectures.
+independent of operating systems or processor architectures~\cite{JAVA}.
 
 \section{Game Engine}\label{sec:game}
 The game engine implements a variety of methods and classes which are used for handling the general program execution, independent of the actual game implementation.
@@ -170,7 +172,8 @@ The execution order of the game loop can be seen in figure~\ref{fig:gameloop-pro
 \subsection{Input Recording}\label{subsec:input-recording}
 Input recording is executed in a separate thread and handles inputs at a rate of $\Delta t_{inputs} = 20 ms$, since inputs in between two frames
 would otherwise not be received by the games' input handling system.
-$20 ms$ is a delta time at which most input devices send button inputs, according to manufacturer specifications, therefore it is suitable for this application as well. \todo{add note}
+$20 ms$ is a delta time that was found to be working best with the given circumstances.
+It records all user inputs correctly while preventing unused overhead from recording more events than usable by the game systems.
 \\
 Generally, a button press needs to be differentiated from a button click.
 While a button press is a continuous event, a button click is a one time event defined as the state change from button is not pressed to button is pressed.
@@ -208,7 +211,7 @@ After the update, the active scene is repainted by the \textit{RenderingEngine}~
 
 \subsection{Rendering Engine}\label{subsec:graphics-engine}
 The \textit{RenderingEngine} is a static class implemented within the game engine to handle all visible objects, screen rendering and scaling.
-All content is rendered to a \textit{JPanel} object by using the \textit{Graphics2D} instance available by default, this is called the \textit{RenderingPanel}.
+All content is rendered to a \textit{JPanel} object by using the \textit{Graphics2D} instance available by default, this is called the \textit{RenderingPanel}~\cite{jpanel,graphics2d}.
 \\
 The \textit{RenderingEngine} receives scaling factors for width and length from the \textit{ScalingEngine} and the \textit{RenderConfiguration}
 classes, which handle resizing the frame,
@@ -244,7 +247,7 @@ The reason for multiple UI and Game layers is simply to allow for a greater vari
 \subsection{Sound Engine}\label{subsec:sound-engine}
 A \textit{SoundEngine} is implemented in the game engine, which handles playing, pausing and stopping any audio stream available.
 During each cycle, the \textit{SoundEngine} collects all entities with a \textit{SoundComponent} available, and checks if they are already playing and if not, if they should be playing.
-The \textit{Java} built-in library \textit{Clip} is used to play audio streams and loop them if necessary.
+The \textit{Java} built-in library \textit{Clip} is used to play audio streams and loop them if necessary~\cite{clip}.
 This allows for an easy handling of any sound that should be played during a game, e.g.\ background music or button click sounds.
 
 \subsection{Utility Classes}\label{subsec:utility-classes}
@@ -369,7 +372,7 @@ a hint on what could be improved by the user.
 To correctly validate the goal, the actual probability calculated is summed up with an epsilon value of $\epsilon = 1e-7$,
 to prevent incorrect validations due to rounding errors in double values.
 The double precision floating point error occurs due to the internal representation, which can only represent a specified range of
-values.
+values~\cite{floating-point}.
 Therefore, especially when working with very small or very large numbers, rounding errors (i.e.\ the next representable value by the internal structure which can be stored
 in the binary format) occur.
 \subsubsection{Markov Processor}\label{subsubsec:example-markov-chains}
@@ -501,7 +504,8 @@ With each iteration, new \textit{MarkovStates} are added to the stack, until eac
 are in a failed state.
 \textbf{Memoization}\\
 To further optimize the algorithm, memoization was implemented.
-Memoization is a programming technique used to optimize the execution time of computationally expensive functions by caching their results for a given set of input parameters.
+Memoization is a programming technique used to optimize the execution time of computationally expensive functions by caching
+their results for a given set of input parameters~\cite{10.5555/971738.971743}.
 When a memoized function is called with the same input parameters as a previous call, the cached result is returned instead of re-computing the function.
 In the implementation, a \textit{HashMap} is used, that stores each \textit{MarkovState} as a key-value pair by using a hash code
 calculated from the current \textit{MarkovStateObjects} states.
@@ -698,14 +702,14 @@ dialogues, or even a storyline in the future, utilizing these character designs.
 
 \section{Data Storage \& Data Parsing}\label{sec:data-storage-&-data-parsing}
 It was chosen to save and load resources from XML files, due to the benefits of this file format.
-XML stands for \textit{eXtensible Markup Language}, and is a markup language that is used for encoding documents in a format that is both human-readable and machine-readable.
-It was designed to be flexible and extensible, allowing developers to create their own markup tags and structure data in a way that is specific to their needs.
+XML means \textit{eXtensible Markup Language}, and is a markup language that is used for encoding documents in a format that is easily readable for both human and computers.
+It was designed to be flexible and extensible, allowing developers to create their own markup tags and structure data in a way that is specific to their needs~\cite{xml}.
 \\
 XML documents are made up of elements, which are enclosed in opening and closing tags, and attributes, which provide additional information about the element.
 The structure of an XML document is defined by a \textit{Document Type Definition (DTD)} or an \textit{XML Schema}, which specifies the elements and attributes that are allowed in the document and the relationships between them.
 \\
 One of the main benefits of XML is its ability to store and transfer data in a standardized format that can be easily parsed by different software applications, regardless of the platform, and there are
-already multiple implementations available to successfully do this, including JAVA's built-in library for DOM parsing.
+already multiple implementations available to successfully do this, including JAVA's built-in library for DOM parsing~\cite{dom-parser}.
 \\
 The structure of the different XML files for levels, tilesets, scores and language used in this project will be explained in the next chapters.
 \subsection{Tileset}\label{subsec:tileset}

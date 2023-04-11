@@ -23,7 +23,14 @@
 \providecommand*\glsXpageXhyperemph[2]{\setentrycounter[#1]{page}\hyperemph{#2}}
 \providecommand*\glsXpageXglsignore[2]{\setentrycounter[#1]{page}\glsignore{#2}}
 \begin{theglossary}\glossaryheader
+\glsgroupheading{C}\relax\glsresetentrylist
+\glossentry{CTMC}{\glossaryentrynumbers{\relax 
+\glsXpageXglsnumberformat{}{7}}}\glsgroupskip
+\glsgroupheading{D}\relax\glsresetentrylist
+\glossentry{DTMC}{\glossaryentrynumbers{\relax 
+\glsXpageXglsnumberformat{}{7}}}\glsgroupskip
 \glsgroupheading{E}\relax\glsresetentrylist
 \glossentry{ECS}{\glossaryentrynumbers{\relax 
-\glsXpageXglsnumberformat{}{12}}}%
+\glsXpageXglsnumberformat{}{13}\delimN 
+\glsXpageXglsnumberformat{}{14}}}%
 \end{theglossary}\glossarypostamble
