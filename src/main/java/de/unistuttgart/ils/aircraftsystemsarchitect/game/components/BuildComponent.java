@@ -3,6 +3,11 @@ package de.unistuttgart.ils.aircraftsystemsarchitect.game.components;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.Component;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.SimulationType;
 
+/**
+ * The BuildComponent is used to store parameters regarding the inventory of the player.
+ * A build component is attached to an entity that should be available for building at has
+ * parameters such as the failure ratio and the current amount of available objects of the type.
+ */
 public class BuildComponent extends Component {
     private int amount;
     private float failureRatio;

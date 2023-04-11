@@ -7,6 +7,12 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.simulation.Simu
 
 import java.util.ArrayList;
 
+/**
+ * SimulationComponent are used by the {@link de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.SimulationSystem} to
+ * correctly simulate the configuration of the current system.
+ * It is used as a parameter storage for different variables such as
+ * the failure ratio, failure detection ratio, current state and input channel states.
+ */
 public class SimulationComponent extends Component {
     private float failureRatio;
     private float failureRecognitionRatio = 0.9f;
@@ -104,6 +110,11 @@ public class SimulationComponent extends Component {
         return simulationType;
     }
 
+    /**
+     * Set the simulation type.
+     * In case of Sensor: add the id of this component to the group ids list to create a new group.
+     * @param simulationType: the simulation type to set for this component
+     */
     public void setSimulationType(SimulationType simulationType) {
         this.simulationType = simulationType;
         if(simulationType == SimulationType.SENSOR) {
@@ -116,6 +127,10 @@ public class SimulationComponent extends Component {
         groupIds.add(groupId);
     }
 
+    /**
+     * Resets the currently stored group ids to an empty list.
+     * In case of Sensor type: group id is set to the id of this component
+     */
     public void resetGroupIds() {
         groupIds.clear();
         if(this.getSimulationType() == SimulationType.SENSOR) {
