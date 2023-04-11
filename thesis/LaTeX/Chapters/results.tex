@@ -1,24 +1,14 @@
 \chapter{Results}\label{ch:results}
-\section{Educational Achievements}\label{sec:educational-achievements}
-\section{Limitations}\label{sec:limitations}
-The field of aircraft system engineering is vast and intricate, and this work aims to simplify this complex subject by narrowing its scope.
-Various failure types (such as mechanical or electrical failures) are considered only as a generalized failure of any type.
-However, different failures may result in diverse system behaviors, which must be analyzed in real-life situations.
-\\
-While incorporating multiple failure types could be a potential future feature, it would considerably slow down the current
-approach of Markov generation, as explained in~\ref{subsubsec:example-markov-chains}.
-The implementation is based on generating Markov chains that grow in size as the number of components in the system increases.
-Introducing multiple failure types would further raise the complexity of the Markov chain, resulting in approximately $m^n$ more states,
-where $m$ represents the number of distinct failure states and $n$ the number of components.
-\todo{check if that is true, adapt equations}
-
+This section focuses on the results acquired by this work, specifically going into detail about
+limitations of the application and challenges that were found during the development and implementation.
+Furthermore, questions for user feedbacks that were determined to be useful during the development process are proposed.
 \section{Challenges}\label{sec:challenges}
 During the implementation process, some major challenges - not only negative, also in a positive way - occurred, which will be described in this chapter, to give an
 overview and a guideline on what may be done differently during the next iteration of the project or during the development of other
 applications and what may be done in a similar way, as it worked well.
 \subsection{Game Engine Development}\label{subsec:entity-component-system-challenges}
 One major part of this work was the implementation of a game engine, using the entity-component system approach in a similar way
-Unity handles its GameObjects.
+\textit{Unity} handles its GameObjects.
 This resulted in a very structured and extendable framework, which servers as a good baseline and enables the development of the actual game.
 As much as this provides flexibility, it is also a lot of work that went into a part of the implementation, that to the user
 does not provide any obvious benefits, as there is nothing which is actually visible from this implementation approach.
@@ -27,15 +17,56 @@ already existing game engines provide, where only a very small subset would be u
 may have occurred due to the relatively specific use case of this work.
 Eventually, finishing the work with a game engine that can be used for any further developments of the game without having to worry
 about the implementation of the engine is a benefit especially for further development and feature implementations.
-
+\subsection{Level Progression}\label{subsec:level-progression}
+Due to a wide audience that should be able to use the application, compromises between level progression difficulty and
+amount of descriptions were made, which may not be chosen ideally yet.
+However, this can only be determined by analyzing the behavior and interest of different groups of people during play-testing.
+To solve any potential issues, user feedback should be taken into consideration.
+A proposal to user feedback questions is made in section~\ref{sec:feedback-questions}.
 \subsection{Programming Language}\label{subsec:programming-language}
 Another challenge was the usage of Java itself, as this was mainly chosen due to already existing coding knowledge with this
 language and a great availability of already existing libraries, such as rendering libraries.
 Furthermore, Java is a very understandable and readable language and applications can easily be used on most devices, which are great benefits.
 However, other languages such as C++ or C\# may be more suitable for game development in general, which is not only shown by
-the usage of languages in the modern gaming industry (e.g. Minecraft was originally created in Java, but is now also switching to C++), but
+the usage of languages in the modern gaming industry, but
 also by the general performance of methods.
 Due to Java being interpreted, most methods, in this work this is especially mentionable for the simulation part of the game, are being slowed down
 by a margin compared to other languages like C++.
 To correctly assess this, these methods would also need to be implemented in other languages, however the above-mentioned would
 be the expected result.
+
+\section{Limitations}\label{sec:limitations}
+The field of aircraft system engineering is vast and intricate, and this work aims to simplify this complex subject by narrowing its scope.
+Various failure types (such as mechanical or electrical failures) are considered only as a generalized failure of any type.
+However, different failures may result in diverse system behaviors, which must be analyzed in real-life situations.
+\\
+While incorporating multiple failure types could be a potential future feature, it would considerably slow down the current
+approach of Markov generation, as explained in~\ref{subsubsec:example-markov-chains}.
+The implementation is based on generating Markov chains that grow in size as the number of components in the system increases.
+Introducing multiple failure types would further raise the complexity of the Markov chain by creating exponentially more states in the state space
+with differing transition rates.
+This would result in an exponentially higher computational complexity, as the complexity of the Markov chain algorithm is
+$O(n \log{n})$ with a growing Markov tree~\cite{10.2307/2337551}.
+Therefore, the computation time may increase significantly, which may result in uncomfortably long waiting times to receive the
+performance feedback (score).
+\\
+A possible solution to - at least to some degree - prevent the above-mentioned scenario from happening may be to implement multithreaded
+generation and look-up of the Markov chain implementation.
+By allocating multiple cores of the \gls{CPU}, the calculations should be more performant and therefore faster, however it is important
+to carefully set up multithreading, as some parts of the calculations may need results from another thread.
+\section{Feedback Questions}\label{sec:feedback-questions}
+Some questions should be asked during the play-testing of the game, which will mainly be during the ``Science Day'' at the \textit{University of Stuttgart},
+in order to gain insight into necessary adjustments, possible feature requests and bugs.
+The following questions were identified during the development process of the application and
+may be asked and documented by the supervisor(s) during the open-door day.
+\begin{enumerate}
+    \item Is the tutorial understandable? Are there any unclarities or confusions where either more or less explanation is needed?
+    \item Is the user interface self-explaining? Could a different component-layout or color-scheme solve any potential issues?
+    \item Are there any bugs during play-testing?
+    \item Is the level progression too easy or hard?
+    \item Are there any calculations that should not have occurred the way they have?
+    \item Is the entertainment value high enough to keep people interested or is there too much text content?
+    \item Are there any performance issues?
+\end{enumerate}
+The questions should be well documented and the results of the questions should be analyzed carefully in order to
+correctly go forward with a new iteration of the implementation.

@@ -114,7 +114,7 @@ hovering an object at the same location as the collision object.
 
 \textbf{Sound Component:} \\
 The \textit{SoundComponent} class can be attached to any entity that needs to have a sound played at times.
-It implements methods to set the state of the sound sample to play, pause or stop and contains the actual sound sample to be used by the \textit{SoundEngine}. \\ \\
+It implements methods to set the state of the sound sample to play, pause or stop and contains the actual sound sample to be used by the \textit{SoundEngine}.
 
 \textbf{Action Component:} \\
 \textit{ActionComponents} are used for storing a mapping of input to action within an entity, e.g.\ clicking a button which opens another scene.
@@ -304,7 +304,7 @@ There are different \textit{SimulationTypes}, which are handled differently.
 For the component and cable placement, the following constraints apply:
 On each game grid tile, there may only be exactly one component of type \textit{ACTUATOR}, \textit{SENSOR}, \textit{COMPUTER} or \textit{VOTER}.
 If any of the above-mentioned components exists on a tile, no cable may be placed at this position.
-CABLE type components are handled differently, as there may be cables of different types (red, blue, green, yellow) on the same tile, to enable
+\textit{CABLE} type components are handled differently, as there may be cables of different types (red, blue, green, yellow) on the same tile, to enable
 cross strapping of different components.
 Cables can be rotated at both ends to correctly connect components as wanted.
 Whenever a cable or component is placed or rotated, the connections are updated.
@@ -313,7 +313,15 @@ Each cable port can be used to connect a single other entity to the cable port.
 Sensors have 4 cable ports with the type output, respectively actuators have 4 cable ports with type input.
 Computers and voters have in and out puts, whereas cables only have a single in and output.
 When replacing or removing a component, the removed component will be put back to the build panel and may be used again.
-\todo{flow besser beschreiben}
+
+To summarize, the following features are currently implemented in the \textit{BuildHandler} class:
+\begin{itemize}
+    \item add items from inventory to grid
+    \item remove items from grid
+    \item replace items on the grid
+    \item rotate cables (input and output)
+    \item switching the cable layer currently used
+\end{itemize}
 \subsubsection{CursorSelectorHandler}\label{subsubsec:cursorselectorhandler}
 For handling game pad and keyboard inputs, the \textit{CursorSelectorHandler} was implemented.
 It creates a globally available entity (meaning, it is available in every scene), which displays a virtual cursor that can be
@@ -533,6 +541,12 @@ Whenever a tutorial dialogue needs to be handled, this interface has to be imple
 The basic layout of the scenes was already described in~\ref{subsec:graphic-design}, the finished implementation of these
 layouts is visualized in figures~\ref{fig:game-scene} and~\ref{fig:level-scene}.
 Furthermore, the menu scene implementation is displayed in figure~\ref{fig:menu-scene}.
+
+It is possible to create custom levels by using the build-mode, which is accessible through the build-mode scene, as shown in figure~\ref{fig:build-mode}.
+The user can generate a grid of different sizes, set the amount of items that may be used from the inventory and place presets to
+the grid that should be available on level start.
+Furthermore, the goal requirements can be set via the save-button, where a name can be set.
+The level is saved to a custom file, which may be loaded to the game manually.
 \\
 During scene design, a bright color palette was chosen to make the game environment appealing and playful.
 For some elements, the color scheme of the Institute of Aircraft Systems was used (aircraft background, logo design).
@@ -541,36 +555,23 @@ typeface inspired by 1980s arcade video games.
 It's a timeless style that began with Atari in 1976 and extended to a slew of manufacturers throughout the 1980s.
 It became the de facto font choice anytime a designer wanted to express classic videogame iconography in the twenty-first century''~\cite{joystix}.
 As the main goal was to design an 8-bit styled, retro-like game, the font choice here is relatively obvious to make.
-\todo{figures wirklich so?}
 \begin{figure}
     \centering
-    \setlength{\fboxsep}{1pt}
-    \setlength{\fboxrule}{1pt}
-    \fbox{
         \includegraphics[width=0.9\textwidth]{Pictures/res/implementation/scenes/game-scene}
-    }
     \caption{Game Scene}
     \label{fig:game-scene}
 \end{figure}
 
 \begin{figure}
     \centering
-    \setlength{\fboxsep}{1pt}
-    \setlength{\fboxrule}{1pt}
-    \fbox{
         \includegraphics[width=0.9\textwidth]{Pictures/res/implementation/scenes/level-map}
-    }
     \caption{Level Map Scene}
     \label{fig:level-scene}
 \end{figure}
 
 \begin{figure}
     \centering
-    \setlength{\fboxsep}{1pt}
-    \setlength{\fboxrule}{1pt}
-    \fbox{
         \includegraphics[width=0.9\textwidth]{Pictures/res/implementation/scenes/main-menu}
-    }
     \caption{Menu Scene}
     \label{fig:menu-scene}
 \end{figure}
@@ -734,12 +735,12 @@ The code snippet shown in figure~\ref{fig:xml-tileset} shows a tileset with a si
 \subsection{Level Files}\label{subsec:level-files}
 The root node of a level structure is the map node, which always includes attributes for assigning an id, a name,
 a difficulty level (tutorial, easy, medium, hard, or custom), and grid dimensions (width and height) for the game grid.
-The map node consists of a subnode for descriptions (and description parts, if the text should be divided into multiple displayable segments),
-a subnode for available building elements from the build panel, and a subnode defining the pre-existing objects on the grid.
+The map node consists of a sub node for descriptions (and description parts, if the text should be divided into multiple displayable segments),
+a sub node for available building elements from the build panel, and a sub node defining the pre-existing objects on the grid.
 \\
-Moreover, the goal and goal definition subnodes provide information on the criteria for completing a level (e.g.,
+Moreover, the goal and goal definition sub-nodes provide information on the criteria for completing a level (e.g.,
 safety requirements, minimum components that must function correctly, and maximum out-of-control components).
-The tileset used by the map must be specified in the tileset subnode,
+The tileset used by the map must be specified in the tileset sub node,
 and level unlocks (e.g., which level ids become accessible after completing the current level) can also be defined.
 \\
 The code snippet shown in figure~\ref{fig:xml-level} demonstrates an example of the level XML file structure, which depicts a 5x3 game grid with one actuator at position $x = 4$ and $y = 1$,
