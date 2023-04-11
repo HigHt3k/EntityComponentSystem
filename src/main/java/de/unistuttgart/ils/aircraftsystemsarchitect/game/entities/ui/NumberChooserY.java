@@ -29,7 +29,7 @@ public class NumberChooserY extends Entity {
         this.addComponent(renderComponent);
 
         ShapeObject shapeObject = new ShapeObject(new Point(x, y),
-                new Rectangle(x, y, width, height), Layer.UI, Bit8.CHROME, Bit8.TRANSPARENT, 1);
+                new Rectangle(x, y, width, height), Layer.UI, Bit8.TRANSPARENT, Bit8.TRANSPARENT, 1);
         renderComponent.addRenderObject(shapeObject);
 
         renderComponent.addRenderObject(new ImageObject(new Point(x, y),

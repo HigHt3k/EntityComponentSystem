@@ -3,9 +3,11 @@ package de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.game;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.IdGenerator;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.graphics.RenderComponent;
+import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.graphics.objects.Layer;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.graphics.objects.ShapeObject;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.GenericButton;
+import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.ImageEntity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalettes.Bit8;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalettes.ColorPalette;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.fonts.FontCollection;
@@ -133,11 +135,10 @@ public class BuildScene extends BaseGameFieldScene {
         // Save button
         GenericButton saveButton = new GenericButton(
                 "Save_button", IdGenerator.generateId(),
-                1600, 850 - ITEM_HEIGHT,
-                ITEM_WIDTH, ITEM_HEIGHT,
+                1800 - 156, 930, 220, 64,
                 "@5",
-                FontCollection.bit8FontHuge, new SaveAction(),
-                Bit8.CHROME, null, null
+                FontCollection.bit8FontLarge, new SaveAction(),
+                Bit8.DARK_GREY, null, null
         );
         this.addEntityToScene(saveButton);
     }
@@ -146,20 +147,24 @@ public class BuildScene extends BaseGameFieldScene {
      * setup method for the description panel (right side)
      */
     private void setupDescriptionPanel() {
-        Entity desc = new SimplePanel("desc", IdGenerator.generateId(),
-                1500, 0, 402, 350, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
+        Font fontBig = FontCollection.scaleFont(FontCollection.bit8Font, 25f);
+
+        Entity desc = null;
+        try {
+            desc = new ImageEntity("desc", IdGenerator.generateId(),
+                    ImageIO.read(new File("res/menus/gui/hud_element_4.png")),
+                    1415, 90, 474, 925, Layer.UI);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         addEntityToScene(desc);
 
-        Entity goal = new SimplePanel("goal", IdGenerator.generateId(),
-                1500, 350, 402, 200, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
-        addEntityToScene(goal);
-
-        Entity tips = new SimplePanel("tips", IdGenerator.generateId(),
-                1500, 550, 402, 300, ColorPalette.setAlpha(Bit8.GREY, 100), Bit8.TRANSPARENT, Bit8.CHROME);
-        addEntityToScene(tips);
+        Entity descHead = new TextBody("descHead", IdGenerator.generateId(),
+                1515, 110, 320, 50, fontBig, Bit8.DARK_GREY, "@49");
+        addEntityToScene(descHead);
 
         Entity xSize = new TextBody("xSize", IdGenerator.generateId(),
-                1500, 50, 202, 50, FontCollection.bit8FontMedium, Bit8.CHROME, "@56");
+                1425, 183, 202, 50, FontCollection.bit8FontMedium, Bit8.DARK_GREY, "@56");
         addEntityToScene(xSize);
 
         NumberChooserX minusGridSizeX = null;
@@ -167,7 +172,7 @@ public class BuildScene extends BaseGameFieldScene {
             minusGridSizeX = new NumberChooserX(
                     "minus", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/minus.png")),
-                    1702, 50, 50, 50, -1, gridSize
+                    1602, 183, 50, 50, -1, gridSize
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,7 +183,7 @@ public class BuildScene extends BaseGameFieldScene {
             plusGridSizeX = new NumberChooserX(
                     "plus", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/plus.png")),
-                    1752, 50, 50, 50, +1, gridSize
+                    1652, 183, 50, 50, +1, gridSize
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -186,7 +191,7 @@ public class BuildScene extends BaseGameFieldScene {
         addEntityToScene(plusGridSizeX);
 
         Entity ySize = new TextBody("ySize", IdGenerator.generateId(),
-                1500, 150, 202, 50, FontCollection.bit8FontMedium, Bit8.CHROME, "@57");
+                1425, 183+75, 202, 50, FontCollection.bit8FontMedium, Bit8.DARK_GREY, "@57");
         addEntityToScene(ySize);
 
         NumberChooserY minusGridSizeY = null;
@@ -194,7 +199,7 @@ public class BuildScene extends BaseGameFieldScene {
             minusGridSizeY = new NumberChooserY(
                     "minus", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/minus.png")),
-                    1702, 150, 50, 50, -1, gridSize
+                    1602, 183+75, 50, 50, -1, gridSize
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -205,7 +210,7 @@ public class BuildScene extends BaseGameFieldScene {
             plusGridSizeY = new NumberChooserY(
                     "plus", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/plus.png")),
-                    1752, 150, 50, 50, +1, gridSize
+                    1652, 183+75, 50, 50, +1, gridSize
             );
         } catch (IOException e) {
             e.printStackTrace();
@@ -251,6 +256,7 @@ public class BuildScene extends BaseGameFieldScene {
         updateGridSize();
         updateEntitySize();
         updateBox();
+        updateGrid();
     }
 
 

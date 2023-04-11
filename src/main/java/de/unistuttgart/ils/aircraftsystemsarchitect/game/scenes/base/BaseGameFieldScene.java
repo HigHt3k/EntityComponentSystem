@@ -375,7 +375,7 @@ public abstract class BaseGameFieldScene extends BaseScene {
         updateGrid();
     }
 
-    private void updateGrid() {
+    protected void updateGrid() {
         while(getEntityByName("grid") != null) {
             removeEntityFromScene(getEntityByName("grid"));
         }
