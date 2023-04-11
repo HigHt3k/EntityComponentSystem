@@ -1,5 +1,6 @@
 package de.unistuttgart.ils.aircraftsystemsarchitect.engine;
 
+import com.badlogic.gdx.files.FileHandle;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.config.GameConfiguration;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.system.SystemManager;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.graphics.SceneManager;
@@ -11,7 +12,10 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceMana
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.sound.SoundEngine;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.CursorSelectorHandler;
 
+import java.io.IOException;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 /**
  * the main class for the game, contains the engine and core pieces of the implementation
@@ -91,8 +95,19 @@ public class Game {
         gameFrame = new GameFrame();
         sceneManager = new SceneManager();
         gameLoop = new GameLoop();
-        logger.info(info.getTitle() + " by " + info.getAuthor() + "\nVersion: " + info.getVersion() + "\n" + info.getDescription());
-        logger.info("Game initialized successfully.");
+
+        try {
+            FileHandler f = new FileHandler("logs.log");
+            logger.addHandler(f);
+            SimpleFormatter formatter = new SimpleFormatter();
+            f.setFormatter(formatter);
+
+            logger.info(info.getTitle() + " by " + info.getAuthor() + "\nVersion: " + info.getVersion() + "\n" + info.getDescription());
+            logger.info("Game initialized successfully.");
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
