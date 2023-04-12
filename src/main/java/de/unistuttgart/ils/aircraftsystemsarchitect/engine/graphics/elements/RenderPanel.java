@@ -40,10 +40,13 @@ public class RenderPanel extends JPanel {
             public synchronized void mouseReleased(MouseEvent e) {
                 super.mouseReleased(e);
             }
+        });
 
+        this.addMouseWheelListener(new MouseAdapter() {
             @Override
             public synchronized void mouseWheelMoved(MouseWheelEvent e) {
                 super.mouseWheelMoved(e);
+                Game.input().queueEvent(e);
             }
         });
 
