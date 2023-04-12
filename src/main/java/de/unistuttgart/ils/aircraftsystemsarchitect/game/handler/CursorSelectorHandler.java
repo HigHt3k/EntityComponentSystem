@@ -21,6 +21,7 @@ import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -155,7 +156,7 @@ public class CursorSelectorHandler extends Handler {
         }
 
         switch(e) {
-            case A, RT -> {
+            case A -> {
                 sendNewMouseEvent(new MouseEvent(
                         Game.frame().getRenderPanel(),
                         MouseEvent.MOUSE_CLICKED,
@@ -171,13 +172,24 @@ public class CursorSelectorHandler extends Handler {
                     InputEvent.BUTTON3_MASK,
                     Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON3
             ));
-            case LT -> sendNewMouseEvent(new MouseEvent(
+            case LT -> sendNewMouseEvent(new MouseWheelEvent(
                     Game.frame().getRenderPanel(),
-                    MouseEvent.MOUSE_CLICKED,
+                    MouseWheelEvent.WHEEL_BLOCK_SCROLL,
                     1,
-                    InputEvent.BUTTON2_MASK,
-                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false, MouseEvent.BUTTON2
+                    (int) InputEvent.MOUSE_WHEEL_EVENT_MASK,
+                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false,
+                    MouseWheelEvent.WHEEL_BLOCK_SCROLL,
+                    1, -1
             ));
+            case RT -> sendNewMouseEvent(new MouseWheelEvent(
+                    Game.frame().getRenderPanel(),
+                    MouseWheelEvent.WHEEL_BLOCK_SCROLL,
+                    1,
+                    (int) InputEvent.MOUSE_WHEEL_EVENT_MASK,
+                    Game.scale().scaleX(x), Game.scale().scaleY(y), 1, false,
+                    MouseWheelEvent.WHEEL_BLOCK_SCROLL,
+                    1, 1
+                    ));
             case RB -> {
                 BuildHandler buildHandler = Game.input().getHandler(BuildHandler.class);
                 int curLayer = buildHandler.getCurrentCableLayer();
