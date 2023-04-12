@@ -147,11 +147,11 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
         addEntityToScene(highscoreHead);
 
         playersView = new TextBody("highscorePlayers", IdGenerator.generateId(),
-                1425, 480, 320, 350, fontMed, Bit8.DARK_GREY, "");
+                1425, 480, 320, 450, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(playersView);
 
         highscoreView = new TextBody("highscoreView", IdGenerator.generateId(),
-                1750, 480, 150, 350, fontMed, Bit8.DARK_GREY, "");
+                1750, 480, 170, 450, fontMed, Bit8.DARK_GREY, "");
         addEntityToScene(highscoreView);
     }
 

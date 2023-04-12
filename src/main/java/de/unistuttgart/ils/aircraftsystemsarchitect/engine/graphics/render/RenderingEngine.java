@@ -5,6 +5,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.graphic
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.Query;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
+import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -81,6 +82,7 @@ public class RenderingEngine {
         if (text == null) {
             return;
         }
+        g.setFont(font);
         if (text.contains("@")) {
             String temp = text;
             try {
@@ -92,7 +94,16 @@ public class RenderingEngine {
         }
 
         if (text.contains("\n")) {
+            long lineCount = text.chars().filter(ch -> ch == '\n').count();
+            int fontHeight = g.getFontMetrics().getHeight();
+
+            if(lineCount * fontHeight > height) {
+                int maxLines = height / fontHeight;
+                text = text.substring(0,StringUtils.ordinalIndexOf(text, "\n", maxLines));
+            }
+
             TextRenderer.render(g, text, color, font, new Point(x + MARGIN, y));
+
             return;
         }
 
@@ -101,8 +112,6 @@ public class RenderingEngine {
 
         g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 Game.config().renderConfiguration().getAliasingText());
-
-        g.setFont(font);
 
         int maxWidth = width - 2 * MARGIN;
         int rows = 1;

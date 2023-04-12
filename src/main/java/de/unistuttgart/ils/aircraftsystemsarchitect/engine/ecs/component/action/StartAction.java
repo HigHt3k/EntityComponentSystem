@@ -33,6 +33,7 @@ public class StartAction extends Action {
      */
     @Override
     public void handle() {
+        Game.res().score().loadScores("res/scores/highscores.xml");
         if (scene != null) {
             if(scene instanceof GameScene gs) {
                 if(gs.isUnlocked()) {

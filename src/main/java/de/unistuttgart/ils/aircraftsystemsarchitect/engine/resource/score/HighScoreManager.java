@@ -17,6 +17,8 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class HighScoreManager {
     private static DocumentBuilder db;
@@ -129,6 +131,16 @@ public class HighScoreManager {
                 highscores.add(score);
             }
         }
+
+        highscores.sort((o1, o2) -> {
+            if (o1.getScore() > o2.getScore()) {
+                return -1;
+            } else if (o1.getScore() == o2.getScore()) {
+                return 0;
+            } else {
+                return 1;
+            }
+        });
 
         return highscores;
     }
