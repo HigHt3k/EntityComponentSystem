@@ -70,9 +70,13 @@
     <string id="10003">Klicke auf ein Kabel und ziehe es zwischen die Komponenten.</string>
     <string id="10004">Wenn du alles richtig verbunden hast, leuchtet die Komponente grün auf.</string>
     <string id="20000">Tutorial 2: Kabel verbinden</string>
-    <string id="20001">Du kannst Kabel auch um Ecken legen. Verbinde die Komponenten mit dem roten Kabel und drehe die Kabelenden mit der rechten und mittleren Maustaste oder den Tasten LB/RB. Tipp: Die Eingänge des Aktuators sind auf der linken Seite.</string>
+    <string id="20001">Um Kabel zu rotieren, bevor du sie platzierst, nutze das Mausrad oder die Knöpfe LT/RT. (Hoch/LT = Eingang drehen, Runter/RT = Ausgang drehen).
+    </string>
+    <string id="20002">Wenn du das Kabel bereits platziert hast, nutze das Mausrad oder den Controller um Ein- oder Ausgänge einer platzierten Komponente zu drehen.
+    </string>
     <string id="30000">Tutorial 3: Kabel verbinden</string>
-    <string id="30001">Es ist auch möglich, verschiedene Komponenten mit einer einzigen anderen Komponente zu verbinden. Verwende die roten und blauen Kabel, um beide Sensoren mit dem Computer zu verbinden. Du kannst die Kabelfarbe mit den Tasten 1-4 oder LB und RB wechseln. Hinweis: 1: rot, 2: blau, 3: grün, 4: gelb</string>
+    <string id="30001">Es ist auch möglich, verschiedene Komponenten mit einer anderen Komponente zu verbinden. Verwende die roten und blauen Kabel, um beide Sensoren mit dem Computer zu verbinden.</string>
+    <string id="30002">Wenn du ein platziertes Kabel rotieren möchtest, nutze die Knöpfe 1-4 oder LB/RB um die aktuelle Farbe zu ändern, welche gedreht werden soll. (1 = ROT, 2 = BLAU, 3 = GRUEN, 4 = GELB)</string>
     <string id="40000">Tutorial 4: Komponenten platzieren</string>
     <string id="40001">Nicht nur Kabel, sondern auch neue Komponenten können verwendet werden! Kopiere das Layout der vorherigen Levels mit den zwei Computern und verbinde alle Komponenten.</string>
     <string id="50000">Tutorial 5: Entfernen und Ersetzen</string>
