@@ -9,6 +9,7 @@
     <string id="11">DEUTSCH</string>
     <string id="12">DEUTSCH EINFACH</string>
     <string id="13">VOLLBILD</string>
+    <string id="14">TDW Mode</string>
     <string id="20">Dies ist eine Sensor-Komponente. Sie misst bestimmte Parameter eines Systems.</string>
     <string id="21">Ein Computer verarbeitet die verschiedenen Sensor-Eingänge, die er empfängt.</string>
     <string id="22">Aktuator-Komponenten führen einen Befehl im Flugzeug aus.</string>

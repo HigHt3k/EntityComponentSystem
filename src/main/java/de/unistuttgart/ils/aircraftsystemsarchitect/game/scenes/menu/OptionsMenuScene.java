@@ -6,6 +6,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.GenericBut
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalettes.Bit8;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.fonts.FontCollection;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageType;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.ToggleExitButtonActiveAction;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.ToggleFullScreenAction;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.base.BaseMenuScene;
 
@@ -58,6 +59,15 @@ public class OptionsMenuScene extends BaseMenuScene {
         addEntityToScene(toggleFullScreen);
 
         //TODO: implement controller / mouse sensitivity
+
+        GenericButton toggleExitButtonActive = new GenericButton(
+                "exit_active", IdGenerator.generateId(),
+                1920/2 - ITEM_WIDTH/2, 200 + (ITEM_HEIGHT + ITEM_MARGIN) * 4,
+                ITEM_WIDTH, ITEM_HEIGHT,
+                "@14", font, new ToggleExitButtonActiveAction(),
+                Bit8.DARK_GREY, null, null
+        );
+        addEntityToScene(toggleExitButtonActive);
     }
 
     @Override

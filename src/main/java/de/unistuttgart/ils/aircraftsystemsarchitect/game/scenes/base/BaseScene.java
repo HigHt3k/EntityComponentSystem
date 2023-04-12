@@ -7,6 +7,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.action.
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.GenericButton;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.graphics.scene.Scene;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.CustomExitAction;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.MuteAction;
 
 import javax.imageio.ImageIO;
@@ -27,7 +28,7 @@ public abstract class BaseScene extends Scene {
                     "Exit",
                     IdGenerator.generateId(),
                     1800, 15,
-                    64, 64, new ExitAction(),
+                    64, 64, new CustomExitAction(),
                     ImageIO.read(new File("res/menus/gui/buttons/exit_button.png")));
         } catch (IOException e) {
             throw new RuntimeException(e);
