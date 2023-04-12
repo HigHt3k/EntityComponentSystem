@@ -8,3 +8,6 @@
 /dataSources.local.xml
 ../out/
 ../auxil/
+../target/
+../logs.log
+../markovlog.txt
