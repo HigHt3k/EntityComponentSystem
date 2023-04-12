@@ -2,17 +2,20 @@ package de.unistuttgart.ils.aircraftsystemsarchitect.engine.config;
 
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageType;
 
+import java.util.ArrayList;
+
 /**
  * Configurator class for different settings of the game.
  * Collection of references to other classes, e.g. rendering options, controls options, language settings, ...
  */
-public class GameConfiguration {
+public class GameConfiguration extends Configuration {
     private static final RenderConfiguration renderConfiguration = new RenderConfiguration();
     private boolean debug = false;
     private LanguageType language = LanguageType.EN_US;
     private static final ControlsConfig controls = new ControlsConfig();
     private static final ProfileConfig profile = new ProfileConfig();
     private static final SoundConfiguration sound = new SoundConfiguration();
+    private ArrayList<Configuration> customConfigurations = new ArrayList<>();
     private final int DEFAULT_TICK_RATE = (int) (1000.0/240.0);
 
     /**
@@ -81,5 +84,13 @@ public class GameConfiguration {
 
     public int getDefaultTickRate() {
         return DEFAULT_TICK_RATE;
+    }
+
+    public ArrayList<Configuration> getCustomConfigurations() {
+        return customConfigurations;
+    }
+
+    public void addCustomConfiguration(Configuration configuration) {
+        customConfigurations.add(configuration);
     }
 }

@@ -3,7 +3,7 @@ package de.unistuttgart.ils.aircraftsystemsarchitect.engine.config;
 /**
  * Configuration of controls of external devices.
  */
-public class ControlsConfig {
+public class ControlsConfig extends Configuration {
     private final double cursorSpeed = 8f;
     private final double controllerSpeed = 2f;
 

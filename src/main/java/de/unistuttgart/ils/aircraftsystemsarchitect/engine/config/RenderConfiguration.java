@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * contains information about default screen resolution, scaling, etc.
  */
-public class RenderConfiguration {
+public class RenderConfiguration extends Configuration {
     private final int DEFAULT_RESOLUTION_WIDTH = 1920;
     private final int DEFAULT_RESOLUTION_HEIGHT = 1080;
     private final float DEFAULT_SCREEN_RATIO = (float) DEFAULT_RESOLUTION_WIDTH/(float) DEFAULT_RESOLUTION_HEIGHT;

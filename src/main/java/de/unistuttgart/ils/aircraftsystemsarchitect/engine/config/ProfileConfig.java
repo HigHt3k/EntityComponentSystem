@@ -5,7 +5,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.profile.Name
 /**
  * Profile configuration, contains information about the username
  */
-public class ProfileConfig {
+public class ProfileConfig extends Configuration {
 
     public String profile;
 

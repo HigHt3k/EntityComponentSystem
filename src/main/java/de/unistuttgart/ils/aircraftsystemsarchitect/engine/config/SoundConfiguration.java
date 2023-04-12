@@ -3,7 +3,7 @@ package de.unistuttgart.ils.aircraftsystemsarchitect.engine.config;
 /**
  * Configuration of sound, contains information about audio status
  */
-public class SoundConfiguration {
+public class SoundConfiguration extends Configuration {
     private boolean isMuted = false;
 
     /**

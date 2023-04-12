@@ -4,6 +4,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.system.ActionSystem;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.system.CollisionDetectionSystem;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageType;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.config.TDWConfiguration;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.CursorSelectorHandler;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.game.BuildScene;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.menu.MainMenuScene;
@@ -26,6 +27,7 @@ public class Main {
         Game.info().setDescription("Educational game to show the concept of redundancy in aircraft system engineering.");
         Game.config().setLanguage(LanguageType.EN_US);
         Game.config().setDebug(false);
+        Game.config().addCustomConfiguration(new TDWConfiguration());
         Game.init();
 
         Game.logger().setLevel(Level.ALL);
