@@ -4,7 +4,7 @@ package de.unistuttgart.ils.aircraftsystemsarchitect.engine;
  * Standard Game Thread that updates all components of the Game at the given tickrate
  */
 public class GameLoop extends Thread {
-    private static final int DEFAULT_TICK_RATE = (int) (1000.0/240.0);
+    private final int DEFAULT_TICK_RATE = Game.config().getDefaultTickRate();
     private boolean paused = true;
     private boolean started = false;
 
@@ -48,5 +48,4 @@ public class GameLoop extends Thread {
     }
 
     public void setStarted() {started = true; }
-
 }

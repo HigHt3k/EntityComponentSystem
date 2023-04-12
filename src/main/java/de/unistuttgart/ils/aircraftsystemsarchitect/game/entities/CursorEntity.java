@@ -1,4 +1,4 @@
-package de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.simulation;
+package de.unistuttgart.ils.aircraftsystemsarchitect.game.entities;
 
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.CursorComponent;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.graphics.RenderComponent;

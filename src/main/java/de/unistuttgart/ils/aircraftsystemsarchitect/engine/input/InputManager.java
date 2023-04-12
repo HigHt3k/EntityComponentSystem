@@ -1,5 +1,6 @@
 package de.unistuttgart.ils.aircraftsystemsarchitect.engine.input;
 
+import de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.gamepad.GamePadAdapter;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.gamepad.InputAction;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.handler.Handler;
@@ -14,6 +15,9 @@ public class InputManager {
     private final ArrayList<KeyEvent> keyEvents;
     private final ArrayList<MouseEvent> mouseEvents;
     private final ArrayList<InputAction> gamePadEvents;
+
+    private long keyboardInactiveTime = 0;
+    private long gamepadInactiveTime = 0;
 
     private ArrayList<Handler> handlers;
 
@@ -33,6 +37,13 @@ public class InputManager {
         HashSet hs = new HashSet(gamePadEvents);
         gamePadEvents.clear();
         gamePadEvents.addAll(hs);
+
+        if(gamePadEvents.isEmpty()) {
+            gamepadInactiveTime += Game.config().getDefaultTickRate();
+        } else {
+            gamepadInactiveTime = 0;
+        }
+
         while (!gamePadEvents.isEmpty()) {
             InputAction e = gamePadEvents.get(0);
             if (e == null) {
@@ -47,6 +58,26 @@ public class InputManager {
             }
 
             gamePadEvents.remove(e);
+        }
+
+        if(keyEvents.isEmpty()) {
+            keyboardInactiveTime += Game.config().getDefaultTickRate();
+        } else {
+            keyboardInactiveTime = 0;
+        }
+
+        if(keyboardInactiveTime > 5000 && gamepadInactiveTime > 5000) {
+            for (Handler h : (ArrayList<Handler>) handlers.clone()) {
+                if (h.getHandlerType() == HandlerType.EVENT) {
+                    if(h.isActive()) h.setActive(false);
+                }
+            }
+        } else {
+            for (Handler h : (ArrayList<Handler>) handlers.clone()) {
+                if (h.getHandlerType() == HandlerType.EVENT) {
+                    if(!h.isActive()) h.setActive(true);
+                }
+            }
         }
 
         while (!keyEvents.isEmpty()) {

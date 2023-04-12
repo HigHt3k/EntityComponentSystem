@@ -13,7 +13,7 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.gamepad.InputAc
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.handler.Handler;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.handler.HandlerType;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.BuildComponent;
-import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.simulation.CursorEntity;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.CursorEntity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.base.BaseGameFieldScene;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.builder.BuildHandler;
 
@@ -83,7 +83,6 @@ public class CursorSelectorHandler extends Handler {
             // handle movement
             for (Integer pressedKey : pressedKeys) {
                 switch (pressedKey) {
-                    //TODO: Add controller keycodes here
                     case KeyEvent.VK_RIGHT -> {
                         x += 1 * Game.config().getControls().getCursorSpeed();
                     }
@@ -279,5 +278,23 @@ public class CursorSelectorHandler extends Handler {
                 Game.scale().scaleX(x), Game.scale().scaleY(y), 0, false, MouseEvent.NOBUTTON
         );
         sendNewMouseEvent(mouseEvent);
+    }
+
+    @Override
+    public void setActive(boolean active) {
+        super.setActive(active);
+
+        if(!active)
+            cursor.getComponent(RenderComponent.class).hideAllObjects();
+        else
+            cursor.getComponent(RenderComponent.class).showAllObjects();
+    }
+
+    /**
+     * Get the activity state of the cursor
+     * @return
+     */
+    public boolean isActive() {
+        return super.isActive();
     }
 }

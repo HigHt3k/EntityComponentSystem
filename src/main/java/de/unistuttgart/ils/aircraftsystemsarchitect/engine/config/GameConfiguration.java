@@ -13,6 +13,7 @@ public class GameConfiguration {
     private static final ControlsConfig controls = new ControlsConfig();
     private static final ProfileConfig profile = new ProfileConfig();
     private static final SoundConfiguration sound = new SoundConfiguration();
+    private final int DEFAULT_TICK_RATE = (int) (1000.0/240.0);
 
     /**
      * get the sound configuration for volume, mute, ...
@@ -76,5 +77,9 @@ public class GameConfiguration {
      */
     public ProfileConfig getProfile() {
         return profile;
+    }
+
+    public int getDefaultTickRate() {
+        return DEFAULT_TICK_RATE;
     }
 }
