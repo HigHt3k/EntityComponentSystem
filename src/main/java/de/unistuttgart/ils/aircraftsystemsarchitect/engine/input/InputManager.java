@@ -69,13 +69,13 @@ public class InputManager {
         if(keyboardInactiveTime > 5000 && gamepadInactiveTime > 5000) {
             for (Handler h : (ArrayList<Handler>) handlers.clone()) {
                 if (h.getHandlerType() == HandlerType.EVENT) {
-                    if(h.isActive()) h.setActive(false);
+                    h.setActive(false);
                 }
             }
         } else {
             for (Handler h : (ArrayList<Handler>) handlers.clone()) {
                 if (h.getHandlerType() == HandlerType.EVENT) {
-                    if(!h.isActive()) h.setActive(true);
+                    h.setActive(true);
                 }
             }
         }
