@@ -17,3 +17,6 @@ To build the *.jar file, following steps are required:
    The "res" folder needs to be located in the directory where the game is started from, as
    it contains all external files used in the game. The resource files are not packaged
    with the *.jar artifact, since some files need to be written during runtime.
+
+## CREDITS
+Music produced by David Renda.
