@@ -10,6 +10,9 @@
     <string id="12">DEUTSCH EINFACH</string>
     <string id="13">VOLLBILD</string>
     <string id="14">TDW Mode</string>
+    <string id="15">Der Radlader wird benutzt um Teile vom Spielfeld zu entfernen. Aktiviere ihn und benutze die linke Maustaste oder den A-Knopf am Controller um
+        Objekte zu entfernen.</string>
+    <string id="16">Der Kabelschalter kann benutzt werden, um die Kabelebene zu aktivieren. Die Farbe des Knopfes entspricht dabei der, der aktivierten Kabel So können bereits platzierte Kabel gedreht werden.</string>
     <string id="20">Dies ist eine Sensor-Komponente. Sie misst bestimmte Parameter eines Systems.</string>
     <string id="21">Ein Computer verarbeitet die verschiedenen Sensor-Eingänge, die er empfängt.</string>
     <string id="22">Aktuator-Komponenten führen einen Befehl im Flugzeug aus.</string>

@@ -10,6 +10,8 @@
     <string id="12">GERMAN SIMPLE</string>
     <string id="13">FULLSCREEN</string>
     <string id="14">TDW Mode</string>
+    <string id="15">The bulldozer is used to remove items. Activate it and use the left mouse button or A on a controller to remove items from the grid.</string>
+    <string id="16">The cable layer is displayed by the color of this icon. If you want to rotate an existing cable, choose the correct color here.</string>
     <string id="20">This is a sensor component. It measures specified parameters from a system.</string>
     <string id="21">A computer processes the different sensor inputs it receives.</string>
     <string id="22">Actuator components execute a command on the aircraft.</string>

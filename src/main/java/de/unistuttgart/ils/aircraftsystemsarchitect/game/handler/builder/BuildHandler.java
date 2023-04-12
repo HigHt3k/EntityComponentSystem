@@ -51,6 +51,14 @@ public class BuildHandler extends Handler {
         this.currentCableLayer = currentCableLayer;
     }
 
+    public BuilderState getCurrentBuildState() {
+        return currentBuildState;
+    }
+
+    public void setCurrentBuildState(BuilderState currentBuildState) {
+        this.currentBuildState = currentBuildState;
+    }
+
     @Override
     public void handle(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_D) {
@@ -385,6 +393,9 @@ public class BuildHandler extends Handler {
                         }
                     }
                 }
+                else if(currentBuildState == BuilderState.REMOVING) {
+                    removeItem(e);
+                }
                 // check if state is building
                 else if (currentBuildState == BuilderState.BUILDING_SIMULATION) {
                     // try to place the component
@@ -500,21 +511,7 @@ public class BuildHandler extends Handler {
                 // handle if building cable -> remove cable
                 else if (currentBuildState == BuilderState.NOT_BUILDING) {
                     // remove component at positon
-                    Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
-                    if (gridLocation == null) {
-                        return;
-                    } else {
-                        ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
-                        entitiesAtSameCell = getEntitiesAtGridPosition(gridLocation);
-
-                        for (Entity remove : entitiesAtSameCell) {
-                            if (remove.isRemovable() && remove.getComponent(SimulationComponent.class) != null) {
-                                if (putBackToStack(remove)) {
-                                    return;
-                                }
-                            }
-                        }
-                    }
+                    if (removeItem(e)) return;
 
                 }
                 // check if no button is clicked
@@ -549,6 +546,25 @@ public class BuildHandler extends Handler {
                 return;
             }
         }
+    }
+
+    private boolean removeItem(MouseEvent e) {
+        Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
+        if (gridLocation == null) {
+            return true;
+        } else {
+            ArrayList<Entity> entitiesAtSameCell = new ArrayList<>();
+            entitiesAtSameCell = getEntitiesAtGridPosition(gridLocation);
+
+            for (Entity remove : entitiesAtSameCell) {
+                if (remove.isRemovable() && remove.getComponent(SimulationComponent.class) != null) {
+                    if (putBackToStack(remove)) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     @Override

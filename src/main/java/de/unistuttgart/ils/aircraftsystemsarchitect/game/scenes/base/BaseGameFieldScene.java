@@ -15,8 +15,11 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceMana
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalettes.Bit8;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.BuildPanelChange;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.BuildPanelChangeAction;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.DeleteModeAction;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.action.SwitchCableLayerAction;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.BuildComponent;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.GridComponent;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.components.TooltipComponent;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.simulation.BuildPanelEntity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.simulation.GridEntity;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.entities.ui.LineEntity;
@@ -426,6 +429,24 @@ public abstract class BaseGameFieldScene extends BaseScene {
                     new BuildPanelChangeAction(BuildPanelChange.RIGHT),
                     ImageIO.read(new File("res/menus/gui/button_right.png")));
             addEntityToScene(rightButton);
+
+            GenericButton bulldozer = new GenericButton("bulldozer", IdGenerator.generateId(),
+                    1295, 690, 100, 100,
+                    new DeleteModeAction(),
+                    ImageIO.read(new File("res/menus/bulldozer.png")));
+            addEntityToScene(bulldozer);
+            TooltipComponent bulldozerToolTip = new TooltipComponent();
+            bulldozerToolTip.setTooltipText("@15");
+            bulldozer.addComponent(bulldozerToolTip);
+
+            GenericButton cableSwitch = new GenericButton("cable_switch", IdGenerator.generateId(),
+                    1295 - 100 - 15, 690, 100, 100,
+                    new SwitchCableLayerAction(),
+                    ImageIO.read(new File("res/menus/cable_switch_1.png")));
+            addEntityToScene(cableSwitch);
+            TooltipComponent switchTip = new TooltipComponent();
+            switchTip.setTooltipText("@16");
+            cableSwitch.addComponent(switchTip);
 
         } catch (IOException e) {
             e.printStackTrace();
