@@ -13,3 +13,7 @@ To build the *.jar file, following steps are required:
 5. use maven to build the project, this may differ depending on IDE.
    1. Jetbrains IntelliJ: Open Maven Tool Window, click Lifecycle -> package
    2. Eclipse: Right click project -> Maven Install / Build
+6. After building, the folder "target" contains the artifact jar and the resource folder.
+   The "res" folder needs to be located in the directory where the game is started from, as
+   it contains all external files used in the game. The resource files are not packaged
+   with the *.jar artifact, since some files need to be written during runtime.
