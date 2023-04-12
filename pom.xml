@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>de.unistuttgart.ils.skylogic</groupId>
-    <artifactId>skylogic</artifactId>
+    <groupId>de.unistuttgart.ils.aircraftsystemsarchitect</groupId>
+    <artifactId>aircraftsystemsarchitect</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-	<name>SkyLogic Educational Game</name>
+	<name>Aircraft Systems Architect</name>
 	
 	<build>
 	   <plugins>
@@ -26,6 +26,7 @@
         <resources>
             <resource>
                 <directory>res</directory>
+                <targetPath>../res</targetPath>
             </resource>
         </resources>
 	 </build>
