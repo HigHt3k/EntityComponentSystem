@@ -414,7 +414,7 @@ public abstract class BaseGameFieldScene extends BaseScene {
     private void setupBuildPanel() {
         try {
             ImageEntity buildPanel = new ImageEntity("Build Panel", IdGenerator.generateId(),
-                    ImageIO.read(new File("res/menus/blueprint8bit.png")), 0, 800, 1500, 1080 - 850, Layer.UI);
+                    ImageIO.read(new File("res/menus/blueprint8bit.png")), 0, 800, 1500, 1080 - 850, Layer.GAMELAYER1);
             addEntityToScene(buildPanel);
 
             GenericButton leftButton = new GenericButton("left_build_panel", IdGenerator.generateId(),

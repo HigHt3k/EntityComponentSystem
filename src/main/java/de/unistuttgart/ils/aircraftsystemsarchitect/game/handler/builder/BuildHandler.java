@@ -403,6 +403,18 @@ public class BuildHandler extends Handler {
                         currentBuilding = null;
                         currentBuildState = BuilderState.NOT_BUILDING;
                         break;
+                    } else {
+                        if(Game.scene().current().getEntityByName("Build Panel")
+                                .getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class)
+                                .get(0).getBounds().contains(e.getPoint())) {
+                            // remove the component
+                            if (putBackToStack(currentBuilding)) {
+                                currentBuildState = BuilderState.NOT_BUILDING;
+
+                                cableBuildRepetitive = null;
+                                currentBuilding = null;
+                            }
+                        }
                     }
                 }
                 // check if state is building cable refactored
@@ -455,6 +467,16 @@ public class BuildHandler extends Handler {
                             break;
                         } else {
                             break;
+                        }
+                    } else if(Game.scene().current().getEntityByName("Build Panel")
+                            .getComponent(RenderComponent.class).getRenderObjectsOfType(ImageObject.class)
+                            .get(0).getBounds().contains(e.getPoint())) {
+                        // remove the component
+                        if (putBackToStack(currentBuilding)) {
+                            currentBuildState = BuilderState.NOT_BUILDING;
+
+                            cableBuildRepetitive = null;
+                            currentBuilding = null;
                         }
                     }
                 }
