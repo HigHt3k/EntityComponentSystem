@@ -1,21 +1,30 @@
 \addchap*{Kurzzusammenfassung der Abschlussarbeit}
 
 {\LARGE Entwicklung einer Gamified Simulation von sicherheitsrelevanten Systemarchitekturen}
+%What is your paper about?
+Die Entwicklung von Luftfahrtsystemen unterliegt verschiedenen Auflagen, welche angeben, wie sicher sie sein müssen.
+Da einzelne integrierte Komponenten geforderte Ausfallwahrscheinlichkeiten oft nicht erfüllen, benötigt es verschiedene
+Konzepte wie etwa Rendundanzen um den Anforderungen zur Zertifizierung dennoch entsprechen zu können.
+Aufgrund der sehr theoretischen und komplexen Problematik ist es eine Herausforderung, auf das Themengebiet speziell bei
+jüngeren Zielgruppen aufmerksam zu machen und gegebenenfalls ein längerfristiges Interesse zu entwickeln.
 
-% GOAL
-Aircraft system architectures need to fulfill a minimum required safety constant in order to pass the certification process.
-This master’s thesis aims to implement a program to present the safety requirements of the rather complex system architectures
-of aircraft to people with none or low knowledge in this area of competence.
-\\ \\
-% METHODS
-The program was implemented as a game with a background simulation in the programming language \textit{JAVA}.
-A game concept was created with the help of specified game design process rules.
-A game engine was developed to handle different features of games in general and the defined game mechanics were implemented.
-\\ \\
-% RESULTS
-The final implementation is a puzzle-like game, where the user interacts with a puzzle board to design a system architecture,
-which is then simulated in order to calculate the safety factors.
-\\ \\
-% DISCUSSION
-In conclusion, the complexity of the subject of aircraft system architecture and safety factors is represented in a more simple
-game approach, which is easier to grasp for layman.
+Ziel dieser Arbeit ist die Entwicklung und Implementierung eines Computerspiels mit Lernhintergrund,
+um die verschiedenen Konzepte visuell und interaktiv zugänglich zu machen.
+Genutzt werden soll das Spiel vor allem am Tag der Wissenschaft und gegebenenfalls anderen öffentlichen Veranstaltungen der \textit{Universität Stuttgart}
+oder dem \textit{Institut für Luftfahrtsysteme}.
+
+Die Grundlage für das Spiel basiert auf der Entwicklung einer Game Engine, welche mithilfe verschiedener üblicher Konzepte
+für Game Design und Objekt-orientierte, wie etwa Entity-Component-Systems und Klassenhierarchien, implementiert ist.
+Die Applikation selbst implementiert diese Engine und ist ein Puzzlespiel, bei dem der/die Spieler:in verschiedene Systemkomponenten bauen und verbinden
+muss, um ein funktionierendes System mit ausreichend niedriger Ausfallwahrscheinlichkeit zu konfigurieren.
+Mittels eines Markov Prozesses wird die Wahrscheinlichkeit für das Auftreten verschiedener Fehlerstatus berechnet.
+
+Mittels verschiedener Spiellevel werden progressiv Spielmechaniken und Luftfahrtsystem-Konzepte eingeführt, sodass
+der/die Spieler:in langsam an das Themengebiet herangeführt werden kann.
+Weiterhin ist durch die generische Implementierung der Game Engine ist eine Basis mit leicht wartbarem und hochflexiblem
+Programmcode gegeben, welcher schnell durch weitere Features ergänzt werden kann.
+Mittels eines Level-Editors können neue Level erstellt werden, um weitere Konzepte einzuführen.
+
+Eine Gamepad-Integration für das Spiel mit 8-Bit Retro-Grafikstil soll dafür sorgen, dass der/die Spieler:in ein
+möglichst interaktives und unterhaltsames Spielerlebnis hat, um so Aufmerksamkeit für das Thema zu schaffen und
+einen Lerneffekt durch direktes Feedback zu erzielen.

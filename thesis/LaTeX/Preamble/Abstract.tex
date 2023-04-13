@@ -1,24 +1,31 @@
 \addchap*{Abstract}
 
 {\LARGE \thetitle}
+The development of aviation systems is subject to various requirements, which specify how safe they must be.
+Since individual integrated components often do not meet the required probabilities of failure, various concepts,
+such as redundancies, are needed to meet certification requirements.
+Due to the very theoretical and complex nature of the issue, it is a challenge to raise awareness and potentially develop
+long-term interest in the subject, especially among younger target groups.
 
-% GOAL
-Aircraft system architectures need to fulfill a minimum required safety constant in order to pass the certification process.
-This master’s thesis aims to implement a program to present the safety requirements of the rather complex system architectures
-of aircraft to people with none or low knowledge in this area of competence.
-\\ \\
-% METHODS
-The program was implemented as a game with a background simulation in the programming language \textit{JAVA}.
-A game concept was created with the help of specified game design process rules.
-A game engine was developed to handle different features of games in general and the defined game mechanics were implemented.
-\\ \\
-% RESULTS
-The final implementation is a puzzle-like game, where the user interacts with a puzzle board to design a system architecture,
-which is then simulated in order to calculate the safety factors.
-\\ \\
-% DISCUSSION
-In conclusion, the complexity of the subject of aircraft system architecture and safety factors is represented in a more simple
-game approach, which is easier to grasp for layman.
+The goal of this work is the development and implementation of a computer game with an educational background to make the
+various concepts visually and interactively accessible.
+The game is intended to be used primarily at the \textit{Science Day} and possibly other public events at the
+\textit{University of Stuttgart} or the \textit{Institute for Aircraft Systems}.
 
+The basis for the game is the development of a game engine, which is implemented using various common concepts for
+game design and object-oriented programming, such as Entity-Component-Systems and class hierarchies.
+The application itself implements this engine and is a puzzle game in which the player must build and connect
+various system components to configure a functioning system with a sufficiently low probability of failure.
+The probability of the occurrence of different error states is calculated using a Markov process.
+
+Through various game levels, gameplay mechanics and aviation system concepts are progressively introduced so that the
+player can be gradually introduced to the subject matter.
+Furthermore, the generic implementation of the game engine provides a basis with easily maintainable and highly flexible
+program code, which can quickly be supplemented with additional features.
+A level editor can be used to create new levels to introduce further concepts.
+
+Gamepad integration for the game with 8-bit retro graphics style is intended to ensure
+that the player has the most interactive and entertaining gaming experience possible,
+in order to create awareness for the topic and achieve a learning effect through direct feedback.
 
 
