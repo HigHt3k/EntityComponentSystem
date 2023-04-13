@@ -97,9 +97,10 @@
     </string>
     <string id="50000">Tutorial 5: Removing and Replacing</string>
     <string id="50001">By accident, someone placed a sensor component instead of a computer component. Remove the wrong
-        component by using the right mouse button or directly replace it by using the correct component on the same
-        tile. Connect all the components again.
+        component by using the right mouse button or directly replace it by...
     </string>
+    <string id="50002">... using the correct component on the same
+        tile. Connect all the components again.</string>
     <string id="60000">Duplex System 1</string>
     <string id="60001">The given system is not safe enough and might lead to major incidents due to exhausted cabin
         crew.

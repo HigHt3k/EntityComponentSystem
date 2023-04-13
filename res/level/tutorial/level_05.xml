@@ -3,6 +3,7 @@
 <map id="5" name="@50000" width="5" height="3" difficulty="TUTORIAL">
     <description>
         <part>@50001</part>
+        <part>@50002</part>
     </description>
     <goal>1e-4</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
