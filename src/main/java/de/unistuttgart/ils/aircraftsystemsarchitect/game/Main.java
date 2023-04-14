@@ -26,7 +26,7 @@ public class Main {
         Game.info().setVersion("v1.0.0");
         Game.info().setDescription("Educational game to show the concept of redundancy in aircraft system engineering.");
         Game.config().setLanguage(LanguageType.EN_US);
-        Game.config().setDebug(false);
+        Game.config().setDebug(true);
         Game.config().addCustomConfiguration(new TDWConfiguration());
         Game.init();
 
