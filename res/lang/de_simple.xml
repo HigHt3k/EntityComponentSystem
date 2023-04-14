@@ -83,6 +83,8 @@
     <string id="40000">Tutorial 4: Komponenten platzieren</string>
     <string id="40001">Nicht nur Kabel, sondern auch neue Komponenten können verwendet werden! Kopiere das Layout der vorherigen Levels mit den zwei Computern und verbinde alle Komponenten.</string>
     <string id="50000">Tutorial 5: Entfernen und Ersetzen</string>
+    <string id="76">Unsicher</string>
+    <string id="77">Überdimensioniert</string>
     <string id="50001">Jemand hat versehentlich einen Sensor anstelle eines Computers platziert. Entferne die falsche Komponente mit der rechten Maustaste...</string>
     <string id="50002">... oder ersetze sie direkt durch die richtige Komponente. Verbinde dann alle Komponenten erneut.</string>
     <string id="60000">Duplex-System 1</string>

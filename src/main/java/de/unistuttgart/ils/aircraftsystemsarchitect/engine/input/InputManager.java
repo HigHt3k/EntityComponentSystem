@@ -97,6 +97,13 @@ public class InputManager {
 
         while(!mouseEvents.isEmpty()) {
             MouseEvent e = mouseEvents.get(0);
+
+            if(Game.config().isDebug()) {
+                if(!Game.input().getMouseEvents().isEmpty()) {
+                    Game.graphics().setCursorPosition(e.getX(), e.getY());
+                }
+            }
+
             if(e == null) {
                 mouseEvents.remove(e);
                 continue;
@@ -119,11 +126,11 @@ public class InputManager {
         keyEvents.add(e);
     }
 
-    protected ArrayList<MouseEvent> getMouseEvents() {
+    public ArrayList<MouseEvent> getMouseEvents() {
         return mouseEvents;
     }
 
-    protected ArrayList<KeyEvent> getKeyEvents() {
+    public ArrayList<KeyEvent> getKeyEvents() {
         return keyEvents;
     }
 

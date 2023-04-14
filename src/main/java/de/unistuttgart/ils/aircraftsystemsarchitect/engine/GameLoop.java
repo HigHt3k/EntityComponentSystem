@@ -1,5 +1,7 @@
 package de.unistuttgart.ils.aircraftsystemsarchitect.engine;
 
+import java.awt.event.MouseEvent;
+
 /**
  * Standard Game Thread that updates all components of the Game at the given tickrate
  */

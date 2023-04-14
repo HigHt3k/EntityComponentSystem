@@ -363,7 +363,7 @@ public class GameScene extends BaseGameFieldScene {
 
     public void displayLevelFinished(int[] score, double[] probabilities) {
         this.baseScore = score[0];
-        this.accuracyScore = score[1];
+        this.accuracyScore = -score[1];
         this.componentScore = score[2];
         this.totalScore = score[3];
 
@@ -387,17 +387,6 @@ public class GameScene extends BaseGameFieldScene {
 
         createScale(probabilities);
 
-        /*Entity scoreText = new TextBody("scoreText", IdGenerator.generateId(),
-                1920/2 - 400, 1080/2 - 150, 200, 50,
-                FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@61"
-                );
-        addEntityToScene(scoreText);
-        Entity scoreContent = new TextBody("scoreContent", IdGenerator.generateId(),
-                1920/2 - 200, 1080/2 - 150, 200, 50,
-                FontCollection.bit8FontLarge, Bit8.DARK_GREY, String.valueOf(totalScore)
-        );
-        addEntityToScene(scoreContent);
-        */
         // create the score table
         Entity baseScore = new TextBody("baseScore", IdGenerator.generateId(),
                 1920/2 - 500, 1080/2 - 200, 300, 50,
@@ -450,7 +439,7 @@ public class GameScene extends BaseGameFieldScene {
 
         GenericButtonFront saveScore = new GenericButtonFront(
                 "ScoreSaveButton", IdGenerator.generateId(),
-                1920 / 2 - 300, 1080 / 2 + 150, 200, 40,
+                650, 750, 200, 40,
                 "@59", FontCollection.bit8FontLarge, new SaveScoreAction(),
                 Bit8.DARK_GREY, null, null
         );
@@ -458,7 +447,7 @@ public class GameScene extends BaseGameFieldScene {
 
         GenericButtonFront nextLevel = new GenericButtonFront(
                 "nextLevelButton", IdGenerator.generateId(),
-                1920 / 2 - 100, 1080 / 2 + 150, 200, 40,
+                1000, 750, 200, 40,
                 "@62", FontCollection.bit8FontLarge, new NextLevelAction(),
                 Bit8.DARK_GREY, null, null
         );
@@ -466,7 +455,7 @@ public class GameScene extends BaseGameFieldScene {
 
         addEntityToScene(new GenericButtonFront(
                 "Back to Menu", IdGenerator.generateId(),
-                1920 / 2 + 100, 1080 / 2 + 150, 200, 40,
+                465, 750, 200, 40,
                 "@60", FontCollection.bit8FontLarge, new StartAction(-254),
                 Bit8.DARK_GREY, null, null
         ));
@@ -481,7 +470,7 @@ public class GameScene extends BaseGameFieldScene {
         try {
             Entity scoreBox = new ImageEntity("scorebox", IdGenerator.generateId(),
                     ImageIO.read(new File("res/menus/gui/hud_element_7.png")),
-                    1920/2 - 131*3 - 40, 1080/2 - 62*3 - 20, 131 * 6 + 80, 62 * 6 + 40, Layer.UI);
+                    1920/2 - 131*4 - 40, 1080/2 - 62*4 - 20, 131 * 8 + 80, 62 * 8 + 40, Layer.UI);
             addEntityToScene(scoreBox);
         } catch (IOException e) {
             e.printStackTrace();
@@ -519,7 +508,7 @@ public class GameScene extends BaseGameFieldScene {
         createScale(probabilities);
         GenericButtonFront back = new GenericButtonFront(
                 "back", IdGenerator.generateId(),
-                1920 / 2 - 150, 1080 / 2 + 150, 300, 40,
+                1920 / 2 - 150, 750, 300, 40,
                 "@58", FontCollection.bit8FontLarge, new StartAction(null),
                 Bit8.DARK_GREY, null, null
         );
@@ -532,27 +521,29 @@ public class GameScene extends BaseGameFieldScene {
      * @param probabilities: Passive and OOC failure probabilities for the users' solution
      */
     private void createScale(double[] probabilities) {
-        int scaleWidth = 128*4;
+        int scaleWidth = (int) (201*2.5);
         int positionGoal;
         int positionScoreOOC;
         int positionScorePassive;
-        if (goal <= 0.0) {
-            positionGoal = scaleWidth;
-        } else {
-            positionGoal = (int) (Math.abs(Math.log10(goal)) * scaleWidth / 10);
-        }
+
+        positionGoal = (scaleWidth / 2);
+
         if (probabilities[0] <= 0.0) {
-            positionScorePassive = scaleWidth;
+            // remove if 0
+            positionScorePassive = 2000;
         } else {
-            positionScorePassive = (int) (Math.abs(Math.log10(probabilities[0])) * scaleWidth / 10);
+            positionScorePassive = scaleWidth/2 + (int) ((Math.log10(goal) - Math.log10(probabilities[0])) * scaleWidth / 8 / 2);
+            System.out.println("Passive; " + positionScorePassive);
         }
         if (positionScorePassive > scaleWidth) {
             positionScorePassive = scaleWidth;
         }
         if (probabilities[1] <= 0.0) {
-            positionScoreOOC = scaleWidth;
+            // remove if 0
+            positionScoreOOC = 2000;
         } else {
-            positionScoreOOC = (int) (Math.abs(Math.log10(probabilities[1])) * scaleWidth / 10);
+            positionScoreOOC = scaleWidth/2 + (int)((Math.log10(goal) - Math.log10(probabilities[1])) * scaleWidth / 8 / 2);
+            System.out.println("ooc; " + positionScoreOOC);
         }
         if (positionScoreOOC > scaleWidth) {
             positionScoreOOC = scaleWidth;
@@ -617,6 +608,18 @@ public class GameScene extends BaseGameFieldScene {
                     1920/2 + 35, 1080/2 - 100, 500, 50,
                     FontCollection.bit8FontLarge, Bit8.DARK_GREY, "@65");
             addEntityToScene(oocMarkerText);
+
+            // not safe enough
+            TextBody notSafeEnoughText = new TextBody("nse", IdGenerator.generateId(),
+                    615, 580, 165, 50,
+                    FontCollection.bit8FontSmall, Bit8.DARK_GREY, "@76");
+            addEntityToScene(notSafeEnoughText);
+
+            //
+            TextBody overengineered = new TextBody("overengineered", IdGenerator.generateId(),
+                    1210, 580, 200, 50,
+                    FontCollection.bit8FontSmall, Bit8.DARK_GREY, "@77");
+            addEntityToScene(overengineered);
         } catch (IOException e) {
             e.printStackTrace();
         }

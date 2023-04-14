@@ -5,6 +5,9 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.graphic
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.Query;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
+import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalettes.Bit8;
+import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalettes.ColorPalette;
+import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.fonts.FontCollection;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
@@ -22,6 +25,8 @@ public class RenderingEngine {
     private static final float scaleW = Game.config().renderConfiguration().getScaleWidth();
     private static final float scaleH = Game.config().renderConfiguration().getScaleHeight();
     public static final int MARGIN = (int) (15 * scaleW); //px
+    private int cursorXPosition = 0;
+    private int cursorYPosition = 0;
 
     private ArrayList<Entity> renderEntities;
 
@@ -217,6 +222,7 @@ public class RenderingEngine {
         renderLayer(Layer.TOOLTIP);
         renderLayer(Layer.UI_HOVER);
         renderLayer(Layer.CURSOR);
+        showDesignLocationOnScreen(cursorXPosition, cursorYPosition);
     }
 
     /**
@@ -304,5 +310,23 @@ public class RenderingEngine {
                 }
             }
         }
+    }
+
+    /**
+     * Render the x,y coordinates of the mouse cursor to the screen, for easier graphics design in the future
+     */
+    private void showDesignLocationOnScreen(int x, int y) {
+        if(!Game.config().isDebug()) {
+            return;
+        }
+        renderText(g, "x: " + Game.scale().upscaleX(x), Bit8.RED, FontCollection.bit8FontMedium,
+                15, 15, 200, 50);
+        renderText(g, "y: " + Game.scale().upscaleX(y), Bit8.RED, FontCollection.bit8FontMedium,
+                15, 65, 200, 50);
+    }
+
+    public void setCursorPosition(int x, int y) {
+        this.cursorXPosition = x;
+        this.cursorYPosition = y;
     }
 }
