@@ -39,7 +39,7 @@ Flight testing is critical to validating the performance of the aircraft system 
 Once the flight testing is complete, the aircraft system is ready for use in commercial or military applications~\cite{lfs1,doi:10.1177/09544100211024787}.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Pictures/res/fundamentals/v-modell}
+    \includegraphics[width=0.6\textwidth]{Pictures/res/fundamentals/v-modell}
     \caption{V-Model of the system development process~\cite{doi:10.1177/09544100211024787}}
     \label{fig:v-model}
 \end{figure}
@@ -132,9 +132,9 @@ This is called a \textbf{Com-Mon} - Command \& Monitoring - system.
 It decreases the failure probability, but increases the integrity, meaning that the system is able to react to a possible failure due
 to noticing it more reliably~\cite{lfs1}.
 \\
-A number of different concepts is shown in the figures below, which also serves as a guideline to the level design of the game,
+A number of different concepts is shown in the figures~\ref{fig:simplex-example},~\ref{fig:duplex-example} and~\ref{fig:duplex-cross-strapped-example},
+which also serves as a guideline to the level design of the game,
 since the presentation and understanding of exactly these concepts is the core of the game.
-\\
 \begin{figure}
     \begin{center}
         \scalebox{0.33}{
@@ -250,12 +250,12 @@ and a state change from $B$ to $C$ describes the transition to an undetected (ou
     \begin{center}
         \begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
         \tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
-        \node[state]    (A)                     {$A$};
-        \node[state]    (B)[below of=A]   {$B$};
-        \node[state]    (C)[below left of=B]   {$C$};
-        \node[state]    (D)[below right of=B]   {$D$};
+        \node[state]    (A)                     {$A$: Correct)};
+        \node[state]    (B)[below of=A]   {$B$: Failure};
+        \node[state]    (C)[below left of=B]   {$C$: Passivated Failure};
+        \node[state]    (D)[below right of=B]   {$D$: Out-of-Control Failure};
         \path
-    (A) edge     node{$p_f$}     (B)
+    (A) edge     node{$$}     (B)
     (B) edge                node{$C$}           (C)
         edge                node{$(1-C)$}           (D);
         \end{tikzpicture}
@@ -293,7 +293,7 @@ The pretending aspect of games is often referred to as the ``Magic Circle'', as 
 playground that is agreed on by all players which is outside the real world and may be defined by imaginary objects or rules~\cite[p.~4-9]{10.5555/2544002}.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{./Pictures/res/fundamentals/magic-circle}
+    \includegraphics[width=0.7\textwidth]{./Pictures/res/fundamentals/magic-circle}
     \caption{Magic Circle~\cite[p.~5]{10.5555/2544002}}
     \label{fig:magic-circle}
 \end{figure}
@@ -340,7 +340,7 @@ By using the digital educational game life cycle as seen in figure~\ref{fig:degl
 educational games specifically.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Pictures/res/fundamentals/deglc}
+    \includegraphics[width=0.8\textwidth]{Pictures/res/fundamentals/deglc}
     \caption{Digital educational game life cycle~\cite{GAMED}}
     \label{fig:deglc}
 \end{figure}

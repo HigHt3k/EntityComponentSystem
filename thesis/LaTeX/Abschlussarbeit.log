@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.26)  11 APR 2023 22:45
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.26)  14 APR 2023 18:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1849,10 +1849,9 @@ Package csquotes Info: ... none found.
 Package translations Info: No language package found. I am going to use `englis
 h' as default language. on input line 49.
  (Abschlussarbeit.aux (Preamble/Erklaerung_Selbstaendigkeit.aux)
-(Preamble/Kurzzusammenfassung.aux) (Preamble/Abstract.aux)
-(Preamble/Danksagung.aux) (Chapters/introduction.aux) (Chapters/basics.aux)
-(Chapters/conception.aux) (Chapters/implementation.aux) (Chapters/results.aux)
-(Chapters/Conclusion.aux))
+(Preamble/Abstract.aux) (Preamble/Kurzzusammenfassung.aux)
+(Chapters/introduction.aux) (Chapters/basics.aux) (Chapters/conception.aux)
+(Chapters/implementation.aux) (Chapters/results.aux) (Chapters/Conclusion.aux))
 \openout1 = `Abschlussarbeit.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 49.
@@ -1884,7 +1883,6 @@ Package scrbase Info: activating english \listtablename on input line 49.
 Package scrbase Info: activating english \bibname on input line 49.
 Package scrbase Info: activating english \indexname on input line 49.
 Package tocbasic Info: usage of `tocbibind' detected on input line 49.
-
 
 Package tocbasic Warning: `tocbibind' redefinition of `\listoffigures'
 (tocbasic)                detected.
@@ -2201,24 +2199,9 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
 
 ]
-\openout2 = `./Preamble/Kurzzusammenfassung.aux'.
+\openout2 = `./Preamble/Abstract.aux'.
 
- (Preamble/Kurzzusammenfassung.tex)
-Underfull \hbox (badness 10000) in paragraph at lines 6--75
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--75
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--75
-
- []
-
-[7
+ (Preamble/Abstract.tex) [7
 
 
 
@@ -2228,24 +2211,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--75
 
 
 ]
-\openout2 = `./Preamble/Abstract.aux'.
+\openout2 = `./Preamble/Kurzzusammenfassung.aux'.
 
- (Preamble/Abstract.tex
-Underfull \hbox (badness 10000) in paragraph at lines 6--22
-
+ (Preamble/Kurzzusammenfassung.tex)
+Overfull \hbox (2.7969pt too wide) in paragraph at lines 23--77
+[]\T1/lmr/m/n/10.95 (-20) Mittels ver-schiedener Spiellevel wer-den pro-gres-si
+v Spielmechaniken und Luftfahrtsystem-Konzepte
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--22
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 6--22
-
- []
-
-) [9
+[9
 
 
 
@@ -2255,50 +2229,49 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--22
 
 
 ]
-\openout2 = `./Preamble/Danksagung.aux'.
-
- (Preamble/Danksagung.tex) [11
-
-
-
-] [12
-
-
-
-
-]
-Package tocbasic Info: character protrusion at toc deactivated on input line 91
+Package tocbasic Info: character protrusion at toc deactivated on input line 86
 .
- (Abschlussarbeit.toc [13
+ (Abschlussarbeit.toc [11
 
 
 ]
-[14])
+Underfull \vbox (badness 1371) has occurred while \output is active []
+
+ [12])
 \tf@toc=\write10
 \openout10 = `Abschlussarbeit.toc'.
 
- [15] [16
+
+[13] [14
 
 
-] (Abschlussarbeit.lof [17])
+] (Abschlussarbeit.lof [15])
 \tf@lof=\write11
 \openout11 = `Abschlussarbeit.lof'.
 
- [18] (Abschlussarbeit.lot)
+ [16] (Abschlussarbeit.lot)
 \tf@lot=\write12
 \openout12 = `Abschlussarbeit.lot'.
 
- [19
+ [17
+
+
+] [18
 
 
 ]
-[20
+(Abschlussarbeit.acr
 
+! Package glossaries Error: Glossary entry `glos:CPU' has not been defined.
 
-] (Abschlussarbeit.gls) [21] [22
+See the glossaries package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.28 \glsXpageXglsnumberformat{}{54}}}
+                                      \relax\glsresetentrylist
+You need to define a glossary entry before you can use it.
 
-
-] (Abschlussarbeit.acr
 
 ! Package glossaries Error: Glossary entry `glos:CTMC' has not been defined.
 
@@ -2306,7 +2279,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.28 \glsXpageXglsnumberformat{}{7}}}
+l.30 \glsXpageXglsnumberformat{}{6}}}
                                      \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2317,7 +2290,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.31 \glsXpageXglsnumberformat{}{7}}}
+l.33 \glsXpageXglsnumberformat{}{6}}}
                                      \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2328,24 +2301,16 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.35 \glsXpageXglsnumberformat{}{14}}}
+l.37 \glsXpageXglsnumberformat{}{13}}}
                                       %
 You need to define a glossary entry before you can use it.
 
-) [23
+) [19
 
 
 
 
-] [24
-
-
-] (Abschlussarbeit.syi) [25
-
-
-
-
-] [26
+] [20
 
 
 ]
@@ -2369,17 +2334,17 @@ Class scrbook Warning: \float@addtolists detected!
 (scrbook)              deprecated \float@addtolist interface.
 
 )
-Underfull \hbox (badness 10000) in paragraph at lines 8--117
+Underfull \hbox (badness 10000) in paragraph at lines 8--103
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 8--117
+Underfull \hbox (badness 10000) in paragraph at lines 8--103
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 8--117
+Underfull \hbox (badness 10000) in paragraph at lines 8--103
 
  []
 
@@ -2398,13 +2363,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 8--117
 
 ]
 chapter 2.
-<Pictures/res/fundamentals/v-modell.png, id=535, 603.0028pt x 535.2497pt>
+<Pictures/res/fundamentals/v-modell.png, id=510, 603.0028pt x 535.2497pt>
 File: Pictures/res/fundamentals/v-modell.png Graphic file (type png)
 <use Pictures/res/fundamentals/v-modell.png>
 Package pdftex.def Info: Pictures/res/fundamentals/v-modell.png  used on input 
 line 42.
-(pdftex.def)             Requested size: 450.97621pt x 400.30103pt.
-[3] [4 <./Pictures/res/fundamentals/v-modell.png>]
+(pdftex.def)             Requested size: 270.58847pt x 240.18225pt.
+[3]
 ! Undefined control sequence.
 l.73 ...em engineering is assumed as $P_f(t) = 1\e
                                                   -4$~\cite{lfs2}.
@@ -2415,9 +2380,9 @@ spelling (e.g., `I\hbox'). Otherwise just continue,
 and I'll forget about whatever was undefined.
 
 
-Underfull \vbox (badness 1924) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [5]
+ [4 <./Pictures/res/fundamentals/v-modell.png>]
 ! Undefined control sequence.
 l.117 $1\e
           -4$, which means, that with only a single component safety effect ...
@@ -2446,6 +2411,7 @@ Missing character: There is no s in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no p in font nullfont!
+[5]
 
 ! Package glossaries Error: Glossary entry `glos:DTMC' has not been defined.
 
@@ -2469,7 +2435,7 @@ l.216 ...ontinuous-time Markov chains (\gls{CTMC})
                                                   .
 You need to define a glossary entry before you can use it.
 
-[6] [7]
+[6]
 
 ! Package pgf Error: Unknown arrow tip kind 'stealth''.
 
@@ -2498,7 +2464,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.253         \node[state]
-                              (A)                     {$A$};
+                              (A)                     {$A$: Correct)};
 (That was another \errmessage.)
 
 
@@ -2510,7 +2476,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.254         \node[state]
-                              (B)[below of=A]   {$B$};
+                              (B)[below of=A]   {$B$: Failure};
 (That was another \errmessage.)
 
 
@@ -2522,7 +2488,7 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.255         \node[state]
-                              (C)[below left of=B]   {$C$};
+                              (C)[below left of=B]   {$C$: Passivated Failure};
 (That was another \errmessage.)
 
 
@@ -2534,16 +2500,17 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.256         \node[state]
-                              (D)[below right of=B]   {$D$};
+                              (D)[below right of=B]   {$D$: Out-of-Control F...
 (That was another \errmessage.)
 
-<./Pictures/res/fundamentals/magic-circle.png, id=616, 618.05907pt x 292.84406p
+[7]
+<./Pictures/res/fundamentals/magic-circle.png, id=594, 618.05907pt x 292.84406p
 t>
 File: ./Pictures/res/fundamentals/magic-circle.png Graphic file (type png)
 <use ./Pictures/res/fundamentals/magic-circle.png>
 Package pdftex.def Info: ./Pictures/res/fundamentals/magic-circle.png  used on 
 input line 296.
-(pdftex.def)             Requested size: 450.97621pt x 213.68501pt.
+(pdftex.def)             Requested size: 315.68196pt x 149.57637pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 273--315
 
@@ -2574,21 +2541,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 273--315
 
  []
 
-[8]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [9 <./Pictures/res/fundamentals/magic-circle.png>]
-<Pictures/res/fundamentals/deglc.png, id=638, 560.0925pt x 599.23875pt>
+[8] [9 <./Pictures/res/fundamentals/magic-circle.png>]
+<Pictures/res/fundamentals/deglc.png, id=618, 560.0925pt x 599.23875pt>
 File: Pictures/res/fundamentals/deglc.png Graphic file (type png)
 <use Pictures/res/fundamentals/deglc.png>
 Package pdftex.def Info: Pictures/res/fundamentals/deglc.png  used on input lin
 e 343.
-(pdftex.def)             Requested size: 450.97621pt x 482.51878pt.
+(pdftex.def)             Requested size: 360.78233pt x 386.01685pt.
 
 
 LaTeX Warning: Reference `GAMED' on page 10 undefined on input line 366.
 
-[10] [11 <./Pictures/res/fundamentals/deglc.png>] [12]
+[10 <./Pictures/res/fundamentals/deglc.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [11]
 
 ! Package glossaries Error: Glossary entry `glos:ECS' has not been defined.
 
@@ -2601,7 +2568,7 @@ l.435 ...neric entity component system (\gls{ECS})
 
 You need to define a glossary entry before you can use it.
 
-<Pictures/res/fundamentals/ECSBlockDiagram-unity.png, id=678, 563.10374pt x 283
+<Pictures/res/fundamentals/ECSBlockDiagram-unity.png, id=650, 563.10374pt x 283
 .0575pt>
 File: Pictures/res/fundamentals/ECSBlockDiagram-unity.png Graphic file (type pn
 g)
@@ -2609,10 +2576,7 @@ g)
 Package pdftex.def Info: Pictures/res/fundamentals/ECSBlockDiagram-unity.png  u
 sed on input line 458.
 (pdftex.def)             Requested size: 450.97621pt x 226.6968pt.
-
-Underfull \vbox (badness 3229) has occurred while \output is active []
-
- [13]
+[12]
 
 ! Package glossaries Error: Glossary entry `DOTS' has not been defined.
 
@@ -2625,7 +2589,7 @@ l.463 ...ta-Oriented Technology Stack (\gls{DOTS})
 
 You need to define a glossary entry before you can use it.
 
-<Pictures/res/fundamentals/unreal-framework.png, id=698, 636.87938pt x 388.4512
+<Pictures/res/fundamentals/unreal-framework.png, id=672, 636.87938pt x 388.4512
 5pt>
 File: Pictures/res/fundamentals/unreal-framework.png Graphic file (type png)
 <use Pictures/res/fundamentals/unreal-framework.png>
@@ -2633,42 +2597,42 @@ Package pdftex.def Info: Pictures/res/fundamentals/unreal-framework.png  used o
 n input line 487.
 (pdftex.def)             Requested size: 450.97621pt x 275.0614pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1057) has occurred while \output is active []
 
- [14 <./Pictures/res/fundamentals/ECSBlockDiagram-unity.png>] [15 <./Pictures/r
-es/fundamentals/unreal-framework.png>]) [16]
+ [13 <./Pictures/res/fundamentals/ECSBlockDiagram-unity.png>] [14 <./Pictures/r
+es/fundamentals/unreal-framework.png>]) [15]
 \openout2 = `./Chapters/conception.aux'.
 
- (Chapters/conception.tex
-chapter 3.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
-4.
-(C:\Users\johan\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [17
+ (Chapters/conception.tex [16
 
 
 
 
 
 ]
-<Pictures/res/concept/aircraft-systems-architect-logo.png, id=737, 23.6082pt x 
+chapter 3.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
+4.
+(C:\Users\johan\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [17]
+<Pictures/res/concept/aircraft-systems-architect-logo.png, id=715, 23.6082pt x 
 12.2859pt>
 File: Pictures/res/concept/aircraft-systems-architect-logo.png Graphic file (ty
 pe png)
 <use Pictures/res/concept/aircraft-systems-architect-logo.png>
 Package pdftex.def Info: Pictures/res/concept/aircraft-systems-architect-logo.p
 ng  used on input line 54.
-(pdftex.def)             Requested size: 450.97621pt x 234.83449pt.
-<Pictures/res/concept/asa-logo.png, id=738, 24.09pt x 16.3812pt>
+(pdftex.def)             Requested size: 315.68196pt x 164.38333pt.
+<Pictures/res/concept/asa-logo.png, id=716, 24.09pt x 16.3812pt>
 File: Pictures/res/concept/asa-logo.png Graphic file (type png)
 <use Pictures/res/concept/asa-logo.png>
 Package pdftex.def Info: Pictures/res/concept/asa-logo.png  used on input line 
 60.
-(pdftex.def)             Requested size: 450.97621pt x 307.01303pt.
+(pdftex.def)             Requested size: 315.68196pt x 214.90814pt.
 
-[18 <./Pictures/res/concept/aircraft-systems-architect-logo.png>] [19 <./Pictur
-es/res/concept/asa-logo.png>]
+[18 <./Pictures/res/concept/aircraft-systems-architect-logo.png> <./Pictures/re
+s/concept/asa-logo.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 86--115
 
  []
@@ -2688,45 +2652,53 @@ Underfull \hbox (badness 10000) in paragraph at lines 86--115
 
  []
 
+
+Underfull \vbox (badness 2799) has occurred while \output is active []
+
+ [19]
 [20]
-<Pictures/res/concept/level-menu-scene-concept.png, id=757, 1912.14375pt x 1165
+<Pictures/res/concept/level-menu-scene-concept.png, id=735, 1912.14375pt x 1165
 .35374pt>
 File: Pictures/res/concept/level-menu-scene-concept.png Graphic file (type png)
 
 <use Pictures/res/concept/level-menu-scene-concept.png>
 Package pdftex.def Info: Pictures/res/concept/level-menu-scene-concept.png  use
 d on input line 180.
-(pdftex.def)             Requested size: 450.97621pt x 274.83617pt.
-<Pictures/res/concept/game-scene-concept.png, id=758, 1912.14375pt x 1305.87875
+(pdftex.def)             Requested size: 338.23215pt x 206.12712pt.
+<Pictures/res/concept/game-scene-concept.png, id=736, 1912.14375pt x 1305.87875
 pt>
 File: Pictures/res/concept/game-scene-concept.png Graphic file (type png)
 <use Pictures/res/concept/game-scene-concept.png>
 Package pdftex.def Info: Pictures/res/concept/game-scene-concept.png  used on i
 nput line 185.
-(pdftex.def)             Requested size: 450.97621pt x 307.97748pt.
- [21] [22 <./Pictures/res/concept/level-menu-scene-concept.png>]
-Underfull \vbox (badness 6364) has occurred while \output is active []
+(pdftex.def)             Requested size: 338.23215pt x 230.98311pt.
 
- [23 <./Pictures/res/concept/game-scene-concept.png>]) [24]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [21 <./Pictures/res/concept/level-menu-scene-concept.png>]
+Underfull \vbox (badness 3189) has occurred while \output is active []
+
+ [22 <./Pictures/res/concept/game-scene-concept.png>]) [23]
 \openout2 = `./Chapters/implementation.aux'.
 
  (Chapters/implementation.tex
-chapter 4.
-<Pictures/res/implementation/ecs-database.png, id=788, 1906.12125pt x 1331.9762
-6pt>
-File: Pictures/res/implementation/ecs-database.png Graphic file (type png)
-<use Pictures/res/implementation/ecs-database.png>
-Package pdftex.def Info: Pictures/res/implementation/ecs-database.png  used on 
-input line 61.
-(pdftex.def)             Requested size: 450.97621pt x 315.12819pt.
-[25
+[24
 
 
 
 
 
 ]
-<./Pictures/res/implementation/ecs-uml.png, id=795, 7625.23781pt x 3714.37688pt
+chapter 4.
+<Pictures/res/implementation/ecs-database.png, id=766, 1906.12125pt x 1331.9762
+6pt>
+File: Pictures/res/implementation/ecs-database.png Graphic file (type png)
+<use Pictures/res/implementation/ecs-database.png>
+Package pdftex.def Info: Pictures/res/implementation/ecs-database.png  used on 
+input line 61.
+(pdftex.def)             Requested size: 450.97621pt x 315.12819pt.
+[25]
+<./Pictures/res/implementation/ecs-uml.png, id=773, 7625.23781pt x 3714.37688pt
 >
 File: ./Pictures/res/implementation/ecs-uml.png Graphic file (type png)
 <use ./Pictures/res/implementation/ecs-uml.png>
@@ -2738,22 +2710,22 @@ Underfull \vbox (badness 2237) has occurred while \output is active []
 
  [26 <./Pictures/res/implementation/ecs-database.png>] [27 <./Pictures/res/impl
 ementation/ecs-uml.png>]
-<Pictures/res/implementation/ecs-system-processing.png, id=809, 6364.27687pt x 
+<Pictures/res/implementation/ecs-system-processing.png, id=787, 6364.27687pt x 
 4450.6275pt>
 File: Pictures/res/implementation/ecs-system-processing.png Graphic file (type 
 png)
 <use Pictures/res/implementation/ecs-system-processing.png>
 Package pdftex.def Info: Pictures/res/implementation/ecs-system-processing.png 
  used on input line 150.
-(pdftex.def)             Requested size: 450.97621pt x 315.31087pt.
+(pdftex.def)             Requested size: 360.78233pt x 252.28944pt.
  [28]
-<Pictures/res/implementation/gameloop-process.png, id=817, 5764.28531pt x 4912.
+<Pictures/res/implementation/gameloop-process.png, id=795, 5764.28531pt x 4912.
 10156pt>
 File: Pictures/res/implementation/gameloop-process.png Graphic file (type png)
 <use Pictures/res/implementation/gameloop-process.png>
 Package pdftex.def Info: Pictures/res/implementation/gameloop-process.png  used
  on input line 167.
-(pdftex.def)             Requested size: 450.97621pt x 384.28166pt.
+(pdftex.def)             Requested size: 360.78233pt x 307.38036pt.
 
 Underfull \hbox (badness 10000) in paragraph at lines 157--171
 
@@ -2761,25 +2733,41 @@ Underfull \hbox (badness 10000) in paragraph at lines 157--171
 
 [29 <./Pictures/res/implementation/ecs-system-processing.png>] [30 <./Pictures/
 res/implementation/gameloop-process.png>] [31]
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 246.
+<Pictures/res/implementation/RenderLayers.png, id=827, 4583.8753pt x 6173.8153p
+t>
+File: Pictures/res/implementation/RenderLayers.png Graphic file (type png)
+<use Pictures/res/implementation/RenderLayers.png>
+Package pdftex.def Info: Pictures/res/implementation/RenderLayers.png  used on 
+input line 248.
+(pdftex.def)             Requested size: 270.58847pt x 364.38383pt.
 
-Underfull \vbox (badness 2080) has occurred while \output is active []
+Underfull \vbox (badness 1533) has occurred while \output is active []
 
- [32]
-[33] [34]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+ [32 <./Pictures/res/implementation/RenderLayers.png>] [33] [34]
+<Pictures/res/implementation/scenes/scorebox.png, id=849, 820.56563pt x 387.698
+44pt>
+File: Pictures/res/implementation/scenes/scorebox.png Graphic file (type png)
+<use Pictures/res/implementation/scenes/scorebox.png>
+Package pdftex.def Info: Pictures/res/implementation/scenes/scorebox.png  used 
+on input line 392.
+(pdftex.def)             Requested size: 450.97621pt x 213.07506pt.
+
+Underfull \vbox (badness 2744) has occurred while \output is active []
 
  [35]
-Underfull \hbox (badness 10000) in paragraph at lines 387--403
+Underfull \hbox (badness 10000) in paragraph at lines 404--420
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 387--403
+Underfull \hbox (badness 10000) in paragraph at lines 404--420
 
  []
 
+
+Underfull \vbox (badness 1259) has occurred while \output is active []
+
+ [36 <./Pictures/res/implementation/scenes/scorebox.png>]
 
 ! Package pgf Error: Unknown arrow tip kind 'stealth''.
 
@@ -2787,7 +2775,7 @@ See the pgf package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.441         }
+l.458         }
                
 (That was another \errmessage.)
 
@@ -2806,7 +2794,7 @@ See the tikz package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.441         }
+l.458         }
                
 (That was another \errmessage.)
 
@@ -2817,7 +2805,7 @@ See the pgf package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.473     }
+l.490     }
            
 (That was another \errmessage.)
 
@@ -2829,13 +2817,13 @@ Missing character: There is no s in font nullfont!
 Missing character: There is no t in font nullfont!
 Missing character: There is no o in font nullfont!
 Missing character: There is no p in font nullfont!
-LaTeX Font Info:    Calculating math sizes for size <20> on input line 473.
+LaTeX Font Info:    Calculating math sizes for size <20> on input line 490.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <20> on input line 473.
+(Font)              <20> on input line 490.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <13.99994> on input line 473.
+(Font)              <13.99994> on input line 490.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 473.
+(Font)              <10> on input line 490.
 
 ! Package tikz Error: Giving up on this path. Did you forget a semicolon?.
 
@@ -2843,120 +2831,117 @@ See the tikz package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.473     }
+l.490     }
            
 (That was another \errmessage.)
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 479--523
+Underfull \hbox (badness 10000) in paragraph at lines 496--540
 
  []
 
-[36]
-Underfull \vbox (badness 2799) has occurred while \output is active []
-
- [37]
-<Pictures/res/implementation/scenes-hierarchy.png, id=900, 5487.2503pt x 5160.5
+[37]
+<Pictures/res/implementation/scenes-hierarchy.png, id=884, 5487.2503pt x 5160.5
 297pt>
 File: Pictures/res/implementation/scenes-hierarchy.png Graphic file (type png)
 <use Pictures/res/implementation/scenes-hierarchy.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes-hierarchy.png  used
- on input line 536.
+ on input line 553.
 (pdftex.def)             Requested size: 450.97621pt x 424.1111pt.
-<Pictures/res/implementation/scenes/game-scene.png, id=908, 1384.42218pt x 749.
+<Pictures/res/implementation/scenes/game-scene.png, id=892, 1384.42218pt x 749.
 80125pt>
 File: Pictures/res/implementation/scenes/game-scene.png Graphic file (type png)
 
 <use Pictures/res/implementation/scenes/game-scene.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/game-scene.png  use
-d on input line 560.
+d on input line 577.
 (pdftex.def)             Requested size: 405.87582pt x 219.81653pt.
-
-[38 <./Pictures/res/implementation/scenes-hierarchy.png>]
-<Pictures/res/implementation/scenes/level-map.png, id=914, 1379.1525pt x 748.29
+<Pictures/res/implementation/scenes/level-map.png, id=893, 1379.1525pt x 748.29
 562pt>
 File: Pictures/res/implementation/scenes/level-map.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/level-map.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/level-map.png  used
- on input line 567.
+ on input line 584.
 (pdftex.def)             Requested size: 405.87582pt x 220.22006pt.
-<Pictures/res/implementation/scenes/main-menu.png, id=915, 1376.89406pt x 754.3
+<Pictures/res/implementation/scenes/main-menu.png, id=894, 1376.89406pt x 754.3
 1813pt>
 File: Pictures/res/implementation/scenes/main-menu.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/main-menu.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/main-menu.png  used
- on input line 574.
+ on input line 591.
 (pdftex.def)             Requested size: 405.87582pt x 222.34927pt.
-<Pictures/res/implementation/scenes/build-mode.png, id=916, 1377.64688pt x 748.
+<Pictures/res/implementation/scenes/build-mode.png, id=895, 1377.64688pt x 748.
 29562pt>
 File: Pictures/res/implementation/scenes/build-mode.png Graphic file (type png)
 
 <use Pictures/res/implementation/scenes/build-mode.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/build-mode.png  use
-d on input line 581.
+d on input line 598.
 (pdftex.def)             Requested size: 405.87582pt x 220.45984pt.
 
-Underfull \vbox (badness 7116) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [39 <./Pictures/res/implementation/scenes/game-scene.png>] [40 <./Pictures/res
-/implementation/scenes/level-map.png> <./Pictures/res/implementation/scenes/mai
-n-menu.png>] [41 <./Pictures/res/implementation/scenes/build-mode.png>]
-<Pictures/res/implementation/entities.png, id=936, 6136.17468pt x 4607.96532pt>
+ [38]
+[39 <./Pictures/res/implementation/scenes-hierarchy.png> <./Pictures/res/implem
+entation/scenes/game-scene.png>] [40 <./Pictures/res/implementation/scenes/leve
+l-map.png> <./Pictures/res/implementation/scenes/main-menu.png>] [41 <./Picture
+s/res/implementation/scenes/build-mode.png>]
+<Pictures/res/implementation/entities.png, id=921, 6136.17468pt x 4607.96532pt>
 
 File: Pictures/res/implementation/entities.png Graphic file (type png)
 <use Pictures/res/implementation/entities.png>
 Package pdftex.def Info: Pictures/res/implementation/entities.png  used on inpu
-t line 644.
+t line 661.
 (pdftex.def)             Requested size: 450.97621pt x 338.62163pt.
- [42 <./Pictures/res/implementation/entities.png>]
-<Pictures/res/implementation/scenes/tutorial-game-scene.png, id=947, 1375.38844
+ [42] [43 <./Pictures/res/implementation/entities.png>]
+<Pictures/res/implementation/scenes/tutorial-game-scene.png, id=936, 1375.38844
 pt x 747.54282pt>
 File: Pictures/res/implementation/scenes/tutorial-game-scene.png Graphic file (
 type png)
 <use Pictures/res/implementation/scenes/tutorial-game-scene.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/tutorial-game-scene
-.png  used on input line 664.
+.png  used on input line 680.
 (pdftex.def)             Requested size: 450.97621pt x 245.10439pt.
-<Pictures/res/implementation/scenes/duplex-scene.png, id=948, 1377.64688pt x 74
+<Pictures/res/implementation/scenes/duplex-scene.png, id=937, 1377.64688pt x 74
 4.53156pt>
 File: Pictures/res/implementation/scenes/duplex-scene.png Graphic file (type pn
 g)
 <use Pictures/res/implementation/scenes/duplex-scene.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/duplex-scene.png  u
-sed on input line 670.
+sed on input line 686.
 (pdftex.def)             Requested size: 450.97621pt x 243.71942pt.
-<Pictures/res/implementation/scenes/cmf.png, id=949, 1365.60187pt x 745.28438pt
+<Pictures/res/implementation/scenes/cmf.png, id=938, 1365.60187pt x 745.28438pt
 >
 File: Pictures/res/implementation/scenes/cmf.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/cmf.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/cmf.png  used on in
-put line 676.
+put line 692.
 (pdftex.def)             Requested size: 450.97621pt x 246.11519pt.
-<Pictures/res/implementation/scenes/oil-leak.png, id=950, 1371.62437pt x 743.02
+<Pictures/res/implementation/scenes/oil-leak.png, id=939, 1371.62437pt x 743.02
 594pt>
 File: Pictures/res/implementation/scenes/oil-leak.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/oil-leak.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/oil-leak.png  used 
-on input line 682.
+on input line 698.
 (pdftex.def)             Requested size: 450.97621pt x 244.30363pt.
-<Pictures/res/implementation/tileset.png, id=953, 256.96pt x 353.32pt>
+<Pictures/res/implementation/tileset.png, id=942, 256.96pt x 353.32pt>
 File: Pictures/res/implementation/tileset.png Graphic file (type png)
 <use Pictures/res/implementation/tileset.png>
 Package pdftex.def Info: Pictures/res/implementation/tileset.png  used on input
- line 693.
+ line 709.
 (pdftex.def)             Requested size: 450.97621pt x 620.1415pt.
-<Pictures/res/implementation/character-models.png, id=955, 18.5493pt x 6.5043pt
+<Pictures/res/implementation/character-models.png, id=944, 18.5493pt x 6.5043pt
 >
 File: Pictures/res/implementation/character-models.png Graphic file (type png)
 <use Pictures/res/implementation/character-models.png>
 Package pdftex.def Info: Pictures/res/implementation/character-models.png  used
- on input line 706.
-(pdftex.def)             Requested size: 450.97621pt x 158.28786pt.
- [43 <./Pictures/res/implementation/scenes/tutorial-game-scene.png>] [44 <./Pic
+ on input line 722.
+(pdftex.def)             Requested size: 270.58847pt x 94.97362pt.
+ [44 <./Pictures/res/implementation/scenes/tutorial-game-scene.png>] [45 <./Pic
 tures/res/implementation/scenes/duplex-scene.png> <./Pictures/res/implementatio
-n/scenes/cmf.png>] [45 <./Pictures/res/implementation/scenes/oil-leak.png>] [46
- <./Pictures/res/implementation/tileset.png>]
-[47 <./Pictures/res/implementation/character-models.png>]
+n/scenes/cmf.png>] [46 <./Pictures/res/implementation/scenes/oil-leak.png>] [47
+ <./Pictures/res/implementation/tileset.png>] [48 <./Pictures/res/implementatio
+n/character-models.png>]
 (C:\Users\johan\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2020/03/24 1.8d listings language file
 )
@@ -2964,7 +2949,7 @@ File: lstlang1.sty 2020/03/24 1.8d listings language file
 File: lstmisc.sty 2020/03/24 1.8d (Carsten Heinz)
 )
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 7
-31.
+47.
 
 (C:\Users\johan\AppData\Local\Programs\MiKTeX\tex/latex/lm\t1lmtt.fd
 File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
@@ -2974,30 +2959,33 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 
-Underfull \hbox (badness 10000) in paragraph at lines 724--742
+Underfull \hbox (badness 10000) in paragraph at lines 740--758
 
  []
 
-[48
+[49
 
 ]
+Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
+ine 809.
+
 Underfull \vbox (badness 4242) has occurred while \output is active []
 
- [49])
-[50] [51]
+ [50])
+[51] [52]
 \openout2 = `./Chapters/results.aux'.
 
- (Chapters/results.tex [52
+ (Chapters/results.tex
+chapter 5.
+[53
 
 
 
 
 
 ]
-chapter 5.
-[53]
 
-! Package glossaries Error: Glossary entry `CPU' has not been defined.
+! Package glossaries Error: Glossary entry `glos:CPU' has not been defined.
 
 See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
@@ -3030,23 +3018,35 @@ Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/10.95'.
 (microtype)             Ignoring protrusion settings for this character.
 
-Overfull \hbox (16.07967pt too wide) in paragraph at lines 128--128
+Overfull \hbox (12.53644pt too wide) in paragraph at lines 114--114
+\T1/lmtt/m/n/10.95 techtarget . com / searchapparchitecture / definition / obje
+ct -[] oriented -[] programming -[]
+ []
+
+
+Overfull \hbox (16.07967pt too wide) in paragraph at lines 114--114
 []\T1/lmr/m/n/10.95 (-20) Epic Games, Inc., \T1/lmr/m/it/10.95 (-20) Un-real ar
 -chi-tec-ture\T1/lmr/m/n/10.95 (-20) , 2023. [On-line]. Avail-able: []$\T1/lmtt
 /m/n/10.95 https : / / docs . unrealengine .
  []
 
 
-Overfull \hbox (21.01605pt too wide) in paragraph at lines 128--128
+Overfull \hbox (21.01605pt too wide) in paragraph at lines 114--114
 \T1/lmtt/m/n/10.95 com / 4 . 27 / en -[] US / ProgrammingAndScripting / Program
 mingWithCPP / UnrealArchitecture/$[]\T1/lmr/m/n/10.95 (-20) . 
  []
 
-[59] [60] (Abschlussarbeit.aux (Preamble/Erklaerung_Selbstaendigkeit.aux)
-(Preamble/Kurzzusammenfassung.aux) (Preamble/Abstract.aux)
-(Preamble/Danksagung.aux) (Chapters/introduction.aux) (Chapters/basics.aux)
-(Chapters/conception.aux) (Chapters/implementation.aux) (Chapters/results.aux)
-(Chapters/Conclusion.aux))
+[59]
+Overfull \hbox (1.1956pt too wide) in paragraph at lines 114--114
+[]\T1/lmr/m/n/10.95 (-20) Crytek GmbH, \T1/lmr/m/it/10.95 (-20) Ar-chi-tec-tura
+l overview\T1/lmr/m/n/10.95 (-20) , 2023. [On-line]. Avail-able: []$\T1/lmtt/m/
+n/10.95 https : / / docs . cryengine .
+ []
+
+[60] (Abschlussarbeit.aux (Preamble/Erklaerung_Selbstaendigkeit.aux)
+(Preamble/Abstract.aux) (Preamble/Kurzzusammenfassung.aux)
+(Chapters/introduction.aux) (Chapters/basics.aux) (Chapters/conception.aux)
+(Chapters/implementation.aux) (Chapters/results.aux) (Chapters/Conclusion.aux))
 
 LaTeX Warning: There were undefined references.
 
@@ -3062,11 +3062,11 @@ Package logreq Info: Writing requests to 'Abschlussarbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 53239 strings out of 476404
- 1098786 string characters out of 2789524
- 2487273 words of memory out of 3000000
- 72020 multiletter control sequences out of 15000+600000
- 603735 words of font info for 210 fonts, out of 8000000 for 9000
+ 53227 strings out of 476404
+ 1098212 string characters out of 2789524
+ 2482675 words of memory out of 3000000
+ 72028 multiletter control sequences out of 15000+600000
+ 603659 words of font info for 209 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,21n,120p,10612b,2213s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/johan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C
@@ -3095,9 +3095,9 @@ ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/johan/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/johan/Ap
 pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/johan/Ap
 pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb>
-Output written on Abschlussarbeit.pdf (88 pages, 7753691 bytes).
+Output written on Abschlussarbeit.pdf (82 pages, 8954589 bytes).
 PDF statistics:
- 1642 PDF objects out of 1728 (max. 8388607)
- 366 named destinations out of 1000 (max. 500000)
- 53226 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 1623 PDF objects out of 1728 (max. 8388607)
+ 359 named destinations out of 1000 (max. 500000)
+ 53228 words of extra memory for PDF output out of 61914 (max. 10000000)
 

@@ -147,7 +147,7 @@ for other systems.
 System processing is shown in figure~\ref{fig:ecs-system-processing}.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Pictures/res/implementation/ecs-system-processing}
+    \includegraphics[width=0.8\textwidth]{Pictures/res/implementation/ecs-system-processing}
     \caption{System processing activity diagram}
     \label{fig:ecs-system-processing}
 \end{figure}
@@ -164,7 +164,7 @@ to the screen, if available.
 The execution order of the game loop can be seen in figure~\ref{fig:gameloop-process}.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Pictures/res/implementation/gameloop-process}
+    \includegraphics[width=0.8\textwidth]{Pictures/res/implementation/gameloop-process}
     \caption{Game loop execution order}
     \label{fig:gameloop-process}
 \end{figure}
@@ -223,8 +223,10 @@ This is necessary to correctly handle rescaling.
 A rendering cycle executes a few different methods which are all called by the overwritten repaint method from the \textit{RenderingPanel}.
 First, all entities with a \textit{RenderComponent} are queried by the \textit{Query} system of the game engine and added to the rendering stack.
 This stack is then split up into multiple stacks of \textit{RenderObjects}, which are the objects saved to the component that describe the actual
-graphical visualization, based
-on their rendering layer.
+graphical visualization, based on their rendering layer.
+Additionally, a separate layer for tooltips which is displayed above other UI layers, but below the UI hovering layer, and a very
+front layer for gamepad cursors, which always are on top of other render objects, is implemented in the rendering cycle, as
+seen in figure~\ref{fig:render-cycle}.
 Each layer is rendered one after another by using specific rendering classes for different objects such as images, text or shapes.
 Layering allows for stacking of multiple graphical entities above each other and allows for a better design and development flow GUIs and the game itself,
 as the order of implementation and creation of entities is made obsolete through the usage of layers.
@@ -237,13 +239,20 @@ The following layers are rendered in this order:
     \item Game Hover Layer
     \item UI Layer 1
     \item UI Layer 2
+    \item Tooltip Layer
     \item UI Hover Layer
+    \item Cursor Layer
 \end{enumerate}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.6\textwidth]{Pictures/res/implementation/RenderLayers}
+    \caption{The \textit{RenderingEngine} cycle}
+    \label{fig:render-cycle}
+\end{figure}
 For example, if a simple composition of background image, game entity and UI should be rendered at the same position,
 the UI will always be in front of the game entity located at any of the game layers,
 while the game entity will always overwrite the background at that position.
 The reason for multiple UI and Game layers is simply to allow for a greater variety and range of possibilities when it comes to designing the game scenes.
-\todo{add figure}.
 \subsection{Sound Engine}\label{subsec:sound-engine}
 A \textit{SoundEngine} is implemented in the game engine, which handles playing, pausing and stopping any audio stream available.
 During each cycle, the \textit{SoundEngine} collects all entities with a \textit{SoundComponent} available, and checks if they are already playing and if not, if they should be playing.
@@ -373,9 +382,17 @@ The total score is the sum of the three previously calculated scores.
     \label{eq:total-score}
 \end{equation}
 Each score is shown separately in the score overview, with an additional indication of the accuracy of the probabilities to the target.
-The user can see, where he or she may improve the system in order to get closer to the target.
+The user can see, where he or she may improve the system in order to get closer to the target, either if the system is not safe enough (left of
+the target marker) or if the system is over-engineered and more points may be gained with a more efficient setup (right of the target marker), as shown
+in figure~\ref{fig:score}.
 This scale is also shown, when the validation of the target requirements is not passed by the currently built system, to indicate
 a hint on what could be improved by the user.
+\begin{figure}
+    \centering
+    \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes/scorebox}
+    \caption{The scorebox shown to the user when validating a level}
+    \label{fig:score}
+\end{figure}
 \\
 To correctly validate the goal, the actual probability calculated is summed up with an epsilon value of $\epsilon = 1e-7$,
 to prevent incorrect validations due to rounding errors in double values.
@@ -658,7 +675,6 @@ Following examples for different levels are provided in this chapter:
     \item Common-Mode Scenario, with different types of sensors and computers~\ref{fig:common-mode-scene}
     \item Oil leakage scenario, emulating a common-cause failures~\ref{fig:common-cause-scene}
 \end{itemize}
-\todo{add scene pictures}
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/res/implementation/scenes/tutorial-game-scene}
@@ -703,7 +719,7 @@ This framework is easily expandable, allowing for the addition of more character
 dialogues, or even a storyline in the future, utilizing these character designs.
 \begin{figure}
     \centering
-    \includegraphics[width=\textwidth]{Pictures/res/implementation/character-models}
+    \includegraphics[width=0.6\textwidth]{Pictures/res/implementation/character-models}
     \caption{Character Models (left to right): Tina Technician, Ingo Engineer, Pete Pilot}
     \label{fig:character-models}
 \end{figure}
