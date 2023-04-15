@@ -41,26 +41,49 @@ public class BuildHandler extends Handler {
 
     private int cellSize;
 
+    /**
+     * Create a new instance of the BuildHandler, using the HandlerType EVENT
+     */
     public BuildHandler() {
         super(HandlerType.EVENT);
     }
 
+    /**
+     * Get the currently used cable layer (for removing and rotating cables)
+     * @return the layer
+     */
     public int getCurrentCableLayer() {
         return currentCableLayer;
     }
 
+    /**
+     * Set the currently used cable layer
+     * @param currentCableLayer the layer (0-3)
+     */
     public void setCurrentCableLayer(int currentCableLayer) {
         this.currentCableLayer = currentCableLayer;
     }
 
+    /**
+     * Get the current state of the build handler
+     * @return the state
+     */
     public BuilderState getCurrentBuildState() {
         return currentBuildState;
     }
 
+    /**
+     * Set the current state of the build handler
+     * @param currentBuildState the state
+     */
     public void setCurrentBuildState(BuilderState currentBuildState) {
         this.currentBuildState = currentBuildState;
     }
 
+    /**
+     * Handle key inputs (mostly for debugging purpose)
+     * @param e The KeyEvent to be processed.
+     */
     @Override
     public void handle(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_D) {
@@ -561,6 +584,10 @@ public class BuildHandler extends Handler {
         }
     }
 
+    /**
+     * Remove the scoreboard / level finished screen from the currently active scene
+     * @param e: mouse event to be checked for if it clicks the back button
+     */
     private void removeLevelFinishedBoard(MouseEvent e) {
         if (Game.scene().current().getEntityByName("back").getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
                 .contains(Game.scale().upscalePoint(e.getPoint()))) {
@@ -594,6 +621,11 @@ public class BuildHandler extends Handler {
         }
     }
 
+    /**
+     * Remove a simulation item from the board
+     * @param e: the mouse event to be checked for if it is within bounds of any item
+     * @return true if removal was successful, false if not
+     */
     private boolean removeItem(MouseEvent e) {
         Point gridLocation = findEntityGridPosition(Game.scale().upscalePoint(e.getPoint()));
         if (gridLocation == null) {
@@ -614,11 +646,21 @@ public class BuildHandler extends Handler {
         return false;
     }
 
+    /**
+     * Handle possible input actions
+     *
+     * @param e The InputAction to be processed.
+     */
     @Override
     public void handle(InputAction e) {
 
     }
 
+    /**
+     * Put back a removed or replaced component to the build panel stack
+     * @param e the entity to be put back
+     * @return true if successful, false if not
+     */
     private boolean putBackToStack(Entity e) {
         if (e instanceof SimulationEntity se) {
             if (e.getComponent(SimulationComponent.class) != null) {
@@ -685,6 +727,11 @@ public class BuildHandler extends Handler {
         return true;
     }
 
+    /**
+     * Place an entity to the grid
+     * @param e the entity to place
+     * @return true if placed, false if not
+     */
     private boolean placeComponent(Entity e) {
         Point gridPos = findEntityGridPosition(e
                 .getComponent(RenderComponent.class)
