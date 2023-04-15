@@ -100,6 +100,11 @@ public class BuildHandler extends Handler {
         }
     }
 
+    /**
+     * Print Simulation Components to the command line
+     *
+     * DEBUGGING METHOD
+     */
     private void printAllSimComponents() {
         if(Game.scene().current() instanceof GameScene gs) {
             ArrayList<Entity> entities = gs.getEntities();
@@ -119,6 +124,11 @@ public class BuildHandler extends Handler {
         }
     }
 
+    /**
+     * Print all available cable ports to the command line
+     *
+     * DEBUGGING METHOD
+     */
     public void printAllCablePorts() {
         if(Game.scene().current() instanceof GameScene gs) {
             ArrayList<Entity> entities = gs.getEntities();
@@ -151,6 +161,14 @@ public class BuildHandler extends Handler {
         }
     }
 
+    /**
+     * Handle MouseEvents. This method handles all building processes in the game, such as
+     * adding, replacing, removing and rotating entities.
+     *
+     * TODO: Remove handling of description texts etc, maybe move this to another system
+     *
+     * @param e The MouseEvent to be processed.
+     */
     @Override
     public void handle(MouseEvent e) {
         Entity prev;
@@ -169,36 +187,7 @@ public class BuildHandler extends Handler {
                         .contains(Game.scale().upscalePoint(e.getPoint()))) {
                     gs.setDescriptionDisplayUsingOffset(+1);
                 } else if (Game.scene().current().getEntityByName("back") != null) {
-                    if (Game.scene().current().getEntityByName("back").getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
-                            .contains(Game.scale().upscalePoint(e.getPoint()))) {
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("back"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scorebox"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("aircraft"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scale"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex1"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex2"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex3"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex4"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex5"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("sky-animated"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarker"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarker"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarker"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("baseScore"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("accuracyScore"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("componentScore"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("totalScore"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("baseScoreContent"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("accuracyScoreContent"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("componentScoreContent"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("totalScoreContent"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarkerDesc"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarkerDesc"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarkerDesc"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarkerText"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarkerText"));
-                        Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarkerText"));
-                    }
+                    removeLevelFinishedBoard(e);
                 }
             }
         } else if (Game.scene().current() instanceof BuildScene bs) {
@@ -569,6 +558,39 @@ public class BuildHandler extends Handler {
                 }
                 return;
             }
+        }
+    }
+
+    private void removeLevelFinishedBoard(MouseEvent e) {
+        if (Game.scene().current().getEntityByName("back").getComponent(ColliderComponent.class).getCollisionObjects().get(0).getCollisionBoundaries()
+                .contains(Game.scale().upscalePoint(e.getPoint()))) {
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("back"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scorebox"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("aircraft"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("scale"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex1"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex2"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex3"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex4"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("ex5"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("sky-animated"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarker"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarker"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarker"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("baseScore"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("accuracyScore"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("componentScore"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("totalScore"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("baseScoreContent"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("accuracyScoreContent"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("componentScoreContent"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("totalScoreContent"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarkerDesc"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarkerDesc"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarkerDesc"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("goalMarkerText"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("passiveMarkerText"));
+            Game.scene().current().removeEntityFromScene(Game.scene().current().getEntityByName("oocMarkerText"));
         }
     }
 
