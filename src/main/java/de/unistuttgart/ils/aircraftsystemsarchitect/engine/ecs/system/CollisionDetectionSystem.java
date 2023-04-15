@@ -19,19 +19,32 @@ import java.util.ArrayList;
 public class CollisionDetectionSystem extends Handler {
     private final ArrayList<Entity> entities;
 
+    /**
+     * Create a new CollisionDetectionSystem with the EVENT type.
+     * Initializes an empty arraylist of entities that should be used for this handler.
+     * Add entities to handle them
+     */
     public CollisionDetectionSystem() {
         super(HandlerType.EVENT);
         entities = new ArrayList<>();
     }
 
+    /**
+     * Handle possible key events
+     * @param e: the key event
+     */
     @Override
     public void handle(KeyEvent e) {
 
     }
 
+    /**
+     * Handle MouseEvents
+     * @param e: the mouse event
+     */
     @Override
     public void handle(MouseEvent e) {
-        //TODO: move entitie collection
+        //TODO: move entity collection, only collect entities / add entities on entity removal or addition
         recollectEntities();
         for (Entity entity : entities) {
             for (CollisionObject collisionObject : entity.getComponent(ColliderComponent.class).getCollisionObjects()) {
@@ -46,11 +59,18 @@ public class CollisionDetectionSystem extends Handler {
         }
     }
 
+    /**
+     * Handle gamepad inputs
+     * @param e: the gamepad input
+     */
     @Override
     public void handle(InputAction e) {
 
     }
 
+    /**
+     * clear list of entities to consider by the system and query for relevant entities using the {@link ColliderComponent}
+     */
     public void recollectEntities() {
         entities.clear();
         entities.addAll(Query.getEntitiesWithComponent(ColliderComponent.class));

@@ -4,7 +4,11 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.Compone
 
 import java.util.ArrayList;
 
-
+/**
+ * Entities are generic objects handled by the game engine.
+ * They contain a list of unique {@link Component}s which describe an Entity, which are used by the
+ * Game Engine Systems and Handlers to process data and change behavior.
+ */
 public class Entity implements Cloneable {
 
     private final ArrayList<Component> components;

@@ -13,12 +13,10 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 /**
- * GenericButton:
- *         |_ GraphicsComponent
- *         |_ CollisionComponent
- *         |_ IntentComponent
- *               |_ HoverIntent
- *         |_ addIntent();
+ * A GenericButtonFront is an Entity that describes a regular clickable button.
+ * The Class implements an {@link Action} and a graphical shape of the button, including hover.
+ * It is similar to the regular {@link GenericButton}, however on a front {@link Layer}.
+ * May be used to create buttons that should appear in front of possible hoverings or other graphical objects.
  */
 public class GenericButtonFront extends Entity {
     private Color TEXT_COLOR = Bit8.DARK_GREY;
@@ -29,6 +27,21 @@ public class GenericButtonFront extends Entity {
     protected ShapeObject button;
     protected HoverObject hover;
 
+    /**
+     * Create a new GenericButton with a custom shape and colors.
+     * @param name: entity name
+     * @param id: entity id
+     * @param x: x-position on the screen in px
+     * @param y: y-position on the screen in px
+     * @param width: width of the shape in px
+     * @param height: height of the shape in px
+     * @param text: button text to render (preferably an id)
+     * @param font: font used for the button appearance
+     * @param action: action handled on click
+     * @param textColor: color of the button text
+     * @param boxColor: color of the box border (may be null)
+     * @param fillColor: fill color (may be null)
+     */
     public GenericButtonFront(String name, int id, int x, int y, int width, int height, String text, Font font, Action action, Color textColor, Color boxColor, Color fillColor) {
         super(name, id);
         this.BOX_COLOR = fillColor;
@@ -62,6 +75,17 @@ public class GenericButtonFront extends Entity {
         this.addComponent(actionComponent);
     }
 
+    /**
+     * Create a new GenericButton with a custom image.
+     * @param name: entity name
+     * @param id: entity id
+     * @param x: x-position on the screen in px
+     * @param y: y-position on the screen in px
+     * @param width: width of the shape in px
+     * @param height: height of the shape in px
+     * @param action: action handled on click
+     * @param img: image to use for the button
+     */
     public GenericButtonFront(String name, int id, int x, int y, int width, int height, Action action, BufferedImage img) {
         super(name, id);
 

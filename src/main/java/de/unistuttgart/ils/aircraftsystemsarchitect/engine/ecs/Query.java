@@ -7,6 +7,10 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * The Query class implements static methods to query the currently active scene for
+ * different entities by using either ids, names of component classes that are attached to an entity.
+ */
 public class Query {
 
     /**
@@ -89,6 +93,11 @@ public class Query {
         return entities;
     }
 
+    /**
+     * get an entity from the current scene by its name
+     * @param name: the entity name
+     * @return: the entity if found, or null if not
+     */
     public static Entity getEntityWithName(String name) {
         for(Entity e : Game.scene().current().getEntities()) {
             if(Objects.equals(e.getName(), name)) {

@@ -13,12 +13,8 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 /**
- * GenericButton:
- *         |_ GraphicsComponent
- *         |_ CollisionComponent
- *         |_ IntentComponent
- *               |_ HoverIntent
- *         |_ addIntent();
+ * A GenericButton is an Entity that describes a regular clickable button.
+ * The Class implements an {@link Action} and a graphical shape of the button, including hover.
  */
 public class GenericButton extends Entity {
     private Color TEXT_COLOR = Bit8.DARK_GREY;
@@ -29,6 +25,21 @@ public class GenericButton extends Entity {
     protected ShapeObject button;
     protected HoverObject hover;
 
+    /**
+     * Create a new GenericButton with a custom shape and colors.
+     * @param name: entity name
+     * @param id: entity id
+     * @param x: x-position on the screen in px
+     * @param y: y-position on the screen in px
+     * @param width: width of the shape in px
+     * @param height: height of the shape in px
+     * @param text: button text to render (preferably an id)
+     * @param font: font used for the button appearance
+     * @param action: action handled on click
+     * @param textColor: color of the button text
+     * @param boxColor: color of the box border (may be null)
+     * @param fillColor: fill color (may be null)
+     */
     public GenericButton(String name, int id, int x, int y, int width, int height, String text, Font font, Action action, Color textColor, Color boxColor, Color fillColor) {
         super(name, id);
         this.BOX_COLOR = fillColor;
@@ -62,6 +73,17 @@ public class GenericButton extends Entity {
         this.addComponent(actionComponent);
     }
 
+    /**
+     * Create a new GenericButton with a custom image.
+     * @param name: entity name
+     * @param id: entity id
+     * @param x: x-position on the screen in px
+     * @param y: y-position on the screen in px
+     * @param width: width of the shape in px
+     * @param height: height of the shape in px
+     * @param action: action handled on click
+     * @param img: image to use for the button
+     */
     public GenericButton(String name, int id, int x, int y, int width, int height, Action action, BufferedImage img) {
         super(name, id);
 
@@ -90,15 +112,16 @@ public class GenericButton extends Entity {
     }
 
     /**
-     * Create a generic functional button. addIntent needs to be used to add a purpose other than hovering to this button.
-     * @param name: Name of the entity
-     * @param id: Id of the entity
-     * @param x: x position by design
-     * @param y: y position by design
-     * @param width: design width
-     * @param height: design height
-     * @param text: text to display (Centered) at the button
-     * @param font: Font to use for this button
+     * Create a new GenericButton with a standardized appearance.
+     * @param name: entity name
+     * @param id: entity id
+     * @param x: x-position on the screen in px
+     * @param y: y-position on the screen in px
+     * @param width: width of the shape in px
+     * @param height: height of the shape in px
+     * @param text: button text to render (preferably an id)
+     * @param font: font used for the button appearance
+     * @param action: action handled on click
      */
     public GenericButton(String name, int id, int x, int y, int width, int height, String text, Font font, Action action) {
         super(name, id);
