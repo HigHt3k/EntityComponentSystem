@@ -70,14 +70,28 @@ public class SceneManager {
         currentScene.init();
     }
 
+    /**
+     * Get the amount of scenes available to the SceneManager
+     * @return number of scenes available
+     */
     public int getSceneAmount() {
         return scenes.size();
     }
 
+    /**
+     * Getter for the scene list.
+     *
+     * @return a list of all available scenes
+     */
     public List<Scene> getScenes() {
         return scenes;
     }
 
+    /**
+     * Get a specific scene by id. If scene Ids are not unique, the first match will be returned.
+     * @param id: the id to look up
+     * @return the scene or null if not found
+     */
     public Scene getScene(int id) {
         for (Scene s : scenes) {
             if (s.getId() == id) {
@@ -87,6 +101,9 @@ public class SceneManager {
         return null;
     }
 
+    /**
+     * initialize all scenes that are currently available
+     */
     public void initScenes() {
         for (Scene s : scenes) {
             s.init();

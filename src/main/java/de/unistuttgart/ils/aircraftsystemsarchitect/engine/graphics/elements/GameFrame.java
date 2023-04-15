@@ -10,9 +10,22 @@ import java.awt.event.ComponentEvent;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Class representing the main game window for the aircraft systems architect engine.
+ * This class is responsible for creating, updating, and managing the display of the game window,
+ * including the RenderPanel, window resizing, and full-screen mode toggling.
+ */
 public class GameFrame extends JFrame {
+    /**
+     * The RenderPanel instance used for displaying game elements.
+     */
     private final RenderPanel renderPanel;
 
+    /**
+     * Constructor for the GameFrame class.
+     * Initializes and configures the game window, including the RenderPanel,
+     * title, size, and component listener for resizing.
+     */
     public GameFrame() {
         Dimension resolution = Game.config().renderConfiguration().getResolution();
         this.renderPanel = new RenderPanel(resolution);
@@ -25,8 +38,7 @@ public class GameFrame extends JFrame {
         this.setTitle(Game.info().getTitle());
         Game.logger().info(Game.info().getTitle());
 
-        this.addComponentListener(new ComponentAdapter()
-        {
+        this.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent evt) {
                 resize();
             }
@@ -36,10 +48,20 @@ public class GameFrame extends JFrame {
         this.getContentPane().setBackground(new Color(0, 0, 0));
     }
 
+    /**
+     * Getter for the RenderPanel instance.
+     *
+     * @return The RenderPanel instance used by the GameFrame.
+     */
     public RenderPanel getRenderPanel() {
         return renderPanel;
     }
 
+    /**
+     * Sets the icon of the game window using an image file at the specified path.
+     *
+     * @param path The file path of the image to be used as the icon.
+     */
     public void setIcon(String path) {
         try {
             setIconImage(ImageIO.read(new File(path)));
@@ -48,6 +70,11 @@ public class GameFrame extends JFrame {
         }
     }
 
+    /**
+     * Toggles the full-screen mode of the game window.
+     * If the game is in full-screen mode, it will switch to windowed mode,
+     * and vice versa.
+     */
     public void toggleFullScreen() {
         if(Game.config().renderConfiguration().getFullscreenMode()) {
             Game.frame().dispose();
@@ -65,7 +92,7 @@ public class GameFrame extends JFrame {
     }
 
     /**
-     * Resize the GameFrame
+     * Resizes the GameFrame, updating the RenderPanel and game scaling.
      */
     private void resize() {
         this.renderPanel.setNewSize();

@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import javax.sound.sampled.*;
 
 /**
- * The Sound Engine is responsible for playing different audio files from components
+ * The Sound Engine is responsible for playing different audio files from components.
  */
 public class SoundEngine {
 
     /**
-     * Query all entities with sound components and play their sound files, if they are currently running. Mute or unmute the sound
+     * Query all entities with sound components and play their sound files, if they are currently running. Mute or unmute the sound.
      */
     public void collectAndPlayEntities() {
         mute(Game.config().getSound().isMuted());
@@ -30,8 +30,9 @@ public class SoundEngine {
     }
 
     /**
-     * play an audio stream
-     * @param audioInputStream: input sound stream
+     * Play an audio stream.
+     *
+     * @param audioInputStream the input sound stream
      */
     private synchronized void playSound(AudioInputStream audioInputStream) {
         Clip clip;
@@ -45,8 +46,9 @@ public class SoundEngine {
     }
 
     /**
-     * Mute the audio system
-     * @param mute: true if muted, false if unmuted
+     * Mute or unmute the audio system.
+     *
+     * @param mute true if the audio system should be muted, false if it should be unmuted
      */
     private void mute(boolean mute) {
         Mixer.Info[] infos = AudioSystem.getMixerInfo();

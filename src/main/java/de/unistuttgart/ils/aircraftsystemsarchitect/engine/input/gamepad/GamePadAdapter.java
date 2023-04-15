@@ -6,6 +6,10 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game;
 
 import static java.lang.Thread.sleep;
 
+/**
+ * A class to provide generic connection to game pads by using the jamepad library.
+ * works by default with all well-known controllers such as xbox, switch and playstation
+ */
 public class GamePadAdapter {
 
     private boolean ltPressed = false;
@@ -23,6 +27,10 @@ public class GamePadAdapter {
 
     /**
      * Create a game pad adapter which uses jamepad library to find controllers and get their inputs
+     * Initialize a separate thread to catch gamepad events, which are sent to the input manager as
+     * inputactions.
+     * Set some generic instructions on how to process events, such as a button press is equal to a state
+     * change of the button.
      */
     public GamePadAdapter() {
         try {

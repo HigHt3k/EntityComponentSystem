@@ -14,6 +14,9 @@ public class GridSizeYAction extends Action {
         this.amount = amount;
     }
 
+    /**
+     * Handles grid size change along the Y-axis
+     */
     @Override
     public void handle() {
         System.out.println("handling action");

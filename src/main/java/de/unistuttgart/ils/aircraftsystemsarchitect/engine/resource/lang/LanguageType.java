@@ -1,10 +1,10 @@
 package de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang;
 
 /**
- * Define available languages.
+ * Enumeration representing the available languages for the application.
  */
 public enum LanguageType {
-    DE_DE,
-    DE_SIMPLE,
-    EN_US
+    DE_DE,      // German language (standard)
+    DE_SIMPLE,  // Simplified German language
+    EN_US       // American English language
 }

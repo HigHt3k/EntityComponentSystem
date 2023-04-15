@@ -15,11 +15,9 @@ import java.awt.image.BufferedImage;
 import java.util.*;
 
 /**
- * The Rendering Engine is the backbone of the graphics generation. It contains different methods which access sub-rendering engines
- * implemented for a special purpose each:
- * TextRenderer: renders Strings with formatting
- * ShapeRenderer: renders different shapes with given color and size
- * ImageRenderer: renders a buffered image at a position and size
+ * The RenderingEngine class is responsible for rendering various graphical elements in the aircraft systems architect engine.
+ * It provides methods for rendering text, shapes, images, lines, and animations, as well as managing render layers and
+ * entities with render components.
  */
 public class RenderingEngine {
     private static final float scaleW = Game.config().renderConfiguration().getScaleWidth();
@@ -34,6 +32,10 @@ public class RenderingEngine {
 
     private Graphics2D g;
 
+    /**
+     * Create a new RenderingEngine instance.
+     * Initializes a new empty array for entities considered for the rendering cycle
+     */
     public RenderingEngine() {
         this.renderEntities = new ArrayList<>();
     }
@@ -203,6 +205,15 @@ public class RenderingEngine {
         LineRenderer.render(g, p1, p2, color, thickness);
     }
 
+    /**
+     * Render an animated image (gif) to the screen
+     * @param g: graphics context
+     * @param animation: animated image (gif)
+     * @param x: x coordinate in px of top-left corner of image
+     * @param y: y coordinate in px of top-left corner of image
+     * @param width: width of image to render in px
+     * @param height: height of image to render in px
+     */
     public static synchronized void renderAnimation(Graphics2D g, Image animation, int x, int y, int width, int height) {
         AnimationRenderer.renderAnimation(g, animation, x, y, width, height);
     }
@@ -234,6 +245,12 @@ public class RenderingEngine {
         this.g = g;
     }
 
+    /**
+     * Render a specific layer.
+     * Gets all render objects of all RenderComponents that are
+     * defined on this layer.
+     * @param layer: the layer to render
+     */
     private synchronized void renderLayer(Layer layer) {
         for (RenderObject r : collectRenderObjects(layer)) {
             if (r.isHidden()) {
@@ -243,10 +260,18 @@ public class RenderingEngine {
         }
     }
 
+    /**
+     * Reset / Reinitialize the list with relevant entities that should be considered
+     */
     public synchronized void recollectEntities() {
         renderEntities = Query.getEntitiesWithComponent(RenderComponent.class);
     }
 
+    /**
+     * Collect all render objects from a layer of all entities in the renderEntities list
+     * @param layer: the layer to collect the objects from
+     * @return a list with all render objects in the layer
+     */
     private ArrayList<RenderObject> collectRenderObjects(Layer layer) {
         ArrayList<RenderObject> renderObjects = new ArrayList<>();
         for (Entity e : renderEntities) {
@@ -255,6 +280,11 @@ public class RenderingEngine {
         return renderObjects;
     }
 
+    /**
+     * Method for rendering a render object.
+     * Rendering methods are determined based on the subclass of the render object implementation
+     * @param r the render object
+     */
     private synchronized void render(RenderObject r) {
         if (r instanceof ImageObject i) {
             renderImage(g, i.getImage(),
@@ -325,6 +355,11 @@ public class RenderingEngine {
                 15, 65, 200, 50);
     }
 
+    /**
+     * Set the position of the mouse cursor coordinates that may be rendered (if debug enabled)
+     * @param x: x-position of mouse
+     * @param y: y-position of mouse
+     */
     public void setCursorPosition(int x, int y) {
         this.cursorXPosition = x;
         this.cursorYPosition = y;

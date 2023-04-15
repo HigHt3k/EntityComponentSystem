@@ -5,25 +5,30 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.action.
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.game.BuildScene;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.util.GridSize;
 
+/**
+ * Action for changing the x-component of the grid size
+ */
 public class GridSizeXAction extends Action {
-    GridSize i;
-    int amount;
+    private final GridSize gridSize;
+    private final int amount;
 
-    public GridSizeXAction(GridSize i, int amount) {
-        this.i = i;
+    public GridSizeXAction(GridSize gridSize, int amount) {
+        this.gridSize = gridSize;
         this.amount = amount;
     }
 
+    /**
+     * Increases/decreases the x-component of the grid size and updates the build scene
+     */
     @Override
     public void handle() {
-        System.out.println("handling action");
-        if (i.x > 0) {
-            i.x += amount;
+        if (gridSize.x > 0) {
+            gridSize.x += amount;
             if (Game.scene().current() instanceof BuildScene bs) {
                 bs.updateGridSize(0);
             }
-        } else if (i.x == 0 && amount > 0) {
-            i.x += amount;
+        } else if (gridSize.x == 0 && amount > 0) {
+            gridSize.x += amount;
             if (Game.scene().current() instanceof BuildScene bs) {
                 bs.updateGridSize(0);
             }

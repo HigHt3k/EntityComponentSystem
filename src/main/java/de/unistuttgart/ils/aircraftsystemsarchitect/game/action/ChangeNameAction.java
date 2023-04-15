@@ -8,6 +8,9 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
 
 import javax.swing.*;
 
+/**
+ * Action that prompts the user to enter a new name and changes the name of the player profile accordingly
+ */
 public class ChangeNameAction extends Action {
     Entity playerProfile;
 
@@ -15,6 +18,9 @@ public class ChangeNameAction extends Action {
         this.playerProfile = playerProfile;
     }
 
+    /**
+     * Prompt the user to enter a new name and change the name of the player profile accordingly
+     */
     @Override
     public void handle() {
         String name = JOptionPane.showInputDialog("Enter name:");

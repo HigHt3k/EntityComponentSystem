@@ -11,12 +11,16 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * An entity that represents the cursor that can be used to select and interact with the game, when using keyboard or gamepad.
+ */
 public class CursorEntity extends Entity {
 
     /**
-     * create a new cursor entity that can be used by Controller/Keyboard to select and interact within the game
-     * @param name: name of the entity
-     * @param id: id of the entity
+     * Creates a new CursorEntity with the given name and ID.
+     *
+     * @param name the name of the entity
+     * @param id the ID of the entity
      */
     public CursorEntity(String name, int id) {
         super(name, id);

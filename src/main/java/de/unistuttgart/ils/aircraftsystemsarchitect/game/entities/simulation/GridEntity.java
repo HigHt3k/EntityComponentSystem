@@ -13,21 +13,25 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * SimulationEntity:
- *         |_ GraphicsComponent
- *         |_ CollisionComponent
- *         |_ GridComponent
- *         |_ IntentComponent
- *               |_ HoverIntent
- *         |_ addIntent();
+ * The entity representing the grid in the game.
  */
 public class GridEntity extends Entity {
     private final Color HOVER_COLOR = new Color(40, 40, 40, 150);
 
-    public GridEntity(String name, int id,
-                      int x, int y, int width, int height,
-                      int xGrid, int yGrid,
-                      BufferedImage img) {
+    /**
+     * Constructor for the GridEntity class.
+     *
+     * @param name   the name of the entity
+     * @param id     the ID of the entity
+     * @param x      the x-coordinate of the entity
+     * @param y      the y-coordinate of the entity
+     * @param width  the width of the entity
+     * @param height the height of the entity
+     * @param xGrid  the x-coordinate of the grid
+     * @param yGrid  the y-coordinate of the grid
+     * @param img    the image used to render the grid
+     */
+    public GridEntity(String name, int id, int x, int y, int width, int height, int xGrid, int yGrid, BufferedImage img) {
         super(name, id);
         // define the size
         Rectangle bounds = new Rectangle(x, y, width, height);

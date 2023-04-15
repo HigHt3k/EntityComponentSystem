@@ -20,11 +20,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * The HighScoreManager class is responsible for managing the high scores
+ * of the game. It provides methods for adding, loading, and resetting high scores,
+ * as well as retrieving high scores for a specific level.
+ */
 public class HighScoreManager {
+    /**
+     * The DocumentBuilder object used for parsing XML files.
+     */
     private static DocumentBuilder db;
+    /**
+     * The ArrayList of HighScore objects representing the high scores.
+     */
     private ArrayList<HighScore> scores;
 
-
+    /**
+     * Constructs a new HighScoreManager object and initializes the DocumentBuilder
+     * object for parsing XML files.
+     */
     public HighScoreManager() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -40,10 +54,18 @@ public class HighScoreManager {
         Game.logger().info("Successfully initialized highscore manager");
     }
 
+    /**
+     * Resets all high scores to 0.
+     */
     public void resetScores() {
-
+        scores = new ArrayList<>();
     }
 
+    /**
+     * Adds a new high score to the list of high scores.
+     *
+     * @param score The HighScore object representing the new high score to be added.
+     */
     public void addScore(HighScore score) {
         try {
             Document document = db.parse("res/scores/highscores.xml");
@@ -80,6 +102,9 @@ public class HighScoreManager {
         }
     }
 
+    /**
+     * Loads the high scores from the specified XML file.
+     */
     public void loadScores(String path) {
         ArrayList<HighScore> scoreHashMap = new ArrayList<>();
         try {
@@ -88,19 +113,19 @@ public class HighScoreManager {
 
             NodeList scores = doc.getElementsByTagName("scores");
 
-            if(scores.item(0).getNodeType() == Node.ELEMENT_NODE) {
+            if (scores.item(0).getNodeType() == Node.ELEMENT_NODE) {
                 NodeList scoreItems = scores.item(0).getChildNodes();
-                for(int i = 0; i < scoreItems.getLength(); i++) {
+                for (int i = 0; i < scoreItems.getLength(); i++) {
                     NodeList scoreItem = scoreItems.item(i).getChildNodes();
                     int score = 0;
                     String name = "";
                     int level = -1;
-                    for(int j = 0; j < scoreItem.getLength(); j++) {
-                        if(scoreItem.item(j).getNodeName() == "score") {
+                    for (int j = 0; j < scoreItem.getLength(); j++) {
+                        if (scoreItem.item(j).getNodeName() == "score") {
                             score = Integer.parseInt(scoreItem.item(j).getTextContent());
-                        } else if(scoreItem.item(j).getNodeName() == "name") {
+                        } else if (scoreItem.item(j).getNodeName() == "name") {
                             name = scoreItem.item(j).getTextContent();
-                        } else if(scoreItem.item(j).getNodeName() == "level") {
+                        } else if (scoreItem.item(j).getNodeName() == "level") {
                             level = Integer.parseInt(scoreItem.item(j).getTextContent());
                         }
                     }
@@ -119,15 +144,24 @@ public class HighScoreManager {
         Game.logger().info("Successfully loaded scores from scores file. \n" + scores.size());
     }
 
+    /**
+     * Saves the high scores to an XML file.
+     */
     public static void saveScores() {
-
+        // Not implemented yet
     }
 
+    /**
+     * Retrieves the high scores for a specific level.
+     *
+     * @param id The ID of the level for which to retrieve high scores.
+     * @return The ArrayList of HighScore objects representing the high scores for the specified level.
+     */
     public ArrayList<HighScore> getLevelScores(int id) {
         ArrayList<HighScore> highscores = new ArrayList<>();
 
-        for(HighScore score : scores) {
-            if(score.getLevelId() == id) {
+        for (HighScore score : scores) {
+            if (score.getLevelId() == id) {
                 highscores.add(score);
             }
         }
@@ -145,6 +179,11 @@ public class HighScoreManager {
         return highscores;
     }
 
+    /**
+     * Retrieves all high scores.
+     *
+     * @return The ArrayList of HighScore objects representing all high scores.
+     */
     public ArrayList<HighScore> getScores() {
         return scores;
     }

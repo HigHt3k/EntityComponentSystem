@@ -17,9 +17,25 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+/**
+ * A UI element for selecting the grid size of the X-axis.
+ */
 public class NumberChooserX extends Entity {
     private final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
 
+    /**
+     * Creates a new instance of the NumberChooserX class.
+     *
+     * @param name   the name of the entity
+     * @param id     the ID of the entity
+     * @param img    the image to display for the entity
+     * @param x      the X coordinate of the entity
+     * @param y      the Y coordinate of the entity
+     * @param width  the width of the entity
+     * @param height the height of the entity
+     * @param amount the grid size of the Y-axis to set
+     * @param i      the GridSize object representing the grid size
+     */
     public NumberChooserX(String name, int id, BufferedImage img, int x, int y, int width,
                           int height, int amount, GridSize i) {
         super(name, id);

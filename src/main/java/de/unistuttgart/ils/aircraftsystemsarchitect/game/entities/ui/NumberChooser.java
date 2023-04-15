@@ -17,9 +17,25 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
+/**
+ * A UI element representing a number chooser.
+ */
 public class NumberChooser extends Entity {
     private final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
 
+    /**
+     * Constructs a new {@code NumberChooser} with text.
+     *
+     * @param name   the name of the entity
+     * @param id     the ID of the entity
+     * @param text   the text to display
+     * @param x      the x-coordinate of the entity
+     * @param y      the y-coordinate of the entity
+     * @param width  the width of the entity
+     * @param height the height of the entity
+     * @param amount the amount of this item
+     * @param c      the {@code BuildPanelEntity} that this {@code NumberChooser} is associated with
+     */
     public NumberChooser(String name, int id, String text, int x, int y, int width,
                          int height, int amount, BuildPanelEntity c) {
         super(name, id);
@@ -50,6 +66,19 @@ public class NumberChooser extends Entity {
         actionComponent.addAction(MouseEvent.BUTTON1, new SetAmountAction(c, amount));
     }
 
+    /**
+     * Constructs a new {@code NumberChooser} with text.
+     *
+     * @param name   the name of the entity
+     * @param id     the ID of the entity
+     * @param img    the image to use for the number chooser button
+     * @param x      the x-coordinate of the entity
+     * @param y      the y-coordinate of the entity
+     * @param width  the width of the entity
+     * @param height the height of the entity
+     * @param amount the amount of this item
+     * @param c      the {@code BuildPanelEntity} that this {@code NumberChooser} is associated with
+     */
     public NumberChooser(String name, int id, BufferedImage img, int x, int y, int width,
                          int height, int amount, BuildPanelEntity c) {
         super(name, id);

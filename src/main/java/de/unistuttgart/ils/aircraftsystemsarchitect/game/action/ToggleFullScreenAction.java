@@ -8,6 +8,9 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.action.
  */
 public class ToggleFullScreenAction extends Action {
 
+    /**
+     * Toggles the screen between fullscreen and windowed mode.
+     */
     @Override
     public void handle() {
         Game.config().renderConfiguration().setFullscreenMode(!Game.config().renderConfiguration().getFullscreenMode());

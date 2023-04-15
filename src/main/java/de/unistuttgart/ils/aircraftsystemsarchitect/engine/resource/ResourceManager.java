@@ -40,21 +40,51 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The ResourceManager class is responsible for managing the game's resources, such as language files and high scores.
+ */
 public class ResourceManager {
+    /**
+     * The LanguageManager instance used for managing language files.
+     */
     private final LanguageManager language = new LanguageManager();
+
+    /**
+     * The HighScoreManager instance used for managing high scores.
+     */
     private final HighScoreManager highScoreManager = new HighScoreManager();
+
+    /**
+     * The DocumentBuilder instance used for parsing XML files.
+     */
     private static DocumentBuilder db;
 
+    /**
+     * The TileSet instance used for managing tile sets.
+     */
     private static TileSet tileSet;
 
+    /**
+     * Returns the LanguageManager instance used for managing language files.
+     *
+     * @return the LanguageManager instance
+     */
     public LanguageManager language() {
         return language;
     }
 
+    /**
+     * Returns the HighScoreManager instance used for managing high scores.
+     *
+     * @return the HighScoreManager instance
+     */
     public HighScoreManager score() {
         return highScoreManager;
     }
 
+    /**
+     * Constructs a new ResourceManager object and initializes the DocumentBuilder instance for parsing XML files.
+     */
     public ResourceManager() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -68,6 +98,11 @@ public class ResourceManager {
         }
     }
 
+    /**
+     * Loads a TileSet from the given file path, parsing the XML file and extracting the tile information.
+     *
+     * @param tilesetPath the file path of the TileSet XML file to load
+     */
     public void loadTileSet(String tilesetPath) {
         Game.logger().info("Loading TileSet from path: " + tilesetPath);
         TileSet t = new TileSet();
@@ -89,6 +124,7 @@ public class ResourceManager {
                     String imagePath = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("source");
                     String description = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("description");
                     String minNonPassive = ((Element) tile.getElementsByTagName("image").item(0)).getAttribute("minNonPassive");
+
                     if(description.equals("")) {
                         description = "Default description";
                     }
@@ -121,6 +157,7 @@ public class ResourceManager {
 
         Game.logger().info("Tileset loaded.");
     }
+
 
     /**
      * load a level from a specified path (xml file)
@@ -266,32 +303,52 @@ public class ResourceManager {
         Game.logger().info("Loaded level, now available levels: " + Game.scene().getSceneAmount());
     }
 
+    /**
+     * Returns the image of the tile with the given ID.
+     *
+     * @param id the ID of the tile to load
+     * @return the image of the tile with the given ID
+     */
     public BufferedImage loadTile(int id) {
         return tileSet.getTile(id);
     }
 
+    /**
+     * Returns the TileSet instance.
+     *
+     * @return the TileSet instance
+     */
     public TileSet getTileSet() {
         return tileSet;
     }
 
-    // Different user profiles can be added to the game, need to create a main menu first.
-
+    /**
+     * Loads a player profile file.
+     */
     public void loadProfile() {
         //TODO: load a player profile (XML)
     }
 
+    /**
+     * Saves the player profile file.
+     */
     public void saveProfile() {
         //TODO: save a profile file (XML)
     }
 
+    /**
+     * Creates a new player profile file.
+     */
     private void createProfile() {
         //TODO: create a new profile file (XML)
     }
 
     /**
-     * load a custom font from a given path
-     * @param path: path to the font file
-     * @return a font from a file if available or null else
+     * Loads a custom font from the given file path and size.
+     *
+     * @param path the file path of the font file
+     * @param size the size of the font to create
+     * @return a font from the file if available, or null otherwise
      */
     public Font loadFont(String path, float size) {
         try {
@@ -311,6 +368,11 @@ public class ResourceManager {
         return null;
     }
 
+    /**
+     * Saves the level to an XML file, prompting the user to enter a level name and set the level goals.
+     *
+     * @param scene the current scene, must be an instance of BuildScene
+     */
     public void saveLevel(Scene scene) {
         if(scene instanceof BuildScene bs) {
             JTextField fail = new JTextField(8);
@@ -456,65 +518,6 @@ public class ResourceManager {
     }
 
     /**
-     * save a level at its current state (for level create mode)
-     * @param id: level id, unique
-     * @param name: level name
-     */
-    public void saveLevel(int id, String name) {
-        try {
-            Document doc = db.newDocument();
-
-            Element rootElement = doc.createElement("map");
-            rootElement.setAttribute("id", String.valueOf(id));
-            rootElement.setAttribute("name", name);
-            doc.appendChild(rootElement);
-
-            Element tileSetElement = doc.createElement("tileset");
-            tileSetElement.setAttribute("source","base_tiles.xml");
-            rootElement.appendChild(tileSetElement);
-
-            Element descriptionElement = doc.createElement("description");
-            rootElement.appendChild(descriptionElement);
-
-            // TODO: Rework level saver
-            /*int[] layerIds = map.getUniqueLayerIds();
-
-            for (int layerId : layerIds) {
-                Element layerElement = doc.createElement("layer");
-                layerElement.setAttribute("id", String.valueOf(layerId));
-
-
-                for(Entity e : entities) {
-                    if(e.getLayerId() == layerId) {
-                        Element ent = doc.createElement("entity");
-                        ent.setAttribute("id", String.valueOf(e.getId()));
-                        ent.setAttribute("x", String.valueOf((int) (e.getPosition().getX() / Game.config().renderConfiguration().getGridPx())));
-                        ent.setAttribute("y", String.valueOf((int) (e.getPosition().getY() / Game.config().renderConfiguration().getGridPx())));
-                        ent.setAttribute("interactable", String.valueOf(false));
-                        layerElement.appendChild(ent);
-                    }
-                }
-
-                rootElement.appendChild(layerElement);
-            } */
-
-
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-            DOMSource source = new DOMSource(doc);
-            File f = new File("test/res/level/" + name + ".xml");
-            f.createNewFile();
-            StreamResult result = new StreamResult(f);
-            transformer.transform(source, result);
-        } catch (TransformerException | IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println("File saved!");
-    }
-
-    /**
      * from a file, load the description of a component based on its id
      * @param id: the id to look up
      * @return a description of given id
@@ -523,6 +526,13 @@ public class ResourceManager {
         return tileSet.getDescription(id);
     }
 
+    /**
+     * Saves a score using the HighScoreManager
+     *
+     * @param name: player name
+     * @param score: score achieved
+     * @param level: level id of the level the score was achieved in
+     */
     public void saveScore(String name, int score, int level) {
         highScoreManager.addScore(new HighScore(name, score, level));
     }

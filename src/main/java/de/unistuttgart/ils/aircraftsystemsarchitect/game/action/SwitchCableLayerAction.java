@@ -12,10 +12,14 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class SwitchCableLayerAction extends Action {
+
+    /**
+     * Changes the current cable layer in the build mode and updates the corresponding image to reflect the change.
+     */
     @Override
     public void handle() {
         BuildHandler buildHandler = Objects.requireNonNull(Game.input().getHandler(BuildHandler.class));
-        if(buildHandler.getCurrentCableLayer() == 3) {
+        if (buildHandler.getCurrentCableLayer() == 3) {
             buildHandler.setCurrentCableLayer(0);
         } else {
             buildHandler.setCurrentCableLayer(buildHandler.getCurrentCableLayer() + 1);
@@ -27,6 +31,12 @@ public class SwitchCableLayerAction extends Action {
         }
     }
 
+    /**
+     * Updates the image for the cable switch based on the current cable layer.
+     *
+     * @param layer The current cable layer.
+     * @throws IOException If an I/O error occurs.
+     */
     private void updateImage(int layer) throws IOException {
         int layerImg = layer + 1;
         Game.scene().current().getEntityByName("cable_switch")

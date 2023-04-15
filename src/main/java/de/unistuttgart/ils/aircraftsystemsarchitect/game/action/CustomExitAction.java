@@ -5,8 +5,14 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.config.Configuration;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.action.ExitAction;
 import de.unistuttgart.ils.aircraftsystemsarchitect.game.config.TDWConfiguration;
 
+/**
+ * An action to handle the game exit with a custom check for TDW configuration.
+ */
 public class CustomExitAction extends ExitAction {
 
+    /**
+     * Handle the game exit with a custom check for TDW configuration.
+     */
     @Override
     public void handle() {
         for(Configuration c : Game.config().getCustomConfigurations()) {
@@ -16,11 +22,9 @@ public class CustomExitAction extends ExitAction {
                 } else if(Game.scene().current().getId() == -255) {
                     super.handle();
                 }
-
                 return;
             }
         }
-
         super.handle();
     }
 }

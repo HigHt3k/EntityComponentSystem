@@ -13,11 +13,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Action to toggle the build mode between removing and not building
+ */
 public class DeleteModeAction extends Action {
+
+    /**
+     * Handles toggling of build mode between removing and not building
+     */
     @Override
     public void handle() {
-        BuildHandler buildHandler = Objects
-                .requireNonNull(Game.input().getHandler(BuildHandler.class));
+        BuildHandler buildHandler = Objects.requireNonNull(Game.input().getHandler(BuildHandler.class));
 
         if(buildHandler.getCurrentBuildState() == BuilderState.REMOVING) {
             buildHandler.setCurrentBuildState(BuilderState.NOT_BUILDING);
@@ -37,6 +43,12 @@ public class DeleteModeAction extends Action {
         }
     }
 
+    /**
+     * Updates the image of the bulldozer entity based on whether the build mode is active or not
+     *
+     * @param active whether the build mode is active or not
+     * @throws IOException if there is an error in reading the image file
+     */
     private void updateImage(boolean active) throws IOException {
         if(active) {
             Game.scene()

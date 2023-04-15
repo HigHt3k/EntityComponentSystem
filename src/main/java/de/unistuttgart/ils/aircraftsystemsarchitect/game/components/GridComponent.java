@@ -11,10 +11,20 @@ import java.awt.geom.Point2D;
 public class GridComponent extends Component {
     private Point2D gridLocation;
 
+    /**
+     * Sets the grid location of the entity
+     *
+     * @param gridLocation The new grid location of the entity
+     */
     public void setGridLocation(Point gridLocation) {
         this.gridLocation = gridLocation;
     }
 
+    /**
+     * Gets the grid location of the entity
+     *
+     * @return The grid location of the entity
+     */
     public Point2D getGridLocation() {
         return gridLocation;
     }

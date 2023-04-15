@@ -38,23 +38,46 @@ public class CablePortsComponent extends Component {
         }
     }
 
+    /**
+     * set the in and out ids of the cable ports
+     * @param inIds: input ids
+     * @param outIds: output ids
+     */
     public void setIds(int[] inIds, int[] outIds) {
         this.inIds = inIds;
         this.outIds = outIds;
     }
 
+    /**
+     * get an array of the ids of the in cable ports
+     * @return list of in ids
+     */
     public int[] getInIds() {
         return inIds;
     }
 
+    /**
+     * get an array of the ids of the out cable ports
+     * @return list of out ids
+     */
     public int[] getOutIds() {
         return outIds;
     }
 
+    /**
+     * get a list of all cable ports available
+     * @return all cable ports
+     */
     public ArrayList<CablePort> getCablePorts() {
         return cablePorts;
     }
 
+    /**
+     * get a specified cable port by its id (usually 0-3) and its type (IN/OUT)
+     * @param id: cable port id
+     * @param type: cable port type
+     * @return the cable port or null if not found
+     */
     public CablePort getCablePort(int id, CablePortType type) {
         for(CablePort port : cablePorts) {
             if(port.getType() == type) {
@@ -99,6 +122,10 @@ public class CablePortsComponent extends Component {
         return null;
     }
 
+    /**
+     * add a cable port to the entity
+     * @param cablePortEntity: the cable port to add
+     */
     public void addCablePort(CablePort cablePortEntity) {
         this.cablePorts.add(cablePortEntity);
     }

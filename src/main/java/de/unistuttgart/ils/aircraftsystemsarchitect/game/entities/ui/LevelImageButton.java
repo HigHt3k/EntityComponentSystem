@@ -10,8 +10,12 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalette
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * A image button used to display a level on the level map
+ */
 public class LevelImageButton extends GenericButton {
     private final Color lockedColor = Bit8.LIGHT_GREY;
+
     /**
      * Create a generic functional button. addIntent needs to be used to add a purpose other than hovering to this button.
      *
@@ -33,6 +37,9 @@ public class LevelImageButton extends GenericButton {
         this.getComponent(RenderComponent.class).addRenderObject(new ImageObject(new Point(x, y), new Rectangle(x, y, width, height), Layer.UI, image));
     }
 
+    /**
+     * unlock the button
+     */
     public void unlock() {
         this.button.setHidden(true);
     }

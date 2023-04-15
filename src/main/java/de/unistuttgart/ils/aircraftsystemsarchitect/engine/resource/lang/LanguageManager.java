@@ -16,11 +16,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-// TODO: Implement
+/**
+ * Class for managing and parsing language files.
+ */
 public class LanguageManager {
     private static DocumentBuilder db;
     ArrayList<Language> languages = new ArrayList<>();
 
+    /**
+     * Constructor for the LanguageManager class. Initializes the Document Builder Factory.
+     */
     public LanguageManager() {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
@@ -37,8 +42,9 @@ public class LanguageManager {
     }
 
     /**
-     * parse a generic language file
-     * @param path
+     * Parses a generic language file located at the specified path.
+     *
+     * @param path The path to the language file.
      */
     public void parseLanguageFile(String path) {
         Document doc = null;
@@ -72,10 +78,11 @@ public class LanguageManager {
     }
 
     /**
-     * get a string from a language file by its id
-     * @param id: id of the string object
-     * @param languageType: type of the language
-     * @return the string
+     * Retrieves a string from a language file by its ID and language type.
+     *
+     * @param id The ID of the string object.
+     * @param languageType The type of the language.
+     * @return The requested string.
      */
     public String getStringValue(int id, LanguageType languageType) {
         for(Language l : languages) {
@@ -92,15 +99,20 @@ public class LanguageManager {
     }
 
     /**
-     * removes line breaks after parsing a xml file
+     * Removes line breaks from the input string after parsing an XML file.
      *
-     * @param in: string to remove the linebreaks from
-     * @return: converted string without any linebreak
+     * @param in The input string to remove the line breaks from.
+     * @return The converted string without any line breaks.
      */
     private String removeLineBreaks(String in) {
         return in.replaceAll("[\\t\\n\\r]+", " ");
     }
 
+    /**
+     * Prints translation values that are missing when comparing languages.
+     * 
+     * DEBUGGING PURPOSE ONLY
+     */
     public void printTranslationMissing() {
         // use english as comparator since this is the implementation language
         Language l = getLanguage(LanguageType.EN_US);
@@ -111,6 +123,14 @@ public class LanguageManager {
         compareLanguages(l, gerSimple);
     }
 
+    /**
+     * Compares two languages and prints missing translations.
+     *
+     * DEBUGGING PURPOSE ONLY
+     *
+     * @param l1 The first language to compare.
+     * @param l2 The second language to compare.
+     */
     private void compareLanguages(Language l1, Language l2) {
         System.out.println("Comparing " + l1.getLanguageType() + " and " + l2.getLanguageType());
         for(Map.Entry<Integer, String> languageEntry : l1.getLanguage().entrySet()) {
@@ -124,6 +144,12 @@ public class LanguageManager {
         }
     }
 
+    /**
+     * Retrieves a Language object by its language type.
+     *
+     * @param languageType The type of the language to be retrieved.
+     * @return The Language object, or null if not found.
+     */
     public Language getLanguage(LanguageType languageType) {
         for(Language l : languages) {
             if(l.getLanguageType() == languageType) {

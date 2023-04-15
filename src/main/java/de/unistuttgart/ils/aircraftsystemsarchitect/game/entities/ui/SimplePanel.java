@@ -7,8 +7,23 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.entity.Entity;
 
 import java.awt.*;
 
+/**
+ * A simple UI panel with a background and border color.
+ */
 public class SimplePanel extends Entity {
 
+    /**
+     * Creates a new SimplePanel object with a given name, ID, position, size, background and border color.
+     * @param name the name of the panel
+     * @param id the ID of the panel
+     * @param x the x position of the panel
+     * @param y the y position of the panel
+     * @param width the width of the panel
+     * @param height the height of the panel
+     * @param background the background color of the panel
+     * @param border the border color of the panel
+     * @param textColor the text color of the panel
+     */
     public SimplePanel(String name, int id,
                        int x, int y, int width, int height,
                        Color background, Color border, Color textColor) {
@@ -22,6 +37,19 @@ public class SimplePanel extends Entity {
         this.addComponent(renderComponent);
     }
 
+    /**
+     * Creates a new SimplePanel object with a given name, ID, position, size, background and border color on a given layer.
+     * @param name the name of the panel
+     * @param id the ID of the panel
+     * @param x the x position of the panel
+     * @param y the y position of the panel
+     * @param width the width of the panel
+     * @param height the height of the panel
+     * @param background the background color of the panel
+     * @param border the border color of the panel
+     * @param textColor the text color of the panel
+     * @param layer the layer on which the panel should be rendered
+     */
     public SimplePanel(String name, int id,
                        int x, int y, int width, int height,
                        Color background, Color border, Color textColor,

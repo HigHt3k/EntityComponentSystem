@@ -9,7 +9,24 @@ import de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.colorpalette
 
 import java.awt.*;
 
+/**
+ * A UI element that displays a score box with a given font and score value.
+ */
 public class ScoreBox extends Entity {
+
+    /**
+     * Constructs a new ScoreBox with the given name, ID, font, score value, position and size.
+     *
+     * @param name   the name of the entity
+     * @param id     the ID of the entity
+     * @param font   the font used to display the score value
+     * @param score  the score value to display
+     * @param x      the x-coordinate of the upper-left corner of the score box
+     * @param y      the y-coordinate of the upper-left corner of the score box
+     * @param width  the width of the score box
+     * @param height the height of the score box
+     * @param text   the text to display above the score box
+     */
     public ScoreBox(String name, int id, Font font, int score,
                     int x, int y, int width, int height, String text) {
         super(name, id);

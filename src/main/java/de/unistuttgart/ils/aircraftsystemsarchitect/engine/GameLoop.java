@@ -11,7 +11,8 @@ public class GameLoop extends Thread {
     private boolean started = false;
 
     /**
-     * runs the standard game thread at a set tick rate / update rate
+     * Runs the standard game thread at a set tick rate / update rate.
+     * Calls the process method at each tick.
      */
     @Override
     public void run() {
@@ -26,10 +27,11 @@ public class GameLoop extends Thread {
     }
 
     /**
-     * processes all the updates that need to be done at each tick
+     * Processes all the updates that need to be done at each tick.
+     * Handles inputs, systems, entities rendering and sound playback.
      */
     private void process() {
-        if(started) {
+        if(started && !paused) {
             // handle inputs
             Game.input().handle();
             // handle systems
@@ -41,13 +43,24 @@ public class GameLoop extends Thread {
         }
     }
 
+    /**
+     * Pauses the game loop, stopping updates and rendering.
+     */
     protected void pause() {
         paused = true;
     }
 
+    /**
+     * Resumes the game loop, allowing updates and rendering to continue.
+     */
     protected void unpause() {
         paused = false;
     }
 
-    public void setStarted() {started = true; }
+    /**
+     * Sets the started flag to true, indicating the game loop has started.
+     */
+    public void setStarted() {
+        started = true;
+    }
 }

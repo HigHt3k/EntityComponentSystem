@@ -18,9 +18,10 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
 /**
- * the main class for the game, contains the engine and core pieces of the implementation
+ * The main class for the game, containing the engine and core pieces of the implementation.
  */
 public class Game {
+
     // Logger & Config
     private static final Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final GameConfiguration config = new GameConfiguration();
@@ -35,7 +36,6 @@ public class Game {
     private static InputManager inputManager;
     private static SystemManager systemManager;
 
-
     // Display stuff
     private static GameFrame gameFrame;
 
@@ -45,44 +45,90 @@ public class Game {
     // variables
     private static boolean paused = false;
 
+    /**
+     * Get the ResourceManager instance.
+     * @return The ResourceManager instance.
+     */
     public static ResourceManager res() {
         return res;
     }
 
+    /**
+     * Get the SoundEngine instance.
+     * @return The SoundEngine instance.
+     */
     public static SoundEngine sound() {
         return sound;
     }
 
+    /**
+     * Get the GameConfiguration instance.
+     * @return The GameConfiguration instance.
+     */
     public static GameConfiguration config() {
         return config;
     }
 
+    /**
+     * Get the GameInformation instance.
+     * @return The GameInformation instance.
+     */
     public static GameInformation info() {
         return info;
     }
 
+    /**
+     * Get the SceneManager instance.
+     * @return The SceneManager instance.
+     */
     public static SceneManager scene() {
         return sceneManager;
     }
 
+    /**
+     * Get the Logger instance.
+     * @return The Logger instance.
+     */
     public static Logger logger() {
         return logger;
     }
 
+    /**
+     * Get the GameFrame instance.
+     * @return The GameFrame instance.
+     */
     public static GameFrame frame() {
         return gameFrame;
     }
 
+    /**
+     * Get the InputManager instance.
+     * @return The InputManager instance.
+     */
     public static InputManager input() {
         return inputManager;
     }
 
+    /**
+     * Get the SystemManager instance.
+     * @return The SystemManager instance.
+     */
     public static SystemManager system() {
         return systemManager;
     }
 
-    public static RenderingEngine graphics() {return graphics;}
+    /**
+     * Get the RenderingEngine instance.
+     * @return The RenderingEngine instance.
+     */
+    public static RenderingEngine graphics() {
+        return graphics;
+    }
 
+    /**
+     * Get the ScalingEngine instance
+     * @return The ScalingEngine instance
+     */
     public static ScalingEngine scale() {return scale;}
 
     /**
@@ -120,16 +166,26 @@ public class Game {
         gameLoop.start();
     }
 
+    /**
+     * unpause the game
+     */
     public static void unpause() {
         gameLoop.unpause();
         paused = false;
     }
 
+    /**
+     * pause the game
+     */
     public static void pause() {
         gameLoop.pause();
         paused = true;
     }
 
+    /**
+     * check if game is paused
+     * @return true if paused, false else
+     */
     public static boolean paused() {
         return paused;
     }

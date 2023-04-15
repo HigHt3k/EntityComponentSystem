@@ -19,20 +19,32 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * SimulationEntity:
- *         |_ GraphicsComponent
- *                  |_ ToolTip
- *         |_ CollisionComponent
- *         |_ BuildComponent
- *         |_ IntentComponent
- *               |_ HoverIntent
- *               |_ BuildIntent
- *         |_ addIntent();
+ * Entity representing a build panel for building simulation components
  */
 public class BuildPanelEntity extends Entity {
+
     private final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
     private final Color TEXT_COLOR = Bit8.DARK_GREY;
 
+    /**
+     * Constructs a BuildPanelEntity with the given parameters
+     *
+     * @param name                   the name of the entity
+     * @param id                     the id of the entity
+     * @param x                      the x coordinate of the panel
+     * @param y                      the y coordinate of the panel
+     * @param width                  the width of the panel
+     * @param height                 the height of the panel
+     * @param img                    the image representing the panel
+     * @param tileId                 the id of the tile the panel is associated with
+     * @param amount                 the amount of the component being built
+     * @param failureRatio           the failure ratio of the component being built
+     * @param simulationType         the type of the component being built
+     * @param correctSignalsNeeded   the number of correct signals needed for the component being built
+     * @param outOfControlSignalsAccepted   the number of out of control signals that are accepted for the component being built
+     * @param description            the description of the component being built
+     * @param failureDetectionRatio  the failure detection ratio of the component being built
+     */
     public BuildPanelEntity(String name, int id,
                             int x, int y, int width, int height,
                             BufferedImage img, int tileId,

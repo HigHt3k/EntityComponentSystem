@@ -20,21 +20,33 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /**
- * SimulationEntity:
- *         |_ GraphicsComponent
- *               |_ ToolTip
- *         |_ CollisionComponent
- *         |_ SimulationComponent
- *         |_ CablePortsComponent
- *         |_ GridComponent
- *         |_ IntentComponent
- *               |_ HoverIntent
- *               |_ BuildIntent
- *         |_ addIntent();
+ * Represents a simulation entity, which can be added to a game scene to simulate certain systems or sensors.
  */
 public class SimulationEntity extends Entity {
     private final Color HOVER_COLOR = Bit8.setAlpha(Bit8.HEATHERED_GREY, 80);
 
+    /**
+     * Creates a new simulation entity.
+     *
+     * @param name                    The name of the simulation entity.
+     * @param id                      The ID of the simulation entity.
+     * @param x                       The x position of the simulation entity.
+     * @param y                       The y position of the simulation entity.
+     * @param width                   The width of the simulation entity.
+     * @param height                  The height of the simulation entity.
+     * @param xGrid                   The x position of the simulation entity on the grid.
+     * @param yGrid                   The y position of the simulation entity on the grid.
+     * @param img                     The image representing the simulation entity.
+     * @param tileId                  The ID of the tile representing the simulation entity.
+     * @param failureRatio            The failure ratio of the simulation entity.
+     * @param type                    The simulation type.
+     * @param correctSignalsNeeded    The number of correct signals needed for the simulation to recognize a signal.
+     * @param outOfControlSignalsAccepted The number of out-of-control signals accepted by the simulation.
+     * @param cablePortIdsIn          An array of IDs of cable ports the simulation entity has as inputs.
+     * @param cablePortIdsOut         An array of IDs of cable ports the simulation entity has as outputs.
+     * @param removable               Whether or not the simulation entity is removable.
+     * @param failureDetectionRatio   The ratio at which the simulation entity can detect failures.
+     */
     public SimulationEntity(String name, int id,
                             int x, int y, int width, int height,
                             int xGrid, int yGrid,
