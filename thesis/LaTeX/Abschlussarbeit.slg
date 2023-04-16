@@ -1,23 +1,2 @@
-;; This logfile was generated automatically by `xindy'
-;; at 14.04.2023  18:18:26
-;; Indexstyle: "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\FC45nPJJam", Rawindex: "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\lD3PI498Rs", Output: "Abschlussarbeit.syi"
-
-
-Building indexentry-tree:
-Hierdepth of index is :TREE
-
-
-Forming letter-groups:
-
-Reading raw-index "C:\\Users\\johan\\IdeaProjects\\EntityComponentSystem\\thesis\\LaTeX\\lD3PI498Rs"...WARNING: location-reference "{}{}" did not match any location-class! (ignored)
-WARNING: location-reference "{}{}" did not match any location-class! (ignored)
-WARNING: location-reference "{}{}" did not match any location-class! (ignored)
-WARNING: location-reference "{}{}" did not match any location-class! (ignored)
-WARNING: location-reference "{}{}" did not match any location-class! (ignored)
-
-makeglossaries diagnostic messages:
-
-You may have forgotten to add a location 
-class with \GlsAddXdyLocation or you may have 
-the format incorrect or you may need 
-the package option esclocations=true.
+Warning: File 'Abschlussarbeit.syg' is empty.
+Have you used any entries defined in glossary 'symbolslist'?

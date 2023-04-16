@@ -102,12 +102,12 @@ Table~\ref{tab:safety-effect} shows the different safety categories~\cite{cs25}.
     \label{tab:safety-effect}
 \end{table}
 \subsection{Common Cause Failure}\label{subsec:common-cause-failure}
-Common cause failure (CCF) is a term that describes the failure of multiple components at the same time due to the same cause.
+\gls{CCF} is a term that describes the failure of multiple components at the same time due to the same cause.
 The cause for the failure of one component is not a consequence of a failure of another component, but rather the failure reason is from and
 external source, such as a lightning strike~\cite{ccf,cmf}.
 
 \subsection{Common Mode Failure}\label{subsec:common-mode-failure}
-Compared to common cause failures, common mode failures (CMF) are failures, where multiple components fail equally, where the reason
+Compared to common cause failures, \gls{CMF} are failures, where multiple components fail equally, where the reason
 for failure may be different for each component.
 Common mode failures occur due to design defects, maintenance or installation errors and errors during the development process
 of the system~\cite{lfs2,cmf}.
@@ -117,7 +117,7 @@ As defined in section~\ref{eq:failure-probability}, the default value of integra
 $1\e-4$, which means, that with only a single component safety effect requirements of categories higher than \textit{Major} are out of scope.
 Therefore, different redundancy concepts have been developed and are being used in system architectures.
 These include duplex, triplex and quadruplex systems - meaning, a component is replicated multiple times to run the same program.
-One needs to divide between replicated computers, also called \textbf{channels}, and replicated components (e.g.\ CPU) within a computer,
+One needs to divide between replicated computers, also called \textbf{channels}, and replicated components (e.g.\ \gls{CPU}) within a computer,
 namely \textbf{lanes}.
 It is important to note, that each lane or channel is merged right before an actuator and signals in general always join together
 at sensors and actuators~\cite{lfs1}.
@@ -198,7 +198,7 @@ since the presentation and understanding of exactly these concepts is the core o
 \end{figure}
 
 \subsection{Markov Process}\label{subsec:markov-process}
-The aircraft design process generally has to comply with the requirements that are stated in regulatory files such as the FAR 25
+The aircraft design process generally has to comply with the requirements that are stated in regulatory files such as the \gls{FAR} 25
 in order to qualify for the aircraft certification documents.
 There are different guidelines for the conduction of the safety assessment process for aircraft systems, which include the
 recommendation of quantitative analysis methods such as Fault Tree Analysis, Dependence Diagrams and Markov Analysis.
@@ -213,7 +213,7 @@ In simpler terms, a Markov process is a random process where the probability of 
 only by the current state and not by any prior history~\cite{markov-processes}.
 \\
 Markov processes can be categorized into two main types:
-discrete-time Markov chains (\gls{DTMC}) and continuous-time Markov chains (\gls{CTMC}).
+\gls{DTMC} and \gls{CTMC}.
 In a discrete-time Markov chain, the state transitions occur at discrete time steps (e.g., every second or every day),
 while in a continuous-time Markov chain, the transitions can happen at any point in continuous time~\cite{markov-processes, VANKAMPEN200773}.
 In the scope of this work, a continuous time markov chain model is used.
@@ -232,7 +232,7 @@ including stock price movements, DNA sequences, and speech recognition~\cite{mar
 The state space for the markov process in aircraft system design is a finite state space, which is determined through the amount of components
 a system consists of and the amount of different types of failures.
 Failure types may include mechanical failures, electrical failures or software failures, which can each be categorized as either
-passive or out-of-control failures, depending on if the failure was detected or not.
+passive or \gls{OOC} failures, depending on if the failure was detected or not.
 As a result, the markov state space consisting of the possible states of the system items, which in the scope of
 this work are the four different states: \textit{correct}, \textit{failed}, \textit{passivated}, \textit{out-of-control}~\cite{markov-processes}.
 
@@ -245,7 +245,7 @@ A singular state transition from state $A$ to state $B$ is therefore defined as 
 of the component that changes its state from correct to failed.
 Going on from the failed state, as seen in figure~\ref{fig:state-change}, there are two possibilities,
 a stange change from $B$ to $C$ shows the failure detection ratio, also known as integrity~\ref{eq:integrity}
-and a state change from $B$ to $C$ describes the transition to an undetected (out-of-control) failure.
+and a state change from $B$ to $C$ describes the transition to an undetected (\gls{OOC}) failure.
 \begin{figure}
     \begin{center}
         \begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
@@ -427,13 +427,13 @@ Furthermore, a custom game engine reduces or avoids the reliance on third partie
 licensing fees or revenue sharing agreements.
 
 \subsubsection{Unity}\label{subsubsec:entity-component-system}
-DOTS (Data-Oriented-Technology Stack) is a framework developed by Unity Technologies for high-performance game development.
+\gls{DOTS} is a framework developed by Unity Technologies for high-performance game development.
 It aims to help developers create projects that can efficiently utilize modern hardware and run smoothly on various platforms,
 including consoles, PCs, and mobile devices.
 DOTS is built on three core pillars: Entity Component System, C\# Job System and Burst Compiler~\cite{dots}.
 \\
-For the unity engine architecture, a generic entity component system (\gls{ECS}) design pattern is used, as seen in figure~\ref{fig:ecs-unity}.
-The basic idea behind using an \gls{ECS} is to separate object data and behavior into components, respectively systems.
+For the unity engine architecture, a generic \gls{ECS} design pattern is used, as seen in figure~\ref{fig:ecs-unity}.
+The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
 Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
 Entities consist of a variety of components, while each entity can have different components based on the needs.
 A purely graphical entity which shows an image may only consist of a single graphics component, however another entity may contain
@@ -448,9 +448,9 @@ to specific needs of the developer.
 \\
 The C\# Job System is a multithreading framework that enables developers to write safe, high-performance multithreaded code.
 It helps to utilize the full power of multicore processors by executing tasks in parallel.
-This results in improved performance and responsiveness, especially for CPU-bound tasks like physics simulations, AI calculations, and procedural generation~\cite{dots}.
+This results in improved performance and responsiveness, especially for \gls{CPU}-bound tasks like physics simulations, AI calculations, and procedural generation~\cite{dots}.
 \\
-The Burst Compiler is a math-aware, LLVM-based compiler developed by Unity to optimize C\# code for high-performance execution.
+The Burst Compiler is a math-aware, \gls{LLVM}-based compiler developed by Unity to optimize C\# code for high-performance execution.
 It takes advantage of vectorization, cache optimization, and other low-level optimizations to produce highly efficient native code.
 By working together with the C\# Job System, the Burst Compiler helps achieve even greater performance gains~\cite{dots}.
 \begin{figure}
@@ -460,12 +460,12 @@ By working together with the C\# Job System, the Burst Compiler helps achieve ev
     \label{fig:ecs-unity}
 \end{figure}
 \subsubsection{Unreal}\label{subsubsec:unreal:-component-based-architecture}
-\textit{Unreal Engine} does not use an Entity Component System (\gls{ECS}) in the same way \textit{Unity} does with its Data-Oriented Technology Stack (\gls{DOTS}) and \gls{ECS} implementation.
-However, \textit{Unreal Engine} does use a component-based architecture, which shares some similarities with an \gls{ECS}~\cite{UNREAL:Framework}.
+\textit{Unreal Engine} does not use an \gls{ECS} in the same way \textit{Unity} does with its \gls{DOTS} and \gls{ECS} implementation.
+However, \textit{Unreal Engine} does use a component-based architecture, which shares some similarities with an ECS~\cite{UNREAL:Framework}.
 \\
 In \textit{Unreal Engine}, as seen in figure~\ref{fig:unreal-concept}, game objects are represented as Actors, which can have
 various components attached to them to define their behavior and appearance.
-This approach allows for modularity and reusability of code, which is one of the primary goals of an \gls{ECS}~\cite{UNREAL:Framework}.
+This approach allows for modularity and reusability of code, which is one of the primary goals of an ECS~\cite{UNREAL:Framework}.
 \\
 While \textit{Unreal Engine's} component-based architecture has some similarities with an ECS, it does not follow the strict separation of
 data and logic that characterizes an ECS. In an ECS, entities are simple identifiers, components hold only data, and systems
@@ -473,7 +473,7 @@ handle the processing of component data.
 This separation of concerns allows for better performance and scalability, particularly on modern hardware with multiple cores, due to the possibility
 of separating different systems into multiple threads~\cite{UNREAL:Framework}.
 \\
-\textit{Unreal Engine's} component-based architecture, though not a pure \gls{ECS} implementation, provides a powerful
+\textit{Unreal Engine's} component-based architecture, though not a pure ECS implementation, provides a powerful
 and flexible way to create game objects and manage their behavior.
 This is done by a method which constantly updates each component by using their built-in methods, instead of having different systems accessing and changing data within components.
 Developers can still achieve good performance and scalability by carefully designing their code and taking
@@ -498,7 +498,7 @@ engine~\cite{cryengine}.
 \section{Background}\label{sec:background}
 In this section, the background to the scope of this work is provided and existing solutions regarding the specified problem and
 games with an educational background in general are discussed.
-\subsection{Problem}\label{subsec:problem}
+\subsection{Problem Definition}\label{subsec:problem}
 The subject of aircraft system design, particularly the concepts of redundancy, can be quite challenging to present and visualize
 in an accessible and comprehensive way.
 To address this, it is proposed that a gamified simulation is designed, developed, and implemented to have an interactive, engaging way to access the topic of interest.
@@ -519,6 +519,13 @@ Players should be able to progress through the levels, experiencing a gradual le
 in general and helps grasp and retain the concepts presented.
 
 \subsection{State-of-the-Art}\label{subsec:state-of-the-art}
+This subsection goes into detail about state-of-the-art research of educational games and similar projects and works available
+today.
+Studies regarding the purpose, effectiveness and innovation of educational and serious games are reviewed and
+serious games are presented and analysed regarding their educational effect and how they try to create interest and combine
+entertainment and learning.
+
+\subsubsection{Research}\label{subsubsec:research}
 In the 21st century, e-learning has seen increasing implementation and adoption across various educational levels.
 This includes the use of educational games and the integration of game-based learning methods not only in
 high schools and universities but also in middle and elementary schools.
@@ -542,7 +549,46 @@ This presents an opportunity for the proposed work, which is specifically design
 technical subject of system engineering and redundancy concepts more accessible and engaging through a visual and interactive format
 to get the audience interested to possibly learn more in the future and regarding young learners, to maybe start their studies
 in this field at a later age.
+\\
+\subsubsection{Games}\label{subsubsec:games}
+Educational and serious games are developed and implemented with an increasing focus specifically on gaining
+interest of possible new students.
+They aim to give insight and involve people with little knowledge to spark interest, which may in later stages of their
+life lead them to the brach the game provides information and game play for.
+The following games are specifically focused on the former-mentioned objectives and should give an insight into
+the possibilities and methodologies currently used and may be used in the scope of this work.
 
+\textbf{Bride Construction Set \& Bride It}:\\ \\
+The bridge building games developed by \textit{ChronicLogic} allow the player to test their engineering and
+construction knowledge by building bridges in different variations (levels) that should withstand a certain amount
+of force applied to them in the form of vehicles crossing the bridge.
+The game is targeted at all age groups and playfully introduces and tests knowledge regarding physics and bridge
+building engineering~\cite{Bridebuilder}.
+
+\textbf{NanoMission}:\\ \\
+As an initiative to face the decline in the number of students starting studies in nanoscale research and development,
+a series of video games named \textit{NanoMission} was started.
+The objective of the game is to inspire learners to dive into the topic of nano sciences through four different modules:
+\textit{NanoMedicine V1}, \textit{NanoMedicine V2}, \textit{NanoImaging} and \textit{NanoScaling}.
+These modules present the user with different challenges such as destroying cancer molecules within the world of
+nano particles.
+According to Sean Murdock, today's students need to get a direct feedback of the contents that are supposed
+to be learned to gain interest in the topic~\cite{nanomission}.
+
+\textbf{transAction}:\\ \\
+Even though not directly purposed to attract interest of an audience with little to no knowledge, the \textit{RWTH Aachen}
+has developed an economics game named \textit{transAction}, where players have to use the skills they learn in theory from
+the lecture to lead a virtual company.
+Via blended learning, this simulation is integrated seemingly into the actual lecture and students receive a bonus to
+their end year grade, which is a motivational aspect implemented~\cite{rwth-aachen:transaction}.
+
+\textbf{ISPRAT - Participation 2.0}:\\ \\
+At the \textit{TU Darmstadt}, a variety of different serious game projects have been developed in the past~\cite{tu-darm:projectslist}.
+The projects are conducted and facilitated by the \textit{Serious Games group} at the etit faculty, with the most relevant
+one to compare to the purpose of this thesis being the \textit{ISPRAT - Participation 2.0} project - an online application to design
+areas of Darmstadt that are being built or rebuilt, with the focus to involve young citizens~\cite{tu-darm:projectslist, tu-darm:ISPRAT}.
+While this project does not provide a specific educational purpose, it provides a higher purpose to include younger people
+and increase their interest in taking part in such tasks, which is also one of the objectives of this work.
 \subsection{Science Day - University of Stuttgart}\label{subsec:science-day---university-of-stuttgart}
 The ``Tag der Wissenschaft'' (Science Day) is an open-door day, where the \textit{University of Stuttgart} can be experienced by everyone.
 Exhibits, research environments and results, laboratories and more can be seen, tested and used by everyone, including families, younger children,

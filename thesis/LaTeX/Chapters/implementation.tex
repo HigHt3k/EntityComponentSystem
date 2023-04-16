@@ -17,7 +17,7 @@ It provides basic functionality for all features needed to design a game, such a
 classes and managers.
 The implementation uses a basic entity-component-system as foundation and enhances this with further features.
 
-\section{Programming Language}\label{sec:programming-language}
+\section{Programming Language \& Tools}\label{sec:programming-language}
 The programming language that was chosen for this implementation is \textit{JAVA}.
 Java is a high-level, object-oriented programming language that was originally developed by Sun Microsystems (now owned by Oracle Corporation) in the mid-1990s.
 It is designed to be portable, meaning that it can be run on a wide variety of platforms, including Windows, macOS,
@@ -26,19 +26,31 @@ Linux, and many others, without needing to be recompiled for each platform.
 Java is widely used for developing both desktop and web-based applications, as well as mobile applications for Android devices.
 It is also used extensively in server-side programming and for building enterprise applications.
 \\
-One of the key features of Java is its virtual machine (VM), which allows Java programs to be executed on any system that has a compatible JVM installed, regardless of the underlying hardware and operating system.
+One of the key features of Java is its \gls{VM}, which allows Java programs to be executed on any system that has a compatible JVM installed, regardless of the underlying hardware and operating system.
 This makes it possible to write a single Java program that can run on multiple platforms, without needing to be modified for each one.
 \\
 Java also has a large standard library of classes and functions, which makes it easier to write complex programs without needing to reinvent the wheel.
 Additionally, Java is known for its strong emphasis on security, which makes it a popular choice for building applications that need to be highly secure
 and resistant to cyber attacks.
 \\
-Java was chosen because of the wide variety of standard libraries and resources available, the very object-oriented programming approach which enables for
+Java is chosen because of the wide variety of standard libraries and resources available, the very object-oriented programming approach which enables for
 extending and inheriting of classes to adapt objects to the games and game engines needs.
 Due to garbage collection, Java enables developing without having to consider memory allocations.
 Furthermore, a great benefit of using Java is the multi-platform support due to Java being an interpreted language which works
 independent of operating systems or processor architectures~\cite{JAVA}.
 
+The development and testing of the application is done in \textit{IntelliJ}, an \gls{IDE}.
+by \textit{Jetbrains}~\cite{intellij}.
+\textit{IntelliJ} is a code editor with integrated code analysis and assistance features, which significantly
+enhances and simplifies the coding and development process~\cite{intellij}.
+
+Furthermore \textit{Git} is used together with the IDE as a version control to keep track of changes and additional
+features~\cite{git}.
+\textit{Git} is free to use, open-source and easy to set up and use, even for smaller projects such as this work~\cite{git}.
+
+Graphics design is conducted with the graphics software \textit{Gimp}~\cite{gimp}.
+\textit{Gimp} (GNU Image Manipulation Program) is an open-source image and graphics design program which provides
+necessary designing features and customization options to set up the graphics needed for the scope of this thesis~\cite{gimp}.
 \section{Game Engine}\label{sec:game}
 The game engine implements a variety of methods and classes which are used for handling the general program execution, independent of the actual game implementation.
 In this chapter, these classes will be explained in detail and the general concept of the engine is reviewed.
@@ -63,7 +75,7 @@ Furthermore, the simplifications made help with keeping an overview of all featu
     \label{fig:ecs}
 \end{figure}
 \subsubsection{UML Diagram}\label{subsubsec:uml-diagram}
-The UML diagram as seen in figure \ref{fig:ecs-block-diagram} shows a simplified structure of the engine implementation, which is going to be used to explain the mechanisms
+The \gls{UML} diagram as seen in figure \ref{fig:ecs-block-diagram} shows a simplified structure of the engine implementation, which is going to be used to explain the mechanisms
 and the framework of the implementation.
 \begin{figure}
     \centering
@@ -81,7 +93,7 @@ The Entity class implements functions to add, remove and get Components of a cla
 \\
 As there are usually lots of different types of entities in a game which may contain the same components, it makes sense to inherit from the Entity class and
 build generic entities which can be reused.
-For GUI elements, the game engine already provides some pre-designed entities, such as buttons, text bodies, panels and image entities.
+For \gls{GUI} elements, the game engine already provides some pre-designed entities, such as buttons, text bodies, panels and image entities.
 During the implementation, it was chosen to handle GUI elements as entities as well, as the game engine is purely working in 2 dimensions and therefore
 rendering methods for the game itself and the GUI do not differ.
 This approach was the easy choice, as having a separate class to implement UI elements would most likely end up with a lot of duplicated
@@ -730,10 +742,10 @@ XML means \textit{eXtensible Markup Language}, and is a markup language that is 
 It was designed to be flexible and extensible, allowing developers to create their own markup tags and structure data in a way that is specific to their needs~\cite{xml}.
 \\
 XML documents are made up of elements, which are enclosed in opening and closing tags, and attributes, which provide additional information about the element.
-The structure of an XML document is defined by a \textit{Document Type Definition (DTD)} or an \textit{XML Schema}, which specifies the elements and attributes that are allowed in the document and the relationships between them.
+The structure of an XML document is defined by a \gls{DTD} or an \textit{XML Schema}, which specifies the elements and attributes that are allowed in the document and the relationships between them.
 \\
 One of the main benefits of XML is its ability to store and transfer data in a standardized format that can be easily parsed by different software applications, regardless of the platform, and there are
-already multiple implementations available to successfully do this, including JAVA's built-in library for DOM parsing~\cite{dom-parser}.
+already multiple implementations available to successfully do this, including JAVA's built-in library for \gls{DOM} parsing~\cite{dom-parser}.
 \\
 The structure of the different XML files for levels, tilesets, scores and language used in this project will be explained in the next chapters.
 \subsection{Tileset}\label{subsec:tileset}
@@ -806,7 +818,7 @@ while the positions indicate the grid positions starting at 0, akin to indexes i
 \end{figure}
 \subsection{Language Files}\label{subsec:language-files}
 A language file, as displayed in figure~\ref{fig:xml-lang} contains all text content used in the game for a specified language.
-In the root node, the language type can be given according to the IETF language tag \todo{add source}, if supported by the game (i.e.\ implemented in the language manager).
+In the root node, the language type can be given according to the \gls{IETF} language tag \todo{add source}, if supported by the game (i.e.\ implemented in the language manager).
 Within this root node, string nodes are created which contain the id of a string as an attribute and the actual content as text.
 Each of the ids has to be unique, otherwise only the first specified id will be considered in the implementation.
 \\
@@ -856,7 +868,7 @@ This chapter will discuss the integration of gamepads, including game controller
 The standard input device for the game are mouse and keyboard.
 \subsection{Gamepad Integration}\label{subsec:gamepad-integration}
 For gamepad integration, the open source library \textit{Jamepad} is used.
-It automatically detects most USB controller devices and has an inbuilt button mapping which can be used in the implementation.
+It automatically detects most \gls{USB} controller devices and has an inbuilt button mapping which can be used in the implementation.
 A separate thread captures game pad inputs, as actions may occur in between the calculated frames of the game engine.
 Button handling is implemented in a way that a button press creates a new mouse event and the cursor position which is then handled by the action
 systems' mouse event handling method.
