@@ -19,4 +19,4 @@ To build the *.jar file, following steps are required:
    with the *.jar artifact, since some files need to be written during runtime.
 
 ## CREDITS
-Music produced by David Renda.
+Music produced by David Renda...
