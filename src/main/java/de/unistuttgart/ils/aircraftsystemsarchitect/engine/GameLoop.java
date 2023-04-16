@@ -31,7 +31,7 @@ public class GameLoop extends Thread {
      * Handles inputs, systems, entities rendering and sound playback.
      */
     private void process() {
-        if(started && !paused) {
+        if(started) {
             // handle inputs
             Game.input().handle();
             // handle systems

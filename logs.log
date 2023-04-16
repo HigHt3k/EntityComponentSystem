@@ -1,99 +1,102 @@
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game init
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game init
 INFO: Aircraft Systems Architect by ILS - Institute for Aircraft Systems University of Stuttgart - Johann Töpfer
 Version: v1.0.0
 Educational game to show the concept of redundancy in aircraft system engineering.
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game init
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game init
 INFO: Game initialized successfully.
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadTileSet
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadTileSet
 INFO: Loading TileSet from path: res/base_tiles.xml
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadTileSet
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadTileSet
 INFO: Tileset loaded.
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageManager parseLanguageFile
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageManager parseLanguageFile
 INFO: Language DE_DE successfully loaded.
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.gamepad.GamePadAdapter lambda$new$1
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.gamepad.GamePadAdapter lambda$new$1
 INFO: Successfully initialized controller(s).
 Amount: 0
 Statefalse
 TypeNot Connected
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageManager parseLanguageFile
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageManager parseLanguageFile
 INFO: Language DE_SIMPLE successfully loaded.
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageManager parseLanguageFile
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.lang.LanguageManager parseLanguageFile
 INFO: Language EN_US successfully loaded.
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.gamepad.GamePadAdapter lambda$new$0
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+INFO: Loaded level, now available levels: 1
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+INFO: Loaded level, now available levels: 2
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.input.gamepad.GamePadAdapter lambda$new$0
 INFO: Successfully initialized controller(s).
 Amount: 0
 Statefalse
 TypeNot Connected
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
-INFO: Loaded level, now available levels: 1
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
-INFO: Loaded level, now available levels: 2
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 3
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 4
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 5
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 6
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 7
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 8
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 9
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 10
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 11
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 12
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 13
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 14
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 15
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 16
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 17
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 18
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 19
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 20
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 21
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 22
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 23
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 24
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.ResourceManager loadLevel
 INFO: Loaded level, now available levels: 25
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.score.HighScoreManager loadScores
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.score.HighScoreManager loadScores
 INFO: Successfully loaded scores from scores file. 
 79
-Apr 14, 2023 2:58:01 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game start
+Apr 18, 2023 6:36:24 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game start
 INFO: Game started
-Apr 14, 2023 2:58:02 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.score.HighScoreManager loadScores
+Apr 18, 2023 6:36:25 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.score.HighScoreManager loadScores
 INFO: Successfully loaded scores from scores file. 
 79
-Apr 14, 2023 2:58:05 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.score.HighScoreManager loadScores
+Apr 18, 2023 6:36:28 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.score.HighScoreManager loadScores
 INFO: Successfully loaded scores from scores file. 
 79
-Apr 14, 2023 2:58:09 PM de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.builder.BuildHandler placeCable
+Apr 18, 2023 6:36:30 PM de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.builder.BuildHandler placeCable
 INFO: Successfully added a new entity to the grid.
 Name: build_element_500_cable
 Position: java.awt.Point[x=1,y=0]
 Removable: true
-Apr 14, 2023 2:58:09 PM de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.builder.BuildHandler placeCable
+Apr 18, 2023 6:36:30 PM de.unistuttgart.ils.aircraftsystemsarchitect.game.handler.builder.BuildHandler placeCable
 INFO: Successfully added a new entity to the grid.
 Name: build_element_500_cable
 Position: java.awt.Point[x=3,y=0]
 Removable: true
-Apr 14, 2023 2:59:41 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.action.ExitAction handle
+Apr 18, 2023 6:36:34 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.resource.score.HighScoreManager loadScores
+INFO: Successfully loaded scores from scores file. 
+79
+Apr 18, 2023 6:36:35 PM de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.action.ExitAction handle
 INFO: Exiting game with normal state.
