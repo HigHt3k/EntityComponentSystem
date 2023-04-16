@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.26)  16 APR 2023 19:03
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.12) (preloaded format=pdflatex 2023.1.26)  17 APR 2023 00:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -2228,7 +2228,30 @@ Package tocbasic Info: character protrusion at toc deactivated on input line 86
 
 
 ] (Abschlussarbeit.lof
-[15])
+
+! Package glossaries Error: Glossary entry `glos:ECS' has not been defined.
+
+See the glossaries package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.10 ...unity-ecs}\relax }}{13}{figure.caption.19}
+                                                  %
+You need to define a glossary entry before you can use it.
+
+[15]
+
+! Package glossaries Error: Glossary entry `glos:XML' has not been defined.
+
+See the glossaries package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.39 ...level file\relax }}{49}{figure.caption.46}
+                                                  %
+You need to define a glossary entry before you can use it.
+
+)
 \tf@lof=\write11
 \openout11 = `Abschlussarbeit.lof'.
 
@@ -2272,7 +2295,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.34 \glsXpageXglsnumberformat{}{56}}}
+l.34 \glsXpageXglsnumberformat{}{55}}}
                                       \relax\glsresetentrylist
 You need to define a glossary entry before you can use it.
 
@@ -2294,7 +2317,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.39 \glsXpageXglsnumberformat{}{50}}}
+l.39 \glsXpageXglsnumberformat{}{48}}}
                                       \relax\glsresetentrylist
 You need to define a glossary entry before you can use it.
 
@@ -2316,7 +2339,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.44 \glsXpageXglsnumberformat{}{50}}}
+l.44 \glsXpageXglsnumberformat{}{48}}}
                                       \relax\glsresetentrylist
 You need to define a glossary entry before you can use it.
 
@@ -2338,7 +2361,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.50 \glsXpageXglsnumberformat{}{13}}}
+l.54 \glsXpageXglsnumberformat{}{XV}}}
                                       \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2349,7 +2372,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.53 \glsXpageXglsnumberformat{}{6}}}
+l.57 \glsXpageXglsnumberformat{}{6}}}
                                      \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2360,7 +2383,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.56 \glsXpageXglsnumberformat{}{28}}}
+l.62 \glsXpageXglsnumberformat{}{32}}}
                                       \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2371,7 +2394,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.59 \glsXpageXglsnumberformat{}{27}}}
+l.67 \glsXpageXglsnumberformat{}{54}}}
                                       \relax\glsresetentrylist
 You need to define a glossary entry before you can use it.
 
@@ -2382,7 +2405,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.61 \glsXpageXglsnumberformat{}{52}}}
+l.69 \glsXpageXglsnumberformat{}{50}}}
                                       \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2393,7 +2416,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.64 \glsXpageXglsnumberformat{}{13}}}
+l.72 \glsXpageXglsnumberformat{}{13}}}
                                       \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2404,7 +2427,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.67 \glsXpageXglsnumberformat{}{7}}}
+l.75 \glsXpageXglsnumberformat{}{7}}}
                                      \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2415,7 +2438,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.70 \glsXpageXglsnumberformat{}{23}}}
+l.79 \glsXpageXglsnumberformat{}{32}}}
                                       \relax\glsresetentrylist
 You need to define a glossary entry before you can use it.
 
@@ -2426,7 +2449,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.72 \glsXpageXglsnumberformat{}{28}}}
+l.81 \glsXpageXglsnumberformat{}{26}}}
                                       \relax\glsresetentrylist
 You need to define a glossary entry before you can use it.
 
@@ -2437,7 +2460,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.74 \glsXpageXglsnumberformat{}{53}}}
+l.83 \glsXpageXglsnumberformat{}{51}}}
                                       \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2448,7 +2471,7 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.77 \glsXpageXglsnumberformat{}{27}}}
+l.86 \glsXpageXglsnumberformat{}{25}}}
                                       \glsgroupskip
 You need to define a glossary entry before you can use it.
 
@@ -2459,8 +2482,8 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.80 \glsXpageXglsnumberformat{}{21}}}
-                                      %
+l.94 \glsXpageXglsnumberformat{}{XVI}}}
+                                       %
 You need to define a glossary entry before you can use it.
 
 ) [19
@@ -2491,43 +2514,28 @@ Class scrbook Warning: \float@addtolists detected!
 (scrbook)              a package that still implements the
 (scrbook)              deprecated \float@addtolist interface.
 
-)
-Underfull \hbox (badness 10000) in paragraph at lines 8--103
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 8--103
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 8--103
-
- []
-
 [1
 
 
 
-]
+]) [2]
 \openout2 = `./Chapters/basics.aux'.
 
- (Chapters/basics.tex [2
-
-
-
-
-
-]
+ (Chapters/basics.tex
 chapter 2.
-<Pictures/res/fundamentals/v-modell.png, id=530, 603.0028pt x 535.2497pt>
+<Pictures/res/fundamentals/v-modell.png, id=554, 603.0028pt x 535.2497pt>
 File: Pictures/res/fundamentals/v-modell.png Graphic file (type png)
 <use Pictures/res/fundamentals/v-modell.png>
 Package pdftex.def Info: Pictures/res/fundamentals/v-modell.png  used on input 
 line 42.
 (pdftex.def)             Requested size: 270.58847pt x 240.18225pt.
-[3]
+[3
+
+
+
+
+
+]
 ! Undefined control sequence.
 l.73 ...em engineering is assumed as $P_f(t) = 1\e
                                                   -4$~\cite{lfs2}.
@@ -2722,7 +2730,7 @@ l.256         \node[state]
 (That was another \errmessage.)
 
 [7]
-<./Pictures/res/fundamentals/magic-circle.png, id=619, 618.05907pt x 292.84406p
+<./Pictures/res/fundamentals/magic-circle.png, id=643, 618.05907pt x 292.84406p
 t>
 File: ./Pictures/res/fundamentals/magic-circle.png Graphic file (type png)
 <use ./Pictures/res/fundamentals/magic-circle.png>
@@ -2760,17 +2768,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 273--315
  []
 
 [8] [9 <./Pictures/res/fundamentals/magic-circle.png>]
-<Pictures/res/fundamentals/deglc.png, id=643, 560.0925pt x 599.23875pt>
+<Pictures/res/fundamentals/deglc.png, id=667, 560.0925pt x 599.23875pt>
 File: Pictures/res/fundamentals/deglc.png Graphic file (type png)
 <use Pictures/res/fundamentals/deglc.png>
 Package pdftex.def Info: Pictures/res/fundamentals/deglc.png  used on input lin
 e 343.
 (pdftex.def)             Requested size: 360.78233pt x 386.01685pt.
-
-
-LaTeX Warning: Reference `GAMED' on page 10 undefined on input line 366.
-
-[10 <./Pictures/res/fundamentals/deglc.png>]
+ [10 <./Pictures/res/fundamentals/deglc.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [11]
@@ -2787,18 +2791,6 @@ l.430 \gls{DOTS}
 You need to define a glossary entry before you can use it.
 
 
-! Package glossaries Error: Glossary entry `glos:ECS' has not been defined.
-
-See the glossaries package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.435 ...engine architecture, a generic \gls{ECS} 
-                                                  design pattern is used, as...
-
-You need to define a glossary entry before you can use it.
-
-
 ! Package glossaries Error: Glossary entry `glos:LLVM' has not been defined.
 
 See the glossaries package documentation for explanation.
@@ -2810,7 +2802,7 @@ l.453 ...rst Compiler is a math-aware, \gls{LLVM}-
 
 You need to define a glossary entry before you can use it.
 
-<Pictures/res/fundamentals/ECSBlockDiagram-unity.png, id=677, 563.10374pt x 283
+<Pictures/res/fundamentals/ECSBlockDiagram-unity.png, id=704, 563.10374pt x 283
 .0575pt>
 File: Pictures/res/fundamentals/ECSBlockDiagram-unity.png Graphic file (type pn
 g)
@@ -2819,7 +2811,7 @@ Package pdftex.def Info: Pictures/res/fundamentals/ECSBlockDiagram-unity.png  u
 sed on input line 458.
 (pdftex.def)             Requested size: 450.97621pt x 226.6968pt.
 [12]
-<Pictures/res/fundamentals/unreal-framework.png, id=696, 636.87938pt x 388.4512
+<Pictures/res/fundamentals/unreal-framework.png, id=731, 636.87938pt x 388.4512
 5pt>
 File: Pictures/res/fundamentals/unreal-framework.png Graphic file (type png)
 <use Pictures/res/fundamentals/unreal-framework.png>
@@ -2835,10 +2827,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 529--553
 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [15]
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 561--567
 
  []
@@ -2858,23 +2847,23 @@ Underfull \hbox (badness 10000) in paragraph at lines 585--592
 
  []
 
-) [16] [17]
+) [16]
 \openout2 = `./Chapters/conception.aux'.
 
- (Chapters/conception.tex [18
+ (Chapters/conception.tex
+chapter 3.
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
+4.
+(C:\Users\johan\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [17
 
 
 
 
 
 ]
-chapter 3.
-LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 4
-4.
-(C:\Users\johan\AppData\Local\Programs\MiKTeX\tex/latex/lm\ts1lmr.fd
-File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
-) [19]
-<Pictures/res/concept/aircraft-systems-architect-logo.png, id=758, 23.6082pt x 
+<Pictures/res/concept/aircraft-systems-architect-logo.png, id=784, 23.6082pt x 
 12.2859pt>
 File: Pictures/res/concept/aircraft-systems-architect-logo.png Graphic file (ty
 pe png)
@@ -2882,27 +2871,15 @@ pe png)
 Package pdftex.def Info: Pictures/res/concept/aircraft-systems-architect-logo.p
 ng  used on input line 54.
 (pdftex.def)             Requested size: 315.68196pt x 164.38333pt.
-<Pictures/res/concept/asa-logo.png, id=759, 24.09pt x 16.3812pt>
+<Pictures/res/concept/asa-logo.png, id=785, 24.09pt x 16.3812pt>
 File: Pictures/res/concept/asa-logo.png Graphic file (type png)
 <use Pictures/res/concept/asa-logo.png>
 Package pdftex.def Info: Pictures/res/concept/asa-logo.png  used on input line 
 60.
 (pdftex.def)             Requested size: 315.68196pt x 214.90814pt.
 
-[20 <./Pictures/res/concept/aircraft-systems-architect-logo.png> <./Pictures/re
+[18 <./Pictures/res/concept/aircraft-systems-architect-logo.png> <./Pictures/re
 s/concept/asa-logo.png>]
-
-! Package glossaries Error: Glossary entry `glos:XML' has not been defined.
-
-See the glossaries package documentation for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.105 ... file types, such as images or \gls{XML} 
-                                                  files.
-You need to define a glossary entry before you can use it.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 86--115
 
  []
@@ -2925,8 +2902,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 86--115
 
 Underfull \vbox (badness 2799) has occurred while \output is active []
 
- [21]
-[22]
+ [19]
+[20]
 
 ! Package glossaries Error: Glossary entry `glos:UI' has not been defined.
 
@@ -2938,32 +2915,32 @@ l.169 ...rate the positioning of various \gls{UI}
                                                   and game elements.
 You need to define a glossary entry before you can use it.
 
-<Pictures/res/concept/level-menu-scene-concept.png, id=781, 1912.14375pt x 1165
+<Pictures/res/concept/level-menu-scene-concept.png, id=808, 1912.14375pt x 1165
 .35374pt>
 File: Pictures/res/concept/level-menu-scene-concept.png Graphic file (type png)
 
 <use Pictures/res/concept/level-menu-scene-concept.png>
 Package pdftex.def Info: Pictures/res/concept/level-menu-scene-concept.png  use
-d on input line 180.
+d on input line 181.
 (pdftex.def)             Requested size: 338.23215pt x 206.12712pt.
-<Pictures/res/concept/game-scene-concept.png, id=782, 1912.14375pt x 1305.87875
+<Pictures/res/concept/game-scene-concept.png, id=809, 1912.14375pt x 1305.87875
 pt>
 File: Pictures/res/concept/game-scene-concept.png Graphic file (type png)
 <use Pictures/res/concept/game-scene-concept.png>
 Package pdftex.def Info: Pictures/res/concept/game-scene-concept.png  used on i
-nput line 185.
+nput line 186.
 (pdftex.def)             Requested size: 338.23215pt x 230.98311pt.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3460) has occurred while \output is active []
 
- [23 <./Pictures/res/concept/level-menu-scene-concept.png>]
+ [21 <./Pictures/res/concept/level-menu-scene-concept.png>]
 Underfull \vbox (badness 3189) has occurred while \output is active []
 
- [24 <./Pictures/res/concept/game-scene-concept.png>]) [25]
+ [22 <./Pictures/res/concept/game-scene-concept.png>]) [23]
 \openout2 = `./Chapters/implementation.aux'.
 
  (Chapters/implementation.tex
-[26
+[24
 
 
 
@@ -2994,8 +2971,8 @@ l.42 ...s done in \textit{IntelliJ}, an \gls{IDE}.
                                                   
 You need to define a glossary entry before you can use it.
 
-[27]
-<Pictures/res/implementation/ecs-database.png, id=827, 1906.12125pt x 1331.9762
+[25]
+<Pictures/res/implementation/ecs-database.png, id=855, 1906.12125pt x 1331.9762
 6pt>
 File: Pictures/res/implementation/ecs-database.png Graphic file (type png)
 <use Pictures/res/implementation/ecs-database.png>
@@ -3015,7 +2992,7 @@ l.78 The \gls{UML}
 
 You need to define a glossary entry before you can use it.
 
-<./Pictures/res/implementation/ecs-uml.png, id=830, 7625.23781pt x 3714.37688pt
+<./Pictures/res/implementation/ecs-uml.png, id=860, 7625.23781pt x 3714.37688pt
 >
 File: ./Pictures/res/implementation/ecs-uml.png Graphic file (type png)
 <use ./Pictures/res/implementation/ecs-uml.png>
@@ -3034,12 +3011,12 @@ l.96 For \gls{GUI}
 
 You need to define a glossary entry before you can use it.
 
-[28] [29 <./Pictures/res/implementation/ecs-database.png> <./Pictures/res/imple
+[26] [27 <./Pictures/res/implementation/ecs-database.png> <./Pictures/res/imple
 mentation/ecs-uml.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [30]
-<Pictures/res/implementation/ecs-system-processing.png, id=850, 6364.27687pt x 
+ [28]
+<Pictures/res/implementation/ecs-system-processing.png, id=885, 6364.27687pt x 
 4450.6275pt>
 File: Pictures/res/implementation/ecs-system-processing.png Graphic file (type 
 png)
@@ -3047,7 +3024,7 @@ png)
 Package pdftex.def Info: Pictures/res/implementation/ecs-system-processing.png 
  used on input line 162.
 (pdftex.def)             Requested size: 360.78233pt x 252.28944pt.
-<Pictures/res/implementation/gameloop-process.png, id=854, 5764.28531pt x 4912.
+<Pictures/res/implementation/gameloop-process.png, id=889, 5764.28531pt x 4912.
 10156pt>
 File: Pictures/res/implementation/gameloop-process.png Graphic file (type png)
 <use Pictures/res/implementation/gameloop-process.png>
@@ -3062,17 +3039,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 169--183
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [31 <./Pictures/res/implementation/ecs-system-processing.png>] [32 <./Pictures
-/res/implementation/gameloop-process.png>] [33]
-<Pictures/res/implementation/RenderLayers.png, id=880, 4583.8753pt x 6173.8153p
+ [29 <./Pictures/res/implementation/ecs-system-processing.png>] [30 <./Pictures
+/res/implementation/gameloop-process.png>] [31]
+<Pictures/res/implementation/RenderLayers.png, id=917, 4583.8753pt x 6173.8153p
 t>
 File: Pictures/res/implementation/RenderLayers.png Graphic file (type png)
 <use Pictures/res/implementation/RenderLayers.png>
 Package pdftex.def Info: Pictures/res/implementation/RenderLayers.png  used on 
 input line 260.
 (pdftex.def)             Requested size: 270.58847pt x 364.38383pt.
- [34] [35 <./Pictures/res/implementation/RenderLayers.png>] [36] [37]
-<Pictures/res/implementation/scenes/scorebox.png, id=912, 820.56563pt x 387.698
+ [32] [33 <./Pictures/res/implementation/RenderLayers.png>] [34] [35]
+<Pictures/res/implementation/scenes/scorebox.png, id=955, 820.56563pt x 387.698
 44pt>
 File: Pictures/res/implementation/scenes/scorebox.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/scorebox.png>
@@ -3082,7 +3059,7 @@ on input line 404.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [38]
+ [36]
 Underfull \hbox (badness 10000) in paragraph at lines 416--432
 
  []
@@ -3122,7 +3099,7 @@ l.470         }
                
 (That was another \errmessage.)
 
-[39 <./Pictures/res/implementation/scenes/scorebox.png>]
+[37 <./Pictures/res/implementation/scenes/scorebox.png>]
 
 ! Package pgf Error: Unknown arrow tip kind 'stealth''.
 
@@ -3168,15 +3145,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 508--552
 
 Underfull \vbox (badness 3302) has occurred while \output is active []
 
- [40]
-<Pictures/res/implementation/scenes-hierarchy.png, id=948, 5487.2503pt x 5160.5
+ [38]
+<Pictures/res/implementation/scenes-hierarchy.png, id=990, 5487.2503pt x 5160.5
 297pt>
 File: Pictures/res/implementation/scenes-hierarchy.png Graphic file (type png)
 <use Pictures/res/implementation/scenes-hierarchy.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes-hierarchy.png  used
  on input line 565.
 (pdftex.def)             Requested size: 450.97621pt x 424.1111pt.
-<Pictures/res/implementation/scenes/game-scene.png, id=956, 1384.42218pt x 749.
+<Pictures/res/implementation/scenes/game-scene.png, id=998, 1384.42218pt x 749.
 80125pt>
 File: Pictures/res/implementation/scenes/game-scene.png Graphic file (type png)
 
@@ -3184,22 +3161,22 @@ File: Pictures/res/implementation/scenes/game-scene.png Graphic file (type png)
 Package pdftex.def Info: Pictures/res/implementation/scenes/game-scene.png  use
 d on input line 589.
 (pdftex.def)             Requested size: 405.87582pt x 219.81653pt.
-<Pictures/res/implementation/scenes/level-map.png, id=957, 1379.1525pt x 748.29
+<Pictures/res/implementation/scenes/level-map.png, id=999, 1379.1525pt x 748.29
 562pt>
 File: Pictures/res/implementation/scenes/level-map.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/level-map.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/level-map.png  used
  on input line 596.
 (pdftex.def)             Requested size: 405.87582pt x 220.22006pt.
-<Pictures/res/implementation/scenes/main-menu.png, id=958, 1376.89406pt x 754.3
-1813pt>
+<Pictures/res/implementation/scenes/main-menu.png, id=1000, 1376.89406pt x 754.
+31813pt>
 File: Pictures/res/implementation/scenes/main-menu.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/main-menu.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/main-menu.png  used
  on input line 603.
 (pdftex.def)             Requested size: 405.87582pt x 222.34927pt.
-<Pictures/res/implementation/scenes/build-mode.png, id=959, 1377.64688pt x 748.
-29562pt>
+<Pictures/res/implementation/scenes/build-mode.png, id=1001, 1377.64688pt x 748
+.29562pt>
 File: Pictures/res/implementation/scenes/build-mode.png Graphic file (type png)
 
 <use Pictures/res/implementation/scenes/build-mode.png>
@@ -3209,65 +3186,65 @@ d on input line 610.
 
 Underfull \vbox (badness 1917) has occurred while \output is active []
 
- [41]
-[42 <./Pictures/res/implementation/scenes-hierarchy.png> <./Pictures/res/implem
-entation/scenes/game-scene.png>] [43 <./Pictures/res/implementation/scenes/leve
-l-map.png> <./Pictures/res/implementation/scenes/main-menu.png>] [44 <./Picture
+ [39]
+[40 <./Pictures/res/implementation/scenes-hierarchy.png> <./Pictures/res/implem
+entation/scenes/game-scene.png>] [41 <./Pictures/res/implementation/scenes/leve
+l-map.png> <./Pictures/res/implementation/scenes/main-menu.png>] [42 <./Picture
 s/res/implementation/scenes/build-mode.png>]
-<Pictures/res/implementation/entities.png, id=984, 6136.17468pt x 4607.96532pt>
-
+<Pictures/res/implementation/entities.png, id=1027, 6136.17468pt x 4607.96532pt
+>
 File: Pictures/res/implementation/entities.png Graphic file (type png)
 <use Pictures/res/implementation/entities.png>
 Package pdftex.def Info: Pictures/res/implementation/entities.png  used on inpu
 t line 673.
 (pdftex.def)             Requested size: 450.97621pt x 338.62163pt.
-<Pictures/res/implementation/scenes/tutorial-game-scene.png, id=990, 1375.38844
-pt x 747.54282pt>
+<Pictures/res/implementation/scenes/tutorial-game-scene.png, id=1033, 1375.3884
+4pt x 747.54282pt>
 File: Pictures/res/implementation/scenes/tutorial-game-scene.png Graphic file (
 type png)
 <use Pictures/res/implementation/scenes/tutorial-game-scene.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/tutorial-game-scene
 .png  used on input line 692.
 (pdftex.def)             Requested size: 450.97621pt x 245.10439pt.
-<Pictures/res/implementation/scenes/duplex-scene.png, id=991, 1377.64688pt x 74
-4.53156pt>
+<Pictures/res/implementation/scenes/duplex-scene.png, id=1034, 1377.64688pt x 7
+44.53156pt>
 File: Pictures/res/implementation/scenes/duplex-scene.png Graphic file (type pn
 g)
 <use Pictures/res/implementation/scenes/duplex-scene.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/duplex-scene.png  u
 sed on input line 698.
 (pdftex.def)             Requested size: 450.97621pt x 243.71942pt.
-<Pictures/res/implementation/scenes/cmf.png, id=992, 1365.60187pt x 745.28438pt
->
+<Pictures/res/implementation/scenes/cmf.png, id=1035, 1365.60187pt x 745.28438p
+t>
 File: Pictures/res/implementation/scenes/cmf.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/cmf.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/cmf.png  used on in
 put line 704.
 (pdftex.def)             Requested size: 450.97621pt x 246.11519pt.
-<Pictures/res/implementation/scenes/oil-leak.png, id=993, 1371.62437pt x 743.02
-594pt>
+<Pictures/res/implementation/scenes/oil-leak.png, id=1036, 1371.62437pt x 743.0
+2594pt>
 File: Pictures/res/implementation/scenes/oil-leak.png Graphic file (type png)
 <use Pictures/res/implementation/scenes/oil-leak.png>
 Package pdftex.def Info: Pictures/res/implementation/scenes/oil-leak.png  used 
 on input line 710.
 (pdftex.def)             Requested size: 450.97621pt x 244.30363pt.
-<Pictures/res/implementation/tileset.png, id=996, 256.96pt x 353.32pt>
+<Pictures/res/implementation/tileset.png, id=1039, 256.96pt x 353.32pt>
 File: Pictures/res/implementation/tileset.png Graphic file (type png)
 <use Pictures/res/implementation/tileset.png>
 Package pdftex.def Info: Pictures/res/implementation/tileset.png  used on input
  line 721.
 (pdftex.def)             Requested size: 450.97621pt x 620.1415pt.
-<Pictures/res/implementation/character-models.png, id=998, 18.5493pt x 6.5043pt
->
+<Pictures/res/implementation/character-models.png, id=1041, 18.5493pt x 6.5043p
+t>
 File: Pictures/res/implementation/character-models.png Graphic file (type png)
 <use Pictures/res/implementation/character-models.png>
 Package pdftex.def Info: Pictures/res/implementation/character-models.png  used
  on input line 734.
 (pdftex.def)             Requested size: 270.58847pt x 94.97362pt.
- [45] [46 <./Pictures/res/implementation/entities.png> <./Pictures/res/implemen
-tation/scenes/tutorial-game-scene.png>] [47 <./Pictures/res/implementation/scen
-es/duplex-scene.png> <./Pictures/res/implementation/scenes/cmf.png>] [48 <./Pic
-tures/res/implementation/scenes/oil-leak.png>] [49 <./Pictures/res/implementati
+ [43] [44 <./Pictures/res/implementation/entities.png> <./Pictures/res/implemen
+tation/scenes/tutorial-game-scene.png>] [45 <./Pictures/res/implementation/scen
+es/duplex-scene.png> <./Pictures/res/implementation/scenes/cmf.png>] [46 <./Pic
+tures/res/implementation/scenes/oil-leak.png>] [47 <./Pictures/res/implementati
 on/tileset.png>]
 
 ! Package glossaries Error: Glossary entry `glos:DTD' has not been defined.
@@ -3276,8 +3253,8 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.745 ...n XML document is defined by a \gls{DTD} 
-                                                  or an \textit{XML Schema},...
+l.745 ...{XML} document is defined by a \gls{DTD} 
+                                                  or an \textit{\gls{XML} Sc...
 
 You need to define a glossary entry before you can use it.
 
@@ -3316,7 +3293,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 752--770
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [50 <./Pictures/res/implementation/character-models.png>]
+ [48 <./Pictures/res/implementation/character-models.png>]
 
 ! Package glossaries Error: Glossary entry `glos:IETF' has not been defined.
 
@@ -3325,13 +3302,11 @@ Type  H <return>  for immediate help.
  ...                                              
                                                   
 l.821 ...can be given according to the \gls{IETF} 
-                                                  language tag \todo{add sou...
+                                                  language tag, if supported...
 
 You need to define a glossary entry before you can use it.
 
-Package hyperref Info: bookmark level for unknown todo defaults to 0 on input l
-ine 821.
-[51] [52]
+[49] [50]
 
 ! Package glossaries Error: Glossary entry `glos:USB' has not been defined.
 
@@ -3339,15 +3314,15 @@ See the glossaries package documentation for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.871 It automatically detects most \gls{USB} 
+l.872 It automatically detects most \gls{USB} 
                                               controller devices and has an ...
 
 You need to define a glossary entry before you can use it.
 
-) [53]
+) [51]
 \openout2 = `./Chapters/results.aux'.
 
- (Chapters/results.tex [54
+ (Chapters/results.tex [52
 
 
 
@@ -3355,18 +3330,18 @@ You need to define a glossary entry before you can use it.
 
 ]
 chapter 5.
-[55]) [56] [57]
+[53] [54] [55]) [56]
 \openout2 = `./Chapters/Conclusion.aux'.
 
- (Chapters/Conclusion.tex [58
-
-
-
-
-
-]
+ (Chapters/Conclusion.tex
 chapter 6.
-) [59] [60
+) [57
+
+
+
+
+
+] [58
 
 
 
@@ -3376,7 +3351,7 @@ chapter without number
 Package microtype Info: Character `029' is missing
 (microtype)             in font `T1/lmr/m/sc/10.95'.
 (microtype)             Ignoring protrusion settings for this character.
-
+[59]
 Overfull \hbox (12.53644pt too wide) in paragraph at lines 114--114
 \T1/lmtt/m/n/10.95 techtarget . com / searchapparchitecture / definition / obje
 ct -[] oriented -[] programming -[]
@@ -3390,12 +3365,12 @@ Overfull \hbox (16.07967pt too wide) in paragraph at lines 114--114
  []
 
 
-Overfull \hbox (21.01605pt too wide) in paragraph at lines 114--114
+Overfull \hbox (19.0098pt too wide) in paragraph at lines 114--114
 \T1/lmtt/m/n/10.95 com / 4 . 27 / en -[] US / ProgrammingAndScripting / Program
-mingWithCPP / UnrealArchitecture/$[]\T1/lmr/m/n/10.95 (-20) . 
+mingWithCPP / UnrealArchitecture/$[]
  []
 
-[61]
+
 Overfull \hbox (1.1956pt too wide) in paragraph at lines 114--114
 []\T1/lmr/m/n/10.95 (-20) Crytek GmbH, \T1/lmr/m/it/10.95 (-20) Ar-chi-tec-tura
 l overview\T1/lmr/m/n/10.95 (-20) , 2023. [On-line]. Avail-able: []$\T1/lmtt/m/
@@ -3409,7 +3384,7 @@ ruc-tion set\T1/lmr/m/n/10.95 (-20) , 2023. [On-line]. Avail-able: []$\T1/lmtt/
 m/n/10.95 https : / / www . chroniclogic .
  []
 
-[62] [63] (Abschlussarbeit.aux (Preamble/Erklaerung_Selbstaendigkeit.aux)
+[60] [61] (Abschlussarbeit.aux (Preamble/Erklaerung_Selbstaendigkeit.aux)
 (Preamble/Abstract.aux) (Preamble/Kurzzusammenfassung.aux)
 (Chapters/introduction.aux) (Chapters/basics.aux) (Chapters/conception.aux)
 (Chapters/implementation.aux) (Chapters/results.aux) (Chapters/Conclusion.aux))
@@ -3428,13 +3403,13 @@ Package logreq Info: Writing requests to 'Abschlussarbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 53590 strings out of 476404
- 1103248 string characters out of 2789524
- 2465514 words of memory out of 3000000
- 72344 multiletter control sequences out of 15000+600000
- 604505 words of font info for 218 fonts, out of 8000000 for 9000
+ 53561 strings out of 476404
+ 1102820 string characters out of 2789524
+ 2463768 words of memory out of 3000000
+ 72306 multiletter control sequences out of 15000+600000
+ 604765 words of font info for 220 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 108i,21n,120p,10612b,2232s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 108i,21n,120p,10612b,2221s stack positions out of 10000i,1000n,20000p,200000b,80000s
 {C:/Users/johan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ec.enc}{C
 :/Users/johan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Us
 ers/johan/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Us
@@ -3461,9 +3436,9 @@ ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy10.pfb><C:/Users/johan/A
 ppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/johan/Ap
 pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt10.pfb><C:/Users/johan/Ap
 pData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmtt9.pfb>
-Output written on Abschlussarbeit.pdf (85 pages, 8978519 bytes).
+Output written on Abschlussarbeit.pdf (83 pages, 9001307 bytes).
 PDF statistics:
- 1716 PDF objects out of 1728 (max. 8388607)
- 388 named destinations out of 1000 (max. 500000)
- 53244 words of extra memory for PDF output out of 61914 (max. 10000000)
+ 1803 PDF objects out of 2073 (max. 8388607)
+ 393 named destinations out of 1000 (max. 500000)
+ 53276 words of extra memory for PDF output out of 61914 (max. 10000000)
 

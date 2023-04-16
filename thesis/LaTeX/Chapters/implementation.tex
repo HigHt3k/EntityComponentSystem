@@ -44,7 +44,7 @@ by \textit{Jetbrains}~\cite{intellij}.
 \textit{IntelliJ} is a code editor with integrated code analysis and assistance features, which significantly
 enhances and simplifies the coding and development process~\cite{intellij}.
 
-Furthermore \textit{Git} is used together with the IDE as a version control to keep track of changes and additional
+Furthermore \textit{Git} is used together with the \gls{IDE} as a version control to keep track of changes and additional
 features~\cite{git}.
 \textit{Git} is free to use, open-source and easy to set up and use, even for smaller projects such as this work~\cite{git}.
 
@@ -71,7 +71,7 @@ Furthermore, the simplifications made help with keeping an overview of all featu
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/res/implementation/ecs-database}
-    \caption{ECS Database}
+    \caption{\gls{ECS} Database}
     \label{fig:ecs}
 \end{figure}
 \subsubsection{UML Diagram}\label{subsubsec:uml-diagram}
@@ -94,8 +94,8 @@ The Entity class implements functions to add, remove and get Components of a cla
 As there are usually lots of different types of entities in a game which may contain the same components, it makes sense to inherit from the Entity class and
 build generic entities which can be reused.
 For \gls{GUI} elements, the game engine already provides some pre-designed entities, such as buttons, text bodies, panels and image entities.
-During the implementation, it was chosen to handle GUI elements as entities as well, as the game engine is purely working in 2 dimensions and therefore
-rendering methods for the game itself and the GUI do not differ.
+During the implementation, it was chosen to handle \gls{GUI} elements as entities as well, as the game engine is purely working in 2 dimensions and therefore
+rendering methods for the game itself and the \gls{GUI} do not differ.
 This approach was the easy choice, as having a separate class to implement UI elements would most likely end up with a lot of duplicated
 code fragments, which are already implemented in the RenderingComponent, as described in the next chapter.
 \subsubsection{Components}\label{subsubsec:components}
@@ -144,9 +144,9 @@ To add a scene to the game, a scene object needs to be instantiated and added to
 scenes are stored and the currently active scene can be set.
 Generally, all systems access the scene manager to only process the currently active scene, or if needed handle entities in other scenes or add or remove them.
 \subsubsection{Systems}\label{subsubsec:systems}
-Systems are the third major part of the ECS implementation and handle any modification to the components.
+Systems are the third major part of the \gls{ECS} implementation and handle any modification to the components.
 They are used for a variety of different purposes and can be split into multiple sub systems, which each serve their own purpose.
-The ECS implementation aims and encourages to split each function or feature into modular systems, which can then be added to the game where they
+The \gls{ECS} implementation aims and encourages to split each function or feature into modular systems, which can then be added to the game where they
 are handled within the \textit{GameLoop} as explained in section~\ref{subsec:game-loop}.
 A variety of systems is already available per default, including rendering, collision and input systems, which will be explained in the following chapters.
 \\
@@ -236,11 +236,11 @@ A rendering cycle executes a few different methods which are all called by the o
 First, all entities with a \textit{RenderComponent} are queried by the \textit{Query} system of the game engine and added to the rendering stack.
 This stack is then split up into multiple stacks of \textit{RenderObjects}, which are the objects saved to the component that describe the actual
 graphical visualization, based on their rendering layer.
-Additionally, a separate layer for tooltips which is displayed above other UI layers, but below the UI hovering layer, and a very
+Additionally, a separate layer for tooltips which is displayed above other \gls{UI} layers, but below the \gls{UI} hovering layer, and a very
 front layer for gamepad cursors, which always are on top of other render objects, is implemented in the rendering cycle, as
 seen in figure~\ref{fig:render-cycle}.
 Each layer is rendered one after another by using specific rendering classes for different objects such as images, text or shapes.
-Layering allows for stacking of multiple graphical entities above each other and allows for a better design and development flow GUIs and the game itself,
+Layering allows for stacking of multiple graphical entities above each other and allows for a better design and development flow \gls{GUI}s and the game itself,
 as the order of implementation and creation of entities is made obsolete through the usage of layers.
 The following layers are rendered in this order:
 \begin{enumerate}
@@ -261,10 +261,10 @@ The following layers are rendered in this order:
     \caption{The \textit{RenderingEngine} cycle}
     \label{fig:render-cycle}
 \end{figure}
-For example, if a simple composition of background image, game entity and UI should be rendered at the same position,
-the UI will always be in front of the game entity located at any of the game layers,
+For example, if a simple composition of background image, game entity and \gls{UI} should be rendered at the same position,
+the \gls{UI} will always be in front of the game entity located at any of the game layers,
 while the game entity will always overwrite the background at that position.
-The reason for multiple UI and Game layers is simply to allow for a greater variety and range of possibilities when it comes to designing the game scenes.
+The reason for multiple \gls{UI} and Game layers is simply to allow for a greater variety and range of possibilities when it comes to designing the game scenes.
 \subsection{Sound Engine}\label{subsec:sound-engine}
 A \textit{SoundEngine} is implemented in the game engine, which handles playing, pausing and stopping any audio stream available.
 During each cycle, the \textit{SoundEngine} collects all entities with a \textit{SoundComponent} available, and checks if they are already playing and if not, if they should be playing.
@@ -289,9 +289,9 @@ Scenes should have unique identifiers (ids) in order for the \textit{SceneManage
 \subsubsection{Resource Manager}\label{subsubsec:resource-manager}
 The \textit{ResourceManager} is used for loading any kind of resource from outside the \textit{Java} classes, e.g.\ audio files, images or xml data and processes
 these resources accordingly.
-There are multiple implementations which are used by the \textit{ResourceManager} for loading of different XML files,
+There are multiple implementations which are used by the \textit{ResourceManager} for loading of different \gls{XML} files,
 such as high-scores (\textit{HighScoreManager}) or languages (\textit{LanguageManager}),
-however the basic implementation of the \textit{ResourceManager} equals their implementation and therefore the XML
+however the basic implementation of the \textit{ResourceManager} equals their implementation and therefore the \gls{XML}
 parsing and processing is going to be described only for the \textit{ResourceManager}.
 The following resource can be loaded by the resource manager and its sub manager classes:
 \begin{itemize}
@@ -737,17 +737,17 @@ dialogues, or even a storyline in the future, utilizing these character designs.
 \end{figure}
 
 \section{Data Storage \& Data Parsing}\label{sec:data-storage-&-data-parsing}
-It was chosen to save and load resources from XML files, due to the benefits of this file format.
-XML means \textit{eXtensible Markup Language}, and is a markup language that is used for encoding documents in a format that is easily readable for both human and computers.
+It was chosen to save and load resources from \gls{XML} files, due to the benefits of this file format.
+\gls{XML} is a markup language that is used for encoding documents in a format that is easily readable for both human and computers.
 It was designed to be flexible and extensible, allowing developers to create their own markup tags and structure data in a way that is specific to their needs~\cite{xml}.
 \\
-XML documents are made up of elements, which are enclosed in opening and closing tags, and attributes, which provide additional information about the element.
-The structure of an XML document is defined by a \gls{DTD} or an \textit{XML Schema}, which specifies the elements and attributes that are allowed in the document and the relationships between them.
+\gls{XML} documents are made up of elements, which are enclosed in opening and closing tags, and attributes, which provide additional information about the element.
+The structure of an \gls{XML} document is defined by a \gls{DTD} or an \textit{\gls{XML} Schema}, which specifies the elements and attributes that are allowed in the document and the relationships between them.
 \\
-One of the main benefits of XML is its ability to store and transfer data in a standardized format that can be easily parsed by different software applications, regardless of the platform, and there are
+One of the main benefits of \gls{XML} is its ability to store and transfer data in a standardized format that can be easily parsed by different software applications, regardless of the platform, and there are
 already multiple implementations available to successfully do this, including JAVA's built-in library for \gls{DOM} parsing~\cite{dom-parser}.
 \\
-The structure of the different XML files for levels, tilesets, scores and language used in this project will be explained in the next chapters.
+The structure of the different \gls{XML} files for levels, tilesets, scores and language used in this project will be explained in the next chapters.
 \subsection{Tileset}\label{subsec:tileset}
 A tileset file contains a list of multiple tile nodes, which each have an id and a type attribute.
 A tile always contains exactly one image node, which has at least width, height and a resource path to an image assigned to it.
@@ -778,7 +778,7 @@ safety requirements, minimum components that must function correctly, and maximu
 The tileset used by the map must be specified in the tileset sub node,
 and level unlocks (e.g., which level ids become accessible after completing the current level) can also be defined.
 \\
-The code snippet shown in figure~\ref{fig:xml-level} demonstrates an example of the level XML file structure, which depicts a 5x3 game grid with one actuator at position $x = 4$ and $y = 1$,
+The code snippet shown in figure~\ref{fig:xml-level} demonstrates an example of the level \gls{XML} file structure, which depicts a 5x3 game grid with one actuator at position $x = 4$ and $y = 1$,
 and two sensors at positions $x = 0$ and $y = [0, 2]$.
 \\
 It is important to note that the width and height attributes represent the actual map size, similar to the length of an array in Java,
@@ -813,12 +813,13 @@ while the positions indicate the grid positions starting at 0, akin to indexes i
         </layer>
     </map>
 \end{lstlisting}
-    \caption{XML Schema of a level file}
+    \caption{\gls{XML} Schema of a level file}
     \label{fig:xml-level}
 \end{figure}
 \subsection{Language Files}\label{subsec:language-files}
 A language file, as displayed in figure~\ref{fig:xml-lang} contains all text content used in the game for a specified language.
-In the root node, the language type can be given according to the \gls{IETF} language tag \todo{add source}, if supported by the game (i.e.\ implemented in the language manager).
+In the root node, the language type can be given according to the \gls{IETF} language tag, if supported by the
+game (i.e.\ implemented in the language manager)~\cite{IETF}.
 Within this root node, string nodes are created which contain the id of a string as an attribute and the actual content as text.
 Each of the ids has to be unique, otherwise only the first specified id will be considered in the implementation.
 \\
@@ -828,7 +829,7 @@ Each of the ids has to be unique, otherwise only the first specified id will be 
         <string id="1">Sample Text</string>
     </strings>
 \end{lstlisting}
-    \caption{XML Schema of a language file}
+    \caption{\gls{XML} Schema of a language file}
     \label{fig:xml-lang}
 \end{figure}
 
@@ -846,7 +847,7 @@ The schema shown in figure~\ref{fig:xml-score} is used for this file, saving the
       </scoreItem>
     </scores>
 \end{lstlisting}
-    \caption{XML schema of a score file}
+    \caption{\gls{XML} schema of a score file}
     \label{fig:xml-score}
 \end{figure}
 

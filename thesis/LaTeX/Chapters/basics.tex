@@ -363,7 +363,7 @@ As seen in figure~\ref{fig:deglc}, the first stages in the cycle of educational 
 as the main focus is to define the educational problem or subject that has to be solved or taught and why it would be more effective
 to do so using a game approach.
 Furthermore, requirements to the game and possible approaches to architecture and software design are defined and reiterated.
-Note, that even during the next stages, there may be reiterations going back to a previous phase or stage.\ref{GAMED}.
+Note, that even during the next stages, there may be reiterations going back to a previous phase or stage~\cite{GAMED}.
 \\
 The notable products of the pre-production stage are concepts, ideas, design choices and in the case of educational games an approach to solving and identifying
 an existing problem;
@@ -429,11 +429,11 @@ licensing fees or revenue sharing agreements.
 \subsubsection{Unity}\label{subsubsec:entity-component-system}
 \gls{DOTS} is a framework developed by Unity Technologies for high-performance game development.
 It aims to help developers create projects that can efficiently utilize modern hardware and run smoothly on various platforms,
-including consoles, PCs, and mobile devices.
-DOTS is built on three core pillars: Entity Component System, C\# Job System and Burst Compiler~\cite{dots}.
+including consoles, computers, and mobile devices.
+\gls{DOTS} is built on three core pillars: Entity Component System, C\# Job System and Burst Compiler~\cite{dots}.
 \\
 For the unity engine architecture, a generic \gls{ECS} design pattern is used, as seen in figure~\ref{fig:ecs-unity}.
-The basic idea behind using an ECS is to separate object data and behavior into components, respectively systems.
+The basic idea behind using an \gls{ECS} is to separate object data and behavior into components, respectively systems.
 Each entity is a unique identifier for an object within the game, this can be anything from a button to a sound.
 Entities consist of a variety of components, while each entity can have different components based on the needs.
 A purely graphical entity which shows an image may only consist of a single graphics component, however another entity may contain
@@ -456,24 +456,24 @@ By working together with the C\# Job System, the Burst Compiler helps achieve ev
 \begin{figure}
     \centering
     \includegraphics[width=\textwidth]{Pictures/res/fundamentals/ECSBlockDiagram-unity}
-    \caption{ECS System used by the Unity Engine~\cite{unity-ecs}}
+    \caption{\gls{ECS} System used by the Unity Engine~\cite{unity-ecs}}
     \label{fig:ecs-unity}
 \end{figure}
 \subsubsection{Unreal}\label{subsubsec:unreal:-component-based-architecture}
 \textit{Unreal Engine} does not use an \gls{ECS} in the same way \textit{Unity} does with its \gls{DOTS} and \gls{ECS} implementation.
-However, \textit{Unreal Engine} does use a component-based architecture, which shares some similarities with an ECS~\cite{UNREAL:Framework}.
+However, \textit{Unreal Engine} does use a component-based architecture, which shares some similarities with an \gls{ECS}~\cite{UNREAL:Framework}.
 \\
 In \textit{Unreal Engine}, as seen in figure~\ref{fig:unreal-concept}, game objects are represented as Actors, which can have
 various components attached to them to define their behavior and appearance.
-This approach allows for modularity and reusability of code, which is one of the primary goals of an ECS~\cite{UNREAL:Framework}.
+This approach allows for modularity and reusability of code, which is one of the primary goals of an \gls{ECS}~\cite{UNREAL:Framework}.
 \\
-While \textit{Unreal Engine's} component-based architecture has some similarities with an ECS, it does not follow the strict separation of
-data and logic that characterizes an ECS. In an ECS, entities are simple identifiers, components hold only data, and systems
+While \textit{Unreal Engine's} component-based architecture has some similarities with an \gls{ECS}, it does not follow the strict separation of
+data and logic that characterizes an \gls{ECS}. In an \gls{ECS}, entities are simple identifiers, components hold only data, and systems
 handle the processing of component data.
 This separation of concerns allows for better performance and scalability, particularly on modern hardware with multiple cores, due to the possibility
 of separating different systems into multiple threads~\cite{UNREAL:Framework}.
 \\
-\textit{Unreal Engine's} component-based architecture, though not a pure ECS implementation, provides a powerful
+\textit{Unreal Engine's} component-based architecture, though not a pure \gls{ECS} implementation, provides a powerful
 and flexible way to create game objects and manage their behavior.
 This is done by a method which constantly updates each component by using their built-in methods, instead of having different systems accessing and changing data within components.
 Developers can still achieve good performance and scalability by carefully designing their code and taking
@@ -558,7 +558,7 @@ life lead them to the brach the game provides information and game play for.
 The following games are specifically focused on the former-mentioned objectives and should give an insight into
 the possibilities and methodologies currently used and may be used in the scope of this work.
 
-\textbf{Bride Construction Set \& Bride It}:\\ \\
+\textbf{Bridge Construction Set \& Bridge It}:\\ \\
 The bridge building games developed by \textit{ChronicLogic} allow the player to test their engineering and
 construction knowledge by building bridges in different variations (levels) that should withstand a certain amount
 of force applied to them in the form of vehicles crossing the bridge.

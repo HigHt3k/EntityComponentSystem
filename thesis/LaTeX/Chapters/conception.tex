@@ -108,7 +108,7 @@ The resource manager may be replaced with a custom resource loader, depending on
 \\
 \\
 The game employs a language management system that uses IDs (tags) instead of actual text for each text string.
-A processor parses all available language files in XML format and generates a look-up table that associates each ID with its corresponding text string.
+A processor parses all available language files in \gls{ECS} format and generates a look-up table that associates each ID with its corresponding text string.
 In the Rendering Engine, text is displayed in the language currently selected for the game.
 This approach allows for multi-language support without the need for modifying game code.
 Language files can be translated and simply incorporated into the game, enabling users to switch languages as desired.
@@ -170,12 +170,13 @@ Throughout this process, placeholders were employed in a prototype game to illus
 The graphic design process was iterative, with most graphics undergoing numerous revisions during the game development.
 \\
 Owing to the need to maintain simplicity for the target audience, the graphic design was also kept clean and straightforward.
-As a result, a classic 8-bit graphic style was adopted for all game visuals, including the UI. Additionally,
-the retro aesthetic has been widely utilized in numerous games previously, which helps to emphasize the gamified approach more evidently.
+As a result, a classic 8-bit graphic style was adopted for all game visuals, including the \gls{UI}.
+Additionally, the retro aesthetic has been widely utilized in numerous games previously, which helps to emphasize the gamified approach more evidently.
 A color palette consisting of predominantly bright colors and various shades of gray was applied across all graphics.
 \\
 The following figures show the general layout concept of the level
 menu scene~\ref{fig:level-menu-scene-concept} and the game scene~\ref{fig:game-scene-concept}.
+
 \begin{figure}
     \includegraphics[width=0.75\textwidth]{Pictures/res/concept/level-menu-scene-concept}
     \caption{Level menu scene concept}
@@ -186,6 +187,7 @@ menu scene~\ref{fig:level-menu-scene-concept} and the game scene~\ref{fig:game-s
     \caption{Game scene concept}
     \label{fig:game-scene-concept}
 \end{figure}
+
 According to the concept scene layouts, the following components have to be designed:
 \begin{itemize}
     \item Screen backgrounds

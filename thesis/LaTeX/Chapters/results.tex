@@ -2,6 +2,76 @@
 This section focuses on the results acquired by this work, specifically going into detail about
 limitations of the application and challenges that were found during the development and implementation.
 Furthermore, questions for user feedbacks that were determined to be useful during the development process are proposed.
+\section{Starting the Game}\label{sec:starting-the-game}
+The \textit{JAVA} application can be compiled and packaged into a final \textit{*.jar} and a resource directory containing
+all the resources such as images and \gls{XML} files.
+The compiling process can be done by using the Java compiler or by using a dependency management system such
+as \textit{Maven}~\cite{maven}.
+When using \textit{Maven}, making sure the project is imported as a \textit{Maven}-project within the \gls{IDE} is
+important.
+By using the \textit{Lifecycle} - \textit{package} tool of \textit{Maven}, the artifact file and the resource folder are
+built and exported to the working directory's \textit{target}-folder.
+From there, the relevant files may be copied to a custom location.
+The application can be started on all operating systems using the \textit{Java Runtime Environment}.
+After starting, the application will show a main menu, which lets the user choose between the regular \textit{playing mode} and a
+\textit{build mode} for building customized maps.
+All commands may be done by using mouse, keyboard or a gamepad.
+\subsection{Play Mode}\label{subsec:play-mode}
+The play mode is the main purpose of the game, which will load a map displaying the different available levels.
+After choosing a level, it is loaded and the player can start the puzzle / logics game and can validate a system
+configuration when finished building it.
+
+The validation is using a Markov chain generation and analysis to calculate the failure probability of it.
+A score and indication of how well the player did and how efficient their system was is presented after finishing a level.
+Through the different levels, a progression in difficulty is presented to the user which reflects in the usage and introduction
+of different concepts of aircraft system engineering.
+\subsection{Build Mode}\label{subsec:build-mode}
+The build mode presents the user with a regular game grid, as known from the play mode, however here a new
+map can be created and settings may be set here regarding map size, amount of components that can be placed and
+the target requirements.
+The map can then be saved to the games' resource folder and may be implemented as a new level in a future iteration of the
+game.
+
+Currently, there is no possibility to load customized maps from folders other than a new implementation of the map
+in the level map, however in the future there can be a new feature to display for example a list of all custom maps in the
+folder.
+\section{Extensibility}\label{sec:extensibility}
+Extensible code means changes can be made without having to rewrite large parts of the code.
+In the scope of this software implementation, adding new entities, components or implementing new logics and game mechanics
+do not require bigger changes in the game engine itself, as stated and explained in section~\ref{subsec:game-loop}.
+
+Generally, the application and its appearance can change upon code modifications, however the game contents can also
+be adapted by simply adding, removing or replacing data such as graphics data and level files.
+To do that, it is recommended to use an \gls{IDE} and a graphics editor of choice, such as \textit{Gimp}, as the graphics
+files created in the scope of this work are also available als \textit{Gimp} files which may be edited and exported to
+the resource folder easily.
+
+A \textit{javadoc} is generated together with the code basis, as all methods, classes and fields are well-documented.
+This should help with new feature implementations and limit confusion as much as possible.
+When creating new classes or methods, it is recommended to add a javadoc to the respective code basis as well, as it
+may be confusing or misleading to new developers otherwise.
+
+Additionally, it would make sense to set up multiple testing cases, however as this game was designed as a prototype
+where the direct requirements were defined as feedback from the former iteration, no automated testing was used during the development.
+Testing was done by calculating the simulation using the application and by hand and comparing the results, formerly.
+For this, an automated testing environment such as \textit{Maven} using \textit{JUnit} test may be used.
+
+Logging is implemented to the game and game engine by default, however there may be the need to expand the logging
+and revisit logging levels, depending on the developer needs.
+Logs are by default written to a log file, which helps with indicating where and why a bug was occurring.
+During play-testing, it is helpful to keep the log-files and analyze them to find and fix potential bugs.
+
+When changing code or adding new features, the version control should be used and the repository should be checked out from the
+location where it is saved.
+The current location of the repository is \url{https://gitlab.com/ils-students/johanntoepferma}.
+A preferred and recommended workflow is to create new branches for new features, which may then be merged by setting up
+a pull/merge request.
+After the request is reviewed, the files may be merged to the main branch again.
+
+Currently, there is no versioning in the traditional way of setting up automated version numbers and sub-numbers, this
+may be set up in the future.
+Stable releases should only be compiled and packaged from the main branch, as all the content in this branch should be
+fully functional.
 \section{Challenges}\label{sec:challenges}
 During the implementation process, some major challenges - not only negative, also in a positive way - occurred, which will be described in this chapter, to give an
 overview and a guideline on what may be done differently during the next iteration of the project or during the development of other
@@ -34,7 +104,6 @@ Due to Java being interpreted, most methods, in this work this is especially men
 by a margin compared to other languages like C++.
 To correctly assess this, these methods would also need to be implemented in other languages, however the above-mentioned would
 be the expected result.
-
 \section{Limitations}\label{sec:limitations}
 The field of aircraft system engineering is vast and intricate, and this work aims to simplify this complex subject by narrowing its scope.
 Various failure types (such as mechanical or electrical failures) are considered only as a generalized failure of any type.
