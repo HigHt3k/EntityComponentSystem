@@ -5,7 +5,7 @@
         <part>@50001</part>
         <part>@50002</part>
     </description>
-    <goal>1e-4</goal>
+    <goal>1e-3</goal>
     <goalDefinition workingActuators="1" workingSensors="0" workingComputers="0"/>
     <tileset source="base_tiles.xml"/>
     <unlocks>
