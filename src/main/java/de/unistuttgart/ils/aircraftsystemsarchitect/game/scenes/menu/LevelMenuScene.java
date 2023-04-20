@@ -195,7 +195,7 @@ public class LevelMenuScene extends BaseMenuScene implements Tutorial {
     private void addLevel(int id, int x, int y, BufferedImage image) {
         LevelImageButton lvl = new LevelImageButton("lvl" + id, IdGenerator.generateId(),
                 x, y, 50, 50, "", FontCollection.bit8Font,
-                new StartAction(Game.scene().getScene(id)),
+                new StartAction(id),
                 image);
         lvl.getComponent(ActionComponent.class).addAction(MouseEvent.NOBUTTON, new ShowLevelInfoAction(id));
         addEntityToScene(lvl);

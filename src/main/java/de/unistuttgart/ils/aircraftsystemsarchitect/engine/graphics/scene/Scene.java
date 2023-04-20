@@ -11,6 +11,7 @@ public abstract class Scene {
     private final String name;
     private final int id;
     private final ArrayList<Entity> entities;
+    private String scenePath;
 
     /**
      * Create a new scene object
@@ -96,5 +97,13 @@ public abstract class Scene {
             }
         }
         return null;
+    }
+
+    public void setScenePath(String scenePath) {
+        this.scenePath = scenePath;
+    }
+
+    public String getScenePath() {
+        return scenePath;
     }
 }

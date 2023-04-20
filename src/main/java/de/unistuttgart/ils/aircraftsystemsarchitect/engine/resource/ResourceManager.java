@@ -193,8 +193,10 @@ public class ResourceManager {
                 GameScene scene;
                 if(difficulty == Difficulty.TUTORIAL) {
                     scene = new TutorialScene(levelName, mapId, difficulty);
+                    scene.setScenePath(levelPath);
                 } else {
                     scene = new GameScene(levelName, mapId, difficulty);
+                    scene.setScenePath(levelPath);
                 }
                 if(descriptions.size() > 0) {
                     scene.setDescription(descriptions.get(0));

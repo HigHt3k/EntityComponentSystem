@@ -65,6 +65,8 @@ public class GameScene extends BaseGameFieldScene {
     private Entity correctSignalsTipDesc;
     private int currentlyDisplayedDescriptionPart = 0;
 
+    private boolean wasPlayed = false;
+
     private boolean levelPassed = false;
 
     private final ArrayList<BuildPanelPage> pages = new ArrayList<>();
@@ -459,6 +461,14 @@ public class GameScene extends BaseGameFieldScene {
                 "@60", FontCollection.bit8FontLarge, new StartAction(-254),
                 Bit8.DARK_GREY, null, null
         ));
+    }
+
+    public boolean isWasPlayed() {
+        return wasPlayed;
+    }
+
+    public void setWasPlayed(boolean wasPlayed) {
+        this.wasPlayed = wasPlayed;
     }
 
     /**

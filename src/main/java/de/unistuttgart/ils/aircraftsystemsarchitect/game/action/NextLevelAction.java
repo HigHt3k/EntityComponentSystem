@@ -2,6 +2,7 @@ package de.unistuttgart.ils.aircraftsystemsarchitect.game.action;
 
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.Game;
 import de.unistuttgart.ils.aircraftsystemsarchitect.engine.ecs.component.action.Action;
+import de.unistuttgart.ils.aircraftsystemsarchitect.game.scenes.game.GameScene;
 
 /**
  * Action to switch to the next level in the game.
@@ -19,6 +20,9 @@ public class NextLevelAction extends Action {
         int nextLevel = curLevel + 1;
 
         if(Game.scene().getScene(nextLevel) != null) {
+            if(Game.scene().current() instanceof GameScene gs) {
+                gs.setWasPlayed(true);
+            }
             Game.scene().setCurrentScene(nextLevel);
         } else {
             // Handle if no next scene
