@@ -109,4 +109,17 @@ public class SceneManager {
             s.init();
         }
     }
+
+    public void removeScene(Scene s) {
+        scenes.remove(s);
+    }
+
+    public void removeScene(int id) {
+        for(int i = 0; i < scenes.size(); i++) {
+            if(scenes.get(i).getId() == id) {
+                scenes.remove(i);
+                return;
+            }
+        }
+    }
 }

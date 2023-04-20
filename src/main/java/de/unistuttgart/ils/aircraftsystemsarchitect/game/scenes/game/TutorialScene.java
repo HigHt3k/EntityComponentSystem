@@ -35,6 +35,14 @@ public class TutorialScene extends GameScene implements Tutorial {
         super(name, id, difficulty);
     }
 
+    public void setFirstTimeOpened(boolean firstTimeOpened) {
+        this.firstTimeOpened = firstTimeOpened;
+    }
+
+    public boolean isFirstTimeOpened() {
+        return firstTimeOpened;
+    }
+
     /**
      * Initialize the scene: check if the scene was already opened or if this is the first time opening it. If first time, play the tutorial
      */
