@@ -1,5 +1,5 @@
-# SKYLOGIC
-SkyLogic is a puzzle game developed for and with the ILS (Institute for Aircraft Systems) at the University of Stuttgart
+# Aircraft Systems Architect
+Aircraft Systems Architect is a puzzle game developed for and with the ILS (Institute for Aircraft Systems) at the University of Stuttgart
 to present redundancy concepts in system design to people with no knowledge of 
 the topic.
 
